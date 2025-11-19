@@ -1,0 +1,10 @@
+{
+  "join_log_channel_id": "",
+  "leave_log_channel_id": "",
+  "moderation_log_channel_id": "",
+  "ticket_log_channel_id": "",
+  "autorole_log_channel_id": "",
+  "automod_log_channel_id": "",
+  "message_log_channel_id": "",
+  "boost_log_channel_id": ""
+}
