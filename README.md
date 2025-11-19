@@ -1,79 +1,136 @@
 # Valiance Bot - JavaScript Version
 
-This is the complete JavaScript recreation of the Valiance Discord bot, identical to the Python version.
+Bot Discord completo per la gestione di server, completamente riscritto in JavaScript da Python.
 
-## Features
+## Caratteristiche
 
-- **Core Commands**: ping, uptime, purge, delete, rename_channel, embed
-- **Game Sessions**: Automatic CW (Clan Wars) session management
-- **Verification System**: Button-based verification with role management
-- **Help System**: Interactive help menu with categories
-- **Fun Commands**: userinfo, serverinfo, avatar, coinflip, roll
-- **AutoRole**: Reaction role system
-- **Birthdays**: Birthday tracking and notifications
-- **Reputation**: User reputation system with cooldowns
-- **Rules**: Server rules display
-- **Welcome/Boost Messages**: Automatic welcome and boost messages
-- **Status Management**: Dynamic bot status with member count
+- **Sistema Ticket** - Gestione completa dei ticket con pannelli personalizzabili
+- **Moderazione** - Ban, kick, mute, warn e altre funzioni di moderazione
+- **AutoRole** - Assegnazione automatica ruoli con reazioni
+- **Sistema Log** - Logging completo di tutti gli eventi del server
+- **TTS** - Text-to-Speech con gTTS
+- **Clan Wars** - Sistema per gestire le guerre interne del clan
+- **Giveaway** - Sistema completo per giveaway
+- **Livelli** - Sistema di livelli e XP (Coming Soon)
+- **Reputation** - Sistema di reputazione tra utenti
+- **Birthday** - Gestione compleanni
+- **Counters** - Contatori automatici per membri, ruoli, etc.
+- **Reminders** - Sistema promemoria
+- **Fun Commands** - Comandi divertenti (userinfo, serverinfo, avatar, etc.)
+- **Verify System** - Sistema di verifica con pulsanti
 
-## Setup
+## Installazione
 
-1. Install dependencies:
-```bash
-npm install
+1. Clona il repository
+2. Installa le dipendenze:
+   ```bash
+   npm install
+   ```
+3. Configura il file `.env`:
+   ```
+   TOKEN=your_bot_token_here
+   MY_GUILD=your_guild_id_here
+   ```
+4. Configura il file `config.json` con le impostazioni del tuo server
+5. Avvia il bot:
+   ```bash
+   npm start
+   ```
+
+## Struttura
+
+```
+valiancejs/
+├── cogs/                 # Moduli del bot
+│   ├── autorole/        # Sistema autorole
+│   ├── birthdays/       # Sistema compleanni
+│   ├── counters/        # Contatori automatici
+│   ├── cw/              # Clan Wars
+│   ├── fun/             # Comandi divertenti
+│   ├── giveaway/        # Sistema giveaway
+│   ├── help/            # Sistema help
+│   ├── levels/          # Sistema livelli
+│   ├── log/             # Sistema logging
+│   ├── moderation/      # Sistema moderazione
+│   ├── regole/          # Sistema regole
+│   ├── rep/             # Sistema reputazione
+│   ├── social/          # Sistema social (matrimoni)
+│   ├── stats/           # Statistiche
+│   ├── ticket/          # Sistema ticket
+│   ├── tts/             # Text-to-Speech
+│   └── util/            # Utilità (reminders)
+├── data/                # File di dati JSON
+├── utils/               # Utilità generali
+├── views/               # Viste Discord (pulsanti, menu)
+├── config.json          # Configurazione principale
+├── index.js             # File principale
+└── package.json         # Dipendenze npm
 ```
 
-2. Copy `.env.example` to `.env` and add your bot token:
-```bash
-cp .env.example .env
-```
+## Comandi Principali
 
-3. Edit `.env` and add your bot token:
-```
-TOKEN=your_bot_token_here
-```
+### Moderazione
+- `/ban <utente> [motivo]` - Banna un utente
+- `/kick <utente> [motivo]` - Kicka un utente
+- `/mute <utente>` - Muta un utente
+- `/warn <utente> [motivo]` - Avverte un utente
 
-4. Make sure the `config.json` file exists in the parent directory (shared with Python version)
+### Ticket
+- `/ticketpanel` - Crea il pannello ticket
+- `/close` - Chiude un ticket
+- `/add <utente>` - Aggiunge utente al ticket
 
-5. Run the bot:
-```bash
-npm start
-```
+### Utilità
+- `/ping` - Mostra la latenza
+- `/purge <numero>` - Elimina messaggi
+- `/embed` - Crea embed personalizzati
+- `/verify panel` - Crea pannello verifica
 
-## Structure
+### Fun
+- `/userinfo [utente]` - Info su un utente
+- `/serverinfo` - Info sul server
+- `/avatar [utente]` - Avatar di un utente
+- `/coinflip` - Lancia una moneta
+- `/roll [max]` - Tira un dado
 
-- `index.js` - Main bot file with core functionality
-- `utils/` - Utility functions (logger, botUtils, jsonStore)
-- `views/` - UI components (VerifyView)
-- `cogs/` - Feature modules (help, fun, autorole, birthdays, rep, regole)
-- `data/` - Data storage directory
+## Configurazione
 
-## Commands
+Il file `config.json` contiene tutte le configurazioni del bot:
 
-All slash commands are identical to the Python version:
+- **Canali**: ID dei canali per welcome, boost, log, etc.
+- **Ruoli**: ID dei ruoli per staff, moderatori, etc.
+- **Messaggi**: Template per messaggi di benvenuto, boost, etc.
+- **Ticket**: Configurazione del sistema ticket
+- **Moderazione**: Impostazioni di moderazione
+- **Bot**: Status, attività, prefissi
 
-- `/help` - Interactive help system
-- `/ping` - Bot latency
-- `/uptime` - Bot uptime
-- `/userinfo` - User information
-- `/serverinfo` - Server information
-- `/avatar` - User avatar
-- `/coinflip` - Coin flip
-- `/roll` - Dice roll
-- `/birthday set/remove/when/next` - Birthday management
-- `/rep add/remove/show` - Reputation system
-- `/regole` - Server rules
-- `/createreact` - Reaction roles
-- `/verify panel/forceverify` - Verification system
-- `/cwend` - End CW session
-- `/ruleset` - Show ruleset
-- `/setruleset` - Set ruleset
-- And many more...
+## Dipendenze
 
-## Configuration
+- `discord.js` - Libreria Discord
+- `@discordjs/voice` - Supporto audio
+- `gtts` - Text-to-Speech
+- `winston` - Logging
+- `canvas` - Generazione immagini
+- `sqlite3` - Database (futuro)
+- `axios` - HTTP requests
+- `dotenv` - Variabili ambiente
 
-The bot uses the same `config.json` file as the Python version, ensuring identical behavior and settings.
+## Sviluppo
 
-## Logging
+Il bot è strutturato in moduli (cogs) per facilitare lo sviluppo e la manutenzione. Ogni cog è indipendente e gestisce una specifica funzionalità.
 
-Logs are stored in the `../logs/` directory (shared with Python version) using Winston logger.
+Per aggiungere un nuovo cog:
+1. Crea una cartella in `cogs/`
+2. Crea il file principale `nome.js`
+3. Implementa la classe del cog con il metodo `setup()`
+4. Aggiungi il cog alla lista in `index.js`
+
+## Supporto
+
+Per supporto o segnalazioni:
+- Discord: https://discord.gg/K4TvkbV2su
+- Developer: `indifferenzah`
+
+## Licenza
+
+Questo progetto è privato e proprietario di Valiance.

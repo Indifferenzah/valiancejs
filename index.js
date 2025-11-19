@@ -42,25 +42,43 @@ class GameSession {
 }
 
 // Load cogs
-const cogsPath = path.join(__dirname, 'cogs');
-const cogFolders = fs.readdirSync(cogsPath);
+const cogsToLoad = [
+    'ticket/ticket',
+    'moderation/moderation', 
+    'autorole/autorole',
+    'log/log',
+    'fun/fun',
+    'regole/regole',
+    'tts/tts',
+    'cw/cw',
+    'giveaway/giveaway',
+    'help/help',
+    'levels/levels',
+    'util/reminders',
+    'social/marriage',
+    'rep/reputation',
+    'birthdays/birthdays',
+    'counters/counters',
+    'stats/stats',
+    'gang/gang'
+];
 
-for (const folder of cogFolders) {
-    const cogPath = path.join(cogsPath, folder);
-    if (fs.statSync(cogPath).isDirectory()) {
-        const cogFile = path.join(cogPath, `${folder}.js`);
+for (const cogPath of cogsToLoad) {
+    try {
+        const cogFile = path.join(__dirname, 'cogs', `${cogPath}.js`);
         if (fs.existsSync(cogFile)) {
-            try {
-                const cog = require(cogFile);
-                if (cog.setup) {
-                    cog.setup(client);
-                    client.cogs.set(folder, cog);
-                    logger.info(`Loaded cog: ${folder}`);
-                }
-            } catch (error) {
-                logger.error(`Failed to load cog ${folder}: ${error.message}`);
+            const cog = require(cogFile);
+            if (cog.setup) {
+                const cogInstance = cog.setup(client);
+                const cogName = cogPath.split('/').pop();
+                client.cogs.set(cogName, cogInstance);
+                logger.info(`Loaded cog: ${cogName}`);
             }
+        } else {
+            logger.warn(`Cog file not found: ${cogFile}`);
         }
+    } catch (error) {
+        logger.error(`Failed to load cog ${cogPath}: ${error.message}`);
     }
 }
 
@@ -290,8 +308,28 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.isButton()) {
         if (interaction.customId === 'verify_button') {
             if (client.verifyView) {
-                await client.verifyView.handleVerifyClick(interaction);
+                try {
+                    await client.verifyView.handleVerifyClick(interaction);
+                } catch (error) {
+                    logger.error(`Error in verify button: ${error.message}`);
+                }
             }
+        }
+        return;
+    }
+    
+    // Handle select menu interactions
+    if (interaction.isStringSelectMenu()) {
+        try {
+            if (interaction.customId === 'help_select') {
+                const helpViews = client.helpViews || new Map();
+                const view = helpViews.get(interaction.user.id);
+                if (view) {
+                    await view.handleSelectCallback(interaction);
+                }
+            }
+        } catch (error) {
+            logger.error(`Error in select menu: ${error.message}`);
         }
         return;
     }
@@ -349,6 +387,11 @@ client.on('interactionCreate', async (interaction) => {
                 break;
             case 'setlogchannel':
                 await handleSetLogChannel(interaction);
+                break;
+            case 'help':
+                if (client.helpCog) {
+                    await client.helpCog.handleHelp(interaction);
+                }
                 break;
         }
     } catch (error) {

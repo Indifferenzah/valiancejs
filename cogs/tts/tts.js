@@ -32,6 +32,39 @@ class TTSCog {
                 .setName("tts")
                 .setDescription("Sistema TTS offline gTTS")
                 .addSubcommand(sub =>
+                    sub.setName("say")
+                        .setDescription("Text-to-Speech nel canale vocale")
+                        .addStringOption(opt =>
+                            opt.setName("text")
+                                .setDescription("Testo da pronunciare")
+                                .setRequired(true)
+                        )
+                )
+                .addSubcommand(sub =>
+                    sub.setName("voice")
+                        .setDescription("Seleziona la voce TTS (placeholder)")
+                        .addStringOption(opt =>
+                            opt.setName("voice")
+                                .setDescription("Nome della voce")
+                                .setRequired(true)
+                        )
+                )
+                .addSubcommand(sub =>
+                    sub.setName("volume")
+                        .setDescription("Imposta il volume del TTS (placeholder)")
+                        .addIntegerOption(opt =>
+                            opt.setName("volume")
+                                .setDescription("Volume (0-100)")
+                                .setRequired(true)
+                                .setMinValue(0)
+                                .setMaxValue(100)
+                        )
+                )
+                .addSubcommand(sub =>
+                    sub.setName("stop")
+                        .setDescription("Ferma il TTS e svuota la coda")
+                )
+                .addSubcommand(sub =>
                     sub.setName("setchannel")
                         .setDescription("Imposta il canale da cui leggere TTS")
                         .addChannelOption(opt =>
@@ -149,11 +182,82 @@ class TTSCog {
 
         if (!conn || !player) return;
 
-        // genera mp3 con gTTS
-        const mp3File = await this.generateTTS(text);
+        try {
+            // genera mp3 con gTTS
+            const mp3File = await this.generateTTS(text);
+            const resource = createAudioResource(mp3File);
+            player.play(resource);
+        } catch (error) {
+            console.error("Error playing TTS:", error);
+        }
+    }
 
-        const resource = createAudioResource(mp3File);
-        player.play(resource);
+    async handleSay(interaction) {
+        const text = interaction.options.getString("text");
+        const member = interaction.member;
+
+        if (!member.voice.channel) {
+            return interaction.reply({
+                content: "❌ Devi essere in un canale vocale!",
+                ephemeral: true
+            });
+        }
+
+        const guildId = interaction.guild.id;
+
+        // Auto join if not connected
+        if (!this.connections.get(guildId)) {
+            const connection = joinVoiceChannel({
+                channelId: member.voice.channel.id,
+                guildId,
+                adapterCreator: interaction.guild.voiceAdapterCreator
+            });
+
+            const player = createAudioPlayer({
+                behaviors: { noSubscriber: NoSubscriberBehavior.Pause }
+            });
+
+            connection.subscribe(player);
+            this.connections.set(guildId, connection);
+            this.players.set(guildId, player);
+        }
+
+        await interaction.reply({
+            content: "🔊 Sto parlando...",
+            ephemeral: true
+        });
+
+        await this.playTTS(guildId, text);
+    }
+
+    async handleVoice(interaction) {
+        const voice = interaction.options.getString("voice");
+        await interaction.reply({
+            content: `✅ Voce impostata su ${voice} (placeholder - gTTS usa sempre italiano)`,
+            ephemeral: true
+        });
+    }
+
+    async handleVolume(interaction) {
+        const volume = interaction.options.getInteger("volume");
+        await interaction.reply({
+            content: "||Coming Soon...|| Volume TTS non ancora implementato",
+            ephemeral: true
+        });
+    }
+
+    async handleStop(interaction) {
+        const guildId = interaction.guild.id;
+        const player = this.players.get(guildId);
+
+        if (player) {
+            player.stop();
+        }
+
+        await interaction.reply({
+            content: "⏹️ TTS fermato.",
+            ephemeral: true
+        });
     }
 
     setupListeners() {
@@ -181,6 +285,10 @@ function setup(client) {
 
         const sub = interaction.options.getSubcommand();
 
+        if (sub === "say") return cog.handleSay(interaction);
+        if (sub === "voice") return cog.handleVoice(interaction);
+        if (sub === "volume") return cog.handleVolume(interaction);
+        if (sub === "stop") return cog.handleStop(interaction);
         if (sub === "setchannel") return cog.handleSetChannel(interaction);
         if (sub === "join") return cog.handleJoin(interaction);
         if (sub === "leave") return cog.handleLeave(interaction);

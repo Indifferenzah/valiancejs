@@ -195,6 +195,7 @@ class HelpSelectView {
     constructor(authorId, client) {
         this.authorId = authorId;
         this.client = client;
+        this.createdAt = Date.now();
         this.components = this.createComponents();
     }
 
@@ -224,40 +225,47 @@ class HelpSelectView {
     }
 
     async handleSelectCallback(interaction) {
-        if (interaction.user.id !== this.authorId) {
-            await interaction.reply({ content: '❌ Solo chi ha eseguito il comando può usare questo menu!', ephemeral: true });
-            return;
-        }
+        try {
+            if (interaction.user.id !== this.authorId) {
+                await interaction.reply({ content: '❌ Solo chi ha eseguito il comando può usare questo menu!', ephemeral: true });
+                return;
+            }
 
-        const selected = interaction.values[0];
+            const selected = interaction.values[0];
 
-        const embed = new EmbedBuilder()
-            .setTitle('📋 Comandi Disponibili')
-            .setColor(0x00ff00);
+            const embed = new EmbedBuilder()
+                .setTitle('📋 Comandi Disponibili')
+                .setColor(0x00ff00);
 
-        if (selected === 'all') {
-            embed.setDescription('Ecco una lista di tutti i comandi slash disponibili su questo bot:');
-            for (const [key, cat] of Object.entries(categories)) {
+            if (selected === 'all') {
+                embed.setDescription('Ecco una lista di tutti i comandi slash disponibili su questo bot:');
+                for (const [key, cat] of Object.entries(categories)) {
+                    embed.addFields({
+                        name: `${cat.emoji} ${cat.name}`,
+                        value: cat.commands.join('\n'),
+                        inline: false
+                    });
+                }
+            } else {
+                const cat = categories[selected];
+                embed.setTitle(`${cat.emoji} ${cat.name}`);
+                embed.setDescription(`Comandi disponibili nella categoria **${cat.name}**:`);
                 embed.addFields({
-                    name: `${cat.emoji} ${cat.name}`,
+                    name: 'Comandi',
                     value: cat.commands.join('\n'),
                     inline: false
                 });
             }
-        } else {
-            const cat = categories[selected];
-            embed.setTitle(`${cat.emoji} ${cat.name}`);
-            embed.setDescription(`Comandi disponibili nella categoria **${cat.name}**:`);
-            embed.addFields({
-                name: 'Comandi',
-                value: cat.commands.join('\n'),
-                inline: false
-            });
+
+            embed.setFooter({ text: 'Valiance Bot | "<campo>" indica un campo obbligatorio; "[campo]" indica un campo opzionale.' });
+
+            await interaction.update({ embeds: [embed], components: this.components });
+        } catch (error) {
+            logger.error(`Error in help select callback: ${error.message}`);
+            if (!interaction.replied && !interaction.deferred) {
+                await interaction.reply({ content: '❌ Errore nel menu help.', ephemeral: true });
+            }
         }
-
-        embed.setFooter({ text: 'Valiance Bot | "<campo>" indica un campo obbligatorio; "[campo]" indica un campo opzionale.' });
-
-        await interaction.update({ embeds: [embed], components: this.components });
     }
 }
 
@@ -272,47 +280,49 @@ class HelpCog {
     }
 
     async handleHelp(interaction) {
-        const embed = new EmbedBuilder()
-            .setTitle('📋 Comandi Disponibili')
-            .setDescription('**Help** | **Valiance**\n\nBenvenuto nel pannello comandi di **Valiance**.\nQuesto bot è stato progettato per offrire strumenti intuitivi, affidabili e sempre aggiornati per la tua community Discord.\n\nUtilizza il menu sottostante per navigare tra le varie categorie e scoprire tutti i comandi disponibili.\nOgni sezione contiene descrizioni dettagliate e parametri d\'uso per aiutarti a sfruttare al meglio ogni funzione.\n\n⚙️ | Developer: `indifferenzah`\n<:VL_Discord:1437134976217911407> | Discord: https://discord.gg/GVMGZuGZ8F\n🔗 | Sito: https://valiancev2.vercel.app/\n-# 💡 | Per suggerimenti o supporto apri un ticket.')
-            .setColor(0x00ff00)
-            .setFooter({ text: 'Valiance Bot | "<campo>" indica un campo obbligatorio; "[campo]" indica un campo opzionale.' });
+        try {
+            const embed = new EmbedBuilder()
+                .setTitle('📋 Comandi Disponibili')
+                .setDescription('**Help** | **Valiance**\n\nBenvenuto nel pannello comandi di **Valiance**.\nQuesto bot è stato progettato per offrire strumenti intuitivi, affidabili e sempre aggiornati per la tua community Discord.\n\nUtilizza il menu sottostante per navigare tra le varie categorie e scoprire tutti i comandi disponibili.\nOgni sezione contiene descrizioni dettagliate e parametri d\'uso per aiutarti a sfruttare al meglio ogni funzione.\n\n⚙️ | Developer: `indifferenzah`\n<:VL_Discord:1437134976217911407> | Discord: https://discord.gg/GVMGZuGZ8F\n🔗 | Sito: https://valiancev2.vercel.app/\n-# 💡 | Per suggerimenti o supporto apri un ticket.')
+                .setColor(0x00ff00)
+                .setFooter({ text: 'Valiance Bot | "<campo>" indica un campo obbligatorio; "[campo]" indica un campo opzionale.' });
 
-        const view = new HelpSelectView(interaction.user.id, this.client);
-        await interaction.reply({ embeds: [embed], components: view.components, ephemeral: true });
-        
-        // Store the view for later use
-        this.client.helpViews = this.client.helpViews || new Map();
-        this.client.helpViews.set(interaction.user.id, view);
-        
-        logger.info(`/help used by ${interaction.user.tag} in ${interaction.guild.name}`);
+            const view = new HelpSelectView(interaction.user.id, this.client);
+            
+            // Store the view before replying
+            this.client.helpViews = this.client.helpViews || new Map();
+            this.client.helpViews.set(interaction.user.id, view);
+            
+            await interaction.reply({ embeds: [embed], components: view.components, ephemeral: true });
+            logger.info(`/help used by ${interaction.user.tag} in ${interaction.guild.name}`);
+        } catch (error) {
+            logger.error(`Error in help command: ${error.message}`);
+            if (!interaction.replied && !interaction.deferred) {
+                await interaction.reply({ content: '❌ Errore nel comando help.', ephemeral: true });
+            }
+        }
     }
 }
 
 function setup(client) {
     const helpCog = new HelpCog(client);
     
-    // Register slash command handler
-    client.on('interactionCreate', async (interaction) => {
-        if (!interaction.isChatInputCommand()) return;
-        
-        if (interaction.commandName === 'help') {
-            await helpCog.handleHelp(interaction);
-        }
-    });
-
-    // Register select menu handler
-    client.on('interactionCreate', async (interaction) => {
-        if (!interaction.isStringSelectMenu()) return;
-        
-        if (interaction.customId === 'help_select') {
-            const helpViews = client.helpViews || new Map();
-            const view = helpViews.get(interaction.user.id);
-            if (view) {
-                await view.handleSelectCallback(interaction);
+    // Store helpCog reference for interaction handling
+    client.helpCog = helpCog;
+    
+    // Clean up expired views every 5 minutes
+    if (!client.helpViewCleanup) {
+        client.helpViewCleanup = setInterval(() => {
+            if (client.helpViews) {
+                const now = Date.now();
+                for (const [userId, view] of client.helpViews.entries()) {
+                    if (view.createdAt && now - view.createdAt > 15 * 60 * 1000) {
+                        client.helpViews.delete(userId);
+                    }
+                }
             }
-        }
-    });
+        }, 5 * 60 * 1000);
+    }
 
     // Add commands to global commands array
     if (!client.globalCommands) client.globalCommands = [];

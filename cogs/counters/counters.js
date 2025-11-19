@@ -2,8 +2,9 @@ const { SlashCommandBuilder, ChannelType } = require('discord.js');
 const { ownerOrHasPermissions } = require('../../utils/botUtils');
 const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
 const logger = require('../../utils/logger');
+const path = require('path');
 
-const CONFIG_PATH = path.join(__dirname, '../../../config.json');
+const CONFIG_PATH = path.join(__dirname, '../../config.json');
 
 class CountersCog {
     constructor(client) {
