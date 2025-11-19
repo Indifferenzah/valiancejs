@@ -6,7 +6,7 @@ const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
 const logger = require('../../utils/logger');
 
 const BASE_DIR = __dirname;
-const CONFIG_PATH = path.join(__dirname, '../../../config.json');
+const CONFIG_PATH = path.join(__dirname, '../../config.json');
 const TICKETMSG_JSON = path.join(BASE_DIR, 'ticketmsg.json');
 const TICKET_JSON = path.join(BASE_DIR, 'ticket.json');
 const CLOSED_TICKETS_JSON = path.join(BASE_DIR, 'closed_tickets.json');
@@ -20,6 +20,8 @@ class TicketCog {
         this.ticketOwners = loadJsonSync(TICKET_JSON, {});
         this.closedTickets = loadJsonSync(CLOSED_TICKETS_JSON, {});
         this.blacklist = loadJsonSync(BLACKLIST_JSON, []);
+        
+        this.setupPersistentViews();
     }
 
     saveTickets() {
@@ -32,30 +34,24 @@ class TicketCog {
 
     async setupPersistentViews() {
         try {
-            const buttons = this.config.ticket_buttons || [];
-            this.client.ticketView = new TicketView(buttons, this.config, this);
-            this.client.closeTicketView = new CloseTicketView(null, this);
-            
-            // Re-attach views to existing tickets
-            for (const [channelId, ticketInfo] of Object.entries(this.ticketOwners)) {
-                if (ticketInfo.close_message_id) {
-                    const channel = this.client.channels.cache.get(channelId);
-                    if (channel) {
-                        try {
-                            const message = await channel.messages.fetch(ticketInfo.close_message_id);
-                            const view = new CloseTicketView(channelId, this);
-                            await message.edit({ components: [view.getActionRow()] });
-                            logger.info(`View re-attached for ticket ${channel.name}`);
-                        } catch (error) {
-                            logger.error(`Error re-attaching view for ticket ${channelId}: ${error.message}`);
-                        }
-                    } else {
-                        delete this.ticketOwners[channelId];
-                        this.saveTickets();
-                        logger.info(`Ticket ${channelId} removed (channel deleted)`);
-                    }
+            // Setup button handlers
+            this.client.on('interactionCreate', async (interaction) => {
+                if (!interaction.isButton()) return;
+                
+                const { customId } = interaction;
+                
+                if (customId === 'ticket_close') {
+                    await this.handleCloseButton(interaction);
+                } else if (customId === 'confirm_close') {
+                    await this.handleConfirmClose(interaction);
+                } else if (customId === 'cancel_close') {
+                    await this.handleCancelClose(interaction);
+                } else if (this.config.ticket_buttons?.some(btn => btn.id === customId)) {
+                    await this.handleTicketButton(interaction);
                 }
-            }
+            });
+            
+            logger.info('Ticket persistent views setup complete');
         } catch (error) {
             logger.error(`Error setting up persistent views: ${error.message}`);
         }
@@ -248,8 +244,8 @@ class TicketCog {
             return roles.length === 0 || roles.some(roleId => userRoleIds.includes(roleId));
         });
 
-        const view = new TicketView(filteredButtons, this.config, this);
-        const message = await interaction.channel.send({ embeds: [embed], components: view.getActionRows() });
+        const rows = this.createButtonRows(filteredButtons);
+        const message = await interaction.channel.send({ embeds: [embed], components: rows });
 
         this.config.ticket_panel_channel_id = interaction.channel.id;
         this.config.ticket_panel_message_id = message.id;
@@ -258,44 +254,12 @@ class TicketCog {
         await interaction.reply({ content: '✅ Pannello ticket creato!', ephemeral: true });
     }
 
-    async handleClose(interaction) {
-        const channel = interaction.channel;
-        if (!this.ticketOwners[channel.id]) {
-            await interaction.reply({ content: '❌ Questo comando può essere usato solo nei canali ticket!', ephemeral: true });
-            return;
-        }
-
-        const staffRoleId = this.config.ticket_staff_role_id;
-        if (staffRoleId && !interaction.member.roles.cache.has(staffRoleId)) {
-            await interaction.reply({ content: '❌ Non hai i permessi per chiudere i ticket!', ephemeral: true });
-            return;
-        }
-
-        const embed = new EmbedBuilder()
-            .setTitle('Conferma Chiusura')
-            .setDescription('Sei sicuro di voler chiudere questo ticket? Verrà generato e inviato il transcript.')
-            .setColor(0xff0000);
-
-        const view = new ConfirmCloseView(channel.id, this);
-        await interaction.reply({ embeds: [embed], components: [view.getActionRow()], ephemeral: true });
-    }
-
-    // Altri metodi handle... (continua con la stessa logica del Python)
-}
-
-class TicketView {
-    constructor(buttons, config, cog) {
-        this.buttons = buttons;
-        this.config = config;
-        this.cog = cog;
-    }
-
-    getActionRows() {
+    createButtonRows(buttons) {
         const rows = [];
         let currentRow = new ActionRowBuilder();
         let buttonsInRow = 0;
 
-        for (const btn of this.buttons) {
+        for (const btn of buttons) {
             if (buttonsInRow >= 5) {
                 rows.push(currentRow);
                 currentRow = new ActionRowBuilder();
@@ -332,34 +296,151 @@ class TicketView {
             default: return ButtonStyle.Primary;
         }
     }
-}
 
-class CloseTicketView {
-    constructor(channelId, cog) {
-        this.channelId = channelId;
-        this.cog = cog;
+    async handleTicketButton(interaction) {
+        if (this.blacklist.includes(interaction.user.id)) {
+            await interaction.reply({ content: '❌ Sei nella blacklist e non puoi aprire ticket!', ephemeral: true });
+            return;
+        }
+
+        await interaction.deferReply({ ephemeral: true });
+
+        const guild = interaction.guild;
+        const buttonConfig = this.config.ticket_buttons.find(btn => btn.id === interaction.customId);
+        
+        if (!buttonConfig) {
+            await interaction.followUp({ content: '❌ Configurazione pulsante non trovata!', ephemeral: true });
+            return;
+        }
+
+        // Check max tickets per user
+        const maxPerUser = parseInt(this.config.ticket_max_per_user || 0);
+        if (maxPerUser > 0) {
+            const userTickets = Object.values(this.ticketOwners).filter(info => {
+                const ownerId = typeof info === 'object' ? info.owner : info;
+                return ownerId === interaction.user.id;
+            });
+
+            if (userTickets.length >= maxPerUser) {
+                await interaction.followUp({ 
+                    content: `⚠️ Hai già ${userTickets.length} ticket aperti (limite: ${maxPerUser}). Chiudi uno di questi prima di aprirne un altro.`, 
+                    ephemeral: true 
+                });
+                return;
+            }
+        }
+
+        const categoryId = this.config.ticket_category_id;
+        const category = categoryId ? guild.channels.cache.get(categoryId) : null;
+
+        const staffRoleId = this.config.ticket_staff_role_id;
+        const overwrites = [
+            {
+                id: guild.roles.everyone.id,
+                deny: [PermissionFlagsBits.ViewChannel]
+            },
+            {
+                id: interaction.user.id,
+                allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages]
+            }
+        ];
+
+        if (staffRoleId) {
+            overwrites.push({
+                id: staffRoleId,
+                allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages]
+            });
+        }
+
+        // Add additional roles from button config
+        const additionalRoles = buttonConfig.roles || [];
+        for (const roleId of additionalRoles) {
+            overwrites.push({
+                id: roleId,
+                allow: [PermissionFlagsBits.ViewChannel, PermissionFlagsBits.SendMessages]
+            });
+        }
+
+        const ticketNumber = (this.config.ticket_counter || 0) + 1;
+        this.config.ticket_counter = ticketNumber;
+        saveJsonSync(CONFIG_PATH, this.config);
+
+        try {
+            const channel = await guild.channels.create({
+                name: `ticket-${ticketNumber}`,
+                type: ChannelType.GuildText,
+                parent: category,
+                permissionOverwrites: overwrites
+            });
+
+            this.ticketOwners[channel.id] = {
+                owner: interaction.user.id,
+                button: interaction.customId,
+                number: ticketNumber
+            };
+
+            const outsideMessage = (buttonConfig.outside_message || 'Ticket aperto!')
+                .replace('{mention}', interaction.user.toString());
+            await channel.send(outsideMessage);
+
+            const embedMessage = buttonConfig.embed_message || 'A breve riceverai il supporto richiesto.\nClicca il bottone sotto per chiudere il ticket.';
+            const embed = new EmbedBuilder()
+                .setDescription(embedMessage)
+                .setColor(0x00ff00);
+
+            const closeButton = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('ticket_close')
+                        .setLabel('Chiudi Ticket')
+                        .setStyle(ButtonStyle.Danger)
+                        .setEmoji('🔒')
+                );
+
+            const message = await channel.send({ embeds: [embed], components: [closeButton] });
+            this.ticketOwners[channel.id].close_message_id = message.id;
+            this.saveTickets();
+
+            // Log ticket opening
+            if (this.client.logCog) {
+                await this.client.logCog.logTicketOpen(
+                    interaction.user,
+                    channel.toString(),
+                    ticketNumber.toString(),
+                    buttonConfig.label || 'Generale'
+                );
+            }
+
+            await interaction.followUp({ content: `🎫 Ticket creato: ${channel}`, ephemeral: true });
+        } catch (error) {
+            logger.error(`Error creating ticket: ${error.message}`);
+            await interaction.followUp({ content: '❌ Errore nella creazione del ticket!', ephemeral: true });
+        }
     }
 
-    getActionRow() {
-        return new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('ticket_close')
-                    .setLabel('Chiudi Ticket')
-                    .setStyle(ButtonStyle.Danger)
-                    .setEmoji('🔒')
-            );
-    }
-}
+    async handleCloseButton(interaction) {
+        const channel = interaction.channel;
+        const ticketInfo = this.ticketOwners[channel.id];
+        
+        if (!ticketInfo) {
+            await interaction.reply({ content: '❌ Questo non è un canale ticket valido!', ephemeral: true });
+            return;
+        }
 
-class ConfirmCloseView {
-    constructor(channelId, cog) {
-        this.channelId = channelId;
-        this.cog = cog;
-    }
+        const staffRoleId = this.config.ticket_staff_role_id;
+        const isStaff = staffRoleId && interaction.member.roles.cache.has(staffRoleId);
 
-    getActionRow() {
-        return new ActionRowBuilder()
+        if (!isStaff) {
+            await interaction.reply({ content: '❌ Solo uno staffer può chiudere il ticket!', ephemeral: true });
+            return;
+        }
+
+        const embed = new EmbedBuilder()
+            .setTitle('Conferma Chiusura')
+            .setDescription('Sei sicuro di voler chiudere questo ticket? Verrà generato e inviato il transcript.')
+            .setColor(0xff0000);
+
+        const confirmRow = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId('confirm_close')
@@ -372,39 +453,458 @@ class ConfirmCloseView {
                     .setStyle(ButtonStyle.Secondary)
                     .setEmoji('❌')
             );
+
+        await interaction.reply({ embeds: [embed], components: [confirmRow], ephemeral: true });
+    }
+
+    async handleConfirmClose(interaction) {
+        const channel = interaction.channel;
+        const ticketInfo = this.ticketOwners[channel.id];
+        
+        if (!ticketInfo) {
+            await interaction.reply({ content: '❌ Ticket non trovato!', ephemeral: true });
+            return;
+        }
+
+        await interaction.deferReply({ ephemeral: true });
+
+        try {
+            // Collect messages for transcript
+            const messages = [];
+            const staffRoleId = this.config.ticket_staff_role_id;
+            
+            let lastId;
+            while (true) {
+                const options = { limit: 100 };
+                if (lastId) options.before = lastId;
+                
+                const fetchedMessages = await channel.messages.fetch(options);
+                if (fetchedMessages.size === 0) break;
+                
+                messages.push(...fetchedMessages.values());
+                lastId = fetchedMessages.last().id;
+            }
+
+            messages.reverse(); // Oldest first
+            const transcript = messages.map(msg => this.formatMessageForTranscript(msg, staffRoleId)).join('\n');
+
+            const ticketNumber = ticketInfo.number || 1;
+            const transcriptDir = path.join(__dirname, '../../../transcripts');
+            if (!fs.existsSync(transcriptDir)) {
+                fs.mkdirSync(transcriptDir, { recursive: true });
+            }
+
+            const filename = path.join(transcriptDir, `transcript-${ticketNumber}.txt`);
+            fs.writeFileSync(filename, transcript, 'utf8');
+
+            // Store closed ticket info
+            this.closedTickets[ticketNumber.toString()] = {
+                owner: ticketInfo.owner,
+                transcript_file: filename,
+                closed_at: new Date().toISOString(),
+                button: ticketInfo.button || '',
+                channel_name: channel.name
+            };
+            saveJsonSync(CLOSED_TICKETS_JSON, this.closedTickets);
+
+            // Send transcript to transcript channel and owner
+            const transcriptChannelId = this.config.ticket_transcript_channel_id;
+            if (transcriptChannelId) {
+                const transcriptChannel = this.client.channels.cache.get(transcriptChannelId);
+                if (transcriptChannel) {
+                    const embedData = this.config.ticket_transcript_embed || {};
+                    const embed = new EmbedBuilder()
+                        .setTitle(embedData.title || 'Transcript del Ticket')
+                        .setDescription(embedData.description || 'Ecco il transcript del ticket.')
+                        .setColor(embedData.color || 0x00ff00);
+
+                    if (embedData.thumbnail) embed.setThumbnail(embedData.thumbnail);
+                    if (embedData.footer) embed.setFooter({ text: embedData.footer });
+
+                    await transcriptChannel.send({ 
+                        embeds: [embed], 
+                        files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }] 
+                    });
+                }
+            }
+
+            // Send transcript to ticket owner
+            try {
+                const owner = await this.client.users.fetch(ticketInfo.owner);
+                if (owner) {
+                    const embed = new EmbedBuilder()
+                        .setTitle('Transcript del Ticket')
+                        .setDescription('Il tuo ticket è stato chiuso. Ecco il transcript della conversazione.')
+                        .setColor(0x00ff00);
+
+                    await owner.send({ 
+                        embeds: [embed], 
+                        files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }] 
+                    });
+                }
+            } catch (error) {
+                logger.error(`Could not send transcript to owner: ${error.message}`);
+            }
+
+            // Log ticket closure
+            if (this.client.logCog) {
+                const opener = await this.client.users.fetch(ticketInfo.owner).catch(() => null);
+                await this.client.logCog.logTicketClose(
+                    channel.name,
+                    opener ? opener.tag : 'Unknown',
+                    interaction.user.tag,
+                    ticketNumber.toString()
+                );
+            }
+
+            // Delete the channel
+            await channel.delete();
+
+            // Remove from active tickets
+            delete this.ticketOwners[channel.id];
+            this.saveTickets();
+
+        } catch (error) {
+            logger.error(`Error closing ticket: ${error.message}`);
+            await interaction.followUp({ content: '❌ Errore nella chiusura del ticket!', ephemeral: true });
+        }
+    }
+
+    async handleCancelClose(interaction) {
+        await interaction.reply({ content: 'Chiusura annullata.', ephemeral: true });
+    }
+
+    async handleClose(interaction) {
+        const channel = interaction.channel;
+        if (!this.ticketOwners[channel.id]) {
+            await interaction.reply({ content: '❌ Questo comando può essere usato solo nei canali ticket!', ephemeral: true });
+            return;
+        }
+
+        const staffRoleId = this.config.ticket_staff_role_id;
+        if (staffRoleId && !interaction.member.roles.cache.has(staffRoleId)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per chiudere i ticket!', ephemeral: true });
+            return;
+        }
+
+        const embed = new EmbedBuilder()
+            .setTitle('Conferma Chiusura')
+            .setDescription('Sei sicuro di voler chiudere questo ticket? Verrà generato e inviato il transcript.')
+            .setColor(0xff0000);
+
+        const confirmRow = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId('confirm_close')
+                    .setLabel('Conferma')
+                    .setStyle(ButtonStyle.Danger)
+                    .setEmoji('✅'),
+                new ButtonBuilder()
+                    .setCustomId('cancel_close')
+                    .setLabel('Annulla')
+                    .setStyle(ButtonStyle.Secondary)
+                    .setEmoji('❌')
+            );
+
+        await interaction.reply({ embeds: [embed], components: [confirmRow], ephemeral: true });
+    }
+
+    async handleRename(interaction) {
+        const channel = interaction.channel;
+        const newName = interaction.options.getString('new_name');
+
+        if (!this.ticketOwners[channel.id]) {
+            await interaction.reply({ content: '❌ Questo comando può essere usato solo nei canali ticket!', ephemeral: true });
+            return;
+        }
+
+        const staffRoleId = this.config.ticket_staff_role_id;
+        if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
+            return;
+        }
+
+        if (newName.length > 100) {
+            await interaction.reply({ content: '❌ Il nome è troppo lungo! (max 100 caratteri)', ephemeral: true });
+            return;
+        }
+
+        try {
+            await channel.setName(newName);
+            await interaction.reply({ content: '✅ Canale rinominato!', ephemeral: false });
+        } catch (error) {
+            if (error.code === 50013) {
+                await interaction.reply({ content: '❌ Non ho i permessi per rinominare il canale!', ephemeral: true });
+            } else {
+                await interaction.reply({ content: `❌ Errore nel rinominare: ${error.message}`, ephemeral: true });
+            }
+        }
+    }
+
+    async handleBlacklist(interaction) {
+        const member = interaction.options.getUser('member');
+        const staffRoleId = this.config.ticket_staff_role_id;
+        
+        if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
+            return;
+        }
+
+        if (this.blacklist.includes(member.id)) {
+            this.blacklist = this.blacklist.filter(id => id !== member.id);
+            await interaction.reply({ content: `✅ ${member} è stato rimosso dalla blacklist!`, ephemeral: true });
+        } else {
+            this.blacklist.push(member.id);
+            await interaction.reply({ content: `✅ ${member} è stato aggiunto alla blacklist!`, ephemeral: true });
+        }
+
+        saveJsonSync(BLACKLIST_JSON, this.blacklist);
+    }
+
+    async handleAdd(interaction) {
+        const member = interaction.options.getUser('member');
+        const channel = interaction.channel;
+
+        if (!this.ticketOwners[channel.id]) {
+            await interaction.reply({ content: '❌ Questo comando può essere usato solo nei canali ticket!', ephemeral: true });
+            return;
+        }
+
+        const staffRoleId = this.config.ticket_staff_role_id;
+        if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
+            return;
+        }
+
+        try {
+            await channel.permissionOverwrites.edit(member, {
+                ViewChannel: true,
+                SendMessages: true
+            });
+
+            await interaction.reply({ content: `✅ ${member} aggiunto!`, ephemeral: false });
+        } catch (error) {
+            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+        }
+    }
+
+    async handleRemove(interaction) {
+        const member = interaction.options.getUser('member');
+        const channel = interaction.channel;
+
+        if (!this.ticketOwners[channel.id]) {
+            await interaction.reply({ content: '❌ Questo comando può essere usato solo nei canali ticket!', ephemeral: true });
+            return;
+        }
+
+        const staffRoleId = this.config.ticket_staff_role_id;
+        if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
+            return;
+        }
+
+        const ticketInfo = this.ticketOwners[channel.id];
+        const ownerId = typeof ticketInfo === 'object' ? ticketInfo.owner : ticketInfo;
+        
+        if (member.id === ownerId) {
+            await interaction.reply({ content: '❌ Non puoi rimuovere il proprietario del ticket!', ephemeral: true });
+            return;
+        }
+
+        if (staffRoleId && interaction.guild.members.cache.get(member.id)?.roles.cache.has(staffRoleId)) {
+            await interaction.reply({ content: '❌ Non puoi rimuovere uno staffer!', ephemeral: true });
+            return;
+        }
+
+        try {
+            await channel.permissionOverwrites.delete(member);
+            await interaction.reply({ content: `✅ ${member} rimosso!`, ephemeral: false });
+        } catch (error) {
+            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+        }
+    }
+
+    async handleList(interaction) {
+        const user = interaction.options.getUser('user');
+        const staffRoleId = this.config.ticket_staff_role_id;
+        
+        if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
+            return;
+        }
+
+        const openTickets = [];
+        const closedTickets = [];
+
+        // Find open tickets
+        for (const [channelId, info] of Object.entries(this.ticketOwners)) {
+            const ownerId = typeof info === 'object' ? info.owner : info;
+            if (ownerId === user.id) {
+                const channel = this.client.channels.cache.get(channelId);
+                if (channel) {
+                    openTickets.push(channel.toString());
+                }
+            }
+        }
+
+        // Find closed tickets
+        for (const [ticketNum, info] of Object.entries(this.closedTickets)) {
+            if (info.owner === user.id) {
+                closedTickets.push(`***\`#${ticketNum}\`*** - ${info.channel_name || 'Unknown'}`);
+            }
+        }
+
+        const embed = new EmbedBuilder()
+            .setTitle(`Ticket di ${user.username}`)
+            .setColor(0x00ff00)
+            .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
+            .setFooter({ text: 'Valiance | Ticket System' });
+
+        embed.addFields(
+            { 
+                name: '**Ticket Aperti**', 
+                value: openTickets.length > 0 ? openTickets.join('\n') : 'Nessuno', 
+                inline: false 
+            },
+            { 
+                name: '**Ticket Chiusi**', 
+                value: closedTickets.length > 0 ? closedTickets.join('\n') : 'Nessuno', 
+                inline: false 
+            }
+        );
+
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+        
+        // Auto-delete after 60 seconds
+        setTimeout(async () => {
+            try {
+                await interaction.deleteReply();
+            } catch (error) {
+                // Ignore errors
+            }
+        }, 60000);
+    }
+
+    async handleTranscript(interaction) {
+        const number = interaction.options.getInteger('number');
+        const ticketStr = number.toString();
+        
+        if (!this.closedTickets[ticketStr]) {
+            await interaction.reply({ content: '❌ Ticket non trovato!', ephemeral: true });
+            return;
+        }
+
+        const ticketInfo = this.closedTickets[ticketStr];
+        const ownerId = ticketInfo.owner;
+        
+        if (ownerId !== interaction.user.id) {
+            const staffRoleId = this.config.ticket_staff_role_id;
+            if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
+                await interaction.reply({ content: '❌ Non hai i permessi per vedere questo transcript!', ephemeral: true });
+                return;
+            }
+        }
+
+        const filename = ticketInfo.transcript_file;
+        if (!fs.existsSync(filename)) {
+            await interaction.reply({ content: '❌ Transcript non trovato!', ephemeral: true });
+            return;
+        }
+
+        await interaction.deferReply({ ephemeral: true });
+        await interaction.followUp({ 
+            files: [{ attachment: filename, name: `transcript-${number}.txt` }], 
+            ephemeral: true 
+        });
+    }
+
+    async handleSendTranscript(interaction) {
+        const number = interaction.options.getInteger('number');
+        const user = interaction.options.getUser('user');
+        const staffRoleId = this.config.ticket_staff_role_id;
+        
+        const hasStaff = staffRoleId && interaction.member.roles.cache.has(staffRoleId);
+        if (!hasStaff && !interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
+            return;
+        }
+
+        const ticketStr = number.toString();
+        let filename = null;
+        
+        if (this.closedTickets[ticketStr]) {
+            filename = this.closedTickets[ticketStr].transcript_file;
+        }
+        
+        if (!filename) {
+            filename = path.join(__dirname, '../../../transcripts', `transcript-${number}.txt`);
+        }
+
+        if (!fs.existsSync(filename)) {
+            await interaction.reply({ content: '❌ Transcript non trovato!', ephemeral: true });
+            return;
+        }
+
+        await interaction.deferReply({ ephemeral: true });
+
+        try {
+            await user.send({
+                content: `Transcript del ticket #${number}`,
+                files: [{ attachment: filename, name: `transcript-${number}.txt` }]
+            });
+            
+            await interaction.followUp({ 
+                content: `✅ Transcript del ticket #${number} inviato in DM a ${user}.`, 
+                ephemeral: true 
+            });
+        } catch (error) {
+            if (error.code === 50007) {
+                await interaction.followUp({ 
+                    content: '❌ Non posso inviare il DM: l\'utente ha i DM chiusi.', 
+                    ephemeral: true 
+                });
+            } else {
+                logger.error(`Error sending transcript: ${error.message}`);
+                await interaction.followUp({ 
+                    content: '❌ Errore durante l\'invio del transcript.', 
+                    ephemeral: true 
+                });
+            }
+        }
+    }
+
+    async handleReloadTicket(interaction) {
+        if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
+            return;
+        }
+
+        try {
+            this.reloadTicket();
+            await interaction.reply({ content: '✅ Configurazione ticket ricaricata con successo!', ephemeral: true });
+        } catch (error) {
+            await interaction.reply({ content: `❌ Errore nel ricaricare la configurazione ticket: ${error.message}`, ephemeral: true });
+        }
     }
 }
 
 function setup(client) {
     const cog = new TicketCog(client);
     
-    // Register commands
-    const commands = cog.getCommands();
-    for (const command of commands) {
-        client.application?.commands.create(command);
-    }
-
     // Handle interactions
     client.on('interactionCreate', async (interaction) => {
-        if (interaction.isCommand()) {
+        if (interaction.isChatInputCommand()) {
             const commandNames = ['ticketpanel', 'close', 'rename', 'blacklist', 'add', 'remove', 'list', 'transcript', 'sendtranscript', 'reloadticket'];
             if (commandNames.includes(interaction.commandName)) {
                 await cog.handleCommand(interaction);
             }
-        } else if (interaction.isButton()) {
-            // Handle button interactions for tickets
-            if (interaction.customId.startsWith('ticket_') || cog.config.ticket_buttons?.some(btn => btn.id === interaction.customId)) {
-                await handleTicketButton(interaction, cog);
-            }
         }
     });
 
+    if (!client.globalCommands) client.globalCommands = [];
+    client.globalCommands.push(...cog.getCommands());
+    
     return cog;
-}
-
-async function handleTicketButton(interaction, cog) {
-    // Implementa la logica per gestire i pulsanti dei ticket
-    // Simile alla callback del TicketButton in Python
 }
 
 module.exports = { setup, TicketCog };

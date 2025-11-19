@@ -292,11 +292,10 @@ client.once('ready', async () => {
         logger.error(`Error registering VerifyView: ${error.message}`);
     }
 
-    // Start counter update loop
+    // Trigger onReady for counter cog
     const counterCog = client.cogs.get('counters');
-    if (counterCog && counterCog.startCounterLoop) {
-        counterCog.startCounterLoop();
-        logger.info('Counter update loop started');
+    if (counterCog && counterCog.onReady) {
+        await counterCog.onReady();
     }
 
     // Setup ticket cog persistent views
