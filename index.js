@@ -1,3 +1,6 @@
+const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
+process.env.FFMPEG_PATH = ffmpegInstaller.path;
+
 const { Client, GatewayIntentBits, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, ChannelType, ActivityType, Status, SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');

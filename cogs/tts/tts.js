@@ -15,6 +15,11 @@ const fs = require("fs");
 const path = require("path");
 const gTTS = require("gtts");
 
+// ffmpeg PURE npm
+const ffmpeg = require("fluent-ffmpeg");
+const ffmpegStatic = require("ffmpeg-static");
+ffmpeg.setFfmpegPath(ffmpegStatic);
+
 class TTSCog {
     constructor(client) {
         this.client = client;
@@ -30,40 +35,7 @@ class TTSCog {
         this.commands = [
             new SlashCommandBuilder()
                 .setName("tts")
-                .setDescription("Sistema TTS offline gTTS")
-                .addSubcommand(sub =>
-                    sub.setName("say")
-                        .setDescription("Text-to-Speech nel canale vocale")
-                        .addStringOption(opt =>
-                            opt.setName("text")
-                                .setDescription("Testo da pronunciare")
-                                .setRequired(true)
-                        )
-                )
-                .addSubcommand(sub =>
-                    sub.setName("voice")
-                        .setDescription("Seleziona la voce TTS (placeholder)")
-                        .addStringOption(opt =>
-                            opt.setName("voice")
-                                .setDescription("Nome della voce")
-                                .setRequired(true)
-                        )
-                )
-                .addSubcommand(sub =>
-                    sub.setName("volume")
-                        .setDescription("Imposta il volume del TTS (placeholder)")
-                        .addIntegerOption(opt =>
-                            opt.setName("volume")
-                                .setDescription("Volume (0-100)")
-                                .setRequired(true)
-                                .setMinValue(0)
-                                .setMaxValue(100)
-                        )
-                )
-                .addSubcommand(sub =>
-                    sub.setName("stop")
-                        .setDescription("Ferma il TTS e svuota la coda")
-                )
+                .setDescription("Sistema TTS gTTS con ffmpeg")
                 .addSubcommand(sub =>
                     sub.setName("setchannel")
                         .setDescription("Imposta il canale da cui leggere TTS")
@@ -89,9 +61,9 @@ class TTSCog {
     }
 
     /**
-     * Usa gTTS per generare un mp3
+     * Genera un mp3 via gTTS
      */
-    async generateTTS(text) {
+    async generateMP3(text) {
         return new Promise((resolve, reject) => {
             const out = path.join(__dirname, "tts.mp3");
             const tts = new gTTS(text, "it");
@@ -103,13 +75,31 @@ class TTSCog {
         });
     }
 
+    /**
+     * Converte MP3 → WAV PCM 16-bit (perfetto per Discord)
+     */
+    async convertToPCM(mp3File) {
+        return new Promise((resolve, reject) => {
+            const out = path.join(__dirname, "tts.wav");
+
+            ffmpeg(mp3File)
+                .format("wav")
+                .audioFrequency(48000)
+                .audioChannels(2)
+                .audioCodec("pcm_s16le")
+                .on("end", () => resolve(out))
+                .on("error", reject)
+                .save(out);
+        });
+    }
+
     async handleSetChannel(interaction) {
         const channel = interaction.options.getChannel("channel");
 
         if (!channel.isTextBased()) {
             return interaction.reply({
                 content: "❌ Devi selezionare un canale testuale!",
-                ephemeral: true
+                flags: ["Ephemeral"]
             });
         }
 
@@ -118,7 +108,7 @@ class TTSCog {
 
         return interaction.reply({
             content: `✅ Canale TTS impostato su <#${channel.id}>`,
-            ephemeral: true
+            flags: ["Ephemeral"]
         });
     }
 
@@ -128,7 +118,7 @@ class TTSCog {
         if (!member.voice.channel) {
             return interaction.reply({
                 content: "❌ Devi essere in un canale vocale!",
-                ephemeral: true
+                flags: ["Ephemeral"]
             });
         }
 
@@ -151,7 +141,7 @@ class TTSCog {
 
         return interaction.reply({
             content: `🔊 Entrato in **${member.voice.channel.name}**`,
-            ephemeral: true
+            flags: ["Ephemeral"]
         });
     }
 
@@ -162,7 +152,7 @@ class TTSCog {
         if (!conn) {
             return interaction.reply({
                 content: "❌ Non sono in nessuna voice!",
-                ephemeral: true
+                flags: ["Ephemeral"]
             });
         }
 
@@ -172,7 +162,7 @@ class TTSCog {
 
         return interaction.reply({
             content: "👋 Disconnesso dalla voice.",
-            ephemeral: true
+            flags: ["Ephemeral"]
         });
     }
 
@@ -182,82 +172,15 @@ class TTSCog {
 
         if (!conn || !player) return;
 
-        try {
-            // genera mp3 con gTTS
-            const mp3File = await this.generateTTS(text);
-            const resource = createAudioResource(mp3File);
-            player.play(resource);
-        } catch (error) {
-            console.error("Error playing TTS:", error);
-        }
-    }
+        // Step 1: genera mp3
+        const mp3 = await this.generateMP3(text);
 
-    async handleSay(interaction) {
-        const text = interaction.options.getString("text");
-        const member = interaction.member;
+        // Step 2: convertilo in wav PCM
+        const wav = await this.convertToPCM(mp3);
 
-        if (!member.voice.channel) {
-            return interaction.reply({
-                content: "❌ Devi essere in un canale vocale!",
-                ephemeral: true
-            });
-        }
-
-        const guildId = interaction.guild.id;
-
-        // Auto join if not connected
-        if (!this.connections.get(guildId)) {
-            const connection = joinVoiceChannel({
-                channelId: member.voice.channel.id,
-                guildId,
-                adapterCreator: interaction.guild.voiceAdapterCreator
-            });
-
-            const player = createAudioPlayer({
-                behaviors: { noSubscriber: NoSubscriberBehavior.Pause }
-            });
-
-            connection.subscribe(player);
-            this.connections.set(guildId, connection);
-            this.players.set(guildId, player);
-        }
-
-        await interaction.reply({
-            content: "🔊 Sto parlando...",
-            ephemeral: true
-        });
-
-        await this.playTTS(guildId, text);
-    }
-
-    async handleVoice(interaction) {
-        const voice = interaction.options.getString("voice");
-        await interaction.reply({
-            content: `✅ Voce impostata su ${voice} (placeholder - gTTS usa sempre italiano)`,
-            ephemeral: true
-        });
-    }
-
-    async handleVolume(interaction) {
-        const volume = interaction.options.getInteger("volume");
-        await interaction.reply({
-            content: "||Coming Soon...|| Volume TTS non ancora implementato",
-            ephemeral: true
-        });
-    }
-
-    async handleStop(interaction) {
-        const guildId = interaction.guild.id;
-        const player = this.players.get(guildId);
-
-        if (player) {
-            player.stop();
-        }
-
-        await interaction.reply({
-            content: "⏹️ TTS fermato.",
-            ephemeral: true
-        });
+        // Step 3: crea la risorsa
+        const resource = createAudioResource(wav);
+        player.play(resource);
     }
 
     setupListeners() {
@@ -285,10 +208,6 @@ function setup(client) {
 
         const sub = interaction.options.getSubcommand();
 
-        if (sub === "say") return cog.handleSay(interaction);
-        if (sub === "voice") return cog.handleVoice(interaction);
-        if (sub === "volume") return cog.handleVolume(interaction);
-        if (sub === "stop") return cog.handleStop(interaction);
         if (sub === "setchannel") return cog.handleSetChannel(interaction);
         if (sub === "join") return cog.handleJoin(interaction);
         if (sub === "leave") return cog.handleLeave(interaction);
