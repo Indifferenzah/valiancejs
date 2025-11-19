@@ -31,6 +31,11 @@ class GiveawayCog {
                     subcommand.setName('reroll')
                         .setDescription('Riestrai vincitori')
                         .addStringOption(option => option.setName('message_id').setDescription('ID messaggio giveaway').setRequired(true)))
+                .addSubcommand(subcommand =>
+                    subcommand.setName('remove')
+                        .setDescription('Rimuovi forzatamente un membro dal giveaway')
+                        .addStringOption(option => option.setName('message_id').setDescription('ID messaggio giveaway').setRequired(true))
+                        .addUserOption(option => option.setName('user').setDescription('Utente da rimuovere').setRequired(true)))
                 .addSubcommandGroup(group =>
                     group.setName('blacklist')
                         .setDescription('Gestisci blacklist giveaway')
@@ -125,6 +130,9 @@ class GiveawayCog {
 
         // Set timeout to end giveaway
         setTimeout(() => this.endGiveaway(message.id), ms);
+        
+        // Store timeout reference for potential cancellation
+        this.activeGiveaways.set(message.id, { timeout: setTimeout(() => this.endGiveaway(message.id), ms) });
         
         logger.info(`Giveaway created by ${interaction.user.tag}: ${prize}`);
     }
@@ -272,6 +280,74 @@ class GiveawayCog {
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
     }
+
+    async handleGiveawayReroll(interaction) {
+        if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+            await interaction.reply({ content: '❌ Non hai i permessi!', ephemeral: true });
+            return;
+        }
+
+        const messageId = interaction.options.getString('message_id');
+        const giveaway = this.config.giveaways[messageId];
+        
+        if (!giveaway) {
+            await interaction.reply({ content: '❌ Giveaway non trovato!', ephemeral: true });
+            return;
+        }
+
+        const validParticipants = giveaway.participants.filter(id => !this.blacklist.users.includes(id));
+        
+        if (validParticipants.length === 0) {
+            await interaction.reply({ content: '❌ Nessun partecipante valido per il reroll!', ephemeral: true });
+            return;
+        }
+
+        const winners = [];
+        for (let i = 0; i < Math.min(giveaway.winners, validParticipants.length); i++) {
+            const randomIndex = Math.floor(Math.random() * validParticipants.length);
+            const winnerId = validParticipants.splice(randomIndex, 1)[0];
+            winners.push(winnerId);
+        }
+
+        const winnerMentions = winners.map(id => `<@${id}>`).join(', ');
+        
+        try {
+            const channel = this.client.channels.cache.get(giveaway.channelId);
+            await channel.send(`🔁 Nuovo reroll per giveaway \`${messageId}\`! Vincitori: ${winnerMentions}`);
+        } catch (error) {
+            logger.error(`Error sending reroll message: ${error.message}`);
+        }
+
+        await interaction.reply({ content: `✅ Reroll eseguito. Nuovi vincitori: ${winnerMentions}`, ephemeral: true });
+    }
+
+    async handleGiveawayRemove(interaction) {
+        if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+            await interaction.reply({ content: '❌ Non hai i permessi!', ephemeral: true });
+            return;
+        }
+
+        const messageId = interaction.options.getString('message_id');
+        const user = interaction.options.getUser('user');
+        const giveaway = this.config.giveaways[messageId];
+        
+        if (!giveaway) {
+            await interaction.reply({ content: '❌ Giveaway non trovato!', ephemeral: true });
+            return;
+        }
+
+        const index = giveaway.participants.indexOf(user.id);
+        
+        if (index === -1) {
+            await interaction.reply({ content: 'ℹ️ Utente non presente tra i partecipanti.', ephemeral: true });
+            return;
+        }
+
+        giveaway.participants.splice(index, 1);
+        this.saveConfig();
+
+        await interaction.reply({ content: `✅ Rimosso ${user} dal giveaway \`${messageId}\`.`, ephemeral: true });
+    }
 }
 
 function setup(client) {
@@ -300,7 +376,8 @@ function setup(client) {
                     switch (subcommand) {
                         case 'create': await giveawayCog.handleGiveawayCreate(interaction); break;
                         case 'end': await giveawayCog.handleGiveawayEnd(interaction); break;
-                        case 'reroll': await giveawayCog.handleGiveawayEnd(interaction); break;
+                        case 'reroll': await giveawayCog.handleGiveawayReroll(interaction); break;
+                        case 'remove': await giveawayCog.handleGiveawayRemove(interaction); break;
                     }
                 }
             } catch (error) {

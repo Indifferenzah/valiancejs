@@ -31,6 +31,7 @@ class TTSCog {
 
         this.connections = new Map();
         this.players = new Map();
+        this.botVoiceChannel = new Map(); // <guildId, voiceChannelId>
 
         this.commands = [
             new SlashCommandBuilder()
@@ -60,9 +61,6 @@ class TTSCog {
         saveJsonSync(this.configPath, this.config);
     }
 
-    /**
-     * Genera un mp3 via gTTS
-     */
     async generateMP3(text) {
         return new Promise((resolve, reject) => {
             const out = path.join(__dirname, "tts.mp3");
@@ -75,9 +73,6 @@ class TTSCog {
         });
     }
 
-    /**
-     * Converte MP3 → WAV PCM 16-bit (perfetto per Discord)
-     */
     async convertToPCM(mp3File) {
         return new Promise((resolve, reject) => {
             const out = path.join(__dirname, "tts.wav");
@@ -139,6 +134,9 @@ class TTSCog {
         this.connections.set(guildId, connection);
         this.players.set(guildId, player);
 
+        // Salva in quale voice è il bot
+        this.botVoiceChannel.set(guildId, member.voice.channel.id);
+
         return interaction.reply({
             content: `🔊 Entrato in **${member.voice.channel.name}**`,
             flags: ["Ephemeral"]
@@ -159,6 +157,7 @@ class TTSCog {
         conn.destroy();
         this.connections.delete(guildId);
         this.players.delete(guildId);
+        this.botVoiceChannel.delete(guildId);
 
         return interaction.reply({
             content: "👋 Disconnesso dalla voice.",
@@ -172,26 +171,45 @@ class TTSCog {
 
         if (!conn || !player) return;
 
-        // Step 1: genera mp3
         const mp3 = await this.generateMP3(text);
-
-        // Step 2: convertilo in wav PCM
         const wav = await this.convertToPCM(mp3);
 
-        // Step 3: crea la risorsa
         const resource = createAudioResource(wav);
         player.play(resource);
     }
 
     setupListeners() {
         this.client.on("messageCreate", async msg => {
-            if (!this.config.channel) return;
-            if (msg.channel.id !== this.config.channel) return;
+            if (!msg.guild) return;
             if (msg.author.bot) return;
 
             const guildId = msg.guild.id;
+            const botVC = this.botVoiceChannel.get(guildId);
 
-            if (!this.connections.get(guildId)) return;
+            // Se il bot NON è in VC → ignora
+            if (!botVC) return;
+
+            const userVC = msg.member.voice?.channel?.id;
+
+            // L’utente deve essere nella STESSA VC del bot
+            if (userVC !== botVC) return;
+
+            const allowedChannels = [
+                this.config.channel,
+                msg.guild.channels.cache.get(botVC)?.guild.voiceStates.cache.get(this.client.user.id)?.channel?.id
+            ];
+
+            // Chat della VC
+            const voiceTextChannel = msg.guild.channels.cache.find(
+                c => c.isTextBased() && c.parentId === botVC
+            );
+
+            if (
+                msg.channel.id !== this.config.channel &&
+                (!voiceTextChannel || msg.channel.id !== voiceTextChannel.id)
+            ) {
+                return;
+            }
 
             await this.playTTS(guildId, msg.content);
         });
