@@ -17,7 +17,7 @@ class TicketCog {
         this.client = client;
         this.config = loadJsonSync(CONFIG_PATH);
         this.ticketMessages = loadJsonSync(TICKETMSG_JSON, {});
-        this.ticketOwners = loadJsonSync(TICKET_JSON, {});
+        this.ticketOwners = this.loadTicketOwners();
         this.closedTickets = loadJsonSync(CLOSED_TICKETS_JSON, {});
         this.blacklist = loadJsonSync(BLACKLIST_JSON, []);
         
@@ -25,7 +25,82 @@ class TicketCog {
     }
 
     saveTickets() {
-        saveJsonSync(TICKET_JSON, this.ticketOwners);
+        const preparedTickets = this.prepareTicketsForSave();
+        const jsonString = JSON.stringify(preparedTickets, null, 2)
+            .replace(/"owner": "(\d+)"/g, '"owner": $1')
+            .replace(/"close_message_id": "(\d+)"/g, '"close_message_id": $1');
+        fs.mkdirSync(path.dirname(TICKET_JSON), { recursive: true });
+        fs.writeFileSync(TICKET_JSON, jsonString, 'utf8');
+    }
+
+    loadTicketOwners() {
+        try {
+            const raw = fs.readFileSync(TICKET_JSON, 'utf8');
+            const sanitized = raw
+                .replace(/("owner": )(\d+)/g, '$1"$2"')
+                .replace(/("close_message_id": )(\d+)/g, '$1"$2"');
+            const parsed = JSON.parse(sanitized);
+            return this.normalizeTicketOwners(parsed);
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                return {};
+            }
+            throw error;
+        }
+    }
+
+    normalizeTicketOwners(data = {}) {
+        const normalized = {};
+        for (const [channelId, info] of Object.entries(data)) {
+            if (info && typeof info === 'object') {
+                normalized[channelId] = { ...info };
+                if (info.owner !== undefined) {
+                    normalized[channelId].owner = String(info.owner);
+                }
+                if (info.close_message_id !== undefined) {
+                    normalized[channelId].close_message_id = String(info.close_message_id);
+                }
+            } else if (info !== undefined) {
+                normalized[channelId] = String(info);
+            }
+        }
+        return normalized;
+    }
+
+    prepareTicketsForSave() {
+        const prepared = {};
+        for (const [channelId, info] of Object.entries(this.ticketOwners)) {
+            if (info && typeof info === 'object') {
+                const copy = { ...info };
+                if ('owner' in copy) {
+                    const ownerId = this.getOwnerId(copy);
+                    if (ownerId !== null) {
+                        copy.owner = ownerId;
+                    } else {
+                        delete copy.owner;
+                    }
+                }
+                if ('close_message_id' in copy) {
+                    if (copy.close_message_id !== undefined && copy.close_message_id !== null) {
+                        copy.close_message_id = String(copy.close_message_id);
+                    } else {
+                        delete copy.close_message_id;
+                    }
+                }
+                prepared[channelId] = copy;
+            } else {
+                prepared[channelId] = String(info);
+            }
+        }
+        return prepared;
+    }
+
+    getOwnerId(ticketInfo) {
+        if (!ticketInfo) return null;
+        const raw = (typeof ticketInfo === 'object' && ticketInfo !== null && 'owner' in ticketInfo)
+            ? ticketInfo.owner
+            : ticketInfo;
+        return raw !== undefined && raw !== null ? String(raw) : null;
     }
 
     reloadTicket() {
@@ -313,7 +388,7 @@ class TicketCog {
         const maxPerUser = parseInt(this.config.ticket_max_per_user || 0);
         if (maxPerUser > 0) {
             const userTickets = Object.values(this.ticketOwners).filter(info => {
-                const ownerId = typeof info === 'object' ? info.owner : info;
+                const ownerId = this.getOwnerId(info);
                 return ownerId === interaction.user.id;
             });
 
@@ -488,6 +563,7 @@ class TicketCog {
             const transcript = messages.map(msg => this.formatMessageForTranscript(msg, staffRoleId)).join('\n');
 
             const ticketNumber = ticketInfo.number || 1;
+            const ownerId = this.getOwnerId(ticketInfo);
             const transcriptDir = path.join(__dirname, '../../../transcripts');
             if (!fs.existsSync(transcriptDir)) {
                 fs.mkdirSync(transcriptDir, { recursive: true });
@@ -498,7 +574,7 @@ class TicketCog {
 
             // Store closed ticket info
             this.closedTickets[ticketNumber.toString()] = {
-                owner: ticketInfo.owner,
+                owner: ownerId,
                 transcript_file: filename,
                 closed_at: new Date().toISOString(),
                 button: ticketInfo.button || '',
@@ -508,7 +584,7 @@ class TicketCog {
 
             // Build transcript embed with placeholders
             const embedData = this.config.ticket_transcript_embed || {};
-            const openerUser = ticketInfo.owner ? await this.client.users.fetch(ticketInfo.owner).catch(() => null) : null;
+            const openerUser = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
             const opener = openerUser ? openerUser.toString() : 'Unknown';
             const staffer = interaction.user ? interaction.user.toString() : 'Unknown';
             const channelName = channel.name;
@@ -555,7 +631,7 @@ class TicketCog {
 
             // Log ticket closure
             if (this.client.logCog) {
-                const opener = await this.client.users.fetch(ticketInfo.owner).catch(() => null);
+                const opener = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
                 await this.client.logCog.logTicketClose(
                     channel.name,
                     opener ? opener.tag : 'Unknown',
@@ -738,8 +814,8 @@ class TicketCog {
         }
 
         const ticketInfo = this.ticketOwners[channel.id];
-        const ownerId = typeof ticketInfo === 'object' ? ticketInfo.owner : ticketInfo;
-        
+        const ownerId = this.getOwnerId(ticketInfo);
+
         if (member.id === ownerId) {
             await interaction.reply({ content: '❌ Non puoi rimuovere il proprietario del ticket!', ephemeral: true });
             return;
@@ -786,7 +862,7 @@ class TicketCog {
 
         // Find open tickets
         for (const [channelId, info] of Object.entries(this.ticketOwners)) {
-            const ownerId = typeof info === 'object' ? info.owner : info;
+            const ownerId = this.getOwnerId(info);
             if (ownerId === user.id) {
                 const channel = this.client.channels.cache.get(channelId);
                 if (channel) {
@@ -797,7 +873,7 @@ class TicketCog {
 
         // Find closed tickets
         for (const [ticketNum, info] of Object.entries(this.closedTickets)) {
-            if (info.owner === user.id) {
+            if (String(info.owner) === user.id) {
                 closedTickets.push(`***\`#${ticketNum}\`*** - ${info.channel_name || 'Unknown'}`);
             }
         }
@@ -843,7 +919,7 @@ class TicketCog {
         }
 
         const ticketInfo = this.closedTickets[ticketStr];
-        const ownerId = ticketInfo.owner;
+        const ownerId = this.getOwnerId(ticketInfo);
         
         if (ownerId !== interaction.user.id) {
             const staffRoleId = this.config.ticket_staff_role_id;
