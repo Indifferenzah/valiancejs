@@ -1,261 +1,296 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { loadJsonSync, saveJsonSync } = require("../../utils/jsonStore");
-const path = require("path");
+const {
+  SlashCommandBuilder,
+  PermissionFlagsBits,
+  EmbedBuilder
+} = require('discord.js');
+const path = require('path');
+const fs = require('fs');
+const { loadJson, saveJson, loadJsonSync } = require('../../utils/jsonStore');
+const logger = require('../../utils/logger');
+
+const CONFIG_PATH = path.join(__dirname, 'config.json');
+const DATA_PATH = path.join(__dirname, '..', '..', 'data', 'reminders.json');
+
+function loadConfig() {
+  try {
+    return loadJsonSync(CONFIG_PATH, {
+      enabled: true,
+      default_send_in_dm: true,
+      default_channel_id: null,
+      cooldown_seconds: 10,
+      max_per_user: 10,
+      timezone: 'Europe/Rome',
+      messages: {
+        created: '✅ Promemoria creato per {time}.',
+        deleted: '🗑️ Promemoria eliminato.',
+        list_header: '📋 I tuoi promemoria:',
+        remind_format: '⏰ {mention} Promemoria: {message}',
+        no_reminders: 'Non hai promemoria.'
+      }
+    });
+  } catch (error) {
+    return {};
+  }
+}
+
+function parseWhen(input) {
+  const when = (input || '').trim();
+  const now = Math.floor(Date.now() / 1000);
+  const rel = when.match(/^(\d+)\s*([smhd])$/i);
+  if (rel) {
+    const val = Number(rel[1]);
+    const unit = rel[2].toLowerCase();
+    const mult = { s: 1, m: 60, h: 3600, d: 86400 }[unit];
+    return now + val * mult;
+  }
+  const abs = when.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})\s+(\d{1,2}):(\d{2})$/);
+  if (abs) {
+    const [d, mo, yy, hh, mm] = abs.slice(1).map(Number);
+    const year = 2000 + yy;
+    try {
+      const dt = new Date(Date.UTC(year, mo - 1, d, hh, mm));
+      return Math.floor(dt.getTime() / 1000);
+    } catch (error) {
+      return null;
+    }
+  }
+  return null;
+}
+
+async function loadData() {
+  try {
+    const data = await loadJson(DATA_PATH, {});
+    return data && typeof data === 'object' ? data : {};
+  } catch (error) {
+    logger.error(`Errore caricando reminders.json: ${error.message}`);
+    return {};
+  }
+}
+
+async function saveData(data) {
+  await fs.promises.mkdir(path.dirname(DATA_PATH), { recursive: true });
+  await saveJson(DATA_PATH, data || {});
+}
 
 class RemindersCog {
-    constructor(client) {
-        this.client = client;
-        this.configPath = path.join(__dirname, "config.json");
-        this.config = loadJsonSync(this.configPath, { reminders: [] });
-        this.activeReminders = new Map();
+  constructor(client) {
+    this.client = client;
+    this.config = loadConfig();
+    this.loop = null;
+    this.ready = false;
 
-        this.commands = [
-            new SlashCommandBuilder()
-                .setName("remind")
-                .setDescription("Sistema promemoria")
-                .addSubcommand(sub =>
-                    sub.setName("add")
-                        .setDescription("Crea un promemoria")
-                        .addStringOption(opt =>
-                            opt.setName("quando")
-                                .setDescription("Quando ricordare (es: 1h, 30m, 2d)")
-                                .setRequired(true)
-                        )
-                        .addStringOption(opt =>
-                            opt.setName("messaggio")
-                                .setDescription("Messaggio del promemoria")
-                                .setRequired(true)
-                        )
-                        .addBooleanOption(opt =>
-                            opt.setName("dm")
-                                .setDescription("Invia in DM invece che nel canale")
-                                .setRequired(false)
-                        )
-                )
-                .addSubcommand(sub =>
-                    sub.setName("list")
-                        .setDescription("Mostra i tuoi promemoria")
-                )
-                .addSubcommand(sub =>
-                    sub.setName("delete")
-                        .setDescription("Elimina un promemoria")
-                        .addIntegerOption(opt =>
-                            opt.setName("id")
-                                .setDescription("ID del promemoria da eliminare")
-                                .setRequired(true)
-                        )
-                )
-        ];
+    this.commands = [
+      new SlashCommandBuilder()
+        .setName('remind')
+        .setDescription('Sistema di reminder')
+        .addSubcommand(sub =>
+          sub.setName('add')
+            .setDescription('Crea un promemoria')
+            .addStringOption(opt => opt.setName('when').setDescription('Quando (es. 10m, 2h, 1d o DD/MM/YY HH:MM)').setRequired(true))
+            .addStringOption(opt => opt.setName('message').setDescription('Messaggio del promemoria').setRequired(true))
+            .addBooleanOption(opt => opt.setName('send_in_dm').setDescription('Inviare in DM (predefinito da config)'))
+        )
+        .addSubcommand(sub =>
+          sub.setName('list')
+            .setDescription('Lista i tuoi promemoria')
+        )
+        .addSubcommand(sub =>
+          sub.setName('delete')
+            .setDescription('Elimina un tuo promemoria')
+            .addIntegerOption(opt => opt.setName('reminder_id').setDescription('ID promemoria').setRequired(true))
+        )
+    ];
+  }
 
-        this.setupReminders();
+  startLoop() {
+    if (this.loop) return;
+    this.loop = setInterval(() => {
+      this.dispatch().catch(err => logger.error(`Errore dispatch reminder: ${err.message}`));
+    }, 30000);
+  }
+
+  async onReady() {
+    this.ready = true;
+    this.startLoop();
+  }
+
+  async handleAdd(interaction) {
+    const cfg = this.config;
+    const when = interaction.options.getString('when');
+    const message = interaction.options.getString('message');
+    const sendInDmOpt = interaction.options.getBoolean('send_in_dm');
+
+    const due = parseWhen(when);
+    if (!due || due <= Math.floor(Date.now() / 1000)) {
+      await interaction.reply({ content: 'Formato tempo non valido o nel passato.', ephemeral: true });
+      return;
     }
 
-    saveConfig() {
-        saveJsonSync(this.configPath, this.config);
+    const sendDm = sendInDmOpt === null ? Boolean(cfg.default_send_in_dm) : sendInDmOpt;
+    const fallbackChannelId = cfg.default_channel_id ? String(cfg.default_channel_id) : String(interaction.channel.id);
+    const targetChannelId = fallbackChannelId;
+
+    const data = await loadData();
+    const gid = String(interaction.guild.id);
+    const uid = Number(interaction.user.id);
+    const g = data[gid] || { last_id: 0, items: [] };
+
+    const maxPerUser = Number(cfg.max_per_user || 10);
+    const userCount = g.items.filter(it => Number(it.user_id) === uid).length;
+    if (userCount >= maxPerUser) {
+      await interaction.reply({ content: `Hai raggiunto il limite di ${maxPerUser} promemoria.`, ephemeral: true });
+      return;
     }
 
-    parseTime(timeStr) {
-        const regex = /(\d+)([smhd])/g;
-        let totalMs = 0;
-        let match;
+    const newId = Number(g.last_id || 0) + 1;
+    g.last_id = newId;
+    g.items.push({
+      id: newId,
+      user_id: uid,
+      channel_id: targetChannelId ? String(targetChannelId) : null,
+      is_dm: Boolean(sendDm),
+      message,
+      remind_at: due,
+      created_at: Math.floor(Date.now() / 1000)
+    });
+    data[gid] = g;
+    await saveData(data);
+    await interaction.reply({ content: cfg.messages?.created?.replace('{time}', when) || '✅ Promemoria creato.', ephemeral: true });
+  }
 
-        while ((match = regex.exec(timeStr)) !== null) {
-            const value = parseInt(match[1]);
-            const unit = match[2];
+  async handleList(interaction) {
+    const cfg = this.config;
+    const data = await loadData();
+    const gid = String(interaction.guild.id);
+    const uid = Number(interaction.user.id);
+    const g = data[gid] || { items: [] };
+    const rows = g.items.filter(it => Number(it.user_id) === uid).sort((a, b) => Number(a.remind_at) - Number(b.remind_at));
+    if (!rows.length) {
+      await interaction.reply({ content: cfg.messages?.no_reminders || 'Non hai promemoria.', ephemeral: true });
+      return;
+    }
+    const lines = [cfg.messages?.list_header || '📋 I tuoi promemoria:'];
+    for (const r of rows) {
+      const ts = `<t:${Number(r.remind_at)}:F>`;
+      const dest = r.is_dm ? 'DM' : (r.channel_id ? `<#${r.channel_id}>` : '#current');
+      lines.push(`\`#${r.id}\` ${ts} → ${dest} — ${r.message}`);
+    }
+    await interaction.reply({ content: lines.join('\n'), ephemeral: true });
+  }
 
-            switch (unit) {
-                case 's': totalMs += value * 1000; break;
-                case 'm': totalMs += value * 60 * 1000; break;
-                case 'h': totalMs += value * 60 * 60 * 1000; break;
-                case 'd': totalMs += value * 24 * 60 * 60 * 1000; break;
-            }
+  async handleDelete(interaction) {
+    const reminderId = interaction.options.getInteger('reminder_id');
+    const data = await loadData();
+    const gid = String(interaction.guild.id);
+    const uid = Number(interaction.user.id);
+    const g = data[gid] || { items: [] };
+    const found = g.items.find(it => Number(it.id) === Number(reminderId));
+    if (!found) {
+      await interaction.reply({ content: 'Promemoria non trovato.', ephemeral: true });
+      return;
+    }
+    if (Number(found.user_id) !== uid && !interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+      await interaction.reply({ content: 'Non puoi eliminare promemoria di altri.', ephemeral: true });
+      return;
+    }
+    g.items = g.items.filter(it => Number(it.id) !== Number(reminderId));
+    data[gid] = g;
+    await saveData(data);
+    await interaction.reply({ content: this.config.messages?.deleted || '🗑️ Promemoria eliminato.', ephemeral: true });
+  }
+
+  async dispatch() {
+    if (!this.ready) return;
+    const now = Math.floor(Date.now() / 1000);
+    let changed = false;
+    const data = await loadData();
+    for (const [gid, g] of Object.entries(data)) {
+      const items = Array.isArray(g.items) ? g.items : [];
+      const remaining = [];
+      for (const r of items) {
+        const remindAt = Number(r.remind_at || 0);
+        if (remindAt > now) {
+          remaining.push(r);
+          continue;
         }
-
-        return totalMs;
-    }
-
-    setupReminders() {
-        const now = Date.now();
-        
-        for (const reminder of this.config.reminders) {
-            if (reminder.time > now) {
-                const timeout = setTimeout(() => {
-                    this.executeReminder(reminder);
-                }, reminder.time - now);
-                
-                this.activeReminders.set(reminder.id, timeout);
-            }
-        }
-    }
-
-    async executeReminder(reminder) {
+        let delivered = false;
         try {
-            const user = await this.client.users.fetch(reminder.userId);
-            const embed = new EmbedBuilder()
-                .setTitle("🔔 Promemoria")
-                .setDescription(reminder.message)
-                .setColor(0x00ff00)
-                .setTimestamp();
-
-            if (reminder.dm) {
-                await user.send({ embeds: [embed] });
-            } else {
-                const channel = await this.client.channels.fetch(reminder.channelId);
-                if (channel) {
-                    await channel.send({ content: `${user.toString()}`, embeds: [embed] });
-                }
+          const guild = this.client.guilds.cache.get(gid);
+          if (!guild) {
+            remaining.push(r);
+            continue;
+          }
+          const user = guild.members.cache.get(String(r.user_id));
+          if (!user) {
+            remaining.push(r);
+            continue;
+          }
+          const content = this.config.messages?.remind_format
+            ? this.config.messages.remind_format.replace('{mention}', user.toString()).replace('{message}', r.message)
+            : `⏰ ${user} Promemoria: ${r.message}`;
+          if (r.is_dm) {
+            try {
+              await user.send(content);
+              delivered = true;
+            } catch (error) {
+              const chId = r.channel_id;
+              const channel = chId ? guild.channels.cache.get(String(chId)) : null;
+              const fallback = channel || guild.systemChannel || guild.channels.cache.find(c => c.isTextBased && c.isTextBased() && c.permissionsFor(guild.members.me).has(PermissionFlagsBits.SendMessages));
+              if (fallback) {
+                await fallback.send(content);
+                delivered = true;
+              }
             }
+          } else {
+            const chId = r.channel_id;
+            let channel = chId ? guild.channels.cache.get(String(chId)) : null;
+            if (!channel) {
+              channel = guild.systemChannel || guild.channels.cache.find(c => c.isTextBased && c.isTextBased() && c.permissionsFor(guild.members.me).has(PermissionFlagsBits.SendMessages));
+            }
+            if (channel) {
+              await channel.send(content);
+              delivered = true;
+            }
+          }
         } catch (error) {
-            console.error(`Error executing reminder ${reminder.id}:`, error);
+          delivered = false;
+        } finally {
+          if (!delivered) {
+            remaining.push(r);
+          } else {
+            changed = true;
+          }
         }
-
-        // Remove from config and active reminders
-        this.config.reminders = this.config.reminders.filter(r => r.id !== reminder.id);
-        this.activeReminders.delete(reminder.id);
-        this.saveConfig();
+      }
+      data[gid] = { ...g, items: remaining };
     }
-
-    async handleAdd(interaction) {
-        const quando = interaction.options.getString("quando");
-        const messaggio = interaction.options.getString("messaggio");
-        const dm = interaction.options.getBoolean("dm") || false;
-
-        const timeMs = this.parseTime(quando);
-        if (timeMs === 0) {
-            return interaction.reply({
-                content: "❌ Formato tempo non valido! Usa: 1s, 30m, 2h, 1d",
-                ephemeral: true
-            });
-        }
-
-        const remindTime = Date.now() + timeMs;
-        const reminderId = Date.now();
-
-        const reminder = {
-            id: reminderId,
-            userId: interaction.user.id,
-            channelId: interaction.channel.id,
-            message: messaggio,
-            time: remindTime,
-            dm: dm
-        };
-
-        this.config.reminders.push(reminder);
-        this.saveConfig();
-
-        // Set timeout
-        const timeout = setTimeout(() => {
-            this.executeReminder(reminder);
-        }, timeMs);
-        
-        this.activeReminders.set(reminderId, timeout);
-
-        const embed = new EmbedBuilder()
-            .setTitle("✅ Promemoria Creato")
-            .setDescription(`Ti ricorderò: **${messaggio}**`)
-            .addFields(
-                { name: "📅 Quando", value: `<t:${Math.floor(remindTime / 1000)}:R>`, inline: true },
-                { name: "📍 Dove", value: dm ? "DM" : `<#${interaction.channel.id}>`, inline: true },
-                { name: "🆔 ID", value: reminderId.toString(), inline: true }
-            )
-            .setColor(0x00ff00);
-
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+    if (changed) {
+      await saveData(data);
     }
+  }
 
-    async handleList(interaction) {
-        const userReminders = this.config.reminders.filter(r => r.userId === interaction.user.id);
-
-        if (userReminders.length === 0) {
-            return interaction.reply({
-                content: "📭 Non hai promemoria attivi.",
-                ephemeral: true
-            });
-        }
-
-        const embed = new EmbedBuilder()
-            .setTitle("🔔 I Tuoi Promemoria")
-            .setColor(0x00ff00);
-
-        for (const reminder of userReminders.slice(0, 10)) {
-            embed.addFields({
-                name: `ID: ${reminder.id}`,
-                value: `**Messaggio:** ${reminder.message}\n**Quando:** <t:${Math.floor(reminder.time / 1000)}:R>\n**Dove:** ${reminder.dm ? "DM" : `<#${reminder.channelId}>`}`,
-                inline: false
-            });
-        }
-
-        if (userReminders.length > 10) {
-            embed.setFooter({ text: `Mostrati 10 di ${userReminders.length} promemoria` });
-        }
-
-        await interaction.reply({ embeds: [embed], ephemeral: true });
-    }
-
-    async handleDelete(interaction) {
-        const id = interaction.options.getInteger("id");
-        const reminderIndex = this.config.reminders.findIndex(r => r.id === id && r.userId === interaction.user.id);
-
-        if (reminderIndex === -1) {
-            return interaction.reply({
-                content: "❌ Promemoria non trovato o non è tuo.",
-                ephemeral: true
-            });
-        }
-
-        // Clear timeout
-        if (this.activeReminders.has(id)) {
-            clearTimeout(this.activeReminders.get(id));
-            this.activeReminders.delete(id);
-        }
-
-        // Remove from config
-        this.config.reminders.splice(reminderIndex, 1);
-        this.saveConfig();
-
-        await interaction.reply({
-            content: `✅ Promemoria **${id}** eliminato.`,
-            ephemeral: true
-        });
-    }
+  registerListeners() {
+    this.client.once('ready', () => this.onReady().catch(err => logger.error(`Reminders onReady error: ${err.message}`)));
+    this.client.on('interactionCreate', async (interaction) => {
+      if (!interaction.isChatInputCommand()) return;
+      if (interaction.commandName !== 'remind') return;
+      const sub = interaction.options.getSubcommand();
+      switch (sub) {
+        case 'add': return this.handleAdd(interaction);
+        case 'list': return this.handleList(interaction);
+        case 'delete': return this.handleDelete(interaction);
+        default: return;
+      }
+    });
+  }
 }
 
 function setup(client) {
-    const cog = new RemindersCog(client);
-
-    client.on("interactionCreate", async interaction => {
-        if (!interaction.isChatInputCommand()) return;
-        if (interaction.commandName !== "remind") return;
-
-        const subcommand = interaction.options.getSubcommand();
-
-        try {
-            switch (subcommand) {
-                case "add":
-                    await cog.handleAdd(interaction);
-                    break;
-                case "list":
-                    await cog.handleList(interaction);
-                    break;
-                case "delete":
-                    await cog.handleDelete(interaction);
-                    break;
-            }
-        } catch (error) {
-            console.error(`Error in remind command:`, error);
-            if (!interaction.replied) {
-                await interaction.reply({
-                    content: "❌ Si è verificato un errore.",
-                    ephemeral: true
-                });
-            }
-        }
-    });
-
-    if (!client.globalCommands) client.globalCommands = [];
-    client.globalCommands.push(...cog.commands);
-
-    return cog;
+  const cog = new RemindersCog(client);
+  cog.registerListeners();
+  if (!client.globalCommands) client.globalCommands = [];
+  client.globalCommands.push(...cog.commands);
+  return cog;
 }
 
 module.exports = { setup, RemindersCog };

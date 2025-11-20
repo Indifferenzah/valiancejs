@@ -111,6 +111,8 @@ class LogCog {
     }
 
     setupEventListeners() {
+        if (this.client.__logHandlersRegistered) return;
+        this.client.__logHandlersRegistered = true;
         // Member join
         this.client.on('guildMemberAdd', async (member) => {
             try {

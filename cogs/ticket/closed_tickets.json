@@ -1,16 +1,23 @@
 {
   "2": {
-    "owner": 1123622103917285418,
+    "owner": 1123622103917285400,
     "transcript_file": "transcripts/transcript-2.txt",
     "closed_at": "2025-10-20T19:02:25.653137",
     "button": "general",
     "channel_name": "ticket-2"
   },
   "3": {
-    "owner": 1123622103917285418,
+    "owner": 1123622103917285400,
     "transcript_file": "transcripts/transcript-3.txt",
     "closed_at": "2025-10-24T16:44:45.590693",
     "button": "general",
     "channel_name": "ticket-3"
+  },
+  "55": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\transcripts\\transcript-55.txt",
+    "closed_at": "2025-11-20T19:09:48.066Z",
+    "button": "general",
+    "channel_name": "ticket-55"
   }
 }

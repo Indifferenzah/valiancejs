@@ -31,6 +31,8 @@ const activeSessions = new Map();
 let waitingForRuleset = false;
 let waitingForWelcome = false;
 let waitingForBoost = false;
+const recentWelcomes = new Set();
+const recentBoosts = new Set();
 
 class GameSession {
     constructor(guild, lobbyChannel) {
@@ -799,6 +801,9 @@ async function handleVerify(interaction) {
     });
 
     client.on('guildMemberAdd', async (member) => {
+        if (recentWelcomes.has(member.id)) return;
+        recentWelcomes.add(member.id);
+        setTimeout(() => recentWelcomes.delete(member.id), 10000);
         try {
             const joinRoleId = config.autorole_on_join_id;
             if (joinRoleId) {
@@ -863,6 +868,9 @@ async function handleVerify(interaction) {
     client.on('guildMemberUpdate', async (oldMember, newMember) => {
         if (!oldMember.premiumSince && newMember.premiumSince) {
             if (!config.boost_channel_id) return;
+            if (recentBoosts.has(newMember.id)) return;
+            recentBoosts.add(newMember.id);
+            setTimeout(() => recentBoosts.delete(newMember.id), 10000);
 
             try {
                 const boostChannel = newMember.guild.channels.cache.get(config.boost_channel_id);

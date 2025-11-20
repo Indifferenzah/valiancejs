@@ -1,227 +1,236 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
-const logger = require('../../utils/logger');
+﻿const {
+  SlashCommandBuilder,
+  ActionRowBuilder,
+  ButtonBuilder,
+  ButtonStyle,
+  EmbedBuilder
+} = require('discord.js');
 const path = require('path');
+const fs = require('fs');
+const fsp = require('fs').promises;
+const { loadJson, saveJson, loadJsonSync } = require('../../utils/jsonStore');
+const logger = require('../../utils/logger');
+
+const CONFIG_PATH = path.join(__dirname, 'config.json');
+const DATA_PATH = path.join(__dirname, '..', '..', 'data', 'marriages.json');
+
+function loadConfig() {
+  try {
+    return loadJsonSync(CONFIG_PATH, {
+      enabled: true,
+      announce_channel_id: null,
+      messages: {
+        proposal: '💍 {proposer} ha chiesto di sposare {target}!',
+        accepted: '🎉 {proposer} e {target} ora sono sposati!',
+        declined: '❌ {target} ha rifiutato la proposta di {proposer}.',
+        already_married: '❌ Uno dei due è già in una relazione.',
+        not_married: '❌ Non sei in una relazione.',
+        divorced: '💔 {a} e {b} hanno divorziato.',
+        status: '💞 {a} è in relazione con {b} dal {date}.'
+      }
+    });
+  } catch (error) {
+    return {
+      enabled: true,
+      announce_channel_id: null,
+      messages: {
+        proposal: '💍 {proposer} ha chiesto di sposare {target}!',
+        accepted: '🎉 {proposer} e {target} ora sono sposati!',
+        declined: '❌ {target} ha rifiutato la proposta di {proposer}.',
+        already_married: '❌ Uno dei due è già in una relazione.',
+        not_married: '❌ Non sei in una relazione.',
+        divorced: '💔 {a} e {b} hanno divorziato.',
+        status: '💞 {a} è in relazione con {b} dal {date}.'
+      }
+    };
+  }
+}
+
+async function loadData() {
+  try {
+    const data = await loadJson(DATA_PATH, {});
+    return data && typeof data === 'object' ? data : {};
+  } catch (error) {
+    logger.error(`Errore caricando marriages.json: ${error.message}`);
+    return {};
+  }
+}
+
+async function saveData(data) {
+  await fsp.mkdir(path.dirname(DATA_PATH), { recursive: true });
+  await saveJson(DATA_PATH, data || {});
+}
+
+async function isUserMarried(guildId, userId) {
+  const data = await loadData();
+  const gid = String(guildId);
+  const pairs = data?.[gid]?.pairs || [];
+  for (const p of pairs) {
+    const a = Number(p.a);
+    const b = Number(p.b);
+    if (a === Number(userId) || b === Number(userId)) {
+      return { user_id_a: a, user_id_b: b, started_at: Number(p.started_at || 0) };
+    }
+  }
+  return null;
+}
+
+class ConsentView {
+  constructor(proposerId, target, interaction, config) {
+    this.proposerId = proposerId;
+    this.targetId = target.id;
+    this.interaction = interaction;
+    this.config = config;
+    this.result = null;
+    this.message = null;
+  }
+
+  components() {
+    return [
+      new ActionRowBuilder().addComponents(
+        new ButtonBuilder().setCustomId('marry_accept').setLabel('Accetta').setStyle(ButtonStyle.Success),
+        new ButtonBuilder().setCustomId('marry_decline').setLabel('Rifiuta').setStyle(ButtonStyle.Danger)
+      )
+    ];
+  }
+
+  async sendProposal(content) {
+    this.message = await this.interaction.reply({ content, components: this.components(), ephemeral: false, fetchReply: true });
+    const collector = this.message.createMessageComponentCollector({ time: 60000, filter: (i) => i.user.id === this.targetId });
+    collector.on('collect', async (i) => {
+      if (i.customId === 'marry_accept') {
+        this.result = true;
+      } else if (i.customId === 'marry_decline') {
+        this.result = false;
+      }
+      await i.update({ components: [], content: this.result ? '✅ Proposta accettata!' : '❌ Proposta rifiutata.' });
+      collector.stop();
+    });
+    collector.on('end', async () => {
+      if (this.result === null) {
+        try {
+          await this.message.edit({ components: [], content: '⏱️ Nessuna risposta, proposta scaduta.' });
+        } catch (error) {
+          logger.error(`Errore chiudendo proposta matrimonio: ${error.message}`);
+        }
+      }
+    });
+    await new Promise((resolve) => collector.on('end', () => resolve()));
+  }
+}
 
 class MarriageCog {
-    constructor(client) {
-        this.client = client;
-        this.configPath = path.join(__dirname, 'config.json');
-        this.config = this.loadConfig();
-        
-        this.commands = [
-            new SlashCommandBuilder()
-                .setName('marry')
-                .setDescription('Sposa un utente')
-                .addUserOption(option =>
-                    option.setName('user')
-                        .setDescription('Utente da sposare')
-                        .setRequired(true)),
-            
-            new SlashCommandBuilder()
-                .setName('divorce')
-                .setDescription('Divorzia da un utente')
-                .addUserOption(option =>
-                    option.setName('user')
-                        .setDescription('Utente da cui divorziare')
-                        .setRequired(true)),
-            
-            new SlashCommandBuilder()
-                .setName('relationship')
-                .setDescription('Mostra le relazioni di un utente')
-                .addUserOption(option =>
-                    option.setName('user')
-                        .setDescription('Utente di cui vedere le relazioni')
-                        .setRequired(false))
-        ];
+  constructor(client) {
+    this.client = client;
+    this.config = loadConfig();
+
+    this.commands = [
+      new SlashCommandBuilder()
+        .setName('marry')
+        .setDescription('Chiedi di sposare un utente')
+        .addUserOption(opt => opt.setName('user').setDescription('Utente da sposare').setRequired(true)),
+      new SlashCommandBuilder()
+        .setName('divorce')
+        .setDescription('Divorzia dalla tua relazione attuale'),
+      new SlashCommandBuilder()
+        .setName('relationship')
+        .setDescription('Mostra lo stato della tua relazione o di un utente')
+        .addUserOption(opt => opt.setName('user').setDescription('Utente (opzionale)').setRequired(false))
+    ];
+  }
+
+  async handleMarry(interaction) {
+    const user = interaction.options.getMember('user');
+    if (!user) {
+      await interaction.reply({ content: '❌ Utente non trovato.', ephemeral: true });
+      return;
+    }
+    if (user.id === interaction.user.id || user.user.bot) {
+      await interaction.reply({ content: '❌ Non puoi sposarti da solo o con un bot.', ephemeral: true });
+      return;
     }
 
-    loadConfig() {
-        return loadJsonSync(this.configPath, {
-            marriages: {}
-        });
+    if (await isUserMarried(interaction.guild.id, interaction.user.id) || await isUserMarried(interaction.guild.id, user.id)) {
+      await interaction.reply({ content: this.config.messages.already_married, ephemeral: true });
+      return;
     }
 
-    saveConfig() {
-        saveJsonSync(this.configPath, this.config);
+    const msg = this.config.messages.proposal.replace('{proposer}', interaction.user.toString()).replace('{target}', user.toString());
+    const view = new ConsentView(interaction.user.id, user, interaction, this.config);
+    await view.sendProposal(msg);
+
+    if (view.result === true) {
+      const started = Math.floor(Date.now() / 1000);
+      const a = Math.min(interaction.user.id, user.id);
+      const b = Math.max(interaction.user.id, user.id);
+      const data = await loadData();
+      const gid = String(interaction.guild.id);
+      const g = data[gid] || { pairs: [] };
+      g.pairs = g.pairs || [];
+      g.pairs.push({ a: Number(a), b: Number(b), started_at: started });
+      data[gid] = g;
+      await saveData(data);
+
+      const text = this.config.messages.accepted.replace('{proposer}', interaction.user.toString()).replace('{target}', user.toString());
+      const announceId = this.config.announce_channel_id;
+      const announceChannel = announceId ? interaction.guild.channels.cache.get(String(announceId)) : null;
+      await interaction.followUp({ content: text });
+      if (announceChannel && announceChannel.id !== interaction.channel.id) {
+        await announceChannel.send(text).catch(() => {});
+      }
+    } else if (view.result === false) {
+      await interaction.followUp({ content: this.config.messages.declined.replace('{proposer}', interaction.user.toString()).replace('{target}', user.toString()) });
     }
+  }
 
-    isMarried(userId) {
-        return this.config.marriages[userId] || null;
+  async handleDivorce(interaction) {
+    const r = await isUserMarried(interaction.guild.id, interaction.user.id);
+    if (!r) {
+      await interaction.reply({ content: this.config.messages.not_married, ephemeral: true });
+      return;
     }
+    const { user_id_a: a, user_id_b: b } = r;
+    const data = await loadData();
+    const gid = String(interaction.guild.id);
+    const g = data[gid] || { pairs: [] };
+    g.pairs = (g.pairs || []).filter(p => {
+      const pa = Number(p.a); const pb = Number(p.b);
+      return !((pa === a && pb === b) || (pa === b && pb === a));
+    });
+    data[gid] = g;
+    await saveData(data);
 
-    async handleMarry(interaction) {
-        const user = interaction.options.getUser('user');
-        
-        if (user.id === interaction.user.id) {
-            await interaction.reply({ content: '❌ Non puoi sposare te stesso!', ephemeral: true });
-            return;
-        }
+    const userA = interaction.guild.members.cache.get(String(a));
+    const userB = interaction.guild.members.cache.get(String(b));
+    await interaction.reply({ content: this.config.messages.divorced.replace('{a}', userA ? userA.toString() : String(a)).replace('{b}', userB ? userB.toString() : String(b)) });
+  }
 
-        if (user.bot) {
-            await interaction.reply({ content: '❌ Non puoi sposare un bot!', ephemeral: true });
-            return;
-        }
-
-        const userMarriage = this.isMarried(interaction.user.id);
-        const targetMarriage = this.isMarried(user.id);
-
-        if (userMarriage) {
-            const spouse = await this.client.users.fetch(userMarriage.spouse_id).catch(() => null);
-            const spouseName = spouse ? spouse.username : 'Utente sconosciuto';
-            await interaction.reply({ 
-                content: `❌ Sei già sposato/a con **${spouseName}**! Divorzia prima di risposare.`, 
-                ephemeral: true 
-            });
-            return;
-        }
-
-        if (targetMarriage) {
-            const spouse = await this.client.users.fetch(targetMarriage.spouse_id).catch(() => null);
-            const spouseName = spouse ? spouse.username : 'Utente sconosciuto';
-            await interaction.reply({ 
-                content: `❌ **${user.username}** è già sposato/a con **${spouseName}**!`, 
-                ephemeral: true 
-            });
-            return;
-        }
-
-        // Create marriage
-        const marriageData = {
-            spouse_id: user.id,
-            spouse_username: user.username,
-            married_at: Date.now(),
-            married_by: interaction.user.id
-        };
-
-        this.config.marriages[interaction.user.id] = {
-            ...marriageData,
-            spouse_id: user.id,
-            spouse_username: user.username
-        };
-
-        this.config.marriages[user.id] = {
-            ...marriageData,
-            spouse_id: interaction.user.id,
-            spouse_username: interaction.user.username
-        };
-
-        this.saveConfig();
-
-        const embed = new EmbedBuilder()
-            .setTitle('💒 Matrimonio!')
-            .setDescription(`🎉 **${interaction.user.username}** e **${user.username}** si sono sposati! 🎉`)
-            .setColor(0xFF69B4)
-            .addFields({
-                name: '💕 Data del matrimonio',
-                value: `<t:${Math.floor(Date.now() / 1000)}:F>`,
-                inline: false
-            })
-            .setFooter({ text: 'Valiance Bot | Marriage System' });
-
-        await interaction.reply({ embeds: [embed] });
-        logger.info(`Marriage created: ${interaction.user.tag} married ${user.tag}`);
+  async handleRelationship(interaction) {
+    const member = interaction.options.getMember('user') || interaction.member;
+    const r = await isUserMarried(interaction.guild.id, member.id);
+    if (!r) {
+      await interaction.reply({ content: 'Nessuna relazione.', ephemeral: true });
+      return;
     }
-
-    async handleDivorce(interaction) {
-        const user = interaction.options.getUser('user');
-        
-        const userMarriage = this.isMarried(interaction.user.id);
-        
-        if (!userMarriage) {
-            await interaction.reply({ content: '❌ Non sei sposato/a con nessuno!', ephemeral: true });
-            return;
-        }
-
-        if (userMarriage.spouse_id !== user.id) {
-            await interaction.reply({ 
-                content: `❌ Non sei sposato/a con **${user.username}**!`, 
-                ephemeral: true 
-            });
-            return;
-        }
-
-        // Remove marriages
-        delete this.config.marriages[interaction.user.id];
-        delete this.config.marriages[user.id];
-        this.saveConfig();
-
-        const embed = new EmbedBuilder()
-            .setTitle('💔 Divorzio!')
-            .setDescription(`😢 **${interaction.user.username}** e **${user.username}** hanno divorziato...`)
-            .setColor(0x808080)
-            .setFooter({ text: 'Valiance Bot | Marriage System' });
-
-        await interaction.reply({ embeds: [embed] });
-        logger.info(`Divorce: ${interaction.user.tag} divorced ${user.tag}`);
-    }
-
-    async handleRelationship(interaction) {
-        const user = interaction.options.getUser('user') || interaction.user;
-        const marriage = this.isMarried(user.id);
-
-        const embed = new EmbedBuilder()
-            .setTitle(`💕 Relazioni di ${user.username}`)
-            .setColor(0xFF69B4)
-            .setThumbnail(user.displayAvatarURL())
-            .setFooter({ text: 'Valiance Bot | Marriage System' });
-
-        if (!marriage) {
-            embed.setDescription('💔 Questo utente è single');
-        } else {
-            const spouse = await this.client.users.fetch(marriage.spouse_id).catch(() => null);
-            const spouseName = spouse ? spouse.username : marriage.spouse_username;
-            const marriedDate = new Date(marriage.married_at);
-            
-            embed.setDescription(`💒 Sposato/a con **${spouseName}**`)
-                .addFields({
-                    name: '💕 Data del matrimonio',
-                    value: `<t:${Math.floor(marriage.married_at / 1000)}:F>`,
-                    inline: false
-                });
-        }
-
-        await interaction.reply({ embeds: [embed] });
-    }
+    const { user_id_a: a, user_id_b: b, started_at } = r;
+    const partnerId = a === member.id ? b : a;
+    const partner = interaction.guild.members.cache.get(String(partnerId));
+    const date = `<t:${started_at}:D>`;
+    await interaction.reply({ content: this.config.messages.status.replace('{a}', member.toString()).replace('{b}', partner ? partner.toString() : String(partnerId)).replace('{date}', date) });
+  }
 }
 
 function setup(client) {
-    const marriageCog = new MarriageCog(client);
-    
-    // Register command handlers
-    client.on('interactionCreate', async (interaction) => {
-        if (!interaction.isChatInputCommand()) return;
-        
-        try {
-            switch (interaction.commandName) {
-                case 'marry':
-                    await marriageCog.handleMarry(interaction);
-                    break;
-                case 'divorce':
-                    await marriageCog.handleDivorce(interaction);
-                    break;
-                case 'relationship':
-                    await marriageCog.handleRelationship(interaction);
-                    break;
-            }
-        } catch (error) {
-            logger.error(`Error in marriage command ${interaction.commandName}: ${error.message}`);
-            
-            const errorMessage = '❌ Si è verificato un errore durante l\'esecuzione del comando.';
-            
-            if (interaction.replied || interaction.deferred) {
-                await interaction.followup.send({ content: errorMessage, ephemeral: true });
-            } else {
-                await interaction.reply({ content: errorMessage, ephemeral: true });
-            }
-        }
-    });
-
-    // Add commands to global commands array
-    if (!client.globalCommands) client.globalCommands = [];
-    client.globalCommands.push(...marriageCog.commands);
-
-    return marriageCog;
+  const marriageCog = new MarriageCog(client);
+  client.on('interactionCreate', async (interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+    if (interaction.commandName === 'marry') return marriageCog.handleMarry(interaction);
+    if (interaction.commandName === 'divorce') return marriageCog.handleDivorce(interaction);
+    if (interaction.commandName === 'relationship') return marriageCog.handleRelationship(interaction);
+  });
+  if (!client.globalCommands) client.globalCommands = [];
+  client.globalCommands.push(...marriageCog.commands);
+  return marriageCog;
 }
 
 module.exports = { setup, MarriageCog };

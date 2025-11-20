@@ -1,585 +1,418 @@
-const { SlashCommandBuilder, ChannelType, PermissionFlagsBits } = require('discord.js');
+﻿const fs = require('fs');
+const path = require('path');
+const { SlashCommandBuilder, ChannelType, PermissionFlagsBits, EmbedBuilder } = require('discord.js');
 const { ownerOrHasPermissions } = require('../../utils/botUtils');
 const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
-const logger = require('../../utils/logger');
-const path = require('path');
 
 const CONFIG_PATH = path.join(__dirname, '../../config.json');
 const COUNTERS_PATH = path.join(__dirname, 'counter.json');
 
+async function computeTotalMembers(guild) {
+  return guild.members.cache.filter(m => !m.user.bot).size;
+}
+async function computeBots(guild) {
+  return guild.members.cache.filter(m => m.user.bot).size;
+}
+async function computeRoleMembers(guild, { role_id }) {
+  if (!role_id) return 0;
+  const role = guild.roles.cache.get(role_id);
+  if (!role) return 0;
+  return role.members.filter(m => !m.user.bot).size;
+}
+async function computeTotalChannels(guild) {
+  return guild.channels.cache.size;
+}
+async function computeTextChannels(guild) {
+  return guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size;
+}
+async function computeVoiceChannels(guild) {
+  return guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size;
+}
+
+const COUNTER_TYPES = {
+  total_members: computeTotalMembers,
+  role_members: computeRoleMembers,
+  bots: computeBots,
+  total_channels: computeTotalChannels,
+  text_channels: computeTextChannels,
+  voice_channels: computeVoiceChannels
+};
+
+function loadConfig() {
+  return loadJsonSync(CONFIG_PATH, {});
+}
+function saveConfig(cfg) {
+  saveJsonSync(CONFIG_PATH, cfg);
+}
+function loadCountersState() {
+  return loadJsonSync(COUNTERS_PATH, {});
+}
+function saveCountersState(state) {
+  saveJsonSync(COUNTERS_PATH, state || {});
+}
+
 class CountersCog {
-    constructor(client) {
-        this.client = client;
-        this.config = loadJsonSync(CONFIG_PATH);
-        this.counterChannels = {};
-        this.counterCache = {};
-        this.pendingUpdates = {};
-        this.updateInterval = null;
-        this.bootstrapped = false;
-    }
+  constructor(client) {
+    this.client = client;
+    this.counterChannels = {};
+    this.counterCache = {};
+    this.pendingUpdates = {};
+    this.bootstrapped = false;
+    this.updateInterval = null;
 
-    async loadExistingCounters() {
-        const state = loadJsonSync(COUNTERS_PATH, { active_counters: {} });
-        for (const [guildId, channels] of Object.entries(state.active_counters || {})) {
-            try {
-                const guild = this.client.guilds.cache.get(guildId);
-                if (!guild) continue;
-                
-                this.counterChannels[guildId] = {};
-                this.counterCache[guildId] = {};
-                this.pendingUpdates[guildId] = true;
-                
-                for (const [ctype, channelId] of Object.entries(channels)) {
-                    const channel = guild.channels.cache.get(channelId);
-                    if (channel && channel.type === ChannelType.GuildVoice) {
-                        this.counterChannels[guildId][ctype] = channel;
-                    }
-                }
-            } catch (error) {
-                logger.error(`Error loading counter for guild ${guildId}: ${error.message}`);
-            }
+    this.commands = [
+      new SlashCommandBuilder()
+        .setName('counter')
+        .setDescription('Gestione dei counter')
+        .addSubcommand(sub =>
+          sub.setName('start')
+            .setDescription('Crea e avvia i counter selezionati')
+            .addStringOption(opt => opt.setName('types').setDescription('Tipi separati da virgola (default: total_members,role_members)'))
+        )
+        .addSubcommand(sub =>
+          sub.setName('stop')
+            .setDescription('Ferma e rimuove tutti i counter')
+        )
+        .addSubcommand(sub =>
+          sub.setName('enable')
+            .setDescription('Abilita un counter su un canale')
+            .addStringOption(opt => opt.setName('counter_type').setDescription('Tipo di counter').setRequired(true).addChoices(
+              { name: 'total_members', value: 'total_members' },
+              { name: 'role_members', value: 'role_members' },
+              { name: 'bots', value: 'bots' },
+              { name: 'total_channels', value: 'total_channels' },
+              { name: 'text_channels', value: 'text_channels' },
+              { name: 'voice_channels', value: 'voice_channels' }
+            ))
+            .addChannelOption(opt => opt.setName('channel').setDescription('Canale vocale esistente').addChannelTypes(ChannelType.GuildVoice))
+        )
+        .addSubcommand(sub =>
+          sub.setName('disable')
+            .setDescription('Disabilita un counter')
+            .addStringOption(opt => opt.setName('counter_type').setDescription('Tipo di counter').setRequired(true).addChoices(
+              { name: 'total_members', value: 'total_members' },
+              { name: 'role_members', value: 'role_members' },
+              { name: 'bots', value: 'bots' },
+              { name: 'total_channels', value: 'total_channels' },
+              { name: 'text_channels', value: 'text_channels' },
+              { name: 'voice_channels', value: 'voice_channels' }
+            ))
+        )
+        .addSubcommand(sub =>
+          sub.setName('setname')
+            .setDescription('Imposta il template del nome per un counter')
+            .addStringOption(opt => opt.setName('counter_type').setDescription('Tipo di counter').setRequired(true).addChoices(
+              { name: 'total_members', value: 'total_members' },
+              { name: 'role_members', value: 'role_members' },
+              { name: 'bots', value: 'bots' },
+              { name: 'total_channels', value: 'total_channels' },
+              { name: 'text_channels', value: 'text_channels' },
+              { name: 'voice_channels', value: 'voice_channels' }
+            ))
+            .addStringOption(opt => opt.setName('template').setDescription('Template con {count}').setRequired(true))
+        )
+        .addSubcommand(sub =>
+          sub.setName('setrole')
+            .setDescription('Imposta il ruolo per role_members')
+            .addRoleOption(opt => opt.setName('role').setDescription('Ruolo').setRequired(true))
+        )
+        .addSubcommand(sub =>
+          sub.setName('list')
+            .setDescription('Lista dei counter attivi')
+        )
+    ];
+  }
+
+  async onReady() {
+    if (this.bootstrapped) return;
+    this.bootstrapped = true;
+    await this.loadExistingCounters();
+    this.startLoop();
+  }
+
+  async loadExistingCounters() {
+    const state = loadCountersState();
+    for (const [gidStr, channels] of Object.entries(state.active_counters || {})) {
+      const gid = gidStr;
+      const guild = this.client.guilds.cache.get(gid);
+      if (!guild) continue;
+      this.counterChannels[gid] = {};
+      this.counterCache[gid] = {};
+      this.pendingUpdates[gid] = true;
+      for (const [ctype, cid] of Object.entries(channels)) {
+        const ch = guild.channels.cache.get(cid);
+        if (ch && ch.type === ChannelType.GuildVoice) {
+          this.counterChannels[gid][ctype] = ch;
         }
+      }
     }
+  }
 
-    startCounterLoop() {
-        if (this.updateInterval) return;
-        
-        this.updateInterval = setInterval(async () => {
-            for (const [guildId, pending] of Object.entries(this.pendingUpdates)) {
-                if (pending) {
-                    const guild = this.client.guilds.cache.get(guildId);
-                    if (guild) {
-                        await this.updateGuildCounters(guild);
-                    }
-                    this.pendingUpdates[guildId] = false;
-                }
-            }
-        }, 60000); // Every minute
-        
-        logger.info('Counter update loop started');
-    }
-
-    stopCounterLoop() {
-        if (this.updateInterval) {
-            clearInterval(this.updateInterval);
-            this.updateInterval = null;
+  startLoop() {
+    if (this.updateInterval) return;
+    this.updateInterval = setInterval(async () => {
+      for (const [gid, pending] of Object.entries(this.pendingUpdates)) {
+        if (pending) {
+          const guild = this.client.guilds.cache.get(gid);
+          if (guild) await this.updateGuildCounters(guild);
+          this.pendingUpdates[gid] = false;
         }
-    }
+      }
+    }, 60000);
+  }
 
-    async updateGuildCounters(guild, force = false) {
-        if (!this.counterChannels[guild.id]) return;
-        
-        const countersConfig = this.config.counters || {};
-        const roleId = countersConfig.member_role_id;
-        
-        const nameTemplates = {
-            total_members: countersConfig.total_members_name || '👥 Membri: {count}',
-            role_members: countersConfig.role_members_name || '⭐ Membri Clan: {count}',
-            bots: countersConfig.bots_name || '🤖 Bot: {count}',
-            total_channels: countersConfig.total_channels_name || '📺 Canali: {count}',
-            text_channels: countersConfig.text_channels_name || '💬 Testo: {count}',
-            voice_channels: countersConfig.voice_channels_name || '🔊 Voce: {count}'
-        };
-        
-        for (const [ctype, channel] of Object.entries(this.counterChannels[guild.id])) {
-            try {
-                let count = 0;
-                
-                switch (ctype) {
-                    case 'total_members':
-                        count = guild.members.cache.filter(m => !m.user.bot).size;
-                        break;
-                    case 'role_members':
-                        if (roleId) {
-                            const role = guild.roles.cache.get(roleId);
-                            if (role) {
-                                count = role.members.filter(m => !m.user.bot).size;
-                            }
-                        }
-                        break;
-                    case 'bots':
-                        count = guild.members.cache.filter(m => m.user.bot).size;
-                        break;
-                    case 'total_channels':
-                        count = guild.channels.cache.size;
-                        break;
-                    case 'text_channels':
-                        count = guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size;
-                        break;
-                    case 'voice_channels':
-                        count = guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size;
-                        break;
-                }
-                
-                const prevCount = this.counterCache[guild.id]?.[ctype];
-                if (force || prevCount !== count) {
-                    const newName = nameTemplates[ctype].replace('{count}', count.toString());
-                    await channel.setName(newName);
-                    
-                    if (!this.counterCache[guild.id]) this.counterCache[guild.id] = {};
-                    this.counterCache[guild.id][ctype] = count;
-                    
-                    logger.info(`Updated ${ctype} counter for ${guild.name}: ${newName}`);
-                }
-            } catch (error) {
-                if (error.code === 50013) {
-                    logger.error(`Missing permissions to update counter ${ctype} in ${guild.name}`);
-                } else {
-                    logger.error(`Error updating counter ${ctype} in ${guild.name}: ${error.message}`);
-                }
-            }
+  markPending(gid) {
+    this.pendingUpdates[gid] = true;
+  }
+
+  templatesFromConfig() {
+    const cfg = loadConfig();
+    const counters = cfg.counters || {};
+    return {
+      total_members: counters.total_members_name || '👥 Membri: {count}',
+      role_members: counters.role_members_name || '⭐ Membri Clan: {count}',
+      bots: counters.bots_name || '🤖 Bot: {count}',
+      total_channels: counters.total_channels_name || '📺 Canali: {count}',
+      text_channels: counters.text_channels_name || '💬 Testo: {count}',
+      voice_channels: counters.voice_channels_name || '🔊 Voce: {count}',
+      role_id: counters.member_role_id ? parseInt(counters.member_role_id, 10) : 0
+    };
+  }
+
+  async updateGuildCounters(guild, force = false) {
+    const guildId = guild.id;
+    if (!this.counterChannels[guildId]) return;
+    const templates = this.templatesFromConfig();
+    for (const [ctype, channel] of Object.entries(this.counterChannels[guildId])) {
+      const compute = COUNTER_TYPES[ctype];
+      if (!compute) continue;
+      const kwargs = {};
+      if (ctype === 'role_members' && templates.role_id) {
+        kwargs.role_id = templates.role_id;
+      }
+      try {
+        const count = await compute(guild, kwargs);
+        const prev = this.counterCache?.[guildId]?.[ctype];
+        if (force || prev !== count) {
+          await channel.edit({ name: (templates[ctype] || '{count}').replace('{count}', String(count)) });
+          this.counterCache[guildId] = this.counterCache[guildId] || {};
+          this.counterCache[guildId][ctype] = count;
         }
+      } catch (err) {
+        logger.error(`Errore aggiornando counter ${ctype} in ${guild.name}: ${err.message}`);
+      }
+    }
+  }
+
+  async counterStart(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+      await interaction.reply({ content: '⛔ Non hai i permessi.', ephemeral: true });
+      return;
+    }
+    const guild = interaction.guild;
+    await interaction.reply({ content: '🔄 Creazione canali counter in corso...', ephemeral: false });
+    let selected = [];
+    const typesStr = interaction.options.getString('types');
+    if (typesStr) {
+      selected = typesStr.split(',').map(s => s.trim()).filter(t => COUNTER_TYPES[t]);
+    }
+    if (!selected.length) selected = ['total_members', 'role_members'];
+
+    const templates = this.templatesFromConfig();
+    const created = {};
+    let position = 0;
+    for (const ctype of selected) {
+      const compute = COUNTER_TYPES[ctype];
+      const kwargs = {};
+      if (ctype === 'role_members' && templates.role_id) kwargs.role_id = templates.role_id;
+      const count = await compute(guild, kwargs);
+      const name = (templates[ctype] || '{count}').replace('{count}', String(count));
+      const channel = await guild.channels.create({
+        name,
+        type: ChannelType.GuildVoice,
+        position,
+        permissionOverwrites: [
+          { id: guild.id, deny: [PermissionFlagsBits.Connect] }
+        ]
+      });
+      position += 1;
+      created[ctype] = channel;
     }
 
-    setupEventListeners() {
-        this.client.on('guildMemberAdd', (member) => {
-            this.pendingUpdates[member.guild.id] = true;
+    if (Object.keys(created).length) {
+      this.counterChannels[guild.id] = created;
+      const state = loadCountersState();
+      state.active_counters = state.active_counters || {};
+      state.active_counters[guild.id] = Object.fromEntries(Object.entries(created).map(([k, ch]) => [k, ch.id]));
+      saveCountersState(state);
+      await this.updateGuildCounters(guild, true);
+      await interaction.followUp({ content: `✅ Counter creati: ${Object.keys(created).join(', ')}`, ephemeral: false });
+    } else {
+      await interaction.followUp({ content: '❌ Nessun counter valido selezionato.', ephemeral: true });
+    }
+  }
+
+  async counterStop(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+      await interaction.reply({ content: '⛔ Non hai i permessi.', ephemeral: true });
+      return;
+    }
+    const guild = interaction.guild;
+    if (!this.counterChannels[guild.id]) {
+      await interaction.reply({ content: '❌ Nessun counter attivo.', ephemeral: true });
+      return;
+    }
+    await interaction.reply({ content: '🔄 Rimozione dei counter...', ephemeral: false });
+    for (const ch of Object.values(this.counterChannels[guild.id])) {
+      try { await ch.delete(); } catch {}
+    }
+    delete this.counterChannels[guild.id];
+    const state = loadCountersState();
+    if (state.active_counters?.[guild.id]) {
+      delete state.active_counters[guild.id];
+      saveCountersState(state);
+    }
+    await interaction.followUp({ content: '✅ Tutti i counter sono stati rimossi.', ephemeral: false });
+  }
+
+  async counterEnable(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+      await interaction.reply({ content: '⛔ Non hai i permessi.', ephemeral: true });
+      return;
+    }
+    const guild = interaction.guild;
+    const ctype = interaction.options.getString('counter_type');
+    const channelOpt = interaction.options.getChannel('channel');
+    const templates = this.templatesFromConfig();
+    const kwargs = {};
+    if (ctype === 'role_members' && templates.role_id) kwargs.role_id = templates.role_id;
+    const compute = COUNTER_TYPES[ctype];
+    const count = await compute(guild, kwargs);
+    const name = (templates[ctype] || '{count}').replace('{count}', String(count));
+    let channel = channelOpt;
+    try {
+      if (!channel) {
+        const position = Object.keys(this.counterChannels[guild.id] || {}).length;
+        channel = await guild.channels.create({
+          name,
+          type: ChannelType.GuildVoice,
+          position,
+          permissionOverwrites: [{ id: guild.id, deny: [PermissionFlagsBits.Connect] }]
         });
-        
-        this.client.on('guildMemberRemove', (member) => {
-            this.pendingUpdates[member.guild.id] = true;
-        });
-        
-        this.client.on('channelCreate', (channel) => {
-            if (channel.guild) {
-                this.pendingUpdates[channel.guild.id] = true;
-            }
-        });
-        
-        this.client.on('channelDelete', (channel) => {
-            if (channel.guild) {
-                this.pendingUpdates[channel.guild.id] = true;
-            }
-        });
-        
-        this.client.on('guildMemberUpdate', (oldMember, newMember) => {
-            if (oldMember.roles.cache.size !== newMember.roles.cache.size) {
-                this.pendingUpdates[newMember.guild.id] = true;
-            }
-        });
+      } else {
+        await channel.edit({ name });
+      }
+    } catch (e) {
+      await interaction.reply({ content: `❌ Errore nell'abilitazione del counter: ${e.message}`, ephemeral: true });
+      return;
     }
+    this.counterChannels[guild.id] = this.counterChannels[guild.id] || {};
+    this.counterChannels[guild.id][ctype] = channel;
+    const state = loadCountersState();
+    state.active_counters = state.active_counters || {};
+    state.active_counters[guild.id] = state.active_counters[guild.id] || {};
+    state.active_counters[guild.id][ctype] = channel.id;
+    saveCountersState(state);
+    await this.updateGuildCounters(guild, true);
+    await interaction.reply({ content: `✅ Counter \\\`${ctype}\\\` abilitato su ${channel}.`, ephemeral: true });
+  }
 
-    async onReady() {
-        if (this.bootstrapped) return;
-        this.bootstrapped = true;
-        
-        await this.loadExistingCounters();
-        this.startCounterLoop();
-        this.setupEventListeners();
-        
-        logger.info('Counter cog ready');
+  async counterDisable(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+      await interaction.reply({ content: '⛔ Non hai i permessi.', ephemeral: true });
+      return;
     }
-
-    getCommands() {
-        return [
-            new SlashCommandBuilder()
-                .setName('counter')
-                .setDescription('Gestione dei counter')
-                .addSubcommand(subcommand =>
-                    subcommand.setName('start')
-                        .setDescription('Crea e avvia i counter selezionati')
-                        .addStringOption(option =>
-                            option.setName('types')
-                                .setDescription('Tipi di counter separati da virgola (default: total_members,role_members)')
-                                .setRequired(false)))
-                .addSubcommand(subcommand =>
-                    subcommand.setName('stop')
-                        .setDescription('Ferma e rimuove tutti i counter'))
-                .addSubcommand(subcommand =>
-                    subcommand.setName('enable')
-                        .setDescription('Abilita un singolo counter')
-                        .addStringOption(option =>
-                            option.setName('counter_type')
-                                .setDescription('Tipo di counter')
-                                .setRequired(true)
-                                .addChoices(
-                                    { name: 'Total Members', value: 'total_members' },
-                                    { name: 'Role Members', value: 'role_members' },
-                                    { name: 'Bots', value: 'bots' },
-                                    { name: 'Total Channels', value: 'total_channels' },
-                                    { name: 'Text Channels', value: 'text_channels' },
-                                    { name: 'Voice Channels', value: 'voice_channels' }
-                                ))
-                        .addChannelOption(option =>
-                            option.setName('channel')
-                                .setDescription('Canale voce esistente (opzionale)')
-                                .addChannelTypes(ChannelType.GuildVoice)
-                                .setRequired(false)))
-                .addSubcommand(subcommand =>
-                    subcommand.setName('disable')
-                        .setDescription('Disabilita un singolo counter')
-                        .addStringOption(option =>
-                            option.setName('counter_type')
-                                .setDescription('Tipo di counter')
-                                .setRequired(true)
-                                .addChoices(
-                                    { name: 'Total Members', value: 'total_members' },
-                                    { name: 'Role Members', value: 'role_members' },
-                                    { name: 'Bots', value: 'bots' },
-                                    { name: 'Total Channels', value: 'total_channels' },
-                                    { name: 'Text Channels', value: 'text_channels' },
-                                    { name: 'Voice Channels', value: 'voice_channels' }
-                                )))
-                .addSubcommand(subcommand =>
-                    subcommand.setName('setname')
-                        .setDescription('Imposta il template del nome per un counter')
-                        .addStringOption(option =>
-                            option.setName('counter_type')
-                                .setDescription('Tipo di counter')
-                                .setRequired(true)
-                                .addChoices(
-                                    { name: 'Total Members', value: 'total_members' },
-                                    { name: 'Role Members', value: 'role_members' },
-                                    { name: 'Bots', value: 'bots' },
-                                    { name: 'Total Channels', value: 'total_channels' },
-                                    { name: 'Text Channels', value: 'text_channels' },
-                                    { name: 'Voice Channels', value: 'voice_channels' }
-                                ))
-                        .addStringOption(option =>
-                            option.setName('template')
-                                .setDescription('Nuovo nome con {count} come segnaposto')
-                                .setRequired(true)))
-                .addSubcommand(subcommand =>
-                    subcommand.setName('setrole')
-                        .setDescription('Imposta il ruolo per il counter role_members')
-                        .addRoleOption(option =>
-                            option.setName('role')
-                                .setDescription('Ruolo usato per il counter role_members')
-                                .setRequired(true)))
-                .addSubcommand(subcommand =>
-                    subcommand.setName('list')
-                        .setDescription('Lista dei counter attivi in questo server'))
-        ];
+    const guild = interaction.guild;
+    const ctype = interaction.options.getString('counter_type');
+    if (!this.counterChannels[guild.id] || !this.counterChannels[guild.id][ctype]) {
+      await interaction.reply({ content: '❌ Questo counter non è attivo.', ephemeral: true });
+      return;
     }
-
-    async handleCommand(interaction) {
-        if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
-            await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
-            return;
-        }
-
-        const subcommand = interaction.options.getSubcommand();
-
-        switch (subcommand) {
-            case 'start':
-                await this.handleCounterStart(interaction);
-                break;
-            case 'stop':
-                await this.handleCounterStop(interaction);
-                break;
-            case 'enable':
-                await this.handleCounterEnable(interaction);
-                break;
-            case 'disable':
-                await this.handleCounterDisable(interaction);
-                break;
-            case 'setname':
-                await this.handleCounterSetName(interaction);
-                break;
-            case 'setrole':
-                await this.handleCounterSetRole(interaction);
-                break;
-            case 'list':
-                await this.handleCounterList(interaction);
-                break;
-        }
+    const channel = this.counterChannels[guild.id][ctype];
+    try { await channel.delete(); } catch {}
+    delete this.counterChannels[guild.id][ctype];
+    const state = loadCountersState();
+    if (state.active_counters?.[guild.id]) {
+      delete state.active_counters[guild.id][ctype];
+      if (!Object.keys(state.active_counters[guild.id]).length) delete state.active_counters[guild.id];
+      saveCountersState(state);
     }
+    await interaction.reply({ content: `✅ Counter \\\`${ctype}\\\` disabilitato e canale eliminato.`, ephemeral: true });
+  }
 
-    async handleCounterStart(interaction) {
-        await interaction.reply({ content: '🔄 Creazione canali counter in corso...', ephemeral: false });
-        
-        const typesStr = interaction.options.getString('types');
-        let selected = ['total_members', 'role_members'];
-        
-        if (typesStr) {
-            const validTypes = ['total_members', 'role_members', 'bots', 'total_channels', 'text_channels', 'voice_channels'];
-            selected = typesStr.split(',').map(t => t.trim()).filter(t => validTypes.includes(t));
-        }
-        
-        if (selected.length === 0) {
-            await interaction.followUp({ content: '❌ Nessun counter valido selezionato.', ephemeral: true });
-            return;
-        }
-        
-        const guild = interaction.guild;
-        const countersConfig = this.config.counters || {};
-        const created = {};
-        let position = 0;
-        
-        for (const ctype of selected) {
-            try {
-                let count = 0;
-                
-                switch (ctype) {
-                    case 'total_members':
-                        count = guild.members.cache.filter(m => !m.user.bot).size;
-                        break;
-                    case 'role_members':
-                        if (countersConfig.member_role_id) {
-                            const role = guild.roles.cache.get(countersConfig.member_role_id);
-                            if (role) count = role.members.filter(m => !m.user.bot).size;
-                        }
-                        break;
-                    case 'bots':
-                        count = guild.members.cache.filter(m => m.user.bot).size;
-                        break;
-                    case 'total_channels':
-                        count = guild.channels.cache.size;
-                        break;
-                    case 'text_channels':
-                        count = guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size;
-                        break;
-                    case 'voice_channels':
-                        count = guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size;
-                        break;
-                }
-                
-                const nameTemplates = {
-                    total_members: countersConfig.total_members_name || '👥 Membri: {count}',
-                    role_members: countersConfig.role_members_name || '⭐ Membri Clan: {count}',
-                    bots: countersConfig.bots_name || '🤖 Bot: {count}',
-                    total_channels: countersConfig.total_channels_name || '📺 Canali: {count}',
-                    text_channels: countersConfig.text_channels_name || '💬 Testo: {count}',
-                    voice_channels: countersConfig.voice_channels_name || '🔊 Voce: {count}'
-                };
-                
-                const name = nameTemplates[ctype].replace('{count}', count.toString());
-                const channel = await guild.channels.create({
-                    name,
-                    type: ChannelType.GuildVoice,
-                    position,
-                    permissionOverwrites: [{
-                        id: guild.roles.everyone.id,
-                        deny: [PermissionFlagsBits.Connect]
-                    }]
-                });
-                
-                created[ctype] = channel;
-                position++;
-            } catch (error) {
-                logger.error(`Error creating counter ${ctype}: ${error.message}`);
-            }
-        }
-        
-        if (Object.keys(created).length > 0) {
-            this.counterChannels[guild.id] = created;
-            
-            const state = loadJsonSync(COUNTERS_PATH, { active_counters: {} });
-            if (!state.active_counters[guild.id]) state.active_counters[guild.id] = {};
-            
-            for (const [ctype, channel] of Object.entries(created)) {
-                state.active_counters[guild.id][ctype] = channel.id;
-            }
-            
-            saveJsonSync(COUNTERS_PATH, state);
-            await this.updateGuildCounters(guild, true);
-            
-            await interaction.followUp({ content: `✅ Counter creati: ${Object.keys(created).join(', ')}`, ephemeral: false });
-        } else {
-            await interaction.followUp({ content: '❌ Nessun counter creato.', ephemeral: true });
-        }
+  async counterSetName(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+      await interaction.reply({ content: '⛔ Non hai i permessi.', ephemeral: true });
+      return;
     }
+    const ctype = interaction.options.getString('counter_type');
+    const template = interaction.options.getString('template');
+    const cfg = loadConfig();
+    cfg.counters = cfg.counters || {};
+    cfg.counters[`${ctype}_name`] = template;
+    saveConfig(cfg);
+    await interaction.reply({ content: `✅ Template per \\\`${ctype}\\\` aggiornato a: ${template}`, ephemeral: true });
+  }
 
-    async handleCounterStop(interaction) {
-        const guild = interaction.guild;
-        
-        if (!this.counterChannels[guild.id]) {
-            await interaction.reply({ content: '❌ Nessun counter attivo.', ephemeral: true });
-            return;
-        }
-        
-        await interaction.reply({ content: '🔄 Rimozione dei counter...', ephemeral: false });
-        
-        for (const [ctype, channel] of Object.entries(this.counterChannels[guild.id])) {
-            try {
-                await channel.delete();
-            } catch (error) {
-                logger.error(`Error deleting counter ${ctype}: ${error.message}`);
-            }
-        }
-        
-        delete this.counterChannels[guild.id];
-        
-        const state = loadJsonSync(COUNTERS_PATH, { active_counters: {} });
-        if (state.active_counters[guild.id]) {
-            delete state.active_counters[guild.id];
-            saveJsonSync(COUNTERS_PATH, state);
-        }
-        
-        await interaction.followUp({ content: '✅ Tutti i counter sono stati rimossi.', ephemeral: false });
+  async counterSetRole(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+      await interaction.reply({ content: '⛔ Non hai i permessi.', ephemeral: true });
+      return;
     }
+    const role = interaction.options.getRole('role');
+    const cfg = loadConfig();
+    cfg.counters = cfg.counters || {};
+    cfg.counters.member_role_id = String(role.id);
+    saveConfig(cfg);
+    await interaction.reply({ content: `✅ Ruolo per role_members impostato a ${role.name}`, ephemeral: true });
+  }
 
-    async handleCounterEnable(interaction) {
-        const guild = interaction.guild;
-        const ctype = interaction.options.getString('counter_type');
-        const channel = interaction.options.getChannel('channel');
-        
-        const countersConfig = this.config.counters || {};
-        
-        let count = 0;
-        switch (ctype) {
-            case 'total_members':
-                count = guild.members.cache.filter(m => !m.user.bot).size;
-                break;
-            case 'role_members':
-                if (countersConfig.member_role_id) {
-                    const role = guild.roles.cache.get(countersConfig.member_role_id);
-                    if (role) count = role.members.filter(m => !m.user.bot).size;
-                }
-                break;
-            case 'bots':
-                count = guild.members.cache.filter(m => m.user.bot).size;
-                break;
-            case 'total_channels':
-                count = guild.channels.cache.size;
-                break;
-            case 'text_channels':
-                count = guild.channels.cache.filter(c => c.type === ChannelType.GuildText).size;
-                break;
-            case 'voice_channels':
-                count = guild.channels.cache.filter(c => c.type === ChannelType.GuildVoice).size;
-                break;
-        }
-        
-        const nameTemplates = {
-            total_members: countersConfig.total_members_name || '👥 Membri: {count}',
-            role_members: countersConfig.role_members_name || '⭐ Membri Clan: {count}',
-            bots: countersConfig.bots_name || '🤖 Bot: {count}',
-            total_channels: countersConfig.total_channels_name || '📺 Canali: {count}',
-            text_channels: countersConfig.text_channels_name || '💬 Testo: {count}',
-            voice_channels: countersConfig.voice_channels_name || '🔊 Voce: {count}'
-        };
-        
-        const name = nameTemplates[ctype].replace('{count}', count.toString());
-        
-        try {
-            let targetChannel = channel;
-            
-            if (!targetChannel) {
-                const position = Object.keys(this.counterChannels[guild.id] || {}).length;
-                targetChannel = await guild.channels.create({
-                    name,
-                    type: ChannelType.GuildVoice,
-                    position,
-                    permissionOverwrites: [{
-                        id: guild.roles.everyone.id,
-                        deny: [PermissionFlagsBits.Connect]
-                    }]
-                });
-            } else {
-                await targetChannel.setName(name);
-            }
-            
-            if (!this.counterChannels[guild.id]) this.counterChannels[guild.id] = {};
-            this.counterChannels[guild.id][ctype] = targetChannel;
-            
-            const state = loadJsonSync(COUNTERS_PATH, { active_counters: {} });
-            if (!state.active_counters[guild.id]) state.active_counters[guild.id] = {};
-            state.active_counters[guild.id][ctype] = targetChannel.id;
-            saveJsonSync(COUNTERS_PATH, state);
-            
-            await this.updateGuildCounters(guild, true);
-            
-            await interaction.reply({ content: `✅ Counter \`${ctype}\` abilitato su ${targetChannel}`, ephemeral: true });
-        } catch (error) {
-            await interaction.reply({ content: `❌ Errore nell'abilitazione del counter: ${error.message}`, ephemeral: true });
-        }
+  async counterList(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+      await interaction.reply({ content: '⛔ Non hai i permessi.', ephemeral: true });
+      return;
     }
+    const active = this.counterChannels[interaction.guild.id] || {};
+    if (!Object.keys(active).length) {
+      await interaction.reply({ content: 'ℹ️ Nessun counter attivo.', ephemeral: true });
+      return;
+    }
+    const desc = Object.entries(active).map(([ctype, ch]) => `${ctype} ? ${ch} (ID: ${ch.id})`).join("\n");
+    const embed = new EmbedBuilder().setTitle('Counter attivi').setDescription(desc).setColor(0x2ecc71);
+    await interaction.reply({ embeds: [embed], ephemeral: true });
+  }
 
-    async handleCounterDisable(interaction) {
-        const guild = interaction.guild;
-        const ctype = interaction.options.getString('counter_type');
-        
-        if (!this.counterChannels[guild.id] || !this.counterChannels[guild.id][ctype]) {
-            await interaction.reply({ content: '❌ Questo counter non è attivo.', ephemeral: true });
-            return;
-        }
-        
-        const channel = this.counterChannels[guild.id][ctype];
-        
-        try {
-            await channel.delete();
-        } catch (error) {
-            logger.error(`Error deleting counter ${ctype}: ${error.message}`);
-        }
-        
-        delete this.counterChannels[guild.id][ctype];
-        
-        const state = loadJsonSync(COUNTERS_PATH, { active_counters: {} });
-        if (state.active_counters[guild.id] && state.active_counters[guild.id][ctype]) {
-            delete state.active_counters[guild.id][ctype];
-            if (Object.keys(state.active_counters[guild.id]).length === 0) {
-                delete state.active_counters[guild.id];
-            }
-            saveJsonSync(COUNTERS_PATH, state);
-        }
-        
-        await interaction.reply({ content: `✅ Counter \`${ctype}\` disabilitato e canale eliminato.`, ephemeral: true });
-    }
+  registerListeners() {
+    this.client.once('ready', async () => { await this.onReady(); });
+    this.client.on('guildMemberAdd', m => this.markPending(m.guild.id));
+    this.client.on('guildMemberRemove', m => this.markPending(m.guild.id));
+    this.client.on('guildMemberUpdate', (b, a) => { if (b.roles.cache.size !== a.roles.cache.size) this.markPending(a.guild.id); });
+    this.client.on('channelCreate', ch => this.markPending(ch.guildId));
+    this.client.on('channelDelete', ch => this.markPending(ch.guildId));
 
-    async handleCounterSetName(interaction) {
-        const ctype = interaction.options.getString('counter_type');
-        const template = interaction.options.getString('template');
-        
-        if (!this.config.counters) this.config.counters = {};
-        this.config.counters[`${ctype}_name`] = template;
-        saveJsonSync(CONFIG_PATH, this.config);
-        
-        await interaction.reply({ content: `✅ Template per \`${ctype}\` aggiornato a: ${template}`, ephemeral: true });
-    }
-
-    async handleCounterSetRole(interaction) {
-        const role = interaction.options.getRole('role');
-        
-        if (!this.config.counters) this.config.counters = {};
-        this.config.counters.member_role_id = role.id;
-        saveJsonSync(CONFIG_PATH, this.config);
-        
-        await interaction.reply({ content: `✅ Ruolo per \`role_members\` impostato a ${role.name}`, ephemeral: true });
-    }
-
-    async handleCounterList(interaction) {
-        const guild = interaction.guild;
-        const active = this.counterChannels[guild.id] || {};
-        
-        if (Object.keys(active).length === 0) {
-            await interaction.reply({ content: 'ℹ️ Nessun counter attivo.', ephemeral: true });
-            return;
-        }
-        
-        const { EmbedBuilder } = require('discord.js');
-        const desc = Object.entries(active).map(([ctype, channel]) => 
-            `\`${ctype}\` → ${channel} (ID: ${channel.id})`
-        ).join('\n');
-        
-        const embed = new EmbedBuilder()
-            .setTitle('Counter attivi')
-            .setDescription(desc)
-            .setColor(0x2ecc71);
-        
-        await interaction.reply({ embeds: [embed], ephemeral: true });
-    }
+    this.client.on('interactionCreate', async (interaction) => {
+      if (!interaction.isChatInputCommand()) return;
+      if (interaction.commandName !== 'counter') return;
+      const sub = interaction.options.getSubcommand();
+      switch (sub) {
+        case 'start': return this.counterStart(interaction);
+        case 'stop': return this.counterStop(interaction);
+        case 'enable': return this.counterEnable(interaction);
+        case 'disable': return this.counterDisable(interaction);
+        case 'setname': return this.counterSetName(interaction);
+        case 'setrole': return this.counterSetRole(interaction);
+        case 'list': return this.counterList(interaction);
+      }
+    });
+  }
 }
 
 function setup(client) {
-    const cog = new CountersCog(client);
-    
-    // Handle ready event
-    client.once('ready', async () => {
-        await cog.onReady();
-    });
-    
-    // Handle interactions
-    client.on('interactionCreate', async (interaction) => {
-        if (interaction.isChatInputCommand() && interaction.commandName === 'counter') {
-            await cog.handleCommand(interaction);
-        }
-    });
-
-    if (!client.globalCommands) client.globalCommands = [];
-    client.globalCommands.push(...cog.getCommands());
-    
-    return cog;
+  const cog = new CountersCog(client);
+  cog.registerListeners();
+  if (!client.globalCommands) client.globalCommands = [];
+  client.globalCommands.push(...cog.commands);
+  return cog;
 }
 
 module.exports = { setup, CountersCog };
