@@ -2,7 +2,7 @@
   "lobby_voice_channel_id": "1425176140481564682",
   "category_id": "1350074005209485372",
   "welcome_channel_id": "1350074011131969600",
-  "ruleset_message": "**RULESET SEASON XI 📜**\n\n✅ FireBalls\n✅ Ladders\n✅ Bridge Eggs\n✅ Diamond Armor (2 per team)\n✅ Blue side\n\n⚠️ Yellow Side after BB\n⚠️ Ender Pearl after Dia 3\n⚠️ TNT after BB\n⚠️ Water (only in your base) after BB\n⚠️ All Potions after BB\n⚠️ Emeralds (except Bridge Eggs & Diamond Armor) after BB\n\n❌ **You can't ladder your own bed**\n❌ Silverfish\n❌ All Potions before BB\n❌ Bows\n❌ Fireballing Diamonds\n❌ Obsidian\n❌ PopUp Towers\n❌ Iron Golems\n\n> Maps:\n🗺️ Archway [127], Boletum [142], Carapace [94], EastWood [101], Lectus [90].",
+  "ruleset_message": "**RULESET SEASON XII** 📜\n\n﻿✅﻿ Ladders\n﻿✅﻿ Bridge Eggs\n﻿✅﻿ Speed, Jump\n﻿✅﻿ Sponges, Water (only in your base)\n✅﻿ Fireballs\n\n⚠️﻿ KB Stick after Diamond II\n﻿⚠️﻿ Yellow side after BedBreak\n﻿⚠️﻿ Iron Golems, Bows after BedBreak\n﻿⚠️﻿ Emeralds (except Speed, Jump, Eggs) after BedBreak\n\n❌ **Fireballing dia gens﻿**\n﻿❌﻿ Silverfish\n﻿❌﻿ Obsidian, Pearl\n﻿❌﻿ Ladders on the bed\n﻿❌﻿ Pop-up Towers\n❌﻿ Punch Bow (Always)\n\n> *Maps:*\n🗺️ Archway [127], Antenna [88], Extinction [95], Invasion [115], SwashBuckle [90].",
   "welcome_message": {
     "title": "**Nuovo membro!**",
     "description": "{mention}, benvenuto/a su **Valiance V2**! 🎮\n> <a:greenarrow:1363851704466149396> Apri un ticket in https://discord.com/channels/1350073876339490826/1350074017536544799 per entrare nel clan! <a:greencrown:1363088614527078521>\n> <a:greenarrow:1363851704466149396> Leggi il regolamento in https://discord.com/channels/1350073876339490826/1350074034053709844 per evitare ban inaspettati! :books:\n> <a:greenarrow:1363851704466149396> Fatti conoscere in <#1350074011131969600>! <a:greenstar:1363853986477637793>\n> <a:greenarrow:1363851704466149396> Personalizza i tuoi ruoli in <#1362486898630721737>! <a:greenfire:1363854359678419186>",
@@ -16,12 +16,7 @@
     "total_members_name": "👥 Membri: {count}",
     "role_members_name": "⭐ Membri Clan: {count}"
   },
-  "active_counters": {
-    "1350073876339490826": {
-      "total_members": 1425503169315737652,
-      "role_members": 1425503171232530563
-    }
-  },
+  "active_counters": {},
   "welcome_emojis": [
     "<a:welcome1:1357415726117290001>",
     "<a:welcome2:1357415713173934140>",
@@ -91,13 +86,13 @@
     "footer": "Valiance | Ticket System",
     "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png"
   },
-  "ticket_panel_channel_id": 1350074017536544799,
-  "ticket_panel_message_id": 1427408841200373811,
+  "ticket_panel_channel_id": 1350074017536544800,
+  "ticket_panel_message_id": 1427408841200373800,
   "prefixes": [
     "v!",
     "!"
   ],
-  "ticket_counter": 3,
+  "ticket_counter": 55,
   "ticket_max_per_user": 1,
   "bot_status": "dnd",
   "bot_activity_type": "watching",

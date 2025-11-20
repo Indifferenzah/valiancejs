@@ -1,3 +1,11 @@
 {
-  "giveaways": {}
+  "embed_template": {
+    "title": "🎉 | Giveaway",
+    "description": "> **Premio:** {prize}\n> **Host:** {host}\n> **Premio:** {prize}\n> **Termina:** {expire}\n\nPartecipa cliccando il bottone!",
+    "thumbnail": null,
+    "footer_text": "Valiance | Giveaway System",
+    "footer_use_server_icon": true,
+    "color": "gold"
+  },
+  "end_message": "🎉 Giveaway terminato!\nVincitore: {winner} — Premio: {prize} — Finito {expire} (Host: {host})"
 }

@@ -1,5 +1,6 @@
 const {
-    SlashCommandBuilder
+    SlashCommandBuilder,
+    PermissionFlagsBits
 } = require("discord.js");
 
 const {
@@ -10,6 +11,7 @@ const {
 } = require("@discordjs/voice");
 
 const { loadJsonSync, saveJsonSync } = require("../../utils/jsonStore");
+const { ownerOrHasPermissions } = require("../../utils/botUtils");
 
 const fs = require("fs");
 const path = require("path");
@@ -89,12 +91,16 @@ class TTSCog {
     }
 
     async handleSetChannel(interaction) {
+        if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+            return interaction.reply({ content: "? Non hai i permessi per impostare il canale TTS.", ephemeral: true });
+        }
+
         const channel = interaction.options.getChannel("channel");
 
         if (!channel.isTextBased()) {
             return interaction.reply({
-                content: "❌ Devi selezionare un canale testuale!",
-                flags: ["Ephemeral"]
+                content: "? Devi selezionare un canale testuale!",
+                ephemeral: true
             });
         }
 
@@ -102,8 +108,8 @@ class TTSCog {
         this.saveConfig();
 
         return interaction.reply({
-            content: `✅ Canale TTS impostato su <#${channel.id}>`,
-            flags: ["Ephemeral"]
+            content: `? Canale TTS impostato su <#${channel.id}>`,
+            ephemeral: true
         });
     }
 

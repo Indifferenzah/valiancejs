@@ -174,10 +174,6 @@ class TicketCog {
                     option.setName('user')
                         .setDescription('Utente a cui inviare il transcript')
                         .setRequired(true)),
-            
-            new SlashCommandBuilder()
-                .setName('reloadticket')
-                .setDescription('Ricarica la configurazione ticketmsg.json senza riavviare il bot (solo admin)')
         ];
     }
 
@@ -211,9 +207,6 @@ class TicketCog {
                 break;
             case 'sendtranscript':
                 await this.handleSendTranscript(interaction);
-                break;
-            case 'reloadticket':
-                await this.handleReloadTicket(interaction);
                 break;
         }
     }
@@ -631,7 +624,21 @@ class TicketCog {
 
         try {
             await channel.setName(newName);
-            await interaction.reply({ content: '✅ Canale rinominato!', ephemeral: false });
+            
+            const renameMsg = this.ticketMessages.rename;
+            if (renameMsg) {
+                const embed = new EmbedBuilder()
+                    .setTitle(renameMsg.title)
+                    .setDescription(renameMsg.description.replace('{name}', newName))
+                    .setColor(renameMsg.color);
+                
+                if (renameMsg.thumbnail) embed.setThumbnail(renameMsg.thumbnail);
+                if (renameMsg.footer) embed.setFooter({ text: renameMsg.footer });
+
+                await interaction.reply({ embeds: [embed], ephemeral: false });
+            } else {
+                await interaction.reply({ content: '✅ Canale rinominato!', ephemeral: false });
+            }
         } catch (error) {
             if (error.code === 50013) {
                 await interaction.reply({ content: '❌ Non ho i permessi per rinominare il canale!', ephemeral: true });
@@ -682,7 +689,20 @@ class TicketCog {
                 SendMessages: true
             });
 
-            await interaction.reply({ content: `✅ ${member} aggiunto!`, ephemeral: false });
+            const addMsg = this.ticketMessages.add;
+            if (addMsg) {
+                const embed = new EmbedBuilder()
+                    .setTitle(addMsg.title)
+                    .setDescription(addMsg.description.replace('{member}', member.toString()))
+                    .setColor(addMsg.color);
+                
+                if (addMsg.thumbnail) embed.setThumbnail(addMsg.thumbnail);
+                if (addMsg.footer) embed.setFooter({ text: addMsg.footer });
+
+                await interaction.reply({ embeds: [embed], ephemeral: false });
+            } else {
+                await interaction.reply({ content: `✅ ${member} aggiunto!`, ephemeral: false });
+            }
         } catch (error) {
             await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
         }
@@ -718,7 +738,21 @@ class TicketCog {
 
         try {
             await channel.permissionOverwrites.delete(member);
-            await interaction.reply({ content: `✅ ${member} rimosso!`, ephemeral: false });
+            
+            const removeMsg = this.ticketMessages.remove;
+            if (removeMsg) {
+                const embed = new EmbedBuilder()
+                    .setTitle(removeMsg.title)
+                    .setDescription(removeMsg.description.replace('{member}', member.toString()))
+                    .setColor(removeMsg.color);
+                
+                if (removeMsg.thumbnail) embed.setThumbnail(removeMsg.thumbnail);
+                if (removeMsg.footer) embed.setFooter({ text: removeMsg.footer });
+
+                await interaction.reply({ embeds: [embed], ephemeral: false });
+            } else {
+                await interaction.reply({ content: `✅ ${member} rimosso!`, ephemeral: false });
+            }
         } catch (error) {
             await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
         }
@@ -894,7 +928,7 @@ function setup(client) {
     // Handle interactions
     client.on('interactionCreate', async (interaction) => {
         if (interaction.isChatInputCommand()) {
-            const commandNames = ['ticketpanel', 'close', 'rename', 'blacklist', 'add', 'remove', 'list', 'transcript', 'sendtranscript', 'reloadticket'];
+            const commandNames = ['ticketpanel', 'close', 'rename', 'blacklist', 'add', 'remove', 'list', 'transcript', 'sendtranscript'];
             if (commandNames.includes(interaction.commandName)) {
                 await cog.handleCommand(interaction);
             }

@@ -50,6 +50,11 @@ class ModerationCog {
                         .setDescription('Mostra i warn di un utente')
                         .addUserOption(option => option.setName('user').setDescription('Utente').setRequired(true)))
                 .addSubcommand(subcommand =>
+                    subcommand.setName('remove')
+                        .setDescription('Rimuovi un singolo warn tramite ID')
+                        .addUserOption(option => option.setName('user').setDescription('Utente').setRequired(true))
+                        .addIntegerOption(option => option.setName('id').setDescription('ID del warn (vedi /warn list)').setRequired(true).setMinValue(1)))
+                .addSubcommand(subcommand =>
                     subcommand.setName('clear')
                         .setDescription('Rimuovi tutti i warn')
                         .addUserOption(option => option.setName('user').setDescription('Utente').setRequired(true))),
@@ -246,6 +251,36 @@ class ModerationCog {
         await interaction.reply({ embeds: [embed] });
     }
 
+    async handleWarnRemove(interaction) {
+        if (!ownerOrHasPermissions(PermissionFlagsBits.ModerateMembers)(interaction)) {
+            await interaction.reply({ content: '�?O Non hai i permessi per rimuovere warn!', ephemeral: true });
+            return;
+        }
+
+        const user = interaction.options.getUser('user');
+        const warnId = interaction.options.getInteger('id');
+        const userWarns = this.warns[user.id] || [];
+
+        if (!userWarns.length) {
+            await interaction.reply({ content: `${user.tag} non ha warn.`, ephemeral: true });
+            return;
+        }
+
+        const index = warnId - 1;
+        if (index < 0 || index >= userWarns.length) {
+            await interaction.reply({ content: `ID non valido. Usa un numero tra 1 e ${userWarns.length} (vedi /warn list).`, ephemeral: true });
+            return;
+        }
+
+        const [removed] = userWarns.splice(index, 1);
+        this.warns[user.id] = userWarns;
+        this.saveWarns();
+
+        const removedDate = removed?.timestamp ? new Date(removed.timestamp).toLocaleString() : 'sconosciuta';
+        await interaction.reply({ content: `�o. Rimosso warn #${warnId} di ${user.tag} (motivo: ${removed?.reason || 'n/d'}, data: ${removedDate}).`, ephemeral: true });
+        logger.info(`Warn #${warnId} removed for ${user.tag} by ${interaction.user.tag}`);
+    }
+
     async handleWarnClear(interaction) {
         if (!ownerOrHasPermissions(PermissionFlagsBits.ModerateMembers)(interaction)) {
             await interaction.reply({ content: '❌ Non hai i permessi per rimuovere warn!', ephemeral: true });
@@ -313,6 +348,7 @@ function setup(client) {
                     switch (subcommand) {
                         case 'add': await moderationCog.handleWarnAdd(interaction); break;
                         case 'list': await moderationCog.handleWarnList(interaction); break;
+                        case 'remove': await moderationCog.handleWarnRemove(interaction); break;
                         case 'clear': await moderationCog.handleWarnClear(interaction); break;
                     }
                     break;

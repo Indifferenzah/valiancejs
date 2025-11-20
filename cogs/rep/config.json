@@ -1,4 +1,35 @@
 {
   "cooldown_hours": 24,
-  "reputation_data": {}
+  "reputation_data": {
+    "1332700099737948274": {
+      "positive": 1,
+      "negative": 0,
+      "total": 1,
+      "given_by": [],
+      "history": [
+        {
+          "type": "positive",
+          "from": "1123622103917285418",
+          "from_username": "indifferenzah",
+          "reason": "Nessun motivo specificato",
+          "timestamp": 1763662045832
+        }
+      ]
+    },
+    "1123622103917285418": {
+      "positive": 1,
+      "negative": 0,
+      "total": 1,
+      "given_by": [],
+      "history": [
+        {
+          "type": "positive",
+          "from": "1332700099737948274",
+          "from_username": "usblivestick",
+          "reason": "Nessun motivo specificato",
+          "timestamp": 1763663296388
+        }
+      ]
+    }
+  }
 }

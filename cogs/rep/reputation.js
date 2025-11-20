@@ -95,81 +95,69 @@ class ReputationCog {
         return { canGive: true };
     }
 
-    async handleRepAdd(interaction) {
-        const user = interaction.options.getUser('user');
-        const reason = interaction.options.getString('reason') || 'Nessun motivo specificato';
-        
-        const canGive = this.canGiveReputation(interaction.user.id, user.id);
+    applyReputation(giver, receiver, reason, type) {
+        const canGive = this.canGiveReputation(giver.id, receiver.id);
         if (!canGive.canGive) {
-            await interaction.reply({ content: `❌ ${canGive.reason}`, ephemeral: true });
-            return;
+            return { error: canGive.reason };
         }
 
-        const userRep = this.getUserReputation(user.id);
-        userRep.positive += 1;
-        userRep.total += 1;
+        const userRep = this.getUserReputation(receiver.id);
+        const isPositive = type === 'positive';
+        if (isPositive) {
+            userRep.positive += 1;
+            userRep.total += 1;
+        } else {
+            userRep.negative += 1;
+            userRep.total -= 1;
+        }
         userRep.history.push({
-            type: 'positive',
-            from: interaction.user.id,
-            from_username: interaction.user.username,
-            reason: reason,
+            type,
+            from: giver.id,
+            from_username: giver.username,
+            reason,
             timestamp: Date.now()
         });
 
-        this.cooldowns.set(`${interaction.user.id}-${user.id}`, Date.now());
+        this.cooldowns.set(`${giver.id}-${receiver.id}`, Date.now());
         this.saveConfig();
 
         const embed = new EmbedBuilder()
-            .setTitle('✅ Reputation Aggiunta!')
-            .setDescription(`Hai dato **+1 reputation** a ${user.toString()}`)
+            .setTitle(isPositive ? '✅ Reputation Aggiunta!' : '❌ Reputation Rimossa!')
+            .setDescription(`Hai dato **${isPositive ? '+1' : '-1'} reputation** a ${receiver.toString()}`)
             .addFields(
                 { name: '📝 Motivo', value: reason, inline: false },
                 { name: '📊 Reputation Totale', value: `${userRep.total} (${userRep.positive}+ / ${userRep.negative}-)`, inline: true }
             )
-            .setColor(0x00ff00)
-            .setThumbnail(user.displayAvatarURL())
+            .setColor(isPositive ? 0x00ff00 : 0xff0000)
+            .setThumbnail(receiver.displayAvatarURL())
             .setFooter({ text: 'Valiance Bot | Reputation System' });
 
-        await interaction.reply({ embeds: [embed] });
+        return { embed };
+    }
+
+    async handleRepAdd(interaction) {
+        const user = interaction.options.getUser('user');
+        const reason = interaction.options.getString('reason') || 'Nessun motivo specificato';
+
+        const res = this.applyReputation(interaction.user, user, reason, 'positive');
+        if (res.error) {
+            await interaction.reply({ content: `❌ ${res.error}`, ephemeral: true });
+            return;
+        }
+        await interaction.reply({ embeds: [res.embed] });
         logger.info(`+rep given by ${interaction.user.tag} to ${user.tag}: ${reason}`);
     }
 
     async handleRepRemove(interaction) {
         const user = interaction.options.getUser('user');
         const reason = interaction.options.getString('reason') || 'Nessun motivo specificato';
-        
-        const canGive = this.canGiveReputation(interaction.user.id, user.id);
-        if (!canGive.canGive) {
-            await interaction.reply({ content: `❌ ${canGive.reason}`, ephemeral: true });
+
+        const res = this.applyReputation(interaction.user, user, reason, 'negative');
+        if (res.error) {
+            await interaction.reply({ content: `❌ ${res.error}`, ephemeral: true });
             return;
         }
-
-        const userRep = this.getUserReputation(user.id);
-        userRep.negative += 1;
-        userRep.total -= 1;
-        userRep.history.push({
-            type: 'negative',
-            from: interaction.user.id,
-            from_username: interaction.user.username,
-            reason: reason,
-            timestamp: Date.now()
-        });
-
-        this.cooldowns.set(`${interaction.user.id}-${user.id}`, Date.now());
-        this.saveConfig();
-
-        const embed = new EmbedBuilder()
-            .setTitle('❌ Reputation Rimossa!')
-            .setDescription(`Hai dato **-1 reputation** a ${user.toString()}`)
-            .addFields(
-                { name: '📝 Motivo', value: reason, inline: false },
-                { name: '📊 Reputation Totale', value: `${userRep.total} (${userRep.positive}+ / ${userRep.negative}-)`, inline: true }
-            )
-            .setColor(0xff0000)
-            .setThumbnail(user.displayAvatarURL())
-            .setFooter({ text: 'Valiance Bot | Reputation System' });
-
-        await interaction.reply({ embeds: [embed] });
+        await interaction.reply({ embeds: [res.embed] });
         logger.info(`-rep given by ${interaction.user.tag} to ${user.tag}: ${reason}`);
     }
 
@@ -177,23 +165,22 @@ class ReputationCog {
         const user = interaction.options.getUser('user') || interaction.user;
         const userRep = this.getUserReputation(user.id);
 
-        let color = 0x808080; // Gray for neutral
-        if (userRep.total > 0) color = 0x00ff00; // Green for positive
-        else if (userRep.total < 0) color = 0xff0000; // Red for negative
+        let color = 0x808080;
+        if (userRep.total > 0) color = 0x00ff00;
+        else if (userRep.total < 0) color = 0xff0000;
 
         const embed = new EmbedBuilder()
-            .setTitle(`📊 Reputation di ${user.username}`)
+            .setTitle(`?? Reputation di ${user.username}`)
             .setDescription(`**Reputation Totale:** ${userRep.total}`)
             .addFields(
-                { name: '✅ Positive', value: userRep.positive.toString(), inline: true },
-                { name: '❌ Negative', value: userRep.negative.toString(), inline: true },
-                { name: '📈 Totale', value: userRep.total.toString(), inline: true }
+                { name: '? Positive', value: userRep.positive.toString(), inline: true },
+                { name: '? Negative', value: userRep.negative.toString(), inline: true },
+                { name: '?? Totale', value: userRep.total.toString(), inline: true }
             )
             .setColor(color)
             .setThumbnail(user.displayAvatarURL())
             .setFooter({ text: 'Valiance Bot | Reputation System' });
 
-        // Show recent history (last 5 entries)
         if (userRep.history.length > 0) {
             const recentHistory = userRep.history
                 .slice(-5)
@@ -206,7 +193,7 @@ class ReputationCog {
                 .join('\n');
 
             embed.addFields({
-                name: '📜 Storia Recente',
+                name: '🕑 Storia Recente',
                 value: recentHistory,
                 inline: false
             });
@@ -214,11 +201,61 @@ class ReputationCog {
 
         await interaction.reply({ embeds: [embed] });
     }
+
 }
 
 function setup(client) {
     const reputationCog = new ReputationCog(client);
     
+
+    if (!client.repPrefixListener) {
+        client.repPrefixListener = true;
+        client.on('messageCreate', async (message) => {
+            try {
+                if (message.author.bot || !message.guild) return;
+                const content = message.content.trim();
+                const isPositive = content.startsWith('+rep');
+                const isNegative = content.startsWith('-rep');
+            if (!isPositive && !isNegative) return;
+
+            const parts = content.split(/\s+/);
+            if (parts.length < 2) {
+                await message.reply('Usa +rep/-rep @utente [motivo].');
+                return;
+            }
+
+            let target = message.mentions.users.first();
+            if (!target) {
+                const possibleId = parts[1].replace(/[^0-9]/g, '');
+                if (possibleId) {
+                    try {
+                        target = await message.client.users.fetch(possibleId);
+                    } catch (error) {
+                        target = null;
+                    }
+                }
+            }
+
+            if (!target) {
+                await message.reply('❌ Utente non valido.');
+                return;
+            }
+
+            const reason = parts.slice(2).join(' ') || 'Nessun motivo specificato';
+            const res = reputationCog.applyReputation(message.author, target, reason, isPositive ? 'positive' : 'negative');
+            if (res.error) {
+                await message.reply(`❌ ${res.error}`);
+                return;
+            }
+
+            await message.reply({ embeds: [res.embed] });
+            logger.info(`${isPositive ? '+rep' : '-rep'} via prefix by ${message.author.tag} to ${target.tag}: ${reason}`);
+        } catch (error) {
+            logger.error(`Error in rep prefix handler: ${error.message}`);
+        }
+    });
+    }
+
     // Register command handlers
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } = require('discord.js');
-const logger = require('../../utils/logger');
+const logger = require('../utils/logger');
 
 const categories = {
     'moderation': {
@@ -10,13 +10,10 @@ const categories = {
             '\\- `/kick` <utente> - Kicka un membro',
             '\\- `/mute` <utente> - Muta un membro',
             '\\- `/unmute` <utente> - Smuta un membro',
-            '\\- `/warn` <utente> - Aggiungi un warn',
+            '\\- `/warn remove` <user> <id> - Aggiungi un warn',
             '\\- `/warn add` <utente> - Rimuovi un warn',
             '\\- `/warn list` <utente> - Mostra i warn di un utente',
             '\\- `/warn clear` <utente> - Rimuovi tutti i warn',
-            '\\- `/listban` - Mostra i ban',
-            '\\- `/checkban` <id utente> - Controlla se un utente è bannato',
-            '\\- `/checkmute` <utente> - Controlla se un utente è mutato',
             '\\- `/nick` <nick> <utente> - Imposta nickname a un utente'
         ]
     },
@@ -41,8 +38,6 @@ const categories = {
             '\\- `/ping` - Mostra latenza bot',
             '\\- `/uptime` - Mostra uptime bot',
             '\\- `/purge` <messaggi> - Elimina messaggi',
-            '\\- `/delete` - Elimina canale',
-            '\\- `/rename_channel` <nome> [canale] - Rinomina canale',
             '\\- `/embed` - Crea embed personalizzato',
             '\\- `/regole` - Manda le regole del server',
             '\\- `/verify panel` - Manda messaggio verifica',
@@ -74,10 +69,9 @@ const categories = {
         'emoji': '📝',
         'name': 'TTS',
         'commands': [
-            '\\- `/tts say` <messaggio> - Usa TTS',
-            '\\- `/tts voice` <voce> - Imposta voce',
-            '\\- `/tts volume` <volume> - Cambia volume',
-            '\\- `/tts stop` - Ferma TTS'
+            '\\- `/tts join` <messaggio> - Entra nel canale vocale',
+            '\\- `/tts setchannel` <canale> - Imposta canale TTS',
+            '\\- `/tts leave` - Esci dal canale vocale'
         ]
     },
     'cw': {
@@ -166,29 +160,6 @@ const categories = {
             '`Coming Soon...` 👀',
         ]
     },
-    'logs': {
-        'emoji': '⚙️',
-        'name': 'Logs',
-        'commands': [
-            '\\- `/logs` - Visualizza file di log',
-            '\\- `/dellogs` - Elimina file di log',
-            '\\- `/setlogchannel` [tipo di log] <id canale> - Imposta canali di log'
-        ]
-    },
-    'reload': {
-        'emoji': '🔄',
-        'name': 'Reload',
-        'commands': [
-            '\\- `/reloadlog` - Ricarica config di log',
-            '\\- `/reloadticket` - Ricarica config di ticket',
-            '\\- `/reloadmod` - Ricarica config di moderazione',
-            '\\- `/reloadcw` - Ricarica config di CW',
-            '\\- `/reloadautorole` - Ricarica config di AutoRole',
-            '\\- `/reloadregole` - Ricarica config di regole',
-            '\\- `/reloadconfig` - Ricarica config generale',
-            '\\- `/reloadall` - Ricarica tutte le configurazioni'
-        ]
-    }
 };
 
 class HelpSelectView {
