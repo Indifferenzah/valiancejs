@@ -296,7 +296,10 @@ class TicketCog {
             return;
         }
 
-        await interaction.deferReply({ ephemeral: true });
+        if (interaction.deferred || interaction.replied) {
+            return;
+        }
+        await interaction.deferReply({ ephemeral: true }).catch(() => {});
 
         const guild = interaction.guild;
         const buttonConfig = this.config.ticket_buttons.find(btn => btn.id === interaction.customId);
@@ -459,7 +462,10 @@ class TicketCog {
             return;
         }
 
-        await interaction.deferReply({ ephemeral: true });
+        if (interaction.deferred || interaction.replied) {
+            return;
+        }
+        await interaction.deferReply({ ephemeral: true }).catch(() => {});
 
         try {
             // Collect messages for transcript
@@ -500,40 +506,48 @@ class TicketCog {
             };
             saveJsonSync(CLOSED_TICKETS_JSON, this.closedTickets);
 
-            // Send transcript to transcript channel and owner
+            // Build transcript embed with placeholders
+            const embedData = this.config.ticket_transcript_embed || {};
+            const openerUser = ticketInfo.owner ? await this.client.users.fetch(ticketInfo.owner).catch(() => null) : null;
+            const opener = openerUser ? openerUser.toString() : 'Unknown';
+            const staffer = interaction.user ? interaction.user.toString() : 'Unknown';
+            const channelName = channel.name;
+            const buttonId = ticketInfo.button || '';
+            const ticketVars = {
+                '{opener}': opener,
+                '{staffer}': staffer,
+                '{name}': channelName,
+                '{id}': buttonId,
+                '{channel}': channel.mention,
+                '{number}': String(ticketNumber)
+            };
+            const applyVars = (str) => Object.entries(ticketVars).reduce((acc, [k, v]) => acc.replace(new RegExp(k, 'g'), v), str || '');
+
+            const transcriptEmbed = new EmbedBuilder()
+                .setTitle(applyVars(embedData.title || 'Transcript del Ticket'))
+                .setDescription(applyVars(embedData.description || 'Ecco il transcript del ticket.'))
+                .setColor(embedData.color || 0x00ff00);
+
+            if (embedData.thumbnail) transcriptEmbed.setThumbnail(embedData.thumbnail);
+            if (embedData.footer) transcriptEmbed.setFooter({ text: applyVars(embedData.footer) });
+
+            const payload = { embeds: [transcriptEmbed], files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }] };
+
+            // Send transcript to transcript channel
             const transcriptChannelId = this.config.ticket_transcript_channel_id;
             if (transcriptChannelId) {
                 const transcriptChannel = this.client.channels.cache.get(transcriptChannelId);
                 if (transcriptChannel) {
-                    const embedData = this.config.ticket_transcript_embed || {};
-                    const embed = new EmbedBuilder()
-                        .setTitle(embedData.title || 'Transcript del Ticket')
-                        .setDescription(embedData.description || 'Ecco il transcript del ticket.')
-                        .setColor(embedData.color || 0x00ff00);
-
-                    if (embedData.thumbnail) embed.setThumbnail(embedData.thumbnail);
-                    if (embedData.footer) embed.setFooter({ text: embedData.footer });
-
-                    await transcriptChannel.send({ 
-                        embeds: [embed], 
-                        files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }] 
-                    });
+                    await transcriptChannel.send(payload).catch(err => logger.error(`Error sending transcript to channel: ${err.message}`));
+                } else {
+                    logger.error('Canale transcript non trovato!');
                 }
             }
 
-            // Send transcript to ticket owner
+            // Send transcript to ticket opener via DM with same embed
             try {
-                const owner = await this.client.users.fetch(ticketInfo.owner);
-                if (owner) {
-                    const embed = new EmbedBuilder()
-                        .setTitle('Transcript del Ticket')
-                        .setDescription('Il tuo ticket è stato chiuso. Ecco il transcript della conversazione.')
-                        .setColor(0x00ff00);
-
-                    await owner.send({ 
-                        embeds: [embed], 
-                        files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }] 
-                    });
+                if (openerUser) {
+                    await openerUser.send({ ...payload, content: applyVars('Transcript del ticket #{number}') });
                 }
             } catch (error) {
                 logger.error(`Could not send transcript to owner: ${error.message}`);
@@ -845,7 +859,10 @@ class TicketCog {
             return;
         }
 
-        await interaction.deferReply({ ephemeral: true });
+        if (interaction.deferred || interaction.replied) {
+            return;
+        }
+        await interaction.deferReply({ ephemeral: true }).catch(() => {});
         await interaction.followUp({ 
             files: [{ attachment: filename, name: `transcript-${number}.txt` }], 
             ephemeral: true 
@@ -879,7 +896,10 @@ class TicketCog {
             return;
         }
 
-        await interaction.deferReply({ ephemeral: true });
+        if (interaction.deferred || interaction.replied) {
+            return;
+        }
+        await interaction.deferReply({ ephemeral: true }).catch(() => {});
 
         try {
             await user.send({
