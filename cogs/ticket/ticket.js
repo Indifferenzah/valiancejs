@@ -20,6 +20,7 @@ class TicketCog {
         this.ticketOwners = this.loadTicketOwners();
         this.closedTickets = loadJsonSync(CLOSED_TICKETS_JSON, {});
         this.blacklist = loadJsonSync(BLACKLIST_JSON, []);
+        this.viewsRegistered = false;
         
         this.setupPersistentViews();
     }
@@ -37,10 +38,20 @@ class TicketCog {
         try {
             const raw = fs.readFileSync(TICKET_JSON, 'utf8');
             const sanitized = raw
+                .replace(/\uFEFF/g, '') // strip BOM
+                .replace(/,\s*([}\]])/g, '$1') // remove trailing commas
                 .replace(/("owner": )(\d+)/g, '$1"$2"')
                 .replace(/("close_message_id": )(\d+)/g, '$1"$2"');
-            const parsed = JSON.parse(sanitized);
-            return this.normalizeTicketOwners(parsed);
+
+            try {
+                const parsed = JSON.parse(sanitized);
+                return this.normalizeTicketOwners(parsed);
+            } catch (parseError) {
+                const backupPath = `${TICKET_JSON}.bak`;
+                fs.writeFileSync(backupPath, raw, 'utf8');
+                logger.error(`Could not parse ${TICKET_JSON}: ${parseError.message}. Backup saved to ${backupPath}`);
+                return {};
+            }
         } catch (error) {
             if (error.code === 'ENOENT') {
                 return {};
@@ -108,6 +119,8 @@ class TicketCog {
     }
 
     async setupPersistentViews() {
+        if (this.viewsRegistered) return;
+        this.viewsRegistered = true;
         try {
             // Setup button handlers
             this.client.on('interactionCreate', async (interaction) => {
@@ -564,7 +577,7 @@ class TicketCog {
 
             const ticketNumber = ticketInfo.number || 1;
             const ownerId = this.getOwnerId(ticketInfo);
-            const transcriptDir = path.join(__dirname, '../../../transcripts');
+            const transcriptDir = path.join(__dirname, '../../transcripts');
             if (!fs.existsSync(transcriptDir)) {
                 fs.mkdirSync(transcriptDir, { recursive: true });
             }
@@ -964,7 +977,7 @@ class TicketCog {
         }
         
         if (!filename) {
-            filename = path.join(__dirname, '../../../transcripts', `transcript-${number}.txt`);
+            filename = path.join(__dirname, '../../transcripts', `transcript-${number}.txt`);
         }
 
         if (!fs.existsSync(filename)) {

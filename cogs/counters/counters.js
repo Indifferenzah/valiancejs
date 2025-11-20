@@ -7,6 +7,11 @@ const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
 const CONFIG_PATH = path.join(__dirname, '../../config.json');
 const COUNTERS_PATH = path.join(__dirname, 'counter.json');
 
+function toIdString(value) {
+  if (value === undefined || value === null) return null;
+  return String(value);
+}
+
 async function computeTotalMembers(guild) {
   return guild.members.cache.filter(m => !m.user.bot).size;
 }
@@ -45,10 +50,29 @@ function saveConfig(cfg) {
   saveJsonSync(CONFIG_PATH, cfg);
 }
 function loadCountersState() {
-  return loadJsonSync(COUNTERS_PATH, {});
+  const rawState = loadJsonSync(COUNTERS_PATH, {});
+  const normalized = { ...rawState, active_counters: {} };
+  for (const [gid, counters] of Object.entries(rawState.active_counters || {})) {
+    normalized.active_counters[gid] = {};
+    for (const [ctype, cid] of Object.entries(counters || {})) {
+      const idStr = toIdString(cid);
+      if (idStr) normalized.active_counters[gid][ctype] = idStr;
+    }
+  }
+  return normalized;
 }
 function saveCountersState(state) {
-  saveJsonSync(COUNTERS_PATH, state || {});
+  const prepared = { ...(state || {}) };
+  prepared.active_counters = prepared.active_counters || {};
+  for (const [gid, counters] of Object.entries(prepared.active_counters)) {
+    const normalizedCounters = {};
+    for (const [ctype, cid] of Object.entries(counters || {})) {
+      const idStr = toIdString(cid);
+      if (idStr) normalizedCounters[ctype] = idStr;
+    }
+    prepared.active_counters[gid] = normalizedCounters;
+  }
+  saveJsonSync(COUNTERS_PATH, prepared);
 }
 
 class CountersCog {

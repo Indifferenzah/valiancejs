@@ -160,6 +160,13 @@ const categories = {
             '`Coming Soon...` 👀',
         ]
     },
+    'music': {
+        'emoji': '🎵',
+        'name': 'Musica',
+        'commands': [
+            '`Coming Soon...` 👀',
+        ]
+    },
 };
 
 class HelpSelectView {
