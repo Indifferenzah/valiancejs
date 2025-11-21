@@ -494,93 +494,121 @@ class LogCog {
          *  SERVER STRUCTURE LOGS
          * ========================== */
 
-        // CHANNEL CREATE / DELETE / UPDATE
-        this.client.on('channelCreate', async (channel) => {
-            try {
-                const guild = channel.guild;
-                if (!guild) return;
-
-                const staffer = await this.getAuditUser(AuditLogEvent.ChannelCreate, channel.id, guild);
-
-                const variables = {
-                    channel: channel.toString(),
-                    staffer,
-                    type: this.channelTypeToString(channel.type),
-                    id: channel.id
-                };
-
-                await this.sendLogEmbed(
-                    this.config.guildlog_channel,
-                    this.config.channel_create_message,
-                    null,
-                    variables
-                );
-            } catch (err) {
-                logger.error(`Errore log channel create: ${err.message}`);
-            }
-        });
-
-        this.client.on('channelDelete', async (channel) => {
-            try {
-                const guild = channel.guild;
-                if (!guild) return;
-
-                const staffer = await this.getAuditUser(AuditLogEvent.ChannelDelete, channel.id, guild);
-
-                const variables = {
-                    name: channel.name,
-                    staffer,
-                    type: this.channelTypeToString(channel.type),
-                    id: channel.id
-                };
-
-                await this.sendLogEmbed(
-                    this.config.guildlog_channel,
-                    this.config.channel_delete_message,
-                    null,
-                    variables
-                );
-            } catch (err) {
-                logger.error(`Errore log channel delete: ${err.message}`);
-            }
-        });
-
-        // CHANNEL UPDATE
+        // 🔥 HANDLER UNIFICATO: CHANNEL UPDATE + PERMISSION UPDATE
         this.client.on('channelUpdate', async (oldChannel, newChannel) => {
             try {
                 const guild = newChannel.guild;
                 if (!guild) return;
 
-                const entry = await this.getAuditEntry(AuditLogEvent.ChannelUpdate, newChannel.id, guild);
+                // Otteniamo gli ultimi audit logs rilevanti
+                const audit = await guild.fetchAuditLogs({
+                    limit: 5,
+                    type: [
+                        AuditLogEvent.ChannelUpdate,
+                        AuditLogEvent.PermissionOverwriteUpdate
+                    ]
+                });
+
+                const entry = audit.entries.find(e => e.target?.id === newChannel.id) || audit.entries.first();
                 if (!entry) return;
 
-                const staffer = entry.executor?.tag || 'Sistema';
-                const changes = this.formatAuditChanges(entry);
+                const staffer = entry.executor?.tag || "Sistema";
 
-                // Evita conflitto con PermissionOverwriteUpdate
-                if (entry.action === AuditLogEvent.PermissionOverwriteUpdate) return;
+                let changes = [];
+                let permsAdded = [];
+                let permsRemoved = [];
+                let permTarget = null;
 
-                const oldSlow = oldChannel.rateLimitPerUser || 0;
-                const newSlow = newChannel.rateLimitPerUser || 0;
-                const slowmodeText = oldSlow !== newSlow
-                    ? `Slowmode: ${oldSlow}s → ${newSlow}s`
-                    : 'Nessuna modifica slowmode';
+                // ================================
+                // 🔵 1. CONTROLLO PERMESSI CAMBIATI
+                // ================================
+                if (entry.action === AuditLogEvent.PermissionOverwriteUpdate) {
 
+                    // Target corretto
+                    if (entry.extra) {
+                        if (entry.extra.type === 1) permTarget = `<@&${entry.extra.id}>`; 
+                        else if (entry.extra.type === 2) permTarget = `<@${entry.extra.id}>`; 
+                    }
+
+                    for (const change of entry.changes) {
+                        if (change.key !== "allow" && change.key !== "deny") continue;
+
+                        const oldPerms = change.old ?? 0;
+                        const newPerms = change.new ?? 0;
+
+                        const { PermissionsBitField } = require("discord.js");
+                        const oldList = new PermissionsBitField(BigInt(oldPerms)).toArray();
+                        const newList = new PermissionsBitField(BigInt(newPerms)).toArray();
+
+                        for (const p of newList) if (!oldList.includes(p)) permsAdded.push(p);
+                        for (const p of oldList) if (!newList.includes(p)) permsRemoved.push(p);
+                    }
+                }
+
+                // ================================
+                // 🔵 2. CONTROLLO MODIFICHE STANDARD
+                // ================================
+
+                let normalChanges = [];
+
+                // nome
+                if (oldChannel.name !== newChannel.name) {
+                    normalChanges.push(`Nome: \`${oldChannel.name}\` → \`${newChannel.name}\``);
+                }
+
+                // topic
+                if (oldChannel.topic !== newChannel.topic) {
+                    normalChanges.push(`Topic: \`${oldChannel.topic || "Nessuno"}\` → \`${newChannel.topic || "Nessuno"}\``);
+                }
+
+                // nsfw
+                if (oldChannel.nsfw !== newChannel.nsfw) {
+                    normalChanges.push(`NSFW: \`${oldChannel.nsfw}\` → \`${newChannel.nsfw}\``);
+                }
+
+                // slowmode
+                const oldSlow = oldChannel.rateLimitPerUser ?? 0;
+                const newSlow = newChannel.rateLimitPerUser ?? 0;
+                if (oldSlow !== newSlow) {
+                    normalChanges.push(`Slowmode: \`${oldSlow}s\` → \`${newSlow}s\``);
+                }
+
+                // ================================
+                // 🔵 3. SE NON C'È NIENTE, ESCI
+                // ================================
+                const permsChanged = permsAdded.length > 0 || permsRemoved.length > 0;
+                const normalChanged = normalChanges.length > 0;
+
+                if (!permsChanged && !normalChanged) return;
+
+                // ================================
+                // 🔵 4. COSTRUZIONE VARIABILI
+                // ================================
                 const variables = {
                     channel: newChannel.toString(),
                     staffer,
-                    changes,
-                    slowmode: slowmodeText
+
+                    // normali
+                    changes: normalChanged ? normalChanges.join("\n") : "Nessuna modifica",
+
+                    // permessi
+                    target: permTarget || "Nessun target",
+                    added_perms: permsAdded.length ? permsAdded.join(", ") : "Nessuno",
+                    removed_perms: permsRemoved.length ? permsRemoved.join(", ") : "Nessuno"
                 };
 
+                // ================================
+                // 🔵 5. UN SOLO EMBED UNIFICATO
+                // ================================
                 await this.sendLogEmbed(
                     this.config.guildlog_channel,
                     this.config.channel_update_message,
                     null,
                     variables
                 );
+
             } catch (err) {
-                logger.error(`Errore log channel update: ${err.message}`);
+                logger.error(`Errore unificato channelUpdate: ${err.message}`);
             }
         });
 
@@ -656,66 +684,6 @@ class LogCog {
                 );
             } catch (err) {
                 logger.error(`Errore log thread update: ${err.message}`);
-            }
-        });
-
-        // CHANNEL PERMISSION OVERWRITE UPDATE
-        this.client.on('channelUpdate', async (oldChannel, newChannel) => {
-            try {
-                const guild = newChannel.guild;
-                if (!guild) return;
-
-                const entry = await this.getAuditEntry(AuditLogEvent.PermissionOverwriteUpdate, newChannel.id, guild);
-                if (!entry) return;
-
-                const staffer = entry.executor?.tag || 'Sistema';
-
-                const target = entry.target; // ruolo o user
-                let targetMention = 'Sconosciuto';
-
-                if (target) {
-                    if (target.constructor.name === 'Role') {
-                        targetMention = `<@&${target.id}>`;
-                    } else {
-                        targetMention = `<@${target.id}>`;
-                    }
-                }
-
-                const changesRaw = entry.changes || [];
-                const added = [];
-                const removed = [];
-
-                for (const change of changesRaw) {
-                    if (change.key !== 'allow' && change.key !== 'deny') continue;
-
-                    const oldPerms = change.old ?? 0;
-                    const newPerms = change.new ?? 0;
-
-                    const { PermissionsBitField } = require('discord.js');
-                    const oldList = new PermissionsBitField(BigInt(oldPerms)).toArray();
-                    const newList = new PermissionsBitField(BigInt(newPerms)).toArray();
-
-                    for (const perm of newList) if (!oldList.includes(perm)) added.push(perm);
-                    for (const perm of oldList) if (!newList.includes(perm)) removed.push(perm);
-                }
-
-                const variables = {
-                    channel: newChannel.toString(),
-                    staffer,
-                    target: targetMention,
-                    added_perms: added.length ? added.join(', ') : 'Nessuno',
-                    removed_perms: removed.length ? removed.join(', ') : 'Nessuno'
-                };
-
-                await this.sendLogEmbed(
-                    this.config.guildlog_channel,
-                    this.config.channel_permission_update_message,
-                    null,
-                    variables
-                );
-
-            } catch (err) {
-                logger.error(`Errore perm overwrite update: ${err.message}`);
             }
         });
 
