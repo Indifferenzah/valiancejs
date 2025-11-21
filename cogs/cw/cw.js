@@ -78,7 +78,6 @@ class CwCog {
             .setFooter({ text: 'Valiance | CW Results' })
             .setTimestamp();
 
-        // Store result
         const result = {
             numero,
             data,

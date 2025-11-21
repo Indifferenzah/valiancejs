@@ -12,17 +12,20 @@ function toIdString(value) {
   return String(value);
 }
 
-async function computeTotalMembers(guild) {
-  return guild.members.cache.filter(m => !m.user.bot).size;
+async function computeTotalMembers(guild, { members }) {
+  const collection = members || guild.members.cache;
+  return collection.filter(m => !m.user.bot).size;
 }
-async function computeBots(guild) {
-  return guild.members.cache.filter(m => m.user.bot).size;
+async function computeBots(guild, { members }) {
+  const collection = members || guild.members.cache;
+  return collection.filter(m => m.user.bot).size;
 }
-async function computeRoleMembers(guild, { role_id }) {
+async function computeRoleMembers(guild, { role_id, members }) {
   if (!role_id) return 0;
   const role = guild.roles.cache.get(role_id);
   if (!role) return 0;
-  return role.members.filter(m => !m.user.bot).size;
+  const collection = members || guild.members.cache;
+  return collection.filter(m => m.roles.cache.has(role.id) && !m.user.bot).size;
 }
 async function computeTotalChannels(guild) {
   return guild.channels.cache.size;
@@ -50,16 +53,37 @@ function saveConfig(cfg) {
   saveJsonSync(CONFIG_PATH, cfg);
 }
 function loadCountersState() {
-  const rawState = loadJsonSync(COUNTERS_PATH, {});
-  const normalized = { ...rawState, active_counters: {} };
-  for (const [gid, counters] of Object.entries(rawState.active_counters || {})) {
-    normalized.active_counters[gid] = {};
-    for (const [ctype, cid] of Object.entries(counters || {})) {
-      const idStr = toIdString(cid);
-      if (idStr) normalized.active_counters[gid][ctype] = idStr;
+  try {
+    const raw = fs.readFileSync(COUNTERS_PATH, 'utf8');
+    const sanitized = raw
+      .replace(/\uFEFF/g, '')
+      .replace(/,\s*([}\]])/g, '$1')
+      .replace(/("active_counters"\s*:\s*\{[^]*?\})/g, (match) => match)
+      .replace(/("?[a-zA-Z0-9_]+"?\s*:\s*)(\d{15,})/g, (_, key, num) => `${key}"${num}"`);
+
+    const rawState = JSON.parse(sanitized);
+    const normalized = { ...rawState, active_counters: {} };
+    for (const [gid, counters] of Object.entries(rawState.active_counters || {})) {
+      normalized.active_counters[gid] = {};
+      for (const [ctype, cid] of Object.entries(counters || {})) {
+        const idStr = toIdString(cid);
+        if (idStr) normalized.active_counters[gid][ctype] = idStr;
+      }
     }
+    return normalized;
+  } catch (error) {
+    if (error.code === 'ENOENT') return {};
+    const fallback = loadJsonSync(COUNTERS_PATH, {});
+    const normalized = { ...fallback, active_counters: {} };
+    for (const [gid, counters] of Object.entries(fallback.active_counters || {})) {
+      normalized.active_counters[gid] = {};
+      for (const [ctype, cid] of Object.entries(counters || {})) {
+        const idStr = toIdString(cid);
+        if (idStr) normalized.active_counters[gid][ctype] = idStr;
+      }
+    }
+    return normalized;
   }
-  return normalized;
 }
 function saveCountersState(state) {
   const prepared = { ...(state || {}) };
@@ -164,7 +188,14 @@ class CountersCog {
       this.counterCache[gid] = {};
       this.pendingUpdates[gid] = true;
       for (const [ctype, cid] of Object.entries(channels)) {
-        const ch = guild.channels.cache.get(cid);
+        let ch = guild.channels.cache.get(cid);
+        if (!ch) {
+          try {
+            ch = await guild.channels.fetch(cid);
+          } catch (_) {
+            ch = null;
+          }
+        }
         if (ch && ch.type === ChannelType.GuildVoice) {
           this.counterChannels[gid][ctype] = ch;
         }
@@ -199,7 +230,7 @@ class CountersCog {
       total_channels: counters.total_channels_name || '📺 Canali: {count}',
       text_channels: counters.text_channels_name || '💬 Testo: {count}',
       voice_channels: counters.voice_channels_name || '🔊 Voce: {count}',
-      role_id: counters.member_role_id ? parseInt(counters.member_role_id, 10) : 0
+      role_id: counters.member_role_id ? String(counters.member_role_id) : null
     };
   }
 
@@ -207,12 +238,25 @@ class CountersCog {
     const guildId = guild.id;
     if (!this.counterChannels[guildId]) return;
     const templates = this.templatesFromConfig();
+    let membersCollection = null;
+    const getMembers = async () => {
+      if (membersCollection) return membersCollection;
+      try {
+        membersCollection = await guild.members.fetch();
+      } catch (_) {
+        membersCollection = guild.members.cache;
+      }
+      return membersCollection;
+    };
     for (const [ctype, channel] of Object.entries(this.counterChannels[guildId])) {
       const compute = COUNTER_TYPES[ctype];
       if (!compute) continue;
       const kwargs = {};
       if (ctype === 'role_members' && templates.role_id) {
         kwargs.role_id = templates.role_id;
+      }
+      if (ctype === 'total_members' || ctype === 'bots' || ctype === 'role_members') {
+        kwargs.members = await getMembers();
       }
       try {
         const count = await compute(guild, kwargs);

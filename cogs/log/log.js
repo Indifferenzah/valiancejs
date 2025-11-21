@@ -74,7 +74,7 @@ class LogCog {
         }
     }
 
-    async sendLogEmbed(channelId, embedConfig, guild = null, variables = {}) {
+    async sendLogEmbed(channelId, embedConfig, user = null, variables = {}) {
         try {
             if (!channelId || !embedConfig) return;
             
@@ -100,8 +100,8 @@ class LogCog {
                 embed.setFooter({ text: footer });
             }
 
-            if (embedConfig.author_header && guild && guild.iconURL()) {
-                embed.setAuthor({ name: guild.name, iconURL: guild.iconURL() });
+            if (embedConfig.author_header && user) {
+                embed.setAuthor({ name: user.username || user.tag, iconURL: user.displayAvatarURL() });
             }
 
             await channel.send({ embeds: [embed] });
@@ -131,7 +131,7 @@ class LogCog {
                 await this.sendLogEmbed(
                     this.config.join_log_channel_id,
                     this.config.join_message,
-                    member.guild,
+                    member.user,
                     variables
                 );
             } catch (error) {
@@ -163,7 +163,7 @@ class LogCog {
                 await this.sendLogEmbed(
                     this.config.leave_log_channel_id,
                     this.config.leave_message,
-                    member.guild,
+                    member.user,
                     variables
                 );
             } catch (error) {
@@ -191,7 +191,7 @@ class LogCog {
                 await this.sendLogEmbed(
                     this.config.moderation_log_channel_id,
                     this.config.ban_message,
-                    ban.guild,
+                    ban.user,
                     variables
                 );
             } catch (error) {
@@ -214,7 +214,7 @@ class LogCog {
                 await this.sendLogEmbed(
                     this.config.moderation_log_channel_id,
                     this.config.unban_message,
-                    ban.guild,
+                    ban.user,
                     variables
                 );
             } catch (error) {
@@ -241,7 +241,7 @@ class LogCog {
                     await this.sendLogEmbed(
                         this.config.voice_log_channel_id,
                         this.config.vc_join_message,
-                        member.guild,
+                        member.user,
                         variables
                     );
                 }
@@ -257,7 +257,7 @@ class LogCog {
                     await this.sendLogEmbed(
                         this.config.voice_log_channel_id,
                         this.config.vc_leave_message,
-                        member.guild,
+                        member.user,
                         variables
                     );
                 }
@@ -274,7 +274,7 @@ class LogCog {
                     await this.sendLogEmbed(
                         this.config.voice_log_channel_id,
                         this.config.vc_move_message,
-                        member.guild,
+                        member.user,
                         variables
                     );
                 }
@@ -300,7 +300,7 @@ class LogCog {
                 await this.sendLogEmbed(
                     this.config.message_log_channel_id,
                     this.config.message_delete_message,
-                    message.guild,
+                    message.author,
                     variables
                 );
             } catch (error) {
@@ -327,7 +327,7 @@ class LogCog {
                 await this.sendLogEmbed(
                     this.config.message_log_channel_id,
                     this.config.message_edit_message,
-                    newMessage.guild,
+                    newMessage.author,
                     variables
                 );
             } catch (error) {
@@ -349,7 +349,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.ban_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -366,7 +366,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.kick_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -384,7 +384,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.mute_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -400,7 +400,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.unmute_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -418,7 +418,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.warn_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -435,7 +435,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.unwarn_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -452,7 +452,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.clearwarns_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -469,7 +469,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.moderation_log_channel_id,
             this.config.nick_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -488,7 +488,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.ticket_log_channel_id,
             this.config.ticket_open_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -521,7 +521,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.autorole_log_channel_id,
             this.config.autorole_add_message,
-            user.guild,
+            user,
             variables
         );
     }
@@ -537,7 +537,7 @@ class LogCog {
         await this.sendLogEmbed(
             this.config.autorole_log_channel_id,
             this.config.autorole_remove_message,
-            user.guild,
+            user,
             variables
         );
     }

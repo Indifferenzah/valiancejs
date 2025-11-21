@@ -315,7 +315,7 @@ class ModerationCog {
 
     parseDuration(duration) {
         const match = duration.match(/^(\d+)([smhd])$/);
-        if (!match) return 10 * 60 * 1000; // Default 10 minutes
+        if (!match) return 10 * 60 * 1000; // 10 minutes
         
         const value = parseInt(match[1]);
         const unit = match[2];

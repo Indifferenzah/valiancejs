@@ -23,6 +23,8 @@ const client = new Client({
     ]
 });
 
+client.setMaxListeners(20);
+
 client.commands = new Collection();
 client.cogs = new Collection();
 
@@ -191,7 +193,7 @@ const commands = [
 
 ];
 
-client.once('ready', async () => {
+client.once('clientReady', async () => {
     client.startTime = new Date();
     logger.info(`Bot connected as ${client.user.tag}`);
     

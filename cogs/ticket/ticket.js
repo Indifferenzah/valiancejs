@@ -917,7 +917,6 @@ class TicketCog {
             try {
                 await interaction.deleteReply();
             } catch (error) {
-                // Ignore errors
             }
         }, 60000);
     }
@@ -1034,7 +1033,6 @@ class TicketCog {
 function setup(client) {
     const cog = new TicketCog(client);
     
-    // Handle interactions
     client.on('interactionCreate', async (interaction) => {
         if (interaction.isChatInputCommand()) {
             const commandNames = ['ticketpanel', 'close', 'rename', 'blacklist', 'add', 'remove', 'list', 'transcript', 'sendtranscript'];

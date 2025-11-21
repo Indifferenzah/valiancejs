@@ -53,13 +53,10 @@ class AutoRoleCog {
         const role = interaction.options.getRole('role');
 
         try {
-            // Fetch the message
             const message = await interaction.channel.messages.fetch(messageId);
             
-            // Add reaction to message
             await message.react(emoji);
             
-            // Store in config
             if (!this.config[interaction.guild.id]) {
                 this.config[interaction.guild.id] = {};
             }
@@ -149,7 +146,6 @@ class AutoRoleCog {
 function setup(client) {
     const autoRoleCog = new AutoRoleCog(client);
     
-    // Register command handlers
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         
@@ -158,9 +154,7 @@ function setup(client) {
         }
     });
 
-    // Register reaction handlers
     client.on('messageReactionAdd', async (reaction, user) => {
-        // Handle partial reactions
         if (reaction.partial) {
             try {
                 await reaction.fetch();
@@ -174,7 +168,6 @@ function setup(client) {
     });
 
     client.on('messageReactionRemove', async (reaction, user) => {
-        // Handle partial reactions
         if (reaction.partial) {
             try {
                 await reaction.fetch();
@@ -187,7 +180,6 @@ function setup(client) {
         await autoRoleCog.handleReactionRemove(reaction, user);
     });
 
-    // Add commands to global commands array
     if (!client.globalCommands) client.globalCommands = [];
     client.globalCommands.push(...autoRoleCog.commands);
 

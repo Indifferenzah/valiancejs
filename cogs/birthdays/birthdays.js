@@ -218,7 +218,6 @@ class BirthdaysCog {
 function setup(client) {
     const birthdaysCog = new BirthdaysCog(client);
     
-    // Register command handlers
     client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         
@@ -254,7 +253,6 @@ function setup(client) {
         }
     });
 
-    // Add commands to global commands array
     if (!client.globalCommands) client.globalCommands = [];
     client.globalCommands.push(...birthdaysCog.commands);
 
