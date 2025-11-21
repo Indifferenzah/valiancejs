@@ -1,8 +1,8 @@
 {
-  "join_channel": "1363431774763483216",
-  "leave_channel": "1363431774763483216",
+  "join_channel": "https://discord.com/api/webhooks/1441562389936865453/Fp3Wy2zA5ZPT8gOAwv4IgEG0P8t-TSww6jhZSEjFfBavLHKpiKMHRx-RfykAdUau_JVv",
+  "leave_channel": "https://discord.com/api/webhooks/1441562389936865453/Fp3Wy2zA5ZPT8gOAwv4IgEG0P8t-TSww6jhZSEjFfBavLHKpiKMHRx-RfykAdUau_JVv",
   "moderation_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
-  "ticket_channel": "1428469262284230688",
+  "ticket_channel": "https://discord.com/api/webhooks/1441562659479883919/SwB-F4vWdxpT1ugSEafUaHMMJ2ouLZUKBD_r20f7ASya-ycRT09roXwAXjFVWEcfsL1j",
   "autorole_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
   "automod_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
   "message_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
