@@ -545,28 +545,32 @@ class LogCog {
             }
         });
 
+        // CHANNEL UPDATE
         this.client.on('channelUpdate', async (oldChannel, newChannel) => {
             try {
                 const guild = newChannel.guild;
                 if (!guild) return;
 
                 const entry = await this.getAuditEntry(AuditLogEvent.ChannelUpdate, newChannel.id, guild);
-                const staffer = entry?.executor?.tag || 'Sistema';
+                if (!entry) return;
+
+                const staffer = entry.executor?.tag || 'Sistema';
                 const changes = this.formatAuditChanges(entry);
 
-                // Slowmode specific (extra log)
+                // Evita conflitto con PermissionOverwriteUpdate
+                if (entry.action === AuditLogEvent.PermissionOverwriteUpdate) return;
+
                 const oldSlow = oldChannel.rateLimitPerUser || 0;
                 const newSlow = newChannel.rateLimitPerUser || 0;
-                let slowmodeText = null;
-                if (oldSlow !== newSlow) {
-                    slowmodeText = `Slowmode: ${oldSlow}s → ${newSlow}s`;
-                }
+                const slowmodeText = oldSlow !== newSlow
+                    ? `Slowmode: ${oldSlow}s → ${newSlow}s`
+                    : 'Nessuna modifica slowmode';
 
                 const variables = {
                     channel: newChannel.toString(),
                     staffer,
                     changes,
-                    slowmode: slowmodeText || 'Nessuna modifica slowmode'
+                    slowmode: slowmodeText
                 };
 
                 await this.sendLogEmbed(
@@ -629,61 +633,6 @@ class LogCog {
             }
         });
 
-        // CHANNEL PERMISSION OVERWRITE UPDATE
-        this.client.on('channelUpdate', async (oldChannel, newChannel) => {
-            try {
-                const guild = newChannel.guild;
-                if (!guild) return;
-
-                const entry = await this.getAuditEntry(AuditLogEvent.PermissionOverwriteUpdate, newChannel.id, guild);
-                if (!entry) return;
-
-                const staffer = entry.executor?.tag || 'Sistema';
-
-                // Troviamo cosa è stato modificato
-                const changesRaw = entry.changes || [];
-                const added = [];
-                const removed = [];
-
-                for (const change of changesRaw) {
-                    if (change.key !== 'allow' && change.key !== 'deny') continue;
-
-                    const oldPerms = change.old ?? 0;
-                    const newPerms = change.new ?? 0;
-
-                    // bitmask → perm list
-                    const { PermissionsBitField } = require('discord.js');
-                    const oldList = new PermissionsBitField(BigInt(oldPerms)).toArray();
-                    const newList = new PermissionsBitField(BigInt(newPerms)).toArray();
-
-                    for (const perm of newList) {
-                        if (!oldList.includes(perm)) added.push(perm);
-                    }
-                    for (const perm of oldList) {
-                        if (!newList.includes(perm)) removed.push(perm);
-                    }
-                }
-
-                const variables = {
-                    channel: newChannel.toString(),
-                    staffer,
-                    added_perms: added.length ? added.join(', ') : 'Nessuno',
-                    removed_perms: removed.length ? removed.join(', ') : 'Nessuno'
-                };
-
-                await this.sendLogEmbed(
-                    this.config.guildlog_channel,
-                    this.config.channel_permission_update_message,
-                    null,
-                    variables
-                );
-
-            } catch (err) {
-                logger.error(`Errore perm overwrite update: ${err.message}`);
-            }
-        });
-
-
         this.client.on('threadUpdate', async (oldThread, newThread) => {
             try {
                 const guild = newThread.guild;
@@ -707,6 +656,66 @@ class LogCog {
                 );
             } catch (err) {
                 logger.error(`Errore log thread update: ${err.message}`);
+            }
+        });
+
+        // CHANNEL PERMISSION OVERWRITE UPDATE
+        this.client.on('channelUpdate', async (oldChannel, newChannel) => {
+            try {
+                const guild = newChannel.guild;
+                if (!guild) return;
+
+                const entry = await this.getAuditEntry(AuditLogEvent.PermissionOverwriteUpdate, newChannel.id, guild);
+                if (!entry) return;
+
+                const staffer = entry.executor?.tag || 'Sistema';
+
+                const target = entry.target; // ruolo o user
+                let targetMention = 'Sconosciuto';
+
+                if (target) {
+                    if (target.constructor.name === 'Role') {
+                        targetMention = `<@&${target.id}>`;
+                    } else {
+                        targetMention = `<@${target.id}>`;
+                    }
+                }
+
+                const changesRaw = entry.changes || [];
+                const added = [];
+                const removed = [];
+
+                for (const change of changesRaw) {
+                    if (change.key !== 'allow' && change.key !== 'deny') continue;
+
+                    const oldPerms = change.old ?? 0;
+                    const newPerms = change.new ?? 0;
+
+                    const { PermissionsBitField } = require('discord.js');
+                    const oldList = new PermissionsBitField(BigInt(oldPerms)).toArray();
+                    const newList = new PermissionsBitField(BigInt(newPerms)).toArray();
+
+                    for (const perm of newList) if (!oldList.includes(perm)) added.push(perm);
+                    for (const perm of oldList) if (!newList.includes(perm)) removed.push(perm);
+                }
+
+                const variables = {
+                    channel: newChannel.toString(),
+                    staffer,
+                    target: targetMention,
+                    added_perms: added.length ? added.join(', ') : 'Nessuno',
+                    removed_perms: removed.length ? removed.join(', ') : 'Nessuno'
+                };
+
+                await this.sendLogEmbed(
+                    this.config.guildlog_channel,
+                    this.config.channel_permission_update_message,
+                    null,
+                    variables
+                );
+
+            } catch (err) {
+                logger.error(`Errore perm overwrite update: ${err.message}`);
             }
         });
 

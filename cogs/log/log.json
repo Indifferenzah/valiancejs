@@ -211,13 +211,13 @@
 
   "channel_permission_update_message": {
     "title": "Permessi Canale Aggiornati",
-    "description": "I permessi del canale {channel} sono stati aggiornati da {staffer}.\n\n**Aggiunti:** {added_perms}\n**Rimossi:** {removed_perms}",
+    "description": "**Canale:** {channel}\n**Modificati da:** {staffer}\n**Target:** {target}\n\n**Aggiunti:** {added_perms}\n**Rimossi:** {removed_perms}",
     "color": 16776960,
     "footer": "Valiance | Logging",
     "thumbnail": "",
     "author_header": false
   },
-  
+
   "role_permission_update_message": {
     "title": "Permessi Ruolo Aggiornati",
     "description": "I permessi del ruolo {role} sono stati aggiornati da {staffer}.\n**Permessi aggiunti:** {added_perms}\n**Permessi rimossi:** {removed_perms}",
