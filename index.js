@@ -1038,12 +1038,30 @@ async function handleVerify(interaction) {
                 });
             }
 
+            const cwAllowedRoles = [
+                '1426247366037602474',
+                '1350073964235325562',
+                '1350073966009782363'
+            ];
+
+            const textChannelOverwrites = [
+                ...overwrites,
+                ...cwAllowedRoles.map(roleId => ({
+                    id: roleId,
+                    allow: [
+                        PermissionFlagsBits.ViewChannel,
+                        PermissionFlagsBits.ReadMessageHistory,
+                        PermissionFlagsBits.SendMessages
+                    ]
+                }))
+            ];
+            
             session.textChannel = await guild.channels.create({
                 name: 'cw-interna',
                 type: ChannelType.GuildText,
                 parent: category,
                 topic: 'CW - Team Rosso vs Verde',
-                permissionOverwrites: overwrites
+                permissionOverwrites: textChannelOverwrites
             });
 
             session.redVoice = await guild.channels.create({

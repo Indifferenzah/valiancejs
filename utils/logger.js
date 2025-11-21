@@ -13,24 +13,23 @@ const {
     metadata
 } = winston.format;
 
+// === DIRECTORY LOGS ===
 const logsDir = path.join(__dirname, '../../logs');
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
 }
 
-const toNumberOrDefault = (value, defaultValue) => {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) ? parsed : defaultValue;
-};
+// === NOME FILE FORMATTATO ===
+const mesi = [
+    "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+    "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
 
-const logLevel = process.env.LOG_LEVEL || 'info';
-const fileLevel = process.env.LOG_FILE_LEVEL || logLevel;
-const consoleLevel = process.env.LOG_CONSOLE_LEVEL || logLevel;
-const maxSize = toNumberOrDefault(process.env.LOG_MAX_SIZE, 5 * 1024 * 1024); // 5 MB
-const maxFiles = toNumberOrDefault(process.env.LOG_MAX_FILES, 7);
-const serviceName = process.env.LOG_SERVICE_NAME || 'valiance-bot';
-const logToConsole = process.env.LOG_TO_CONSOLE === 'true' || process.env.NODE_ENV !== 'production';
+const now = new Date();
+const nomeFile = `${now.getDate()}_${mesi[now.getMonth()]}_${now.getFullYear()}.log`;
+const logFilePath = path.join(logsDir, nomeFile);
 
+// === FORMATS ===
 const fileFormat = combine(
     timestamp(),
     errors({ stack: true }),
@@ -45,63 +44,50 @@ const consoleFormat = combine(
     errors({ stack: true }),
     splat(),
     metadata({ fillExcept: ['timestamp', 'level', 'message', 'stack'] }),
-    printf(({ timestamp, level, message, stack, service, pid, metadata: meta = {} }) => {
-        const scope = meta.scope ? `[${meta.scope}] ` : '';
-        const baseMeta = { ...meta };
-        delete baseMeta.scope;
-        const metaString = Object.keys(baseMeta).length ? ` ${JSON.stringify(baseMeta)}` : '';
-
-        return `${timestamp} ${level}: [${service || serviceName}@${pid || process.pid}] ${scope}${stack || message}${metaString}`;
+    printf(({ timestamp, level, message, stack, service = 'valiance-bot', pid = process.pid }) => {
+        return `${timestamp} ${level}: [${service}@${pid}] ${stack || message}`;
     })
 );
 
+// === LOGGER ===
 const logger = winston.createLogger({
-    level: logLevel,
+    level: 'debug',
     format: fileFormat,
-    defaultMeta: { service: serviceName, pid: process.pid },
+    defaultMeta: { service: 'valiance-bot', pid: process.pid },
     transports: [
         new winston.transports.File({
-            filename: path.join(logsDir, 'errors.log'),
-            level: 'error',
-            maxsize: maxSize,
-            maxFiles,
-            tailable: true
-        }),
-        new winston.transports.File({
-            filename: path.join(logsDir, 'bot.log'),
-            level: fileLevel,
-            maxsize: maxSize,
-            maxFiles,
-            tailable: true
-        })
-    ],
-    exceptionHandlers: [
-        new winston.transports.File({
-            filename: path.join(logsDir, 'exceptions.log'),
-            maxsize: maxSize,
-            maxFiles,
-            tailable: true
-        })
-    ],
-    rejectionHandlers: [
-        new winston.transports.File({
-            filename: path.join(logsDir, 'rejections.log'),
-            maxsize: maxSize,
-            maxFiles,
+            filename: logFilePath,
+            level: 'debug',
+            maxsize: 20 * 1024 * 1024,
             tailable: true
         })
     ],
     exitOnError: false
 });
 
-if (logToConsole) {
-    logger.add(new winston.transports.Console({
-        level: consoleLevel,
-        format: consoleFormat
-    }));
-}
+// === OUTPUT IN CONSOLE REALTIME ===
+logger.add(new winston.transports.Console({
+    level: 'debug',
+    format: consoleFormat
+}));
 
-const createScopedLogger = (scope) => logger.child({ scope });
+// === REDIREZIONE console.log / console.error ===
+const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
+// Sovrascrivo le funzioni della console
+const origLog = console.log;
+const origErr = console.error;
+
+console.log = (...args) => {
+    logStream.write(`[LOG] ${args.join(' ')}\n`);
+    origLog.apply(console, args);
+};
+
+console.error = (...args) => {
+    logStream.write(`[ERROR] ${args.join(' ')}\n`);
+    origErr.apply(console, args);
+};
+
+// === EXPORT ===
 module.exports = logger;
-module.exports.createScopedLogger = createScopedLogger;
+module.exports.createScopedLogger = (scope) => logger.child({ scope });
