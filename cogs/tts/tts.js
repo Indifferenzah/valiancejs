@@ -35,6 +35,10 @@ class TTSCog {
         this.players = new Map();
         this.botVoiceChannel = new Map(); // <guildId, voiceChannelId>
 
+        // QUEUE FIX
+        this.queue = new Map();       // <guildId, [messages]>
+        this.isPlaying = new Map();   // <guildId, boolean>
+
         this.commands = [
             new SlashCommandBuilder()
                 .setName("tts")
@@ -90,16 +94,54 @@ class TTSCog {
         });
     }
 
+    // ========== QUEUE SYSTEM ==========
+
+    async enqueueTTS(guildId, text) {
+        if (!this.queue.has(guildId)) this.queue.set(guildId, []);
+        this.queue.get(guildId).push(text);
+
+        if (!this.isPlaying.get(guildId)) {
+            this.isPlaying.set(guildId, true);
+            this.processQueue(guildId);
+        }
+    }
+
+    async processQueue(guildId) {
+        const queue = this.queue.get(guildId);
+        const conn = this.connections.get(guildId);
+        const player = this.players.get(guildId);
+
+        if (!queue || queue.length === 0) {
+            this.isPlaying.set(guildId, false);
+            return;
+        }
+
+        const text = queue.shift();
+
+        const mp3 = await this.generateMP3(text);
+        const wav = await this.convertToPCM(mp3);
+
+        const resource = createAudioResource(wav);
+
+        player.once("idle", () => {
+            this.processQueue(guildId);
+        });
+
+        player.play(resource);
+    }
+
+    // ========== SLASH COMMANDS ==========
+
     async handleSetChannel(interaction) {
         if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
-            return interaction.reply({ content: "? Non hai i permessi per impostare il canale TTS.", ephemeral: true });
+            return interaction.reply({ content: "❌ Non hai i permessi.", ephemeral: true });
         }
 
         const channel = interaction.options.getChannel("channel");
 
         if (!channel.isTextBased()) {
             return interaction.reply({
-                content: "? Devi selezionare un canale testuale!",
+                content: "❌ Devi selezionare un canale testuale!",
                 ephemeral: true
             });
         }
@@ -108,7 +150,7 @@ class TTSCog {
         this.saveConfig();
 
         return interaction.reply({
-            content: `? Canale TTS impostato su <#${channel.id}>`,
+            content: `✔ Canale TTS impostato su <#${channel.id}>`,
             ephemeral: true
         });
     }
@@ -119,7 +161,7 @@ class TTSCog {
         if (!member.voice.channel) {
             return interaction.reply({
                 content: "❌ Devi essere in un canale vocale!",
-                flags: ["Ephemeral"]
+                ephemeral: true
             });
         }
 
@@ -140,12 +182,11 @@ class TTSCog {
         this.connections.set(guildId, connection);
         this.players.set(guildId, player);
 
-        // Salva in quale voice è il bot
         this.botVoiceChannel.set(guildId, member.voice.channel.id);
 
         return interaction.reply({
             content: `🔊 Entrato in **${member.voice.channel.name}**`,
-            flags: ["Ephemeral"]
+            ephemeral: true
         });
     }
 
@@ -156,7 +197,7 @@ class TTSCog {
         if (!conn) {
             return interaction.reply({
                 content: "❌ Non sono in nessuna voice!",
-                flags: ["Ephemeral"]
+                ephemeral: true
             });
         }
 
@@ -166,23 +207,12 @@ class TTSCog {
         this.botVoiceChannel.delete(guildId);
 
         return interaction.reply({
-            content: "👋 Disconnesso dalla voice.",
-            flags: ["Ephemeral"]
+            content: "👋 Disconnesso.",
+            ephemeral: true
         });
     }
 
-    async playTTS(guildId, text) {
-        const conn = this.connections.get(guildId);
-        const player = this.players.get(guildId);
-
-        if (!conn || !player) return;
-
-        const mp3 = await this.generateMP3(text);
-        const wav = await this.convertToPCM(mp3);
-
-        const resource = createAudioResource(wav);
-        player.play(resource);
-    }
+    // ========== MESSAGE LISTENER FIXATO ==========
 
     setupListeners() {
         this.client.on("messageCreate", async msg => {
@@ -192,32 +222,88 @@ class TTSCog {
             const guildId = msg.guild.id;
             const botVC = this.botVoiceChannel.get(guildId);
 
-            // Se il bot NON è in VC → ignora
             if (!botVC) return;
 
             const userVC = msg.member.voice?.channel?.id;
 
-            // L’utente deve essere nella STESSA VC del bot
             if (userVC !== botVC) return;
 
-            const allowedChannels = [
-                this.config.channel,
-                msg.guild.channels.cache.get(botVC)?.guild.voiceStates.cache.get(this.client.user.id)?.channel?.id
-            ];
+            // Chat testuale settata
+            const ttsChannel = this.config.channel;
 
-            // Chat della VC
-            const voiceTextChannel = msg.guild.channels.cache.find(
-                c => c.isTextBased() && c.parentId === botVC
+            // Chat della VC dinamica
+            const voiceChat = msg.guild.channels.cache.find(
+                c =>
+                    c.isTextBased() &&
+                    (
+                        c.name.toLowerCase().includes(msg.member.voice.channel.name.toLowerCase()) ||
+                        c.parentId === msg.member.voice.channel.parentId
+                    )
             );
 
-            if (
-                msg.channel.id !== this.config.channel &&
-                (!voiceTextChannel || msg.channel.id !== voiceTextChannel.id)
-            ) {
+            if (msg.channel.id !== ttsChannel &&
+                (!voiceChat || msg.channel.id !== voiceChat.id)) {
                 return;
             }
 
-            await this.playTTS(guildId, msg.content);
+            await this.enqueueTTS(guildId, msg.content);
+        });
+    }
+
+    // ========== PREFIX COMMANDS ==========
+    setupPrefixCommands() {
+        this.client.on("messageCreate", async msg => {
+            if (!msg.guild) return;
+            if (msg.author.bot) return;
+
+            const content = msg.content.toLowerCase();
+
+            // ----------- PREFIX JOIN -----------
+            if (content === "-join") {
+                const member = msg.member;
+
+                if (!member.voice.channel) {
+                    return msg.reply("❌ Devi essere in un canale vocale.");
+                }
+
+                const guildId = msg.guild.id;
+
+                const connection = joinVoiceChannel({
+                    channelId: member.voice.channel.id,
+                    guildId,
+                    adapterCreator: msg.guild.voiceAdapterCreator
+                });
+
+                const player = createAudioPlayer({
+                    behaviors: { noSubscriber: NoSubscriberBehavior.Pause }
+                });
+
+                connection.subscribe(player);
+
+                this.connections.set(guildId, connection);
+                this.players.set(guildId, player);
+
+                this.botVoiceChannel.set(guildId, member.voice.channel.id);
+
+                return msg.reply(`🔊 Entrato in **${member.voice.channel.name}**`);
+            }
+
+            // ----------- PREFIX LEAVE -----------
+            if (content === "-leave") {
+                const guildId = msg.guild.id;
+
+                const conn = this.connections.get(guildId);
+                if (!conn) {
+                    return msg.reply("❌ Non sono in nessuna voice!");
+                }
+
+                conn.destroy();
+                this.connections.delete(guildId);
+                this.players.delete(guildId);
+                this.botVoiceChannel.delete(guildId);
+
+                return msg.reply("👋 Disconnesso.");
+            }
         });
     }
 }
@@ -225,6 +311,7 @@ class TTSCog {
 function setup(client) {
     const cog = new TTSCog(client);
     cog.setupListeners();
+    cog.setupPrefixCommands(); 
 
     client.on("interactionCreate", async interaction => {
         if (!interaction.isChatInputCommand()) return;
