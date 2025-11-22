@@ -49,7 +49,7 @@ class LogCog {
 
     formatDateTime(date) {
         if (!date) return 'Sconosciuto';
-        return `<t:${Math.floor(date.getTime() / 1000)}:F>`;
+        return `<t:${Math.floor(date.getTime() / 1000)}:R>`;
     }
 
     formatTimeDelta(start, end) {

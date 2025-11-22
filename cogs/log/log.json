@@ -12,7 +12,7 @@
 
   "join_message": {
     "title": "Join",
-    "description": "{mention} è entrato nel server il {joined_at}.\nAccount creato il {created_at}.\nMembri totali: {total_members}",
+    "description": "{mention} è entrato nel server il {joined_at}.\nAccount creato {created_at}.\nMembri totali: {total_members}",
     "color": 3066993,
     "footer": "ID: {id} | {total_members} membri",
     "thumbnail": "{avatar}",
@@ -20,7 +20,7 @@
   },
   "leave_message": {
     "title": "Left",
-    "description": "{mention} ha lasciato il server.\nAccount creato: {created_at}\nTempo nel server: {time_in_server}\nRuoli: {roles}",
+    "description": "{mention} ha lasciato il server.\nAccount creato {created_at}\nTempo nel server: {time_in_server}\nRuoli: {roles}",
     "color": 15158332,
     "footer": "ID: {id} | {total_members} membri",
     "thumbnail": "{avatar}",
