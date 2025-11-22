@@ -1,10 +1,10 @@
-const { 
-    EmbedBuilder, 
-    AuditLogEvent, 
-    WebhookClient, 
-    Collection, 
-    ChannelType, 
-    PermissionsBitField 
+const {
+    EmbedBuilder,
+    AuditLogEvent,
+    WebhookClient,
+    Collection,
+    ChannelType,
+    PermissionsBitField
 } = require('discord.js');
 const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
 const logger = require('../../utils/logger');
@@ -185,13 +185,13 @@ class LogCog {
             }
 
             if (embedConfig.author_header && user) {
-                embed.setAuthor({ 
-                    name: user.tag || user.username || 'Utente', 
-                    iconURL: user.displayAvatarURL?.() 
-                        ? user.displayAvatarURL() 
-                        : user.avatarURL?.() 
-                            ? user.avatarURL() 
-                            : null 
+                embed.setAuthor({
+                    name: user.tag || user.username || 'Utente',
+                    iconURL: user.displayAvatarURL?.()
+                        ? user.displayAvatarURL()
+                        : user.avatarURL?.()
+                            ? user.avatarURL()
+                            : null
                 });
             }
 
@@ -532,8 +532,8 @@ class LogCog {
                     channel: newChannel.toString(),
                     staffer,
                     changes: normalChanges.join('\n'),
-                    slowmode: normalChanges.some(c => c.includes('Slowmode')) 
-                        ? `Slowmode: \`${oldSlow}s\` → \`${newSlow}s\`` 
+                    slowmode: normalChanges.some(c => c.includes('Slowmode'))
+                        ? `Slowmode: \`${oldSlow}s\` → \`${newSlow}s\``
                         : 'Nessuna modifica slowmode'
                 };
 
