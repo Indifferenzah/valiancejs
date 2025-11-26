@@ -226,7 +226,7 @@ class TicketCog {
                 .setName('rename')
                 .setDescription('Rinomina il canale ticket')
                 .addStringOption(option =>
-                    option.setName('new_name')
+                    option.setName('nome')
                         .setDescription('Il nuovo nome del canale (max 100 caratteri)')
                         .setRequired(true)),
 
@@ -881,7 +881,7 @@ class TicketCog {
 
     async handleRename(interaction) {
         const channel = interaction.channel;
-        const newName = interaction.options.getString('new_name');
+        const newName = interaction.options.getString('nome');
 
         if (!this.ticketOwners[channel.id]) {
             await interaction.reply({ content: '❌ Questo comando può essere usato solo nei canali ticket!', ephemeral: true });
