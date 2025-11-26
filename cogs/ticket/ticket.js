@@ -899,6 +899,9 @@ class TicketCog {
             return;
         }
 
+        // 🔥 Fix "The application did not respond"
+        await interaction.deferReply({ ephemeral: false });
+
         try {
             await channel.setName(newName);
 
@@ -912,15 +915,15 @@ class TicketCog {
                 if (renameMsg.thumbnail) embed.setThumbnail(renameMsg.thumbnail);
                 if (renameMsg.footer) embed.setFooter({ text: renameMsg.footer });
 
-                await interaction.reply({ embeds: [embed], ephemeral: false });
+                await interaction.followUp({ embeds: [embed], ephemeral: false });
             } else {
-                await interaction.reply({ content: '✅ Canale rinominato!', ephemeral: false });
+                await interaction.followUp({ content: '✅ Canale rinominato!', ephemeral: false });
             }
         } catch (error) {
             if (error.code === 50013) {
-                await interaction.reply({ content: '❌ Non ho i permessi per rinominare il canale!', ephemeral: true });
+                await interaction.followUp({ content: '❌ Non ho i permessi per rinominare il canale!', ephemeral: true });
             } else {
-                await interaction.reply({ content: `❌ Errore nel rinominare: ${error.message}`, ephemeral: true });
+                await interaction.followUp({ content: `❌ Errore nel rinominare: ${error.message}`, ephemeral: true });
             }
         }
     }
