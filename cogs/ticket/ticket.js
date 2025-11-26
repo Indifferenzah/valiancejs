@@ -1,4 +1,15 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, ChannelType } = require('discord.js');
+const {
+    SlashCommandBuilder,
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    PermissionFlagsBits,
+    ChannelType,
+    ModalBuilder,
+    TextInputBuilder,
+    TextInputStyle
+} = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 const { isOwner, ownerOrHasPermissions } = require('../../utils/botUtils');
@@ -21,7 +32,7 @@ class TicketCog {
         this.closedTickets = loadJsonSync(CLOSED_TICKETS_JSON, {});
         this.blacklist = loadJsonSync(BLACKLIST_JSON, []);
         this.viewsRegistered = false;
-        
+
         this.setupPersistentViews();
     }
 
@@ -122,23 +133,31 @@ class TicketCog {
         if (this.viewsRegistered) return;
         this.viewsRegistered = true;
         try {
-            // Setup button handlers
             this.client.on('interactionCreate', async (interaction) => {
-                if (!interaction.isButton()) return;
-                
-                const { customId } = interaction;
-                
-                if (customId === 'ticket_close') {
-                    await this.handleCloseButton(interaction);
-                } else if (customId === 'confirm_close') {
-                    await this.handleConfirmClose(interaction);
-                } else if (customId === 'cancel_close') {
-                    await this.handleCancelClose(interaction);
-                } else if (this.config.ticket_buttons?.some(btn => btn.id === customId)) {
-                    await this.handleTicketButton(interaction);
+                try {
+                    if (interaction.isButton()) {
+                        const { customId } = interaction;
+
+                        if (customId === 'ticket_close') {
+                            await this.handleCloseButton(interaction);
+                        } else if (customId === 'confirm_close') {
+                            await this.handleConfirmClose(interaction);
+                        } else if (customId === 'cancel_close') {
+                            await this.handleCancelClose(interaction);
+                        } else if (this.config.ticket_buttons?.some(btn => btn.id === customId)) {
+                            await this.handleTicketButton(interaction);
+                        }
+                    } else if (interaction.isModalSubmit()) {
+                        const { customId } = interaction;
+                        if (customId.startsWith('ticket_modal:')) {
+                            await this.handleTicketModal(interaction);
+                        }
+                    }
+                } catch (err) {
+                    logger.error(`Error in interactionCreate handler (ticket): ${err.message}`);
                 }
             });
-            
+
             logger.info('Ticket persistent views setup complete');
         } catch (error) {
             logger.error(`Error setting up persistent views: ${error.message}`);
@@ -153,7 +172,7 @@ class TicketCog {
             } else {
                 const cwRoleId = '1350073967716732971';
                 const authorRoles = message.member?.roles?.cache || new Map();
-                
+
                 if (staffRoleId && authorRoles.has(staffRoleId)) {
                     prefix = '[STAFF] ';
                 } else if (authorRoles.has(cwRoleId)) {
@@ -189,7 +208,7 @@ class TicketCog {
         const content = parts.join(' ') || '';
         const timeStr = message.createdAt.toISOString().replace('T', ' ').split('.')[0];
         const author = message.author.username || message.author.id;
-        
+
         return `[${timeStr}] ${prefix}${author}: ${content}`;
     }
 
@@ -198,11 +217,11 @@ class TicketCog {
             new SlashCommandBuilder()
                 .setName('ticketpanel')
                 .setDescription('Crea un pannello per i ticket di supporto'),
-            
+
             new SlashCommandBuilder()
                 .setName('close')
                 .setDescription('Avvia la procedura di chiusura del ticket'),
-            
+
             new SlashCommandBuilder()
                 .setName('rename')
                 .setDescription('Rinomina il canale ticket')
@@ -210,7 +229,7 @@ class TicketCog {
                     option.setName('new_name')
                         .setDescription('Il nuovo nome del canale (max 100 caratteri)')
                         .setRequired(true)),
-            
+
             new SlashCommandBuilder()
                 .setName('blacklist')
                 .setDescription('Aggiungi/rimuovi un utente dalla blacklist dei ticket')
@@ -218,7 +237,7 @@ class TicketCog {
                     option.setName('member')
                         .setDescription('Utente da blacklistare / de-blacklistare')
                         .setRequired(true)),
-            
+
             new SlashCommandBuilder()
                 .setName('add')
                 .setDescription('Aggiungi un utente al ticket')
@@ -226,7 +245,7 @@ class TicketCog {
                     option.setName('member')
                         .setDescription('Utente da aggiungere')
                         .setRequired(true)),
-            
+
             new SlashCommandBuilder()
                 .setName('remove')
                 .setDescription('Rimuovi un utente dal ticket')
@@ -234,7 +253,7 @@ class TicketCog {
                     option.setName('member')
                         .setDescription('Utente da rimuovere')
                         .setRequired(true)),
-            
+
             new SlashCommandBuilder()
                 .setName('list')
                 .setDescription('Mostra i ticket aperti e chiusi di un utente')
@@ -242,7 +261,7 @@ class TicketCog {
                     option.setName('user')
                         .setDescription('Utente di cui mostrare i ticket')
                         .setRequired(true)),
-            
+
             new SlashCommandBuilder()
                 .setName('transcript')
                 .setDescription('Invia il transcript di un ticket chiuso')
@@ -250,7 +269,7 @@ class TicketCog {
                     option.setName('number')
                         .setDescription('Numero del ticket')
                         .setRequired(true)),
-            
+
             new SlashCommandBuilder()
                 .setName('sendtranscript')
                 .setDescription('Manda via DM il transcript di un ticket chiuso a un utente')
@@ -378,26 +397,42 @@ class TicketCog {
         }
     }
 
+    /**
+     * Gestisce il click sul bottone del ticket:
+     * - se ci sono domande → mostra il Modal
+     * - se non ci sono domande → crea il ticket direttamente (fallback)
+     */
     async handleTicketButton(interaction) {
         if (this.blacklist.includes(interaction.user.id)) {
             await interaction.reply({ content: '❌ Sei nella blacklist e non puoi aprire ticket!', ephemeral: true });
             return;
         }
 
-        if (interaction.deferred || interaction.replied) {
-            return;
-        }
-        await interaction.deferReply({ ephemeral: true }).catch(() => {});
-
         const guild = interaction.guild;
-        const buttonConfig = this.config.ticket_buttons.find(btn => btn.id === interaction.customId);
-        
+        const buttonConfig = (this.config.ticket_buttons || []).find(btn => btn.id === interaction.customId);
+
         if (!buttonConfig) {
-            await interaction.followUp({ content: '❌ Configurazione pulsante non trovata!', ephemeral: true });
+            await interaction.reply({ content: '❌ Configurazione pulsante non trovata!', ephemeral: true });
             return;
         }
 
-        // Check max tickets per user
+        // Prende domande da buttonConfig.questions, oppure in fallback da buttonConfig.form.questions
+        let questions = Array.isArray(buttonConfig.questions) ? buttonConfig.questions : [];
+        if ((!questions || questions.length === 0) && buttonConfig.form && Array.isArray(buttonConfig.form.questions)) {
+            questions = buttonConfig.form.questions;
+        }
+
+        questions = questions
+            .filter(q => q && (q.id || q.label || q.placeholder))
+            .slice(0, 5);
+
+        // Se nessuna domanda, fallback: crea il ticket come prima (senza modal)
+        if (!questions || questions.length === 0) {
+            await this.openTicketChannel(interaction, buttonConfig, {});
+            return;
+        }
+
+        // Controllo limite ticket per utente QUI, così se è già pieno non mostro neanche il modal
         const maxPerUser = parseInt(this.config.ticket_max_per_user || 0);
         if (maxPerUser > 0) {
             const userTickets = Object.values(this.ticketOwners).filter(info => {
@@ -406,9 +441,117 @@ class TicketCog {
             });
 
             if (userTickets.length >= maxPerUser) {
-                await interaction.followUp({ 
-                    content: `⚠️ Hai già ${userTickets.length} ticket aperti (limite: ${maxPerUser}). Chiudi uno di questi prima di aprirne un altro.`, 
-                    ephemeral: true 
+                await interaction.reply({
+                    content: `⚠️ Hai già ${userTickets.length} ticket aperti (limite: ${maxPerUser}). Chiudi uno di questi prima di aprirne un altro.`,
+                    ephemeral: true
+                });
+                return;
+            }
+        }
+
+        // Costruisco il Modal
+        const modal = new ModalBuilder()
+            .setCustomId(`ticket_modal:${buttonConfig.id}`)
+            .setTitle(buttonConfig.form?.title || buttonConfig.label || 'Ticket');
+
+        const rows = [];
+        for (let i = 0; i < questions.length && i < 5; i++) {
+            const q = questions[i] || {};
+            const fieldId = q.id || `q${i + 1}`; // IMPORTANTE: id compatibile con {q1}..{q5}
+            const style = (q.type === "short")
+                ? TextInputStyle.Short
+                : TextInputStyle.Paragraph;
+
+            const input = new TextInputBuilder()
+                .setCustomId(fieldId)
+                .setLabel(q.label || `Domanda ${i + 1}`)
+                .setStyle(style)
+                .setRequired(q.required ?? false);
+
+            if (q.placeholder) {
+                input.setPlaceholder(q.placeholder);
+            }
+
+            if (q.placeholder) {
+                input.setPlaceholder(q.placeholder);
+            }
+
+            const row = new ActionRowBuilder().addComponents(input);
+            rows.push(row);
+        }
+
+        modal.addComponents(...rows);
+
+        await interaction.showModal(modal);
+    }
+
+    /**
+     * Gestisce l'invio del Modal: crea il canale, sostituisce {q1}..{q5} e {mention}, salva le risposte.
+     */
+    async handleTicketModal(interaction) {
+        const customId = interaction.customId; // "ticket_modal:<buttonId>"
+        const parts = customId.split(':');
+        const buttonId = parts[1];
+
+        const buttonConfig = (this.config.ticket_buttons || []).find(btn => btn.id === buttonId);
+        if (!buttonConfig) {
+            await interaction.reply({ content: '❌ Configurazione pulsante non trovata!', ephemeral: true });
+            return;
+        }
+
+        // Rileggo le domande (come nel bottone)
+        let questions = Array.isArray(buttonConfig.questions) ? buttonConfig.questions : [];
+        if ((!questions || questions.length === 0) && buttonConfig.form && Array.isArray(buttonConfig.form.questions)) {
+            questions = buttonConfig.form.questions;
+        }
+
+        questions = questions
+            .filter(q => q && (q.id || q.label || q.placeholder))
+            .slice(0, 5);
+
+        // Mappa delle risposte → { '{q1}': '...', '{q2}': '...' }
+        const answerVars = {};
+
+        for (let i = 0; i < questions.length && i < 5; i++) {
+            const fieldId = questions[i].id || `q${i + 1}`;
+            const key = `{q${i + 1}}`;
+
+            let value = '';
+            try {
+                value = interaction.fields.getTextInputValue(fieldId) || '';
+            } catch {
+                value = '';
+            }
+
+            // Se vuoto → N/A
+            if (!value || value.trim() === '') {
+                value = 'N/A';
+            }
+
+            answerVars[key] = value;
+        }
+
+        await this.openTicketChannel(interaction, buttonConfig, answerVars);
+    }
+
+    /**
+     * Crea il canale ticket, salva info, manda i messaggi, logga, usa variabili {q1}..{q5} e {mention}.
+     */
+    async openTicketChannel(interaction, buttonConfig, answerVars = {}) {
+        const guild = interaction.guild;
+
+        // Controllo max ticket per utente (di sicurezza, nel caso arrivasse da altrove)
+        const maxPerUser = parseInt(this.config.ticket_max_per_user || 0);
+        if (maxPerUser > 0) {
+            const userTickets = Object.values(this.ticketOwners).filter(info => {
+                const ownerId = this.getOwnerId(info);
+                return ownerId === interaction.user.id;
+            });
+
+            if (userTickets.length >= maxPerUser) {
+                await interaction.reply({
+                    content: `⚠️ Hai già ${userTickets.length} ticket aperti (limite: ${maxPerUser}). Chiudi uno di questi prima di aprirne un altro.`,
+                    ephemeral: true
                 });
                 return;
             }
@@ -436,7 +579,6 @@ class TicketCog {
             });
         }
 
-        // Add additional roles from button config
         const additionalRoles = buttonConfig.roles || [];
         for (const roleId of additionalRoles) {
             overwrites.push({
@@ -449,6 +591,22 @@ class TicketCog {
         this.config.ticket_counter = ticketNumber;
         saveJsonSync(CONFIG_PATH, this.config);
 
+        // Template vars per messaggi
+        const templateVars = {
+            '{mention}': interaction.user.toString(),
+            ...answerVars
+        };
+
+        const applyTemplate = (str) => {
+            if (!str) return str;
+            let result = str;
+            for (const [k, v] of Object.entries(templateVars)) {
+                if (v === undefined || v === null) continue;
+                result = result.replace(new RegExp(k, 'g'), String(v));
+            }
+            return result;
+        };
+
         try {
             const channel = await guild.channels.create({
                 name: `ticket-${ticketNumber}`,
@@ -459,15 +617,19 @@ class TicketCog {
 
             this.ticketOwners[channel.id] = {
                 owner: interaction.user.id,
-                button: interaction.customId,
-                number: ticketNumber
+                button: buttonConfig.id,
+                number: ticketNumber,
+                answers: answerVars
             };
 
-            const outsideMessage = (buttonConfig.outside_message || 'Ticket aperto!')
-                .replace('{mention}', interaction.user.toString());
+            const outsideMessage = applyTemplate(buttonConfig.outside_message || 'Ticket aperto!');
             await channel.send(outsideMessage);
 
-            const embedMessage = buttonConfig.embed_message || 'A breve riceverai il supporto richiesto.\nClicca il bottone sotto per chiudere il ticket.';
+            const embedMessage = applyTemplate(
+                buttonConfig.embed_message ||
+                'A breve riceverai il supporto richiesto.\nClicca il bottone sotto per chiudere il ticket.'
+            );
+
             const embed = new EmbedBuilder()
                 .setDescription(embedMessage)
                 .setColor(0x00ff00);
@@ -485,7 +647,6 @@ class TicketCog {
             this.ticketOwners[channel.id].close_message_id = message.id;
             this.saveTickets();
 
-            // Log ticket opening
             if (this.client.logCog) {
                 await this.client.logCog.logTicketOpen(
                     interaction.user,
@@ -495,17 +656,21 @@ class TicketCog {
                 );
             }
 
-            await interaction.followUp({ content: `🎫 Ticket creato: ${channel}`, ephemeral: true });
+            await interaction.reply({ content: `🎫 Ticket creato: ${channel}`, ephemeral: true });
         } catch (error) {
             logger.error(`Error creating ticket: ${error.message}`);
-            await interaction.followUp({ content: '❌ Errore nella creazione del ticket!', ephemeral: true });
+            try {
+                await interaction.reply({ content: '❌ Errore nella creazione del ticket!', ephemeral: true });
+            } catch {
+                // ignore
+            }
         }
     }
 
     async handleCloseButton(interaction) {
         const channel = interaction.channel;
         const ticketInfo = this.ticketOwners[channel.id];
-        
+
         if (!ticketInfo) {
             await interaction.reply({ content: '❌ Questo non è un canale ticket valido!', ephemeral: true });
             return;
@@ -544,7 +709,7 @@ class TicketCog {
     async handleConfirmClose(interaction) {
         const channel = interaction.channel;
         const ticketInfo = this.ticketOwners[channel.id];
-        
+
         if (!ticketInfo) {
             await interaction.reply({ content: '❌ Ticket non trovato!', ephemeral: true });
             return;
@@ -556,23 +721,22 @@ class TicketCog {
         await interaction.deferReply({ ephemeral: true }).catch(() => {});
 
         try {
-            // Collect messages for transcript
             const messages = [];
             const staffRoleId = this.config.ticket_staff_role_id;
-            
+
             let lastId;
             while (true) {
                 const options = { limit: 100 };
                 if (lastId) options.before = lastId;
-                
+
                 const fetchedMessages = await channel.messages.fetch(options);
                 if (fetchedMessages.size === 0) break;
-                
+
                 messages.push(...fetchedMessages.values());
                 lastId = fetchedMessages.last().id;
             }
 
-            messages.reverse(); // Oldest first
+            messages.reverse();
             const transcript = messages.map(msg => this.formatMessageForTranscript(msg, staffRoleId)).join('\n');
 
             const ticketNumber = ticketInfo.number || 1;
@@ -585,32 +749,30 @@ class TicketCog {
             const filename = path.join(transcriptDir, `transcript-${ticketNumber}.txt`);
             fs.writeFileSync(filename, transcript, 'utf8');
 
-            // Store closed ticket info
-            this.closedTickets[ticketNumber.toString()] = {
-                owner: ownerId,
-                transcript_file: filename,
-                closed_at: new Date().toISOString(),
-                button: ticketInfo.button || '',
-                channel_name: channel.name
-            };
-            saveJsonSync(CLOSED_TICKETS_JSON, this.closedTickets);
-
-            // Build transcript embed with placeholders
             const embedData = this.config.ticket_transcript_embed || {};
             const openerUser = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
             const opener = openerUser ? openerUser.toString() : 'Unknown';
             const staffer = interaction.user ? interaction.user.toString() : 'Unknown';
             const channelName = channel.name;
             const buttonId = ticketInfo.button || '';
+
             const ticketVars = {
                 '{opener}': opener,
                 '{staffer}': staffer,
                 '{name}': channelName,
                 '{id}': buttonId,
-                '{channel}': channel.mention,
-                '{number}': String(ticketNumber)
+                '{channel}': channel.toString(),
+                '{number}': String(ticketNumber),
+                '{mention}': opener
             };
-            const applyVars = (str) => Object.entries(ticketVars).reduce((acc, [k, v]) => acc.replace(new RegExp(k, 'g'), v), str || '');
+
+            const answers = ticketInfo.answers || {};
+            for (const [k, v] of Object.entries(answers)) {
+                ticketVars[k] = (v && v.trim() !== '') ? v : 'N/A';
+            }
+
+            const applyVars = (str) =>
+                Object.entries(ticketVars).reduce((acc, [k, v]) => acc.replace(new RegExp(k, 'g'), v), str || '');
 
             const transcriptEmbed = new EmbedBuilder()
                 .setTitle(applyVars(embedData.title || 'Transcript del Ticket'))
@@ -620,46 +782,58 @@ class TicketCog {
             if (embedData.thumbnail) transcriptEmbed.setThumbnail(embedData.thumbnail);
             if (embedData.footer) transcriptEmbed.setFooter({ text: applyVars(embedData.footer) });
 
-            const payload = { embeds: [transcriptEmbed], files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }] };
+            const payload = {
+                embeds: [transcriptEmbed],
+                files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }]
+            };
 
-            // Send transcript to transcript channel
             const transcriptChannelId = this.config.ticket_transcript_channel_id;
             if (transcriptChannelId) {
                 const transcriptChannel = this.client.channels.cache.get(transcriptChannelId);
                 if (transcriptChannel) {
-                    await transcriptChannel.send(payload).catch(err => logger.error(`Error sending transcript to channel: ${err.message}`));
+                    await transcriptChannel.send(payload).catch(err =>
+                        logger.error(`Error sending transcript to channel: ${err.message}`)
+                    );
                 } else {
                     logger.error('Canale transcript non trovato!');
                 }
             }
 
-            // Send transcript to ticket opener via DM with same embed
             try {
                 if (openerUser) {
-                    await openerUser.send({ ...payload, content: applyVars('Transcript del ticket #{number}') });
+                    await openerUser.send({
+                        ...payload,
+                        content: applyVars('Transcript del ticket #{number}')
+                    });
                 }
             } catch (error) {
                 logger.error(`Could not send transcript to owner: ${error.message}`);
             }
 
-            // Log ticket closure
+            this.closedTickets[ticketNumber.toString()] = {
+                owner: ownerId,
+                transcript_file: filename,
+                closed_at: new Date().toISOString(),
+                button: ticketInfo.button || '',
+                channel_name: channel.name,
+                answers
+            };
+            saveJsonSync(CLOSED_TICKETS_JSON, this.closedTickets);
+
             if (this.client.logCog) {
-                const opener = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
+                const openerUserFull = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
                 await this.client.logCog.logTicketClose(
                     channel.name,
-                    opener ? opener.tag : 'Unknown',
+                    openerUserFull ? openerUserFull.tag : 'Unknown',
                     interaction.user.tag,
                     ticketNumber.toString()
                 );
             }
 
-            // Delete the channel
             await channel.delete();
 
-            // Remove from active tickets
             delete this.ticketOwners[channel.id];
             this.saveTickets();
-
         } catch (error) {
             logger.error(`Error closing ticket: ${error.message}`);
             await interaction.followUp({ content: '❌ Errore nella chiusura del ticket!', ephemeral: true });
@@ -727,14 +901,14 @@ class TicketCog {
 
         try {
             await channel.setName(newName);
-            
+
             const renameMsg = this.ticketMessages.rename;
             if (renameMsg) {
                 const embed = new EmbedBuilder()
                     .setTitle(renameMsg.title)
                     .setDescription(renameMsg.description.replace('{name}', newName))
                     .setColor(renameMsg.color);
-                
+
                 if (renameMsg.thumbnail) embed.setThumbnail(renameMsg.thumbnail);
                 if (renameMsg.footer) embed.setFooter({ text: renameMsg.footer });
 
@@ -754,7 +928,7 @@ class TicketCog {
     async handleBlacklist(interaction) {
         const member = interaction.options.getUser('member');
         const staffRoleId = this.config.ticket_staff_role_id;
-        
+
         if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
             await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
             return;
@@ -798,7 +972,7 @@ class TicketCog {
                     .setTitle(addMsg.title)
                     .setDescription(addMsg.description.replace('{member}', member.toString()))
                     .setColor(addMsg.color);
-                
+
                 if (addMsg.thumbnail) embed.setThumbnail(addMsg.thumbnail);
                 if (addMsg.footer) embed.setFooter({ text: addMsg.footer });
 
@@ -841,14 +1015,14 @@ class TicketCog {
 
         try {
             await channel.permissionOverwrites.delete(member);
-            
+
             const removeMsg = this.ticketMessages.remove;
             if (removeMsg) {
                 const embed = new EmbedBuilder()
                     .setTitle(removeMsg.title)
                     .setDescription(removeMsg.description.replace('{member}', member.toString()))
                     .setColor(removeMsg.color);
-                
+
                 if (removeMsg.thumbnail) embed.setThumbnail(removeMsg.thumbnail);
                 if (removeMsg.footer) embed.setFooter({ text: removeMsg.footer });
 
@@ -864,7 +1038,7 @@ class TicketCog {
     async handleList(interaction) {
         const user = interaction.options.getUser('user');
         const staffRoleId = this.config.ticket_staff_role_id;
-        
+
         if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
             await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
             return;
@@ -873,7 +1047,6 @@ class TicketCog {
         const openTickets = [];
         const closedTickets = [];
 
-        // Find open tickets
         for (const [channelId, info] of Object.entries(this.ticketOwners)) {
             const ownerId = this.getOwnerId(info);
             if (ownerId === user.id) {
@@ -884,7 +1057,6 @@ class TicketCog {
             }
         }
 
-        // Find closed tickets
         for (const [ticketNum, info] of Object.entries(this.closedTickets)) {
             if (String(info.owner) === user.id) {
                 closedTickets.push(`***\`#${ticketNum}\`*** - ${info.channel_name || 'Unknown'}`);
@@ -898,25 +1070,25 @@ class TicketCog {
             .setFooter({ text: 'Valiance | Ticket System' });
 
         embed.addFields(
-            { 
-                name: '**Ticket Aperti**', 
-                value: openTickets.length > 0 ? openTickets.join('\n') : 'Nessuno', 
-                inline: false 
+            {
+                name: '**Ticket Aperti**',
+                value: openTickets.length > 0 ? openTickets.join('\n') : 'Nessuno',
+                inline: false
             },
-            { 
-                name: '**Ticket Chiusi**', 
-                value: closedTickets.length > 0 ? closedTickets.join('\n') : 'Nessuno', 
-                inline: false 
+            {
+                name: '**Ticket Chiusi**',
+                value: closedTickets.length > 0 ? closedTickets.join('\n') : 'Nessuno',
+                inline: false
             }
         );
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
-        
-        // Auto-delete after 60 seconds
+
         setTimeout(async () => {
             try {
                 await interaction.deleteReply();
             } catch (error) {
+                // ignore
             }
         }, 60000);
     }
@@ -924,7 +1096,7 @@ class TicketCog {
     async handleTranscript(interaction) {
         const number = interaction.options.getInteger('number');
         const ticketStr = number.toString();
-        
+
         if (!this.closedTickets[ticketStr]) {
             await interaction.reply({ content: '❌ Ticket non trovato!', ephemeral: true });
             return;
@@ -932,7 +1104,7 @@ class TicketCog {
 
         const ticketInfo = this.closedTickets[ticketStr];
         const ownerId = this.getOwnerId(ticketInfo);
-        
+
         if (ownerId !== interaction.user.id) {
             const staffRoleId = this.config.ticket_staff_role_id;
             if (!staffRoleId || !interaction.member.roles.cache.has(staffRoleId)) {
@@ -951,9 +1123,9 @@ class TicketCog {
             return;
         }
         await interaction.deferReply({ ephemeral: true }).catch(() => {});
-        await interaction.followUp({ 
-            files: [{ attachment: filename, name: `transcript-${number}.txt` }], 
-            ephemeral: true 
+        await interaction.followUp({
+            files: [{ attachment: filename, name: `transcript-${number}.txt` }],
+            ephemeral: true
         });
     }
 
@@ -961,7 +1133,7 @@ class TicketCog {
         const number = interaction.options.getInteger('number');
         const user = interaction.options.getUser('user');
         const staffRoleId = this.config.ticket_staff_role_id;
-        
+
         const hasStaff = staffRoleId && interaction.member.roles.cache.has(staffRoleId);
         if (!hasStaff && !interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
             await interaction.reply({ content: '❌ Non hai i permessi per usare questo comando!', ephemeral: true });
@@ -970,11 +1142,11 @@ class TicketCog {
 
         const ticketStr = number.toString();
         let filename = null;
-        
+
         if (this.closedTickets[ticketStr]) {
             filename = this.closedTickets[ticketStr].transcript_file;
         }
-        
+
         if (!filename) {
             filename = path.join(__dirname, '../../transcripts', `transcript-${number}.txt`);
         }
@@ -994,22 +1166,22 @@ class TicketCog {
                 content: `Transcript del ticket #${number}`,
                 files: [{ attachment: filename, name: `transcript-${number}.txt` }]
             });
-            
-            await interaction.followUp({ 
-                content: `✅ Transcript del ticket #${number} inviato in DM a ${user}.`, 
-                ephemeral: true 
+
+            await interaction.followUp({
+                content: `✅ Transcript del ticket #${number} inviato in DM a ${user}.`,
+                ephemeral: true
             });
         } catch (error) {
             if (error.code === 50007) {
-                await interaction.followUp({ 
-                    content: '❌ Non posso inviare il DM: l\'utente ha i DM chiusi.', 
-                    ephemeral: true 
+                await interaction.followUp({
+                    content: '❌ Non posso inviare il DM: l\'utente ha i DM chiusi.',
+                    ephemeral: true
                 });
             } else {
                 logger.error(`Error sending transcript: ${error.message}`);
-                await interaction.followUp({ 
-                    content: '❌ Errore durante l\'invio del transcript.', 
-                    ephemeral: true 
+                await interaction.followUp({
+                    content: '❌ Errore durante l\'invio del transcript.',
+                    ephemeral: true
                 });
             }
         }
@@ -1032,7 +1204,7 @@ class TicketCog {
 
 function setup(client) {
     const cog = new TicketCog(client);
-    
+
     client.on('interactionCreate', async (interaction) => {
         if (interaction.isChatInputCommand()) {
             const commandNames = ['ticketpanel', 'close', 'rename', 'blacklist', 'add', 'remove', 'list', 'transcript', 'sendtranscript'];
@@ -1044,7 +1216,7 @@ function setup(client) {
 
     if (!client.globalCommands) client.globalCommands = [];
     client.globalCommands.push(...cog.getCommands());
-    
+
     return cog;
 }
 
