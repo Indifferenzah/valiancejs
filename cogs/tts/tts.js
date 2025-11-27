@@ -1,6 +1,7 @@
 const {
     SlashCommandBuilder,
-    PermissionFlagsBits
+    PermissionFlagsBits,
+    EmbedBuilder
 } = require("discord.js");
 
 const {
@@ -13,7 +14,6 @@ const {
 const { loadJsonSync, saveJsonSync } = require("../../utils/jsonStore");
 const { ownerOrHasPermissions } = require("../../utils/botUtils");
 
-const fs = require("fs");
 const path = require("path");
 const gTTS = require("gtts");
 
@@ -27,6 +27,7 @@ class TTSCog {
         this.client = client;
 
         this.configPath = path.join(__dirname, "tts.json");
+        this.mainConfigPath = path.join(__dirname, "../../config.json");
         this.config = loadJsonSync(this.configPath, {
             channel: null
         });
@@ -90,8 +91,88 @@ class TTSCog {
                 .audioCodec("pcm_s16le")
                 .on("end", () => resolve(out))
                 .on("error", reject)
-                .save(out);
+            .save(out);
         });
+    }
+
+    getStatusEmbedConfig(type) {
+        try {
+            const cfg = loadJsonSync(this.mainConfigPath, {});
+            if (cfg?.tts_embeds?.[type]) return cfg.tts_embeds[type];
+            if (cfg?.[type]) return cfg[type];
+        } catch {
+            return null;
+        }
+        return null;
+    }
+
+    parseColor(color) {
+        if (typeof color === "number") return color;
+        if (typeof color === "string") {
+            const cleaned = color.replace("#", "");
+            const parsed = parseInt(cleaned, 16);
+            if (!Number.isNaN(parsed)) return parsed;
+        }
+        return null;
+    }
+
+    buildStatusEmbed(type, executor, guild, extra = {}) {
+        const template = this.getStatusEmbedConfig(type);
+        if (!template) return null;
+
+        const avatarURL =
+            executor?.displayAvatarURL?.({ dynamic: true }) ||
+            executor?.user?.displayAvatarURL?.({ dynamic: true }) ||
+            null;
+        const username =
+            executor?.user?.username ||
+            executor?.username ||
+            executor?.user?.tag ||
+            executor?.tag ||
+            "";
+        const displayName = executor?.displayName || executor?.globalName || username;
+        const mention =
+            executor?.toString?.() ||
+            (executor?.user?.id ? `<@${executor.user.id}>` : executor?.id ? `<@${executor.id}>` : "");
+
+        const replacements = {
+            mention,
+            user: displayName,
+            channel: extra.channel || ""
+        };
+        const applyReplacements = (text = "") => {
+            if (typeof text !== "string") return text;
+            return text
+                .replace(/\{mention\}/gi, replacements.mention)
+                .replace(/\{user\}/gi, replacements.user)
+                .replace(/\{channel\}/gi, replacements.channel);
+        };
+
+        const embed = new EmbedBuilder();
+
+        embed.setAuthor({
+            name: displayName || replacements.user,
+            iconURL: avatarURL
+        });
+
+        if (template.title) embed.setTitle(applyReplacements(template.title));
+        if (template.description) embed.setDescription(applyReplacements(template.description));
+
+        const color = this.parseColor(template.color);
+        if (color !== null) embed.setColor(color);
+
+        if (template.thumbnail) embed.setThumbnail(applyReplacements(template.thumbnail));
+
+        const footerText = template.footer ? applyReplacements(template.footer) : "";
+        const footerIcon = guild?.iconURL?.({ dynamic: true }) || null;
+        if (footerText || footerIcon) {
+            embed.setFooter({
+                text: footerText || " ",
+                iconURL: footerIcon
+            });
+        }
+
+        return embed;
     }
 
     // ========== QUEUE SYSTEM ==========
@@ -159,6 +240,10 @@ class TTSCog {
         const member = interaction.member;
 
         if (!member.voice.channel) {
+            const embed = this.buildStatusEmbed("not_in_channel", member, interaction.guild);
+            if (embed) {
+                return interaction.reply({ embeds: [embed], ephemeral: true });
+            }
             return interaction.reply({
                 content: "❌ Devi essere in un canale vocale!",
                 ephemeral: true
@@ -184,6 +269,14 @@ class TTSCog {
 
         this.botVoiceChannel.set(guildId, member.voice.channel.id);
 
+        const embed = this.buildStatusEmbed("join", member, interaction.guild, {
+            channel: member.voice.channel.name
+        });
+
+        if (embed) {
+            return interaction.reply({ embeds: [embed], ephemeral: true });
+        }
+
         return interaction.reply({
             content: `🔊 Entrato in **${member.voice.channel.name}**`,
             ephemeral: true
@@ -195,16 +288,30 @@ class TTSCog {
 
         const conn = this.connections.get(guildId);
         if (!conn) {
+            const embed = this.buildStatusEmbed("no_voice", interaction.member, interaction.guild);
+            if (embed) {
+                return interaction.reply({ embeds: [embed], ephemeral: true });
+            }
             return interaction.reply({
                 content: "❌ Non sono in nessuna voice!",
                 ephemeral: true
             });
         }
 
+        const voiceChannelName = interaction.guild.channels.cache.get(conn.joinConfig.channelId)?.name || "";
+
         conn.destroy();
         this.connections.delete(guildId);
         this.players.delete(guildId);
         this.botVoiceChannel.delete(guildId);
+
+        const embed = this.buildStatusEmbed("leave", interaction.member, interaction.guild, {
+            channel: voiceChannelName
+        });
+
+        if (embed) {
+            return interaction.reply({ embeds: [embed], ephemeral: true });
+        }
 
         return interaction.reply({
             content: "👋 Disconnesso.",
@@ -263,6 +370,10 @@ class TTSCog {
                 const member = msg.member;
 
                 if (!member.voice.channel) {
+                    const embed = this.buildStatusEmbed("not_in_channel", member, msg.guild);
+                    if (embed) {
+                        return msg.reply({ embeds: [embed] });
+                    }
                     return msg.reply("❌ Devi essere in un canale vocale.");
                 }
 
@@ -285,6 +396,14 @@ class TTSCog {
 
                 this.botVoiceChannel.set(guildId, member.voice.channel.id);
 
+                const embed = this.buildStatusEmbed("join", member, msg.guild, {
+                    channel: member.voice.channel.name
+                });
+
+                if (embed) {
+                    return msg.reply({ embeds: [embed] });
+                }
+
                 return msg.reply(`🔊 Entrato in **${member.voice.channel.name}**`);
             }
 
@@ -294,13 +413,26 @@ class TTSCog {
 
                 const conn = this.connections.get(guildId);
                 if (!conn) {
+                    const embed = this.buildStatusEmbed("no_voice", msg.member, msg.guild);
+                    if (embed) {
+                        return msg.reply({ embeds: [embed] });
+                    }
                     return msg.reply("❌ Non sono in nessuna voice!");
                 }
 
+                const voiceChannelName = msg.guild.channels.cache.get(conn.joinConfig.channelId)?.name || "";
                 conn.destroy();
                 this.connections.delete(guildId);
                 this.players.delete(guildId);
                 this.botVoiceChannel.delete(guildId);
+
+                const embed = this.buildStatusEmbed("leave", msg.member, msg.guild, {
+                    channel: voiceChannelName
+                });
+
+                if (embed) {
+                    return msg.reply({ embeds: [embed] });
+                }
 
                 return msg.reply("👋 Disconnesso.");
             }

@@ -1,21 +1,21 @@
 {
     "add": {
-        "title": "Utente aggiunto",
+        "title": "Utente Aggiunto",
         "description": "{member} è stato aggiunto al ticket.",
         "color": 36665,
         "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
         "footer": "Valiance | Ticket System"
     },
     "remove": {
-        "title": "Utente rimosso",
+        "title": "Utente Rimosso",
         "description": "{member} è stato rimosso dal ticket.",
         "color": 36665,
         "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
         "footer": "Valiance | Ticket System"
     },
     "rename": {
-        "title": "Ticket rinominato",
-        "description": "Il ticket è stato rinominato in {name}.",
+        "title": "Ticket Aggiornato",
+        "description": "Il nome del ticket è stato\ncambiato in `{name}`.",
         "color": 36665,
         "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
         "footer": "Valiance | Ticket System"

@@ -31,6 +31,37 @@
     "footer": "Valiance | Grazie per il boost!"
   },
 
+  "tts_embeds": {
+    "join": {
+      "title": "TTS Join",
+      "description": "{mention} ha fatto entrare il bot in **{channel}**!\nUsa `/help` per vedere una lista dei comandi disponibili.",
+      "color": 36665,
+      "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
+      "footer": "Valiance | TTS System"
+    },
+    "not_in_channel": {
+      "title": "TTS Error",
+      "description": "{mention}, devi essere in un canale vocale per usare il TTS.",
+      "color": 16711680,
+      "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
+      "footer": "Valiance | TTS System"
+    },
+    "leave": {
+      "title": "TTS Leave",
+      "description": "{mention} ha fatto uscire il bot dalla vocale.",
+      "color": 36665,
+      "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
+      "footer": "Valiance | TTS System"
+    },
+    "no_voice": {
+      "title": "TTS Error",
+      "description": "{mention}, il bot non è collegato a nessun canale vocale.",
+      "color": 16711680,
+      "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
+      "footer": "Valiance | TTS System"
+    }
+  },
+
   "ticket_staff_role_id": "1350073958933729371",
   "ticket_category_id": "1350074001229221898",
   "ticket_transcript_channel_id": "1350118549665873981",
@@ -111,7 +142,7 @@
   "ticket_panel_message_id": 1427408841200373800,
 
   "prefixes": ["v!","!"],
-  "ticket_counter": 57,
+  "ticket_counter": 68,
   "ticket_max_per_user": 1,
   "bot_status": "dnd",
   "bot_activity_type": "watching",
