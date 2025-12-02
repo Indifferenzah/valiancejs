@@ -868,48 +868,59 @@ async function handleVerify(interaction) {
     });
 
     client.on('guildMemberUpdate', async (oldMember, newMember) => {
-        if (!oldMember.premiumSince && newMember.premiumSince) {
-            if (!config.boost_channel_id) return;
-            if (recentBoosts.has(newMember.id)) return;
-            recentBoosts.add(newMember.id);
-            setTimeout(() => recentBoosts.delete(newMember.id), 10000);
 
-            try {
-                const boostChannel = newMember.guild.channels.cache.get(config.boost_channel_id);
-                if (!boostChannel) return;
+        const firstBoost = !oldMember.premiumSince && newMember.premiumSince;
 
-                const boostData = config.boost_message || {};
-            
-                let description = boostData.description || '{mention} ha boostato il server!';
-                description = description.replace('{mention}', newMember.toString())
-                    .replace('{username}', newMember.user.username)
-                    .replace('{user}', newMember.user.username);
+        const boostUpgrade = oldMember.premiumTier !== newMember.premiumTier;
+        
+        if (!firstBoost && !boostUpgrade) return;
 
-                const embed = new EmbedBuilder()
-                    .setTitle(boostData.title || 'Nuovo Boost!')
-                    .setDescription(description)
-                    .setColor(boostData.color || 0xFFD700);
+        if (!config.boost_channel_id) return;
+        if (recentBoosts.has(newMember.id)) return;
+        recentBoosts.add(newMember.id);
+        setTimeout(() => recentBoosts.delete(newMember.id), 10000);
 
-                const thumbnail = boostData.thumbnail || '{avatar}';
-                if (thumbnail.includes('{avatar}')) {
-                    embed.setThumbnail(newMember.user.displayAvatarURL());
-                } else if (thumbnail) {
-                    embed.setThumbnail(thumbnail);
-                }
+        try {
+            const boostChannel = newMember.guild.channels.cache.get(config.boost_channel_id);
+            if (!boostChannel) return;
 
-                if (boostData.footer) {
-                    embed.setFooter({ text: boostData.footer });
-                }
+            const boostData = config.boost_message || {};
+        
+            let description = boostData.description || '{mention} ha boostato il server!';
+            description = description
+                .replace('{mention}', newMember.toString())
+                .replace('{username}', newMember.user.username)
+                .replace('{user}', newMember.user.username);
 
-                embed.setAuthor({ name: newMember.user.username, iconURL: newMember.user.displayAvatarURL() });
+            const embed = new EmbedBuilder()
+                .setTitle(boostData.title || 'Nuovo Boost!')
+                .setDescription(description)
+                .setColor(boostData.color || 0xFFD700);
 
-                await boostChannel.send({ embeds: [embed] });
-                logger.info(`Boost message sent for ${newMember.user.username}`);
-            } catch (error) {
-                logger.error(`Error sending boost message: ${error.message}`);
+            const thumbnail = boostData.thumbnail || '{avatar}';
+            if (thumbnail.includes('{avatar}')) {
+                embed.setThumbnail(newMember.user.displayAvatarURL());
+            } else if (thumbnail) {
+                embed.setThumbnail(thumbnail);
             }
+
+            if (boostData.footer) {
+                embed.setFooter({ text: boostData.footer });
+            }
+
+            embed.setAuthor({
+                name: newMember.user.username,
+                iconURL: newMember.user.displayAvatarURL()
+            });
+
+            await boostChannel.send({ embeds: [embed] });
+            logger.info(`Boost message sent for ${newMember.user.username}`);
+
+        } catch (error) {
+            logger.error(`Error sending boost message: ${error.message}`);
         }
     });
+
 
     client.on('messageCreate', async (message) => {
         if (message.author.bot) return;

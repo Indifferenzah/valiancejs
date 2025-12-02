@@ -26,6 +26,12 @@ class ModerationCog {
                 .addStringOption(option => option.setName('reason').setDescription('Motivo del kick').setRequired(false)),
             
             new SlashCommandBuilder()
+                .setName('unban')
+                .setDescription('Sbanna un utente tramite ID')
+                .addStringOption(option => option.setName('id').setDescription('ID utente da sbannare').setRequired(true).setAutocomplete(true))
+                .addStringOption(option => option.setName('reason').setDescription('Motivo dell unban').setRequired(false)),
+            
+            new SlashCommandBuilder()
                 .setName('mute')
                 .setDescription('Muta un membro')
                 .addUserOption(option => option.setName('user').setDescription('Utente da mutare').setRequired(true))
@@ -111,6 +117,74 @@ class ModerationCog {
             logger.info(`${user.tag} banned by ${interaction.user.tag}: ${reason}`);
         } catch (error) {
             await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+        }
+    }
+
+    async handleUnban(interaction) {
+        if (!ownerOrHasPermissions(PermissionFlagsBits.BanMembers)(interaction)) {
+            await interaction.reply({ content: '❌ Non hai i permessi per sbannare!', ephemeral: true });
+            return;
+        }
+
+        const userId = interaction.options.getString('id');
+        const reason = interaction.options.getString('reason') || 'Nessun motivo specificato';
+
+        try {
+            const bans = await interaction.guild.bans.fetch();
+            const bannedUser = bans.get(userId);
+
+            if (!bannedUser) {
+                await interaction.reply({ content: '❌ Utente non trovato nella lista ban.', ephemeral: true });
+                return;
+            }
+
+            await interaction.guild.bans.remove(userId, reason);
+
+            const embed = new EmbedBuilder()
+                .setTitle('♻️ Utente Sbannato')
+                .setDescription(`L'utente con ID **${userId}** è stato sbannato.`)
+                .addFields({ name: 'Motivo', value: reason })
+                .setColor(0x00ff00)
+                .setFooter({ text: `Sbannato da ${interaction.user.tag}` });
+
+            await interaction.reply({ embeds: [embed] });
+            logger.info(`User ${userId} unbanned by ${interaction.user.tag}: ${reason}`);
+
+        } catch (error) {
+            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+            logger.error(`Unban failed for ${userId} by ${interaction.user.tag}: ${error.message}`);
+        }
+    }
+
+    async handleUnbanAutocomplete(interaction) {
+        const focused = interaction.options.getFocused();
+        try {
+            const bans = await interaction.guild.bans.fetch();
+
+            let choices = bans.map(ban => {
+                const user = ban.user;
+                return {
+                    name: `${user.id} (${user.tag})`,
+                    value: user.id
+                };
+            });
+
+            if (focused && focused.length > 0) {
+                const query = focused.toLowerCase();
+                choices = choices.filter(choice =>
+                    choice.value.startsWith(query) ||
+                    choice.name.toLowerCase().includes(query)
+                );
+            }
+
+            choices = choices.slice(0, 25);
+
+            await interaction.respond(choices);
+        } catch (error) {
+            logger.error(`Error in unban autocomplete: ${error.message}`);
+            if (!interaction.responded) {
+                await interaction.respond([]);
+            }
         }
     }
 
@@ -334,14 +408,23 @@ function setup(client) {
     const moderationCog = new ModerationCog(client);
     
     client.on('interactionCreate', async (interaction) => {
-        if (!interaction.isChatInputCommand()) return;
-        
         try {
+            if (interaction.isAutocomplete()) {
+                if (interaction.commandName === 'unban') {
+                    const focused = interaction.options.getFocused(true);
+                    if (focused.name === 'id') await moderationCog.handleUnbanAutocomplete(interaction);
+                }
+                return;
+            }
+
+            if (!interaction.isChatInputCommand()) return;
+            
             switch (interaction.commandName) {
                 case 'ban': await moderationCog.handleBan(interaction); break;
                 case 'kick': await moderationCog.handleKick(interaction); break;
                 case 'mute': await moderationCog.handleMute(interaction); break;
                 case 'unmute': await moderationCog.handleUnmute(interaction); break;
+                case 'unban': await moderationCog.handleUnban(interaction); break;
                 case 'nick': await moderationCog.handleNick(interaction); break;
                 case 'warn':
                     const subcommand = interaction.options.getSubcommand();
