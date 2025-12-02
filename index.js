@@ -66,8 +66,7 @@ const cogsToLoad = [
     'rep/reputation',
     'birthdays/birthdays',
     'counters/counters',
-    'stats/stats',
-    'gang/gang'
+    'stats/stats'
 ];
 
 for (const cogPath of cogsToLoad) {
@@ -872,7 +871,7 @@ async function handleVerify(interaction) {
         const firstBoost = !oldMember.premiumSince && newMember.premiumSince;
 
         const boostUpgrade = oldMember.premiumTier !== newMember.premiumTier;
-        
+
         if (!firstBoost && !boostUpgrade) return;
 
         if (!config.boost_channel_id) return;
