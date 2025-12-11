@@ -374,17 +374,31 @@ async function handlePurge(interaction) {
     try {
         const messages = await interaction.channel.messages.fetch({ limit, before: interaction.id });
         await interaction.channel.bulkDelete(messages);
-        await interaction.followup.send({ content: `✅ Ho eliminato ${messages.size} messaggi.`, ephemeral: true });
+
+        await interaction.followUp({
+            content: `✅ Ho eliminato ${messages.size} messaggi.`,
+            ephemeral: true
+        });
+
         logger.info(`Purge executed: ${messages.size} messages deleted by ${interaction.user.tag} in ${interaction.channel.name}`);
     } catch (error) {
-        await interaction.followup.send({ content: `❌ Errore durante la purge: ${error.message}`, ephemeral: true });
+        await interaction.followUp({
+            content: `❌ Errore durante la purge: ${error.message}`,
+            ephemeral: true
+        });
+
         logger.error(`Purge error by ${interaction.user.tag}: ${error.message}`);
     }
 }
 
 async function handlePing(interaction) {
-    const latency = Math.round(client.ws.ping);
-    await interaction.reply({ content: `🏓 Pong! Latenza: ${latency}ms`, ephemeral: true });
+    const latency = Math.round(interaction.client.ws.ping);
+
+    await interaction.reply({
+        content: `🏓 Pong! Latenza: ${latency}ms`,
+        ephemeral: true
+    });
+
     logger.info(`/ping used by ${interaction.user.tag} - Latency: ${latency}ms`);
 }
 
@@ -875,9 +889,7 @@ async function handleVerify(interaction) {
         if (!firstBoost && !boostUpgrade) return;
 
         if (!config.boost_channel_id) return;
-        if (recentBoosts.has(newMember.id)) return;
-        recentBoosts.add(newMember.id);
-        setTimeout(() => recentBoosts.delete(newMember.id), 10000);
+
 
         try {
             const boostChannel = newMember.guild.channels.cache.get(config.boost_channel_id);
