@@ -924,7 +924,20 @@ async function handleVerify(interaction) {
                 iconURL: newMember.user.displayAvatarURL()
             });
 
-            await boostChannel.send({ embeds: [embed] });
+            const pingMessage = boostData.ping_message;
+            let finalPingMessage = null;
+
+            if (pingMessage) {
+                finalPingMessage = pingMessage
+                    .replace('{mention}', newMember.toString())
+                    .replace('{username}', newMember.user.username)
+                    .replace('{user}', newMember.user.username);
+            }
+
+            await boostChannel.send({
+                content: finalPingMessage || null,
+                embeds: [embed]
+            });
             logger.info(`Boost message sent for ${newMember.user.username}`);
 
         } catch (error) {
