@@ -14,6 +14,7 @@ class CwCog {
             new SlashCommandBuilder()
                 .setName('cw')
                 .setDescription('Invia punteggio CW')
+                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
                 .addIntegerOption(option => option.setName('numero').setDescription('Numero CW').setRequired(true))
                 .addStringOption(option => option.setName('data').setDescription('Data (DD/MM/YYYY)').setRequired(true))
                 .addStringOption(option => option.setName('ora').setDescription('Ora (HH:MM)').setRequired(true))

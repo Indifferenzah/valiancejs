@@ -112,6 +112,7 @@ class CountersCog {
       new SlashCommandBuilder()
         .setName('counter')
         .setDescription('Gestione dei counter')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addSubcommand(sub =>
           sub.setName('start')
             .setDescription('Crea e avvia i counter selezionati')

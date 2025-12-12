@@ -14,6 +14,7 @@ class AutoRoleCog {
             new SlashCommandBuilder()
                 .setName('createreact')
                 .setDescription('Crea messaggio reazione ruoli')
+                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
                 .addStringOption(option =>
                     option.setName('message_id')
                         .setDescription('ID del messaggio')

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
 const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
 const { ownerOrHasPermissions } = require('../../utils/botUtils');
 const logger = require('../../utils/logger');
@@ -16,24 +16,28 @@ class ModerationCog {
             new SlashCommandBuilder()
                 .setName('ban')
                 .setDescription('Banna un membro')
+                .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
                 .addUserOption(option => option.setName('user').setDescription('Utente da bannare').setRequired(true))
                 .addStringOption(option => option.setName('reason').setDescription('Motivo del ban').setRequired(false)),
             
             new SlashCommandBuilder()
                 .setName('kick')
                 .setDescription('Kicka un membro')
+                .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
                 .addUserOption(option => option.setName('user').setDescription('Utente da kickare').setRequired(true))
                 .addStringOption(option => option.setName('reason').setDescription('Motivo del kick').setRequired(false)),
             
             new SlashCommandBuilder()
                 .setName('unban')
                 .setDescription('Sbanna un utente tramite ID')
+                .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
                 .addStringOption(option => option.setName('id').setDescription('ID utente da sbannare').setRequired(true).setAutocomplete(true))
                 .addStringOption(option => option.setName('reason').setDescription('Motivo dell unban').setRequired(false)),
             
             new SlashCommandBuilder()
                 .setName('mute')
                 .setDescription('Muta un membro')
+                .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
                 .addUserOption(option => option.setName('user').setDescription('Utente da mutare').setRequired(true))
                 .addStringOption(option => option.setName('duration').setDescription('Durata (es: 10m, 1h, 1d)').setRequired(false))
                 .addStringOption(option => option.setName('reason').setDescription('Motivo del mute').setRequired(false)),
@@ -41,11 +45,13 @@ class ModerationCog {
             new SlashCommandBuilder()
                 .setName('unmute')
                 .setDescription('Smuta un membro')
+                .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
                 .addUserOption(option => option.setName('user').setDescription('Utente da smutare').setRequired(true)),
             
             new SlashCommandBuilder()
                 .setName('warn')
                 .setDescription('Gestisci i warn')
+                .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
                 .addSubcommand(subcommand =>
                     subcommand.setName('add')
                         .setDescription('Aggiungi un warn')
@@ -68,8 +74,23 @@ class ModerationCog {
             new SlashCommandBuilder()
                 .setName('nick')
                 .setDescription('Imposta nickname a un utente')
+                .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames)
                 .addStringOption(option => option.setName('nick').setDescription('Nuovo nickname').setRequired(true))
                 .addUserOption(option => option.setName('user').setDescription('Utente').setRequired(true))
+        ];
+
+        this.contextMenus = [
+            new ContextMenuCommandBuilder()
+                .setName('Ban')
+                .setType(ApplicationCommandType.User),
+
+            new ContextMenuCommandBuilder()
+                .setName('Kick')
+                .setType(ApplicationCommandType.User),
+
+            new ContextMenuCommandBuilder()
+                .setName('Timeout')
+                .setType(ApplicationCommandType.User),
         ];
     }
 
@@ -402,6 +423,118 @@ class ModerationCog {
             default: return 10 * 60 * 1000;
         }
     }
+    async handleUserContext(interaction) {
+        const action = interaction.commandName.toLowerCase();
+        const target = interaction.targetMember;
+
+        if (!target) {
+            return interaction.reply({
+                content: '❌ Utente non valido.',
+                ephemeral: true
+            });
+        }
+
+        const permMap = {
+            ban: PermissionFlagsBits.BanMembers,
+            kick: PermissionFlagsBits.KickMembers,
+            timeout: PermissionFlagsBits.ModerateMembers
+        };
+
+        const neededPerm = permMap[action];
+
+        if (neededPerm && !ownerOrHasPermissions(neededPerm)(interaction)) {
+            return interaction.reply({
+                content: `❌ Non hai il permesso per usare **${interaction.commandName}**.`,
+                ephemeral: true
+            });
+        }
+
+        const modal = new ModalBuilder()
+            .setCustomId(`mod_${action}_${target.id}`)
+            .setTitle(`${interaction.commandName} - ${target.user.username}`);
+
+        const rows = [];
+
+        if (action === 'timeout') {
+            const durationInput = new TextInputBuilder()
+                .setCustomId('duration')
+                .setLabel('Durata (es: 10m, 1h, 1d)')
+                .setStyle(TextInputStyle.Short)
+                .setRequired(true);
+
+            rows.push(new ActionRowBuilder().addComponents(durationInput));
+        }
+
+        const reasonInput = new TextInputBuilder()
+            .setCustomId('reason')
+            .setLabel('Motivo')
+            .setStyle(TextInputStyle.Paragraph)
+            .setRequired(false);
+
+        rows.push(new ActionRowBuilder().addComponents(reasonInput));
+
+        modal.addComponents(...rows);
+        await interaction.showModal(modal);
+    }
+
+
+    async handleModerationModal(interaction) {
+        const [, action, userId] = interaction.customId.split('_');
+        const member = await interaction.guild.members.fetch(userId).catch(() => null);
+
+        if (!member) {
+            return interaction.reply({
+                content: '❌ Utente non trovato.',
+                ephemeral: true
+            });
+        }
+
+        const reason =
+            interaction.fields.getTextInputValue('reason') ||
+            'Nessun motivo specificato';
+
+        const permMap = {
+            ban: PermissionFlagsBits.BanMembers,
+            kick: PermissionFlagsBits.KickMembers,
+            timeout: PermissionFlagsBits.ModerateMembers
+        };
+
+        const neededPerm = permMap[action];
+
+        if (neededPerm && !ownerOrHasPermissions(neededPerm)(interaction)) {
+            return interaction.reply({
+                content: '❌ Permessi insufficienti.',
+                ephemeral: true
+            });
+        }
+
+        try {
+            if (action === 'ban') {
+                await member.ban({ reason });
+            }
+
+            if (action === 'kick') {
+                await member.kick(reason);
+            }
+
+            if (action === 'timeout') {
+                const durationRaw = interaction.fields.getTextInputValue('duration');
+                const ms = this.parseDuration(durationRaw);
+                await member.timeout(ms, reason);
+            }
+
+            await interaction.reply({
+                content: `✅ **${action.toUpperCase()}** eseguito su **${member.user.tag}**`,
+                ephemeral: true
+            });
+
+        } catch (error) {
+            await interaction.reply({
+                content: `❌ Errore: ${error.message}`,
+                ephemeral: true
+            });
+        }
+    }
 }
 
 function setup(client) {
@@ -409,12 +542,19 @@ function setup(client) {
     
     client.on('interactionCreate', async (interaction) => {
         try {
+            if (interaction.isModalSubmit()) {
+                return moderationCog.handleModerationModal(interaction);
+            }
+
             if (interaction.isAutocomplete()) {
                 if (interaction.commandName === 'unban') {
                     const focused = interaction.options.getFocused(true);
                     if (focused.name === 'id') await moderationCog.handleUnbanAutocomplete(interaction);
                 }
                 return;
+            }
+            if (interaction.isUserContextMenuCommand()) {
+                return moderationCog.handleUserContext(interaction);
             }
 
             if (!interaction.isChatInputCommand()) return;
@@ -443,9 +583,12 @@ function setup(client) {
             }
         }
     });
-
+    
     if (!client.globalCommands) client.globalCommands = [];
-    client.globalCommands.push(...moderationCog.commands);
+    client.globalCommands.push(
+        ...moderationCog.commands,
+        ...moderationCog.contextMenus
+    );
     return moderationCog;
 }
 

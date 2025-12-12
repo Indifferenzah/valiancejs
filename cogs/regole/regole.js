@@ -14,6 +14,7 @@ class RegoleCog {
             new SlashCommandBuilder()
                 .setName('regole')
                 .setDescription('Manda le regole del server')
+                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         ];
     }
 

@@ -202,6 +202,7 @@ class GiveawayCog {
             new SlashCommandBuilder()
                 .setName('giveaway')
                 .setDescription('Sistema di giveaway')
+                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
                 .addSubcommand(sub =>
                     sub.setName('create')
                         .setDescription('Crea un giveaway con pulsanti di partecipazione')

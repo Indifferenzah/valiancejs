@@ -1,7 +1,7 @@
 const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 process.env.FFMPEG_PATH = ffmpegInstaller.path;
 
-const { Client, GatewayIntentBits, Collection, EmbedBuilder, PermissionFlagsBits, ChannelType, ActivityType, Status, SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+const { Client, GatewayIntentBits, Collection, EmbedBuilder, PermissionFlagsBits, ChannelType, ActivityType, Status, SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ModalBuilder, TextInputBuilder, ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
@@ -141,11 +141,13 @@ function updateStatus() {
 const commands = [
     new SlashCommandBuilder()
         .setName('cwend')
-        .setDescription('Termina la partita custom e elimina i canali (solo admin)'),
+        .setDescription('Termina la partita custom e elimina i canali (solo admin)')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     
     new SlashCommandBuilder()
         .setName('setruleset')
-        .setDescription('Imposta il ruleset (solo per admin)'),
+        .setDescription('Imposta il ruleset (solo per admin)')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     
     new SlashCommandBuilder()
         .setName('ruleset')
@@ -154,6 +156,7 @@ const commands = [
     new SlashCommandBuilder()
         .setName('purge')
         .setDescription('Elimina un numero di messaggi (1-250)')
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
         .addIntegerOption(option =>
             option.setName('limit')
                 .setDescription('Numero di messaggi da eliminare (1-250)')
@@ -171,11 +174,13 @@ const commands = [
     
     new SlashCommandBuilder()
         .setName('embed')
-        .setDescription('Crea e modifica un embed in tempo reale (solo admin)'),
+        .setDescription('Crea e modifica un embed in tempo reale (solo admin)')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     
     new SlashCommandBuilder()
         .setName('verify')
         .setDescription('Comandi di verifica')
+        .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addSubcommand(subcommand =>
             subcommand
                 .setName('panel')
@@ -192,13 +197,23 @@ const commands = [
 
 ];
 
+const contextMenus = [
+    new ContextMenuCommandBuilder()
+        .setName('Force Verify')
+        .setType(ApplicationCommandType.User)
+];
+
 client.once('clientReady', async () => {
     client.startTime = new Date();
     logger.info(`Bot connected as ${client.user.tag}`);
     
     try {
         // Collect all commands from cogs and core commands
-        const allCommands = [...commands];
+        const allCommands = [
+            ...commands,
+            ...contextMenus,
+        ];
+
         if (client.globalCommands) {
             allCommands.push(...client.globalCommands);
         }
@@ -235,6 +250,13 @@ client.once('clientReady', async () => {
 });
 
 client.on('interactionCreate', async (interaction) => {
+    // CONTEXT MENU
+    if (interaction.isUserContextMenuCommand()) {
+        if (interaction.commandName === 'Force Verify') {
+            return handleForceVerifyContext(interaction);
+        }
+    }
+
     // Handle button interactions
     if (interaction.isButton()) {
         if (interaction.customId === 'verify_button') {
@@ -316,6 +338,60 @@ client.on('interactionCreate', async (interaction) => {
 });
 
 // Command handlers
+
+async function handleForceVerifyContext(interaction) {
+    if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+        return interaction.reply({
+            content: '❌ Non hai abbastanza permessi.',
+            ephemeral: true
+        });
+    }
+
+    const member = interaction.targetMember;
+    if (!member) {
+        return interaction.reply({
+            content: '❌ Utente non valido.',
+            ephemeral: true
+        });
+    }
+
+    const addRoleId = config.verify_add_role_id;
+    const removeRoleId = config.verify_remove_role_id;
+
+    if (!addRoleId && !removeRoleId) {
+        return interaction.reply({
+            content: '⚠️ Ruoli di verifica non configurati.',
+            ephemeral: true
+        });
+    }
+
+    let added = false;
+    let removed = false;
+
+    if (addRoleId) {
+        const role = interaction.guild.roles.cache.get(addRoleId);
+        if (role && !member.roles.cache.has(role.id)) {
+            await member.roles.add(role, `Force verify by ${interaction.user.tag}`);
+            added = true;
+        }
+    }
+
+    if (removeRoleId) {
+        const role = interaction.guild.roles.cache.get(removeRoleId);
+        if (role && member.roles.cache.has(role.id)) {
+            await member.roles.remove(role, `Force verify by ${interaction.user.tag}`);
+            removed = true;
+        }
+    }
+
+    let msg = `✅ Verifica forzata completata per ${member}.`;
+    if (added && removed) msg = `✅ ${member} verificato forzatamente.`;
+    else if (added || removed) msg = `⚠️ Azione parziale completata su ${member}.`;
+
+    await interaction.reply({ content: msg, ephemeral: true });
+    logger.info(`ForceVerify (context) by ${interaction.user.tag} on ${member.user.tag}`);
+}
+
 async function handleCwEnd(interaction) {
     if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
         await interaction.reply({ content: '❌ Non hai abbastanza permessi!', ephemeral: true });
