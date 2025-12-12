@@ -216,7 +216,8 @@ class TicketCog {
         return [
             new SlashCommandBuilder()
                 .setName('ticketpanel')
-                .setDescription('Crea un pannello per i ticket di supporto'),
+                .setDescription('Crea un pannello per i ticket di supporto')
+                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
             new SlashCommandBuilder()
                 .setName('close')
@@ -265,6 +266,7 @@ class TicketCog {
             new SlashCommandBuilder()
                 .setName('transcript')
                 .setDescription('Invia il transcript di un ticket chiuso')
+                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
                 .addIntegerOption(option =>
                     option.setName('number')
                         .setDescription('Numero del ticket')
@@ -273,6 +275,7 @@ class TicketCog {
             new SlashCommandBuilder()
                 .setName('sendtranscript')
                 .setDescription('Manda via DM il transcript di un ticket chiuso a un utente')
+                .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
                 .addIntegerOption(option =>
                     option.setName('number')
                         .setDescription('Numero del ticket')

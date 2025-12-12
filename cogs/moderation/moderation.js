@@ -489,9 +489,10 @@ class ModerationCog {
             });
         }
 
-        const reason =
-            interaction.fields.getTextInputValue('reason') ||
-            'Nessun motivo specificato';
+        let reason = 'Nessun motivo specificato';
+        if (interaction.fields.fields.has('reason')) {
+            reason = interaction.fields.getTextInputValue('reason');
+        }
 
         const permMap = {
             ban: PermissionFlagsBits.BanMembers,
@@ -500,7 +501,6 @@ class ModerationCog {
         };
 
         const neededPerm = permMap[action];
-
         if (neededPerm && !ownerOrHasPermissions(neededPerm)(interaction)) {
             return interaction.reply({
                 content: '❌ Permessi insufficienti.',
@@ -518,6 +518,13 @@ class ModerationCog {
             }
 
             if (action === 'timeout') {
+                if (!interaction.fields.fields.has('duration')) {
+                    return interaction.reply({
+                        content: '❌ Durata mancante.',
+                        ephemeral: true
+                    });
+                }
+
                 const durationRaw = interaction.fields.getTextInputValue('duration');
                 const ms = this.parseDuration(durationRaw);
                 await member.timeout(ms, reason);
