@@ -31,7 +31,6 @@
     "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "footer": "Valiance | Grazie per il boost!"
   },
-
   "tts_embeds": {
     "join": {
       "title": "TTS Join",
@@ -62,11 +61,9 @@
       "footer": "Valiance | TTS System"
     }
   },
-
   "ticket_staff_role_id": "1350073958933729371",
   "ticket_category_id": "1350074001229221898",
   "ticket_transcript_channel_id": "1350118549665873981",
-
   "ticket_panel": {
     "title": "Supporto Valiance",
     "description": "Clicca i bottoni **sotto** per aprire **ticket**!\n> <a:greenarrow:1363851704466149396> Se hai bisogno di assistenza, non esitare ad **aprire un ticket**.\n> <a:greenarrow:1363851704466149396> Il **nostro team** è sempre pronto a darti una mano e **ti risponderà** nel più breve tempo possibile.",
@@ -74,7 +71,6 @@
     "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "footer": "Valiance | Supporto"
   },
-
   "ticket_buttons": [
     {
       "id": "general",
@@ -84,12 +80,29 @@
       "outside_message": "{mention} ha aperto un ticket nella categoria **Generale**. <@&1350073958933729371>",
       "embed_message": "{mention}, ti chiedo di non taggare lo Staff nell'attesa.\n\n> **IGN:** {q1}\n> **Motivo:** {q2}\n> **Dettagli:** {q3}",
       "questions": [
-        { "id": "q1", "label": "Qual è il tuo IGN (Nick in Game)?", "placeholder": "DrNooB_", "required": true, "type": "short" },
-        { "id": "q2", "label": "Di cosa hai bisogno?", "placeholder": "", "required": true, "type": "long" },
-        { "id": "q3", "label": "Eventuali dettagli", "placeholder": "", "required": false, "type": "short" }
+        {
+          "id": "q1",
+          "label": "Qual è il tuo IGN (Nick in Game)?",
+          "placeholder": "DrNooB_",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q2",
+          "label": "Di cosa hai bisogno?",
+          "placeholder": "",
+          "required": true,
+          "type": "long"
+        },
+        {
+          "id": "q3",
+          "label": "Eventuali dettagli",
+          "placeholder": "",
+          "required": false,
+          "type": "short"
+        }
       ]
     },
-
     {
       "id": "cw",
       "label": "Clan Wars",
@@ -97,16 +110,48 @@
       "style": "secondary",
       "outside_message": "{mention} ha aperto un ticket nella categoria **Clan Wars**. <@&1350073958933729371> <@&1350073967716732971>",
       "embed_message": "{mention}, ti chiedo di non taggare lo Staff nell'attesa.\n\n> **IGN:** {q1}\n> **Clan:** {q2}\n> **Link:** {q3}\n> **Giocatori:** {q4}\n> **Disponibilità:** {q5}",
-      "roles": ["1350073958933729371","1350073967716732971"],
+      "roles": [
+        "1350073958933729371",
+        "1350073967716732971"
+      ],
       "questions": [
-        { "id": "q1", "label": "Qual è il tuo IGN (Nick in Game)?", "placeholder": "DrNooB_", "required": true, "type": "short" },
-        { "id": "q2", "label": "Nome Clan?", "placeholder": "Valiance", "required": true, "type": "short" },
-        { "id": "q3", "label": "Link d'invito al Discord?", "placeholder": "https://discord.gg/GVMGZuGZ8F", "required": true, "type": "short" },
-        { "id": "q4", "label": "Chi gioca?", "placeholder": "GabriNumberOne, Diffidenza, JustFr4, MM0NE", "required": true, "type": "short" },
-        { "id": "q5", "label": "Quando siete disponibili?", "placeholder": "Venerdì alle 15:00", "required": true, "type": "short" }
+        {
+          "id": "q1",
+          "label": "Qual è il tuo IGN (Nick in Game)?",
+          "placeholder": "DrNooB_",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q2",
+          "label": "Nome Clan?",
+          "placeholder": "Valiance",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q3",
+          "label": "Link d'invito al Discord?",
+          "placeholder": "https://discord.gg/GVMGZuGZ8F",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q4",
+          "label": "Chi gioca?",
+          "placeholder": "GabriNumberOne, Diffidenza, JustFr4, MM0NE",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q5",
+          "label": "Quando siete disponibili?",
+          "placeholder": "Venerdì alle 15:00",
+          "required": true,
+          "type": "short"
+        }
       ]
     },
-
     {
       "id": "provino",
       "label": "Provino",
@@ -115,22 +160,53 @@
       "outside_message": "{mention} ha aperto un ticket nella categoria **Provino**. <@&1350073958933729371>",
       "embed_message": "{mention}, ti chiedo di non taggare lo Staff nell'attesa.\n\n> **IGN:** {q1}\n> **Provino:** {q2}\n> **Nick passati:** {q3}\n> **Server principali:** {q4}\n> **Disponibilità:** {q5}",
       "questions": [
-        { "id": "q1", "label": "Qual è il tuo IGN (Nick in Game)?", "placeholder": "DrNooB_", "required": true, "type": "short" },
-        { "id": "q2", "label": "Provino CW o Clan?", "placeholder": "CW / Clan", "required": true, "type": "short" },
-        { "id": "q3", "label": "Nick passati?", "placeholder": "Lascia vuoto se non ne hai avuti", "required": false, "type": "short" },
-        { "id": "q4", "label": "Che server giochi di più?", "placeholder": "Coral, MMC, Hypixel", "required": true, "type": "short" },
-        { "id": "q5", "label": "Quando sei disponibile?", "placeholder": "Venerdì alle 15:00", "required": true, "type": "short" }
+        {
+          "id": "q1",
+          "label": "Qual è il tuo IGN (Nick in Game)?",
+          "placeholder": "DrNooB_",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q2",
+          "label": "Provino CW o Clan?",
+          "placeholder": "CW / Clan",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q3",
+          "label": "Nick passati?",
+          "placeholder": "Lascia vuoto se non ne hai avuti",
+          "required": false,
+          "type": "short"
+        },
+        {
+          "id": "q4",
+          "label": "Che server giochi di più?",
+          "placeholder": "Coral, MMC, Hypixel",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q5",
+          "label": "Quando sei disponibile?",
+          "placeholder": "Venerdì alle 15:00",
+          "required": true,
+          "type": "short"
+        }
       ]
     }
   ],
-
   "moderation": {
     "staff_role_id": "1350073958933729371",
     "mod_role_id": "1350073957168058408",
     "warn_channel_id": "1351184266284896347",
-    "no_automod": ["1350073967716732971","1364656451779428462"]
+    "no_automod": [
+      "1350073967716732971",
+      "1364656451779428462"
+    ]
   },
-
   "ticket_transcript_embed": {
     "title": "Ticket Chiuso",
     "description": "Il tuo ticket su **Valiance** è stato chiuso.\n> **Aperto da:** {opener}\n> **Chiuso da:** {staffer}\n> **Nome del ticket:** {name}\n> **ID:** {id}\n> **Numero:** {number}",
@@ -138,19 +214,19 @@
     "footer": "Valiance | Ticket System",
     "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png"
   },
-
   "ticket_panel_channel_id": 1350074017536544800,
   "ticket_panel_message_id": 1427408841200373800,
-
-  "prefixes": ["v!","!"],
-  "ticket_counter": 68,
+  "prefixes": [
+    "v!",
+    "!"
+  ],
+  "ticket_counter": 69,
   "ticket_max_per_user": 1,
   "bot_status": "dnd",
   "bot_activity_type": "watching",
   "bot_activity_name": "/help | {membri} membri",
   "bot_activity_guild_id": "1350073876339490826",
   "bot_activity_url": "",
-
   "verify_message": {
     "title": "Verifica",
     "description": "Clicca il pulsante qui sotto per verificarti e accedere al resto dei canali di `Valiance`.",
@@ -159,14 +235,12 @@
     "footer": "Valiance | Verify",
     "image": "https://i.postimg.cc/ZKrYBsw5/4F32D0D5-A764-4FDB-8126-5E745A546764.png"
   },
-
   "verify_button": {
     "id": "verify_button",
     "label": "Verificati",
     "emoji": "✅",
     "style": "success"
   },
-
   "verify_add_role_id": "1350073971395268698",
   "verify_remove_role_id": "1350077038098120724",
   "autorole_on_join_id": "1350077038098120724"

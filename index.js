@@ -242,10 +242,10 @@ client.once('clientReady', async () => {
         await counterCog.onReady();
     }
 
-    // Setup ticket cog persistent views
+    // Ticket panel view
     const ticketCog = client.cogs.get('ticket');
-    if (ticketCog && ticketCog.setupPersistentViews) {
-        await ticketCog.setupPersistentViews();
+    if (ticketCog?.restoreTicketPanel) {
+        await ticketCog.restoreTicketPanel();
     }
 });
 
@@ -254,6 +254,43 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.isUserContextMenuCommand()) {
         if (interaction.commandName === 'Force Verify') {
             return handleForceVerifyContext(interaction);
+        }
+    }
+
+    const ticketCog = client.cogs.get('ticket');
+    if (ticketCog) {
+
+        // 🎫 BOTTONI TICKET
+        if (interaction.isButton()) {
+            const id = interaction.customId;
+
+            if (
+                id === 'ticket_close' ||
+                id === 'confirm_close' ||
+                id === 'cancel_close' ||
+                config.ticket_buttons?.some(btn => btn.id === id)
+            ) {
+                try {
+                    if (id === 'ticket_close') return ticketCog.handleCloseButton(interaction);
+                    if (id === 'confirm_close') return ticketCog.handleConfirmClose(interaction);
+                    if (id === 'cancel_close') return ticketCog.handleCancelClose(interaction);
+
+                    return ticketCog.handleTicketButton(interaction);
+                } catch (err) {
+                    logger.error(`Ticket button error: ${err.message}`);
+                }
+            }
+        }
+
+        // 🧾 MODAL TICKET
+        if (interaction.isModalSubmit()) {
+            if (interaction.customId.startsWith('ticket_modal:')) {
+                try {
+                    return ticketCog.handleTicketModal(interaction);
+                } catch (err) {
+                    logger.error(`Ticket modal error: ${err.message}`);
+                }
+            }
         }
     }
 

@@ -31,9 +31,6 @@ class TicketCog {
         this.ticketOwners = this.loadTicketOwners();
         this.closedTickets = loadJsonSync(CLOSED_TICKETS_JSON, {});
         this.blacklist = loadJsonSync(BLACKLIST_JSON, []);
-        this.viewsRegistered = false;
-
-        this.setupPersistentViews();
     }
 
     saveTickets() {
@@ -127,41 +124,6 @@ class TicketCog {
 
     reloadTicket() {
         this.ticketMessages = loadJsonSync(TICKETMSG_JSON, {});
-    }
-
-    async setupPersistentViews() {
-        if (this.viewsRegistered) return;
-        this.viewsRegistered = true;
-        try {
-            this.client.on('interactionCreate', async (interaction) => {
-                try {
-                    if (interaction.isButton()) {
-                        const { customId } = interaction;
-
-                        if (customId === 'ticket_close') {
-                            await this.handleCloseButton(interaction);
-                        } else if (customId === 'confirm_close') {
-                            await this.handleConfirmClose(interaction);
-                        } else if (customId === 'cancel_close') {
-                            await this.handleCancelClose(interaction);
-                        } else if (this.config.ticket_buttons?.some(btn => btn.id === customId)) {
-                            await this.handleTicketButton(interaction);
-                        }
-                    } else if (interaction.isModalSubmit()) {
-                        const { customId } = interaction;
-                        if (customId.startsWith('ticket_modal:')) {
-                            await this.handleTicketModal(interaction);
-                        }
-                    }
-                } catch (err) {
-                    logger.error(`Error in interactionCreate handler (ticket): ${err.message}`);
-                }
-            });
-
-            logger.info('Ticket persistent views setup complete');
-        } catch (error) {
-            logger.error(`Error setting up persistent views: ${error.message}`);
-        }
     }
 
     formatMessageForTranscript(message, staffRoleId = null) {
@@ -488,6 +450,52 @@ class TicketCog {
         await interaction.showModal(modal);
     }
 
+    async restoreTicketPanel() {
+        const channelId = this.config.ticket_panel_channel_id;
+        const messageId = this.config.ticket_panel_message_id;
+
+        if (!channelId || !messageId) return;
+
+        let channel;
+
+        try {
+            channel = await this.client.channels.fetch(channelId);
+            if (!channel || !channel.isTextBased()) return;
+
+            // Se il messaggio esiste, fine
+            await channel.messages.fetch(messageId);
+            logger.info('Ticket panel già presente, nessun ripristino necessario');
+            return;
+
+        } catch {
+            // Se il messaggio NON esiste → lo ricreiamo
+            logger.warn('Ticket panel mancante, lo ricreo');
+        }
+
+        // ⬇️ ORA `channel` ESISTE SICURAMENTE
+        if (!channel) return;
+
+        const panel = this.config.ticket_panel || {};
+        const embed = new EmbedBuilder()
+            .setTitle(panel.title || 'Support Tickets')
+            .setDescription(panel.description || 'Clicca un pulsante per aprire un ticket')
+            .setColor(panel.color || 0x00ff00);
+
+        if (panel.thumbnail) embed.setThumbnail(panel.thumbnail);
+        if (panel.footer) embed.setFooter({ text: panel.footer });
+
+        const buttons = this.config.ticket_buttons || [];
+        const rows = this.createButtonRows(buttons);
+
+        const message = await channel.send({ embeds: [embed], components: rows });
+
+        this.config.ticket_panel_message_id = message.id;
+        saveJsonSync(CONFIG_PATH, this.config);
+
+        logger.info('Ticket panel ripristinato con successo');
+    }
+
+
     /**
      * Gestisce l'invio del Modal: crea il canale, sostituisce {q1}..{q5} e {mention}, salva le risposte.
      */
@@ -651,19 +659,44 @@ class TicketCog {
             this.saveTickets();
 
             if (this.client.logCog) {
-                await this.client.logCog.logTicketOpen(
-                    interaction.user,
-                    channel.toString(),
-                    ticketNumber.toString(),
-                    buttonConfig.label || 'Generale'
-                );
+                try {
+                    const openerTag =
+                        interaction.user?.tag ??
+                        interaction.user?.username ??
+                        'Unknown';
+
+                    await this.client.logCog.logTicketOpen(
+                        openerTag,
+                        channel.toString(),
+                        ticketNumber.toString(),
+                        buttonConfig.label || 'Generale'
+                    );
+                } catch (err) {
+                    logger.error(`logCog.logTicketOpen failed: ${err?.message || err}`);
+                }
             }
 
-            await interaction.reply({ content: `🎫 Ticket creato: ${channel}`, ephemeral: true });
+            if (interaction.replied || interaction.deferred) {
+                try {
+                    await interaction.followUp({ content: `🎫 Ticket creato: ${channel}`, ephemeral: true });
+                } catch (err) {
+                    try {
+                        await interaction.editReply({ content: `🎫 Ticket creato: ${channel}` });
+                    } catch (e) {
+                        // ignore
+                    }
+                }
+            } else {
+                await interaction.reply({ content: `🎫 Ticket creato: ${channel}`, ephemeral: true });
+            }
         } catch (error) {
             logger.error(`Error creating ticket: ${error.message}`);
             try {
-                await interaction.reply({ content: '❌ Errore nella creazione del ticket!', ephemeral: true });
+                if (interaction.replied || interaction.deferred) {
+                    await interaction.followUp({ content: '❌ Errore nella creazione del ticket!', ephemeral: true }).catch(() => {});
+                } else {
+                    await interaction.reply({ content: '❌ Errore nella creazione del ticket!', ephemeral: true }).catch(() => {});
+                }
             } catch {
                 // ignore
             }
@@ -824,13 +857,18 @@ class TicketCog {
             saveJsonSync(CLOSED_TICKETS_JSON, this.closedTickets);
 
             if (this.client.logCog) {
-                const openerUserFull = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
-                await this.client.logCog.logTicketClose(
-                    channel.name,
-                    openerUserFull ? openerUserFull.tag : 'Unknown',
-                    interaction.user.tag,
-                    ticketNumber.toString()
-                );
+                try {
+                    const openerUserFull = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
+                    const staffTag = interaction.user ? (interaction.user.tag || interaction.user.username || 'Unknown') : 'Unknown';
+                    await this.client.logCog.logTicketClose(
+                        channel.name,
+                        openerUserFull ? openerUserFull.tag : 'Unknown',
+                        staffTag,
+                        ticketNumber.toString()
+                    );
+                } catch (err) {
+                    logger.error(`logCog.logTicketClose failed: ${err?.message || err}`);
+                }
             }
 
             await channel.delete();

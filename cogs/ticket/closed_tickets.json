@@ -19,5 +19,19 @@
     "closed_at": "2025-11-20T19:09:48.066Z",
     "button": "general",
     "channel_name": "ticket-55"
+  },
+  "69": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\valiancejs\\transcripts\\transcript-69.txt",
+    "closed_at": "2025-12-12T22:04:10.241Z",
+    "button": "provino",
+    "channel_name": "ticket-69",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
   }
 }
