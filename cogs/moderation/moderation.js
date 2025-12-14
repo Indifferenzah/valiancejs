@@ -479,9 +479,14 @@ class ModerationCog {
 
 
     async handleModerationModal(interaction) {
-        const [, action, userId] = interaction.customId.split('_');
+        let preAction = interaction.customId.split('_');
+        let action;
+        if (preAction[0] !== 'ticket' ) { action = preAction[1] } else { action = interaction.customId };
+        console.log(interaction.customId)
+        let userId = preAction[2]
+		if (preAction[0].startsWith('ticket')) userId = interaction.user.id
         const member = await interaction.guild.members.fetch(userId).catch(() => null);
-        
+
         if (!member) {
             return interaction.reply({
                 content: '❌ Utente non trovato.',
@@ -529,13 +534,16 @@ class ModerationCog {
                 const ms = this.parseDuration(durationRaw);
                 await member.timeout(ms, reason);
             }
-
-            await interaction.reply({
-                content: `✅ **${action.toUpperCase()}** eseguito su **${member.user.tag}**`,
-                ephemeral: true
-            });
+            
+            if (!preAction[0].startsWith('ticket')) {
+                await interaction.reply({
+                    content: `✅ **${action.toUpperCase()}** eseguito su **${member.user.tag}**`,
+                    ephemeral: true
+                });
+            };
 
         } catch (error) {
+            console.log(error)
             await interaction.reply({
                 content: `❌ modCog.Errore7: ${error.message}`,
                 ephemeral: true
