@@ -63,7 +63,8 @@ const cogsToLoad = [
     'rep/reputation',
     'birthdays/birthdays',
     'counters/counters',
-    'stats/stats'
+    'stats/stats',
+    'aimod/aimod'
 ];
 
 for (const cogPath of cogsToLoad) {
@@ -84,6 +85,17 @@ for (const cogPath of cogsToLoad) {
         logger.error(`Failed to load cog ${cogPath}: ${error.message}`);
     }
 }
+
+const aimodCog = client.cogs.get('aimod');
+const moderationCog = client.cogs.get('moderation');
+
+if (aimodCog && moderationCog) {
+    aimodCog.bindModerationCog(moderationCog);
+    logger.info('[AI-MOD] Bind con moderation effettuato');
+} else {
+    logger.warn('[AI-MOD] Bind saltato: aimod o moderation mancanti');
+}
+
 function updateStatus() {
     const status = config.bot_status || 'dnd';
     const activityType = config.bot_activity_type || 'watching';
