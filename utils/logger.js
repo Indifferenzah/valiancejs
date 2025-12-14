@@ -13,127 +13,81 @@ const {
     metadata
 } = winston.format;
 
-/* =======================
-   DIRECTORY LOGS
-======================= */
+// === DIRECTORY LOGS ===
 const logsDir = path.join(__dirname, '../../logs');
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
 }
 
-/* =======================
-   FILE NAMES
-======================= */
-const date = new Date().toISOString().split('T')[0];
+// === NOME FILE FORMATTATO ===
+const mesi = [
+    "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+    "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
 
-const files = {
-    all: path.join(logsDir, `${date}.log`),
-    error: path.join(logsDir, `${date}.error.log`)
-};
+const now = new Date();
+const nomeFile = `${now.getDate()}_${mesi[now.getMonth()]}_${now.getFullYear()}.log`;
+const logFilePath = path.join(logsDir, nomeFile);
 
-/* =======================
-   CUSTOM LEVELS
-======================= */
-const levels = {
-    levels: {
-        error: 0,
-        warn: 1,
-        info: 2,
-        discord: 3,
-        debug: 4,
-        trace: 5
-    },
-    colors: {
-        error: 'red',
-        warn: 'yellow',
-        info: 'green',
-        discord: 'magenta',
-        debug: 'cyan',
-        trace: 'grey'
-    }
-};
-
-
-winston.addColors(levels.colors);
-
-/* =======================
-   FORMATS
-======================= */
-const baseFormat = combine(
-    timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
+// === FORMATS ===
+const fileFormat = combine(
+    timestamp(),
     errors({ stack: true }),
     splat(),
-    metadata({ fillExcept: ['timestamp', 'level', 'message', 'stack'] })
-);
-
-const fileFormat = combine(
-    baseFormat,
+    metadata({ fillExcept: ['timestamp', 'level', 'message', 'stack'] }),
     json()
 );
 
 const consoleFormat = combine(
-    colorize({ all: true }),
-    baseFormat,
-    printf(({ timestamp, level, message, stack, scope, service, pid }) => {
-        const scopeLabel = scope ? `${scope} ` : '';
-        return `${timestamp} ${level}: ${scopeLabel}[${service}@${pid}] ${stack || message}`;
+    colorize(),
+    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    errors({ stack: true }),
+    splat(),
+    metadata({ fillExcept: ['timestamp', 'level', 'message', 'stack'] }),
+    printf(({ timestamp, level, message, stack, service = 'valiance-bot', pid = process.pid }) => {
+        return `${timestamp} ${level}: [${service}@${pid}] ${stack || message}`;
     })
 );
 
-/* =======================
-   LOGGER INSTANCE
-======================= */
+// === LOGGER ===
 const logger = winston.createLogger({
-    levels: levels.levels,
-    level: process.env.LOG_LEVEL || 'debug',
-    defaultMeta: {
-        service: 'valiance-bot',
-        pid: process.pid
-    },
+    level: 'debug',
+    format: fileFormat,
+    defaultMeta: { service: 'valiance-bot', pid: process.pid },
     transports: [
-        // Tutto
         new winston.transports.File({
-            filename: files.all,
-            format: fileFormat,
-            maxsize: 25 * 1024 * 1024,
-            maxFiles: 14,
-            tailable: true
-        }),
-
-        // Solo errori
-        new winston.transports.File({
-            filename: files.error,
-            level: 'error',
-            format: fileFormat,
-            maxsize: 10 * 1024 * 1024,
-            maxFiles: 30,
+            filename: logFilePath,
+            level: 'debug',
+            maxsize: 20 * 1024 * 1024,
             tailable: true
         })
     ],
     exitOnError: false
 });
 
-/* =======================
-   CONSOLE OUTPUT
-======================= */
+// === OUTPUT IN CONSOLE REALTIME ===
 logger.add(new winston.transports.Console({
-    level: process.env.LOG_CONSOLE_LEVEL || 'debug',
+    level: 'debug',
     format: consoleFormat
 }));
 
-/* =======================
-   SAFE console.* BRIDGE
-======================= */
-console.log = (...args) => logger.info(args.join(' '));
-console.warn = (...args) => logger.warn(args.join(' '));
-console.error = (...args) => logger.error(args.join(' '));
+// === REDIREZIONE console.log / console.error ===
+const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
-/* =======================
-   SCOPED LOGGER
-======================= */
-function createScopedLogger(scope) {
-    return logger.child({ scope });
-}
+// Sovrascrivo le funzioni della console
+const origLog = console.log;
+const origErr = console.error;
 
+console.log = (...args) => {
+    logStream.write(`[LOG] ${args.join(' ')}\n`);
+    origLog.apply(console, args);
+};
+
+console.error = (...args) => {
+    logStream.write(`[ERROR] ${args.join(' ')}\n`);
+    origErr.apply(console, args);
+};
+
+// === EXPORT ===
 module.exports = logger;
-module.exports.createScopedLogger = createScopedLogger;
+module.exports.createScopedLogger = (scope) => logger.child({ scope });
