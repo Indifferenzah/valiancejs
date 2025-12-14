@@ -5,6 +5,13 @@ const logger = require('../../utils/logger');
 const { analyzeText } = require('./hfClient');
 const { initLogger, logAIMod } = require('./log');
 
+function sanitizeMentions(text) {
+    if (!text) return text;
+    return text
+        .replace(/@everyone/gi, '@\u200beveryone')
+        .replace(/@here/gi, '@\u200bhere');
+}
+
 class AIModCog {
     constructor(client) {
         this.client = client;
@@ -79,11 +86,27 @@ class AIModCog {
                 await message.delete().catch(() => {});
             }
 
+            const safeContent = sanitizeMentions(message.content);
+            // ▶ Messaggio temporaneo in chat (auto-delete 3s)
+            const notice = await message.channel.send({
+                content:
+                    `**Contenuto Rimosso**\n` +
+                    `> **Autore:** <@${message.author.id}>\n` +
+                    `> **Messaggio:** ${safeContent || '*contenuto vuoto*'}\n` +
+                    `> **Toxicity Score:** ${score.toFixed(2)}`
+            }).catch(() => null);
+
+            if (notice) {
+                setTimeout(() => {
+                    notice.delete().catch(() => {});
+                }, 3000);
+            }
+
             await logAIMod(this.client, this.config.log, {
                 user: message.author,
                 channel: message.channel,
                 guild: message.guild,
-                messageContent: message.content,
+                messageContent: safeContent,
                 score: score,
                 action: score >= this.config.thresholds.timeout
                     ? 'TIMEOUT'
