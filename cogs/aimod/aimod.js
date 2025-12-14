@@ -87,7 +87,6 @@ class AIModCog {
             }
 
             const safeContent = sanitizeMentions(message.content);
-            // ▶ Messaggio temporaneo in chat (auto-delete 3s)
             const notice = await message.channel.send({
                 content:
                     `**Contenuto Rimosso**\n` +
