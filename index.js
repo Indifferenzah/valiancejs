@@ -9,7 +9,6 @@ require('dotenv').config();
 const logger = require('./utils/logger');
 const { OWNER_ID, ownerOrHasPermissions, isOwner } = require('./utils/botUtils');
 
-// Load config
 let config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
 
 const client = new Client({
@@ -28,7 +27,6 @@ client.setMaxListeners(20);
 client.commands = new Collection();
 client.cogs = new Collection();
 
-// Game sessions
 const activeSessions = new Map();
 let waitingForRuleset = false;
 let waitingForWelcome = false;
@@ -48,7 +46,6 @@ class GameSession {
     }
 }
 
-// Load cogs
 const cogsToLoad = [
     'ticket/ticket',
     'moderation/moderation', 
@@ -87,8 +84,6 @@ for (const cogPath of cogsToLoad) {
         logger.error(`Failed to load cog ${cogPath}: ${error.message}`);
     }
 }
-
-// Status loop
 function updateStatus() {
     const status = config.bot_status || 'dnd';
     const activityType = config.bot_activity_type || 'watching';
@@ -137,7 +132,6 @@ function updateStatus() {
     client.user.setPresence({ status: statusEnum, activities: [activity] });
 }
 
-// Core slash commands
 const commands = [
     new SlashCommandBuilder()
         .setName('cwend')
@@ -208,7 +202,6 @@ client.once('clientReady', async () => {
     logger.info(`Bot connected as ${client.user.tag}`);
     
     try {
-        // Collect all commands from cogs and core commands
         const allCommands = [
             ...commands,
             ...contextMenus,
@@ -224,10 +217,9 @@ client.once('clientReady', async () => {
         logger.error(`Error syncing commands: ${error.message}`);
     }
 
-    setInterval(updateStatus, 5 * 60 * 1000); // Every 5 minutes
+    setInterval(updateStatus, 5 * 60 * 1000);
     updateStatus();
 
-    // Register persistent views
     try {
         const VerifyView = require('./views/VerifyView');
         client.verifyView = new VerifyView(config);
@@ -236,13 +228,11 @@ client.once('clientReady', async () => {
         logger.error(`Error registering VerifyView: ${error.message}`);
     }
 
-    // Trigger onReady for counter cog
     const counterCog = client.cogs.get('counters');
     if (counterCog && counterCog.onReady) {
         await counterCog.onReady();
     }
 
-    // Ticket panel view
     const ticketCog = client.cogs.get('ticket');
     if (ticketCog?.restoreTicketPanel) {
         await ticketCog.restoreTicketPanel();
@@ -250,7 +240,6 @@ client.once('clientReady', async () => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-    // CONTEXT MENU
     if (interaction.isUserContextMenuCommand()) {
         if (interaction.commandName === 'Force Verify') {
             return handleForceVerifyContext(interaction);
@@ -260,7 +249,6 @@ client.on('interactionCreate', async (interaction) => {
     const ticketCog = client.cogs.get('ticket');
     if (ticketCog) {
 
-        // 🎫 BOTTONI TICKET
         if (interaction.isButton()) {
             const id = interaction.customId;
 
@@ -282,19 +270,23 @@ client.on('interactionCreate', async (interaction) => {
             }
         }
 
-        // 🧾 MODAL TICKET
         if (interaction.isModalSubmit()) {
+
             if (interaction.customId.startsWith('ticket_modal:')) {
-                try {
-                    return ticketCog.handleTicketModal(interaction);
-                } catch (err) {
-                    logger.error(`Ticket modal error: ${err.message}`);
+                return ticketCog.handleTicketModal(interaction);
+            }
+
+            if (interaction.customId.startsWith('moderation_')) {
+                const modCog = client.cogs.get('moderation');
+                if (modCog?.handleModerationModal) {
+                    return modCog.handleModerationModal(interaction);
                 }
             }
+
+            return;
         }
     }
 
-    // Handle button interactions
     if (interaction.isButton()) {
         if (interaction.customId === 'verify_button') {
             if (client.verifyView) {
@@ -308,7 +300,6 @@ client.on('interactionCreate', async (interaction) => {
         return;
     }
     
-    // Handle select menu interactions
     if (interaction.isStringSelectMenu()) {
         try {
             if (interaction.customId === 'help_select') {
@@ -373,8 +364,6 @@ client.on('interactionCreate', async (interaction) => {
         }
     }
 });
-
-// Command handlers
 
 async function handleForceVerifyContext(interaction) {
     if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
@@ -834,7 +823,7 @@ async function handleVerify(interaction) {
                 await interaction.reply({ embeds: [embed], components: view.components });
                 logger.info(`/verify panel used by ${interaction.user.tag} in ${interaction.guild.name}`);
             } catch (error) {
-                await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+                await interaction.reply({ content: `❌ Errore1: ${error.message}`, ephemeral: true });
                 logger.error(`Error in /verify panel: ${error.message}`);
             }
         } else if (subcommand === 'forceverify') {
@@ -884,7 +873,7 @@ async function handleVerify(interaction) {
                 await interaction.reply({ content: msg, ephemeral: true });
                 logger.info(`/verify forceverify used by ${interaction.user.tag} on ${member.user.tag}`);
             } catch (error) {
-                await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+                await interaction.reply({ content: `❌ Errore2: ${error.message}`, ephemeral: true });
                 logger.error(`Error in /verify forceverify: ${error.message}`);
             }
         }
@@ -941,7 +930,7 @@ async function handleVerify(interaction) {
                 }
             }
         } catch (error) {
-            if (error.code !== 50013) { // Not missing permissions
+            if (error.code !== 50013) {
                 logger.error(`Error assigning autorole on join: ${error.message}`);
             }
         }
@@ -1099,7 +1088,6 @@ async function handleVerify(interaction) {
             }
         }
 
-        // Welcome reactions
         if (['wlc', 'welcome', 'benvenuto'].includes(message.content.toLowerCase())) {
             const emojis = config.welcome_emojis || [];
             for (const emoji of emojis) {
@@ -1111,7 +1099,6 @@ async function handleVerify(interaction) {
             }
         }
 
-        // Game session logic
         const guild = message.guild;
         if (!guild || !activeSessions.has(guild.id)) return;
 
@@ -1269,7 +1256,6 @@ async function handleVerify(interaction) {
         }
     }
 
-    // Global functions for cogs
     function reloadGlobalConfig() {
         config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
     
@@ -1303,7 +1289,6 @@ async function handleVerify(interaction) {
         }
     }
 
-    // Export for use in cogs
     module.exports = {
         client,
         config,

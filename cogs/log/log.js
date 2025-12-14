@@ -16,19 +16,13 @@ class LogCog {
         this.configPath = path.join(__dirname, 'log.json');
         this.config = this.loadConfig();
 
-        // Cache webhook client per URL
         this.webhookCache = new Collection();
 
-        // Evita doppia registrazione
         if (!this.client.__logHandlersRegistered) {
             this.client.__logHandlersRegistered = true;
             this.setupEventListeners();
         }
     }
-
-    /* ==========================
-     *  CONFIG
-     * ========================== */
 
     loadConfig() {
         return loadJsonSync(this.configPath, {});
@@ -137,7 +131,6 @@ class LogCog {
         const value = String(target).trim();
         if (!value) return null;
 
-        // Webhook URL
         if (value.startsWith('http://') || value.startsWith('https://')) {
             try {
                 if (!this.webhookCache.has(value)) {
@@ -151,7 +144,6 @@ class LogCog {
             }
         }
 
-        // Channel ID
         const channel = this.client.channels.cache.get(value);
         if (!channel || !channel.isTextBased?.()) return null;
         return { type: 'channel', channel };
@@ -688,13 +680,12 @@ class LogCog {
             }
         });
 
-        // WEBHOOK UPDATE (create/delete/update -> via audit)
+        // WEBHOOK UPDATE
         this.client.on('webhookUpdate', async (channel) => {
             try {
                 const guild = channel.guild;
                 if (!guild) return;
 
-                // Controllo gli ultimi log per capire tipo azione
                 const logs = await guild.fetchAuditLogs({
                     type: [
                         AuditLogEvent.WebhookCreate,
@@ -956,7 +947,7 @@ class LogCog {
         });
 
         /* ==========================
-         *  EXTRA: REACTION / PIN / INVITE / PRESENCE / USER
+         *  REACTION / PIN / INVITE / PRESENCE / USER
          * ========================== */
 
         // REACTION ADD / REMOVE
@@ -1038,7 +1029,6 @@ class LogCog {
                     );
                 }
             } catch (err) {
-                // silenzioso, c'è già un altro handler messageUpdate sopra
             }
         });
 
@@ -1152,10 +1142,6 @@ class LogCog {
             }
         });
     }
-
-    /* ==========================
-     *  PUBLIC METHODS PER ALTRI COG
-     * ========================== */
 
     // Moderation manuale
     async logBan(user, staffer, reason) {

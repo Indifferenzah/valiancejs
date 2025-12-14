@@ -46,8 +46,8 @@ class TicketCog {
         try {
             const raw = fs.readFileSync(TICKET_JSON, 'utf8');
             const sanitized = raw
-                .replace(/\uFEFF/g, '') // strip BOM
-                .replace(/,\s*([}\]])/g, '$1') // remove trailing commas
+                .replace(/\uFEFF/g, '')
+                .replace(/,\s*([}\]])/g, '$1')
                 .replace(/("owner": )(\d+)/g, '$1"$2"')
                 .replace(/("close_message_id": )(\d+)/g, '$1"$2"');
 
@@ -142,7 +142,6 @@ class TicketCog {
                 }
             }
         } catch (error) {
-            // Ignore errors
         }
 
         const parts = [];
@@ -362,11 +361,6 @@ class TicketCog {
         }
     }
 
-    /**
-     * Gestisce il click sul bottone del ticket:
-     * - se ci sono domande → mostra il Modal
-     * - se non ci sono domande → crea il ticket direttamente (fallback)
-     */
     async handleTicketButton(interaction) {
         if (this.blacklist.includes(interaction.user.id)) {
             await interaction.reply({ content: '❌ Sei nella blacklist e non puoi aprire ticket!', ephemeral: true });
@@ -381,7 +375,6 @@ class TicketCog {
             return;
         }
 
-        // Prende domande da buttonConfig.questions, oppure in fallback da buttonConfig.form.questions
         let questions = Array.isArray(buttonConfig.questions) ? buttonConfig.questions : [];
         if ((!questions || questions.length === 0) && buttonConfig.form && Array.isArray(buttonConfig.form.questions)) {
             questions = buttonConfig.form.questions;
@@ -391,13 +384,11 @@ class TicketCog {
             .filter(q => q && (q.id || q.label || q.placeholder))
             .slice(0, 5);
 
-        // Se nessuna domanda, fallback: crea il ticket come prima (senza modal)
         if (!questions || questions.length === 0) {
             await this.openTicketChannel(interaction, buttonConfig, {});
             return;
         }
 
-        // Controllo limite ticket per utente QUI, così se è già pieno non mostro neanche il modal
         const maxPerUser = parseInt(this.config.ticket_max_per_user || 0);
         if (maxPerUser > 0) {
             const userTickets = Object.values(this.ticketOwners).filter(info => {
@@ -414,7 +405,6 @@ class TicketCog {
             }
         }
 
-        // Costruisco il Modal
         const modal = new ModalBuilder()
             .setCustomId(`ticket_modal:${buttonConfig.id}`)
             .setTitle(buttonConfig.form?.title || buttonConfig.label || 'Ticket');
@@ -422,7 +412,7 @@ class TicketCog {
         const rows = [];
         for (let i = 0; i < questions.length && i < 5; i++) {
             const q = questions[i] || {};
-            const fieldId = q.id || `q${i + 1}`; // IMPORTANTE: id compatibile con {q1}..{q5}
+            const fieldId = q.id || `q${i + 1}`;
             const style = (q.type === "short")
                 ? TextInputStyle.Short
                 : TextInputStyle.Paragraph;
@@ -462,17 +452,14 @@ class TicketCog {
             channel = await this.client.channels.fetch(channelId);
             if (!channel || !channel.isTextBased()) return;
 
-            // Se il messaggio esiste, fine
             await channel.messages.fetch(messageId);
             logger.info('Ticket panel già presente, nessun ripristino necessario');
             return;
 
         } catch {
-            // Se il messaggio NON esiste → lo ricreiamo
             logger.warn('Ticket panel mancante, lo ricreo');
         }
 
-        // ⬇️ ORA `channel` ESISTE SICURAMENTE
         if (!channel) return;
 
         const panel = this.config.ticket_panel || {};
@@ -495,12 +482,8 @@ class TicketCog {
         logger.info('Ticket panel ripristinato con successo');
     }
 
-
-    /**
-     * Gestisce l'invio del Modal: crea il canale, sostituisce {q1}..{q5} e {mention}, salva le risposte.
-     */
     async handleTicketModal(interaction) {
-        const customId = interaction.customId; // "ticket_modal:<buttonId>"
+        const customId = interaction.customId;
         const parts = customId.split(':');
         const buttonId = parts[1];
 
@@ -510,7 +493,6 @@ class TicketCog {
             return;
         }
 
-        // Rileggo le domande (come nel bottone)
         let questions = Array.isArray(buttonConfig.questions) ? buttonConfig.questions : [];
         if ((!questions || questions.length === 0) && buttonConfig.form && Array.isArray(buttonConfig.form.questions)) {
             questions = buttonConfig.form.questions;
@@ -520,7 +502,6 @@ class TicketCog {
             .filter(q => q && (q.id || q.label || q.placeholder))
             .slice(0, 5);
 
-        // Mappa delle risposte → { '{q1}': '...', '{q2}': '...' }
         const answerVars = {};
 
         for (let i = 0; i < questions.length && i < 5; i++) {
@@ -534,7 +515,6 @@ class TicketCog {
                 value = '';
             }
 
-            // Se vuoto → N/A
             if (!value || value.trim() === '') {
                 value = 'N/A';
             }
@@ -545,13 +525,9 @@ class TicketCog {
         await this.openTicketChannel(interaction, buttonConfig, answerVars);
     }
 
-    /**
-     * Crea il canale ticket, salva info, manda i messaggi, logga, usa variabili {q1}..{q5} e {mention}.
-     */
     async openTicketChannel(interaction, buttonConfig, answerVars = {}) {
         const guild = interaction.guild;
 
-        // Controllo max ticket per utente (di sicurezza, nel caso arrivasse da altrove)
         const maxPerUser = parseInt(this.config.ticket_max_per_user || 0);
         if (maxPerUser > 0) {
             const userTickets = Object.values(this.ticketOwners).filter(info => {
@@ -602,7 +578,6 @@ class TicketCog {
         this.config.ticket_counter = ticketNumber;
         saveJsonSync(CONFIG_PATH, this.config);
 
-        // Template vars per messaggi
         const templateVars = {
             '{mention}': interaction.user.toString(),
             ...answerVars
@@ -660,13 +635,8 @@ class TicketCog {
 
             if (this.client.logCog) {
                 try {
-                    const openerTag =
-                        interaction.user?.tag ??
-                        interaction.user?.username ??
-                        'Unknown';
-
                     await this.client.logCog.logTicketOpen(
-                        openerTag,
+                        interaction.user,
                         channel.toString(),
                         ticketNumber.toString(),
                         buttonConfig.label || 'Generale'
@@ -683,7 +653,6 @@ class TicketCog {
                     try {
                         await interaction.editReply({ content: `🎫 Ticket creato: ${channel}` });
                     } catch (e) {
-                        // ignore
                     }
                 }
             } else {
@@ -698,7 +667,6 @@ class TicketCog {
                     await interaction.reply({ content: '❌ Errore nella creazione del ticket!', ephemeral: true }).catch(() => {});
                 }
             } catch {
-                // ignore
             }
         }
     }
@@ -940,7 +908,6 @@ class TicketCog {
             return;
         }
 
-        // 🔥 Fix "The application did not respond"
         await interaction.deferReply({ ephemeral: false });
 
         try {
@@ -1132,7 +1099,6 @@ class TicketCog {
             try {
                 await interaction.deleteReply();
             } catch (error) {
-                // ignore
             }
         }, 60000);
     }

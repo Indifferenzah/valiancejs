@@ -137,7 +137,7 @@ class ModerationCog {
             await interaction.reply({ embeds: [embed] });
             logger.info(`${user.tag} banned by ${interaction.user.tag}: ${reason}`);
         } catch (error) {
-            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+            await interaction.reply({ content: `❌ modCog.Errore1: ${error.message}`, ephemeral: true });
         }
     }
 
@@ -172,7 +172,7 @@ class ModerationCog {
             logger.info(`User ${userId} unbanned by ${interaction.user.tag}: ${reason}`);
 
         } catch (error) {
-            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+            await interaction.reply({ content: `❌ modCog.Errore2: ${error.message}`, ephemeral: true });
             logger.error(`Unban failed for ${userId} by ${interaction.user.tag}: ${error.message}`);
         }
     }
@@ -231,7 +231,7 @@ class ModerationCog {
             await interaction.reply({ embeds: [embed] });
             logger.info(`${member.user.tag} kicked by ${interaction.user.tag}: ${reason}`);
         } catch (error) {
-            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+            await interaction.reply({ content: `❌ modCog.Errore3: ${error.message}`, ephemeral: true });
         }
     }
 
@@ -259,7 +259,7 @@ class ModerationCog {
             await interaction.reply({ embeds: [embed] });
             logger.info(`${member.user.tag} muted by ${interaction.user.tag}: ${reason}`);
         } catch (error) {
-            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+            await interaction.reply({ content: `❌ modCog.Errore4: ${error.message}`, ephemeral: true });
         }
     }
 
@@ -283,7 +283,7 @@ class ModerationCog {
             await interaction.reply({ embeds: [embed] });
             logger.info(`${member.user.tag} unmuted by ${interaction.user.tag}`);
         } catch (error) {
-            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+            await interaction.reply({ content: `❌ modCog.Errore5: ${error.message}`, ephemeral: true });
         }
     }
 
@@ -404,13 +404,13 @@ class ModerationCog {
             await interaction.reply({ content: `✅ Nickname di ${member.user.tag} cambiato in "${nick}"` });
             logger.info(`Nickname changed for ${member.user.tag} to "${nick}" by ${interaction.user.tag}`);
         } catch (error) {
-            await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });
+            await interaction.reply({ content: `❌ modCog.Errore6: ${error.message}`, ephemeral: true });
         }
     }
 
     parseDuration(duration) {
         const match = duration.match(/^(\d+)([smhd])$/);
-        if (!match) return 10 * 60 * 1000; // 10 minutes
+        if (!match) return 10 * 60 * 1000;
         
         const value = parseInt(match[1]);
         const unit = match[2];
@@ -481,7 +481,7 @@ class ModerationCog {
     async handleModerationModal(interaction) {
         const [, action, userId] = interaction.customId.split('_');
         const member = await interaction.guild.members.fetch(userId).catch(() => null);
-
+        
         if (!member) {
             return interaction.reply({
                 content: '❌ Utente non trovato.',
@@ -537,7 +537,7 @@ class ModerationCog {
 
         } catch (error) {
             await interaction.reply({
-                content: `❌ Errore: ${error.message}`,
+                content: `❌ modCog.Errore7: ${error.message}`,
                 ephemeral: true
             });
         }

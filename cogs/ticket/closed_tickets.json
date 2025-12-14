@@ -33,5 +33,19 @@
       "{q4}": "a",
       "{q5}": "a"
     }
+  },
+  "70": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\valiancejs\\transcripts\\transcript-70.txt",
+    "closed_at": "2025-12-12T22:10:46.071Z",
+    "button": "provino",
+    "channel_name": "ticket-70",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
   }
 }
