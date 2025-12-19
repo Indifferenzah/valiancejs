@@ -26,6 +26,7 @@
     "gtts": "^0.2.1",
     "sqlite3": "^5.1.7",
     "winston": "^3.18.3",
-    "@huggingface/inference": "^4.13.3"
+    "@huggingface/inference": "^4.13.3",
+    "deepl-node": "^1.22.0"
   }
 }

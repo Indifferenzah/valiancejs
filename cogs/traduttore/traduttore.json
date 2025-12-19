@@ -1,0 +1,22 @@
+{
+  "embed": {
+    "title": "🌍 Traduzione",
+    "color": 3447003,
+    "footer_text": "Valiance | DeepL",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png"
+  },
+  "languages": [
+    { "label": "Italiano", "value": "IT" },
+    { "label": "English (US)", "value": "en-US" },
+    { "label": "English (GB)", "value": "en-GB" },
+    { "label": "Français", "value": "FR" },
+    { "label": "Deutsch", "value": "DE" },
+    { "label": "Español", "value": "ES" },
+    { "label": "Português", "value": "PT" },
+    { "label": "Nederlands", "value": "NL" },
+    { "label": "Polski", "value": "PL" },
+    { "label": "Русский", "value": "RU" },
+    { "label": "日本語", "value": "JA" },
+    { "label": "中文", "value": "ZH" }
+  ]
+}

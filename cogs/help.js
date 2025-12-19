@@ -139,13 +139,6 @@ const categories = {
             '\\- `/counter migrate` - Migra i counter creati con il vecchio sistema (se trovati)'
         ]
     },
-    'levels': {
-        'emoji': '📈',
-        'name': 'Livelli',
-        'commands': [
-            '`Coming Soon...` 👀',
-        ]
-    },
     'coralmc': {
         'emoji': '<:VL_CoralMC:1434320425592033391>',
         'name': 'CoralMC',
@@ -153,16 +146,16 @@ const categories = {
             '`Coming Soon...` 👀',
         ]
     },
-    'stats': {
-        'emoji': '📜',
-        'name': 'Stats',
+    'levels': {
+        'emoji': '📈',
+        'name': 'Livelli',
         'commands': [
             '`Coming Soon...` 👀',
         ]
     },
-    'music': {
-        'emoji': '🎵',
-        'name': 'Musica',
+    'stats': {
+        'emoji': '📜',
+        'name': 'Stats',
         'commands': [
             '`Coming Soon...` 👀',
         ]
