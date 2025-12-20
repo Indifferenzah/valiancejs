@@ -3,14 +3,14 @@ const {
     PermissionFlagsBits,
     EmbedBuilder
 } = require("discord.js");
-
 const {
     joinVoiceChannel,
     createAudioPlayer,
     createAudioResource,
-    NoSubscriberBehavior
+    NoSubscriberBehavior,
+    AudioPlayerStatus
 } = require("@discordjs/voice");
-
+const fs = require("fs");
 const { loadJsonSync, saveJsonSync } = require("../../utils/jsonStore");
 const { ownerOrHasPermissions } = require("../../utils/botUtils");
 
@@ -68,12 +68,12 @@ class TTSCog {
         saveJsonSync(this.configPath, this.config);
     }
 
-    async generateMP3(text) {
+    async generateMP3(text, guildId) {
         return new Promise((resolve, reject) => {
-            const out = path.join(__dirname, "tts.mp3");
+            const out = path.join(__dirname, `tts_${guildId}_${Date.now()}.mp3`);
             const tts = new gTTS(text, "it");
 
-            tts.save(out, (err) => {
+            tts.save(out, err => {
                 if (err) reject(err);
                 else resolve(out);
             });
@@ -82,7 +82,7 @@ class TTSCog {
 
     async convertToPCM(mp3File) {
         return new Promise((resolve, reject) => {
-            const out = path.join(__dirname, "tts.wav");
+            const out = mp3File.replace(".mp3", ".wav");
 
             ffmpeg(mp3File)
                 .format("wav")
@@ -91,7 +91,7 @@ class TTSCog {
                 .audioCodec("pcm_s16le")
                 .on("end", () => resolve(out))
                 .on("error", reject)
-            .save(out);
+                .save(out);
         });
     }
 
@@ -178,37 +178,53 @@ class TTSCog {
     // ========== QUEUE SYSTEM ==========
 
     async enqueueTTS(guildId, text) {
-        if (!this.queue.has(guildId)) this.queue.set(guildId, []);
+        const player = this.players.get(guildId);
+        const connection = this.connections.get(guildId);
+
+        if (!player || !connection) return;
+
+        if (!this.queue.has(guildId)) {
+            this.queue.set(guildId, []);
+        }
+
         this.queue.get(guildId).push(text);
 
         if (!this.isPlaying.get(guildId)) {
             this.isPlaying.set(guildId, true);
-            this.processQueue(guildId);
+            await this.processQueue(guildId);
         }
     }
 
     async processQueue(guildId) {
         const queue = this.queue.get(guildId);
-        const conn = this.connections.get(guildId);
         const player = this.players.get(guildId);
+
+        if (!player) {
+            this.isPlaying.set(guildId, false);
+            return;
+        }
 
         if (!queue || queue.length === 0) {
             this.isPlaying.set(guildId, false);
             return;
         }
 
-        const text = queue.shift();
+        try {
+            const text = queue.shift();
 
-        const mp3 = await this.generateMP3(text);
-        const wav = await this.convertToPCM(mp3);
+            const mp3 = await this.generateMP3(text, guildId);
+            const wav = await this.convertToPCM(mp3);
 
-        const resource = createAudioResource(wav);
+            const resource = createAudioResource(wav, {
+                metadata: { mp3, wav }
+            });
 
-        player.once("idle", () => {
+            player.play(resource);
+
+        } catch (err) {
+            console.error("[TTS QUEUE ERROR]", err);
             this.processQueue(guildId);
-        });
-
-        player.play(resource);
+        }
     }
 
     // ========== SLASH COMMANDS ==========
@@ -268,6 +284,15 @@ class TTSCog {
         this.players.set(guildId, player);
 
         this.botVoiceChannel.set(guildId, member.voice.channel.id);
+
+        player.on(AudioPlayerStatus.Idle, (oldState) => {
+            const meta = oldState.resource?.metadata;
+
+            if (meta?.mp3) fs.unlink(meta.mp3, () => {});
+            if (meta?.wav) fs.unlink(meta.wav, () => {});
+
+            this.processQueue(guildId);
+        });
 
         const embed = this.buildStatusEmbed("join", member, interaction.guild, {
             channel: member.voice.channel.name
@@ -353,6 +378,9 @@ class TTSCog {
                 return;
             }
 
+            if (!this.players.has(guildId)) return;
+            if (!this.connections.has(guildId)) return;
+
             await this.enqueueTTS(guildId, msg.content);
         });
     }
@@ -393,6 +421,15 @@ class TTSCog {
 
                 this.connections.set(guildId, connection);
                 this.players.set(guildId, player);
+
+                player.on(AudioPlayerStatus.Idle, (oldState) => {
+                    const meta = oldState.resource?.metadata;
+
+                    if (meta?.mp3) fs.unlink(meta.mp3, () => {});
+                    if (meta?.wav) fs.unlink(meta.wav, () => {});
+
+                    this.processQueue(guildId);
+                });
 
                 this.botVoiceChannel.set(guildId, member.voice.channel.id);
 
