@@ -38,6 +38,8 @@ const categories = {
             '\\- `/ping` - Mostra latenza bot',
             '\\- `/uptime` - Mostra uptime bot',
             '\\- `/purge` <messaggi> - Elimina messaggi',
+            '\\- `/traduci` <messaggio> <lingua> - Traduci un messaggio',
+            '**ADMIN**',
             '\\- `/embed` - Crea embed personalizzato',
             '\\- `/regole` - Manda le regole del server',
             '\\- `/verify panel` - Manda messaggio verifica',
@@ -48,6 +50,7 @@ const categories = {
         'emoji': '🎭',
         'name': 'AutoRole',
         'commands': [
+            '**ADMIN:**',
             '\\- `/createreact` <id messaggio> <emoji> <ruolo> - Crea messaggio reazione ruoli'
         ]
     },
@@ -78,8 +81,9 @@ const categories = {
         'emoji': '📆',
         'name': 'Clan Wars',
         'commands': [
-            '\\- `/cwend` - Termina partita CW',
             '\\- `/ruleset` - Mostra ruleset',
+            '**ADMIN:**',
+            '\\- `/cwend` - Termina partita CW',
             '\\- `/setruleset` - Imposta ruleset',
             '\\- `/cw` <numero> <data> <ora> <rossi> <verdi> <mappa> <recap> <vincitore> - Invia punteggio CW',
         ]
@@ -88,6 +92,7 @@ const categories = {
         'emoji': '🎉',
         'name': 'Giveaway',
         'commands': [
+            '**ADMIN:**',
             '\\- `/giveaway create` <premio> <durata> [numero vincitori]- Crea giveaway',
             '\\- `/giveaway remove` <id giveaway> <utente> - Rimuovi forzatamente un membro dal giveaway (solo owner o admin)',
             '\\- `/giveaway reroll` <id giveaway> - Estrai nuovi vincitori aggiuntivi (non sostituisce i precedenti)',
@@ -129,6 +134,7 @@ const categories = {
         'emoji': '🔢',
         'name': 'Counters',
         'commands': [
+            '**ADMIN:**',
             '\\- `/counter start` [tipi] - Crea e avvia i counter (es. total_members,role_members,bots)',
             '\\- `/counter stop` - Ferma ed elimina i counter',
             '\\- `/counter enable` <tipo> [canale] - Abilita un counter su un canale',
@@ -139,16 +145,30 @@ const categories = {
             '\\- `/counter migrate` - Migra i counter creati con il vecchio sistema (se trovati)'
         ]
     },
-    'coralmc': {
-        'emoji': '<:VL_CoralMC:1434320425592033391>',
-        'name': 'CoralMC',
-        'commands': [
-            '`Coming Soon...` 👀',
-        ]
-    },
     'levels': {
         'emoji': '📈',
         'name': 'Livelli',
+        'commands': [
+            '\\- `/rank` [utente] - Mostra il livello e gli XP di un utente',
+            '\\- `/leaderboard` [limite] - Mostra la classifica XP del server',
+            '**ADMIN:**',
+            '\\- `/level give` <utente> <quantità> - Aggiunge livelli a un utente',
+            '\\- `/level set` <utente> <livello> - Imposta un livello preciso',
+            '\\- `/level remove` <utente> <quantità> - Rimuove livelli a un utente',
+            '\\- `/level givexp` <utente> <xp> - Aggiunge XP a un utente',
+            '\\- `/level setxp` <utente> <xp> - Imposta gli XP di un utente',
+            '\\- `/level removexp` <utente> <xp> - Rimuove XP a un utente',
+            '\\- `/leveling enable` - Abilita il sistema livelli',
+            '\\- `/leveling disable` - Disabilita il sistema livelli',
+            '\\- `/leveling setchannel` [id_canale] - Imposta il canale annunci level-up',
+            '\\- `/rlevel add` <livello> <ruolo> - Assegna un ruolo a un livello',
+            '\\- `/rlevel remove` <livello> - Rimuove il ruolo da un livello',
+            '\\- `/rlevel show` - Mostra i ruoli level-based'
+        ]
+    },
+    'coralmc': {
+        'emoji': '<:VL_CoralMC:1434320425592033391>',
+        'name': 'CoralMC',
         'commands': [
             '`Coming Soon...` 👀',
         ]

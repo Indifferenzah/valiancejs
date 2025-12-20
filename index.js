@@ -66,7 +66,8 @@ const cogsToLoad = [
     'stats/stats',
     'aimod/aimod',
     'coralmc/coralmc',
-    'traduttore/traduttore'
+    'traduttore/traduttore',
+    'leveling/leveling'
 ];
 
 for (const cogPath of cogsToLoad) {
