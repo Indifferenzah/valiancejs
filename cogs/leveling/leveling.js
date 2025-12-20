@@ -258,7 +258,10 @@ class LevelingCog {
                 { name: 'XP per prossimo', value: `${Math.max(0, this.xpForLevel(entry.level + 1) - entry.xp)}`, inline: true }
               );
 
-            await ch.send({ embeds: [embed] }).catch(() => {});
+            await ch.send({
+              content: `${message.author}`,
+              embeds: [embed]
+            }).catch(() => {});
           }
         }
       }
