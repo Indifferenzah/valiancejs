@@ -172,14 +172,7 @@ const categories = {
         'commands': [
             '`Coming Soon...` 👀',
         ]
-    },
-    'stats': {
-        'emoji': '📜',
-        'name': 'Stats',
-        'commands': [
-            '`Coming Soon...` 👀',
-        ]
-    },
+    }
 };
 
 class HelpSelectView {
