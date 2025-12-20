@@ -1123,9 +1123,29 @@ async function handleVerify(interaction) {
             const member = guild.members.cache.get(mention.id);
             if (!member || session.taggedUsers.includes(member)) continue;
 
+            const cwType = config.cw_type || '4v4';
+
+            let teamSize;
+            let maxPlayers;
+
+            switch (cwType) {
+                case '2v2':
+                    teamSize = 2;
+                    maxPlayers = 4;
+                    break;
+                case '4v4':
+                default:
+                    teamSize = 4;
+                    maxPlayers = 8;
+                    break;
+            }
+
             session.taggedUsers.push(member);
             const position = session.taggedUsers.length - 1;
-            const isRed = position < 4;
+
+            if (position >= maxPlayers) return; // blocca tag extra
+
+            const isRed = position < teamSize;
 
             if (member.voice && member.voice.channel) {
                 try {

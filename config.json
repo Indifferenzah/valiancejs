@@ -243,5 +243,6 @@
   },
   "verify_add_role_id": "1350073971395268698",
   "verify_remove_role_id": "1350077038098120724",
-  "autorole_on_join_id": "1350077038098120724"
+  "autorole_on_join_id": "1350077038098120724",
+  "cw_type": "4v4"
 }
