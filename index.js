@@ -98,51 +98,42 @@ if (aimodCog && moderationCog) {
 }
 
 function updateStatus() {
-    const status = config.bot_status || 'dnd';
-    const activityType = config.bot_activity_type || 'watching';
-    const activityName = config.bot_activity_name || '{membri} membri';
-    
-    let statusEnum;
-    switch (status) {
-        case 'online': statusEnum = Status.Online; break;
-        case 'idle': statusEnum = Status.Idle; break;
-        case 'dnd': statusEnum = Status.DoNotDisturb; break;
-        case 'invisible': statusEnum = Status.Invisible; break;
-        default: statusEnum = Status.DoNotDisturb;
-    }
+    const status = config.bot_status ?? 'dnd'; // STRINGA
+    const activityType = config.bot_activity_type ?? 'watching';
+    const activityName = config.bot_activity_name ?? '{membri} membri';
 
     let membri;
     if (config.bot_activity_guild_id) {
-        const specificGuild = client.guilds.cache.get(config.bot_activity_guild_id);
-        membri = specificGuild ? specificGuild.memberCount : client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+        const guild = client.guilds.cache.get(config.bot_activity_guild_id);
+        membri = guild
+            ? guild.memberCount
+            : client.guilds.cache.reduce((a, g) => a + g.memberCount, 0);
     } else {
-        membri = client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0);
+        membri = client.guilds.cache.reduce((a, g) => a + g.memberCount, 0);
     }
 
     const finalActivityName = activityName.replace('{membri}', membri.toString());
 
-    let activity;
-    switch (activityType) {
-        case 'playing':
-            activity = { name: finalActivityName, type: ActivityType.Playing };
-            break;
-        case 'streaming':
-            activity = { name: finalActivityName, type: ActivityType.Streaming, url: config.bot_activity_url || '' };
-            break;
-        case 'listening':
-            activity = { name: finalActivityName, type: ActivityType.Listening };
-            break;
-        case 'watching':
-            activity = { name: finalActivityName, type: ActivityType.Watching };
-            break;
-        case 'competing':
-            activity = { name: finalActivityName, type: ActivityType.Competing };
-            break;
-        default:
-            activity = { name: finalActivityName, type: ActivityType.Watching };
-    }
+    const activityMap = {
+        playing: ActivityType.Playing,
+        streaming: ActivityType.Streaming,
+        listening: ActivityType.Listening,
+        watching: ActivityType.Watching,
+        competing: ActivityType.Competing
+    };
 
-    client.user.setPresence({ status: statusEnum, activities: [activity] });
+    const activity = {
+        name: finalActivityName,
+        type: activityMap[activityType] ?? ActivityType.Watching,
+        ...(activityType === 'streaming' && config.bot_activity_url
+            ? { url: config.bot_activity_url }
+            : {})
+    };
+
+    client.user.setPresence({
+        status,              // ✅ STRINGA
+        activities: [activity]
+    });
 }
 
 const commands = [
@@ -214,6 +205,9 @@ client.once('clientReady', async () => {
     client.startTime = new Date();
     logger.info(`Bot connected as ${client.user.tag}`);
     
+    setInterval(updateStatus, 5 * 60 * 1000);
+    updateStatus();
+    
     try {
         const allCommands = [
             ...commands,
@@ -229,9 +223,6 @@ client.once('clientReady', async () => {
     } catch (error) {
         logger.error(`Error syncing commands: ${error.message}`);
     }
-
-    setInterval(updateStatus, 5 * 60 * 1000);
-    updateStatus();
 
     try {
         const VerifyView = require('./views/VerifyView');
