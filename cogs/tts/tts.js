@@ -216,14 +216,22 @@ class TTSCog {
             const wav = await this.convertToPCM(mp3);
 
             const resource = createAudioResource(wav, {
+                inlineVolume: true,
                 metadata: { mp3, wav }
             });
+            resource.volume.setVolume(1);
 
+            if (player.state.status !== AudioPlayerStatus.Idle) {
+                this.queue.get(guildId).unshift(text);
+                return;
+            }
+            
             player.play(resource);
 
         } catch (err) {
             console.error("[TTS QUEUE ERROR]", err);
-            this.processQueue(guildId);
+            this.isPlaying.set(guildId, false);
+            setTimeout(() => this.processQueue(guildId), 200);
         }
     }
 
@@ -275,7 +283,7 @@ class TTSCog {
         });
 
         const player = createAudioPlayer({
-            behaviors: { noSubscriber: NoSubscriberBehavior.Pause }
+            behaviors: { noSubscriber: NoSubscriberBehavior.Play }
         });
 
         connection.subscribe(player);
@@ -285,13 +293,24 @@ class TTSCog {
 
         this.botVoiceChannel.set(guildId, member.voice.channel.id);
 
-        player.on(AudioPlayerStatus.Idle, (oldState) => {
-            const meta = oldState.resource?.metadata;
-
-            if (meta?.mp3) fs.unlink(meta.mp3, () => {});
-            if (meta?.wav) fs.unlink(meta.wav, () => {});
-
-            this.processQueue(guildId);
+        player.on("stateChange", (oldState, newState) => {
+            if (newState.status === AudioPlayerStatus.Idle) {
+                const meta = oldState.resource?.metadata;
+                if (meta?.mp3) fs.unlink(meta.mp3, () => {});
+                if (meta?.wav) fs.unlink(meta.wav, () => {});
+                this.processQueue(guildId);
+            }
+        });
+        
+        player.on("error", error => {
+            console.error("[TTS PLAYER ERROR]", error);
+        
+            this.isPlaying.set(guildId, false);
+        
+            // tenta di continuare la queue
+            setTimeout(() => {
+                this.processQueue(guildId);
+            }, 250);
         });
 
         const embed = this.buildStatusEmbed("join", member, interaction.guild, {
@@ -414,7 +433,7 @@ class TTSCog {
                 });
 
                 const player = createAudioPlayer({
-                    behaviors: { noSubscriber: NoSubscriberBehavior.Pause }
+                    behaviors: { noSubscriber: NoSubscriberBehavior.Play }
                 });
 
                 connection.subscribe(player);
@@ -422,13 +441,24 @@ class TTSCog {
                 this.connections.set(guildId, connection);
                 this.players.set(guildId, player);
 
-                player.on(AudioPlayerStatus.Idle, (oldState) => {
-                    const meta = oldState.resource?.metadata;
-
-                    if (meta?.mp3) fs.unlink(meta.mp3, () => {});
-                    if (meta?.wav) fs.unlink(meta.wav, () => {});
-
-                    this.processQueue(guildId);
+                player.on("stateChange", (oldState, newState) => {
+                    if (newState.status === AudioPlayerStatus.Idle) {
+                        const meta = oldState.resource?.metadata;
+                        if (meta?.mp3) fs.unlink(meta.mp3, () => {});
+                        if (meta?.wav) fs.unlink(meta.wav, () => {});
+                        this.processQueue(guildId);
+                    }
+                });
+                
+                player.on("error", error => {
+                    console.error("[TTS PLAYER ERROR]", error);
+                
+                    this.isPlaying.set(guildId, false);
+                
+                    // tenta di continuare la queue
+                    setTimeout(() => {
+                        this.processQueue(guildId);
+                    }, 250);
                 });
 
                 this.botVoiceChannel.set(guildId, member.voice.channel.id);
