@@ -166,6 +166,20 @@ const categories = {
             '\\- `/rlevel show` - Mostra i ruoli level-based'
         ]
     },
+    'invites': {
+        'emoji': '📨',
+        'name': 'Inviti',
+        'commands': [
+            '\\- `/invites` [utente] - Mostra inviti',
+            '\\- `.invites` [utente] - Mostra inviti',
+            '\\- `/inviteleaderboard` - Classifica inviti',
+            '\\- `.leaderboard` / `.lb` - Classifica inviti',
+            '**ADMIN:**',
+            '\\- `/invite set` <utente> <numero>',
+            '\\- `/invite add` <utente> <numero>',
+            '\\- `/invite remove` <utente> <numero>'
+        ]
+    },
     'coralmc': {
         'emoji': '<:VL_CoralMC:1434320425592033391>',
         'name': 'CoralMC',

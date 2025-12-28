@@ -62,10 +62,11 @@ const cogsToLoad = [
     'rep/reputation',
     'birthdays/birthdays',
     'counters/counters',
-    'aimod/aimod',
-    'coralmc/coralmc',
+    // 'aimod/aimod',
+    // 'coralmc/coralmc',
     'traduttore/traduttore',
-    'leveling/leveling'
+    'leveling/leveling',
+    'invites/invites'
 ];
 
 for (const cogPath of cogsToLoad) {
