@@ -211,12 +211,16 @@ class InviteCog {
         );
 
         // 🔥 FIX TOTALE reply/update
-        if (interaction.deferred || interaction.replied) {
-            await interaction.editReply({ embeds: [embed], components: [row] });
-        } else if (interaction.isButton()) {
-            await interaction.update({ embeds: [embed], components: [row] });
+        const payload = { embeds: [embed], components: [row] };
+
+        if (interaction.isButton()) {
+            await interaction.update(payload);
         } else {
-            await interaction.reply({ embeds: [embed], components: [row] });
+            if (interaction.replied || interaction.deferred) {
+                await interaction.editReply(payload);
+            } else {
+                await interaction.reply(payload);
+            }
         }
     }
 
