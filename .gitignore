@@ -73,3 +73,5 @@ transcripts/
 # Temporary files
 tmp/
 temp/
+*.zip
+cogs/leveling/levels.json
