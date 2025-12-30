@@ -1,7 +1,7 @@
 {
   "embed_template": {
     "title": "🎉 | Giveaway",
-    "description": "> **Premio:** {prize}\n> **Host:** {host}\n> **Premio:** {prize}\n> **Termina:** {expire}\n\nPartecipa cliccando il bottone!",
+    "description": "{description}\n\n-# Partecipa cliccando il bottone!",
     "thumbnail": null,
     "footer_text": "Valiance | Giveaway System",
     "footer_use_server_icon": true,

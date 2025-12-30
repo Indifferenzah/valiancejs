@@ -79,9 +79,10 @@ function formatDiscordTime(epoch) {
     return epoch ? `<t:${epoch}:R>` : '';
 }
 
-function renderTemplate(template, { prize, durationText, expireEpoch, hostMention, winnersText = null }) {
+function renderTemplate(template, { prize, durationText, expireEpoch, hostMention, description = '', winnersText = null }) {
     if (!template) return '';
     let result = template;
+    result = result.replace('{description}', description || '');
     result = result.replace('{prize}', prize || '');
     result = result.replace('{duration}', durationText || '');
     result = result.replace('{expire}', expireEpoch ? formatDiscordTime(expireEpoch) : '');
@@ -209,7 +210,8 @@ class GiveawayCog {
                         .addStringOption(opt => opt.setName('prize').setDescription('Premio').setRequired(true))
                         .addStringOption(opt => opt.setName('duration').setDescription('Durata es. 1d2h30m (alternativa a expire)'))
                         .addIntegerOption(opt => opt.setName('expire').setDescription('Timestamp UNIX di scadenza (alternativa a durata)'))
-                        .addIntegerOption(opt => opt.setName('number_winners').setDescription('Numero vincitori').setMinValue(1)))
+                        .addIntegerOption(opt => opt.setName('number_winners').setDescription('Numero vincitori').setMinValue(1))
+                        .addStringOption(opt => opt.setName('description').setDescription('Descrizione del giveaway (supporta \\n)').setRequired(false)))
                 .addSubcommand(sub =>
                     sub.setName('end')
                         .setDescription('Termina un giveaway')
@@ -343,11 +345,19 @@ class GiveawayCog {
 
     async handleCreate(interaction) {
         if (!this.isOwnerOrAdmin(interaction)) {
-            await interaction.reply({ content: '⛔ Non hai i permessi per creare giveaway.', ephemeral: true });
+            await interaction.reply({
+                content: '⛔ Non hai i permessi per creare giveaway.',
+                ephemeral: true
+            });
             return;
         }
 
         await interaction.deferReply({ ephemeral: true });
+
+        let description = interaction.options.getString('description');
+        if (description) {
+            description = description.replace(/\\n/g, '\n');
+        }
 
         const prize = interaction.options.getString('prize');
         const duration = interaction.options.getString('duration');
@@ -356,12 +366,15 @@ class GiveawayCog {
 
         let expireEpoch;
         let durationText = duration;
+
         if (expireOpt) {
             expireEpoch = Number(expireOpt);
         } else {
             const seconds = parseDuration(duration);
             if (!seconds) {
-                await interaction.editReply('❌ Specifica una durata valida (es. 1d2h30m) o un expire timestamp valido.');
+                await interaction.editReply(
+                    '❌ Specifica una durata valida (es. 1d2h30m) o un expire timestamp valido.'
+                );
                 return;
             }
             expireEpoch = utcEpoch() + seconds;
@@ -369,11 +382,13 @@ class GiveawayCog {
 
         const cfg = await loadConfig();
         const nowIso = utcIso();
+
         const base = {
             guild_id: interaction.guildId,
             channel_id: interaction.channelId,
             message_id: '0',
             prize,
+            description, // ✅ ora funziona
             duration_text: durationText,
             expire_epoch: expireEpoch,
             number_winners: Math.max(1, numberWinners),
@@ -657,7 +672,8 @@ class GiveawayCog {
                     prize: data.prize,
                     durationText: data.duration_text,
                     expireEpoch: data.expire_epoch,
-                    hostMention: `<@${data.host}>`
+                    hostMention: `<@${data.host}>`,
+                    description: data.description
                 }
             ))
             .setColor(color);
