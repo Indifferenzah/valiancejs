@@ -261,7 +261,7 @@ class GiveawayCog {
             }
         });
 
-        this.client.once('ready', () => {
+        this.client.once('clientReady', () => {
             this.onReady().catch(err => logger.error(`[Giveaway] onReady error: ${err.message}`));
         });
     }

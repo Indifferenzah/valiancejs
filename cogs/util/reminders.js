@@ -270,7 +270,7 @@ class RemindersCog {
   }
 
   registerListeners() {
-    this.client.once('ready', () => this.onReady().catch(err => logger.error(`Reminders onReady error: ${err.message}`)));
+    this.client.once('clientReady', () => this.onReady().catch(err => logger.error(`Reminders onReady error: ${err.message}`)));
     this.client.on('interactionCreate', async (interaction) => {
       if (!interaction.isChatInputCommand()) return;
       if (interaction.commandName !== 'remind') return;

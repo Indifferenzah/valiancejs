@@ -214,13 +214,13 @@
     "footer": "Valiance | Ticket System",
     "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png"
   },
-  "ticket_panel_channel_id": 1350074017536544800,
-  "ticket_panel_message_id": 1427408841200373800,
+  "ticket_panel_channel_id": "1350074054350078034",
+  "ticket_panel_message_id": "1455591803926347826",
   "prefixes": [
     "v!",
     "!"
   ],
-  "ticket_counter": 146,
+  "ticket_counter": 147,
   "ticket_max_per_user": 1,
   "bot_status": "dnd",
   "bot_activity_type": "watching",
@@ -253,7 +253,6 @@
       "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
       "footer": "Valiance | Invites"
     },
-  
     "leaderboard": {
       "title": "🏆 Leaderboard Inviti",
       "empty": "Nessun dato disponibile.",
@@ -262,7 +261,6 @@
       "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
       "footer": "Valiance | Invites"
     },
-  
     "admin": {
       "success": "✅ Inviti aggiornati per {user}",
       "no_permission": "❌ Non hai i permessi per usare questo comando."

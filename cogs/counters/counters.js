@@ -452,7 +452,7 @@ class CountersCog {
   }
 
   registerListeners() {
-    this.client.once('ready', async () => { await this.onReady(); });
+    this.client.once('clientReady', async () => { await this.onReady(); });
     this.client.on('guildMemberAdd', m => this.markPending(m.guild.id));
     this.client.on('guildMemberRemove', m => this.markPending(m.guild.id));
     this.client.on('guildMemberUpdate', (b, a) => { if (b.roles.cache.size !== a.roles.cache.size) this.markPending(a.guild.id); });

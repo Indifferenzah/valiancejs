@@ -47,5 +47,17 @@
       "{q4}": "a",
       "{q5}": "a"
     }
+  },
+  "147": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-147.txt",
+    "closed_at": "2025-12-30T16:10:11.761Z",
+    "button": "general",
+    "channel_name": "ticket-147",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
   }
 }
