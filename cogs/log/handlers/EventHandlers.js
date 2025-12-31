@@ -319,10 +319,21 @@ class MemberEventHandler {
     }
 
     async handleGuildMemberUpdate(oldMember, newMember) {
+        if (this.configManager.shouldIgnore(newMember.guild.id, newMember)) return;
+
+        // Controlla timeout add/remove PRIMA di loggare l'update generale
+        if (oldMember.communicationDisabledUntil !== newMember.communicationDisabledUntil) {
+            if (newMember.communicationDisabledUntil && !oldMember.communicationDisabledUntil) {
+                // Timeout aggiunto
+                await this.handleMemberTimeoutAdd(oldMember, newMember);
+            } else if (!newMember.communicationDisabledUntil && oldMember.communicationDisabledUntil) {
+                // Timeout rimosso
+                await this.handleMemberTimeoutRemove(oldMember, newMember);
+            }
+        }
+
         const eventLogger = this.loggerFactory.getLogger('guildMemberUpdate');
         if (!eventLogger) return;
-
-        if (this.configManager.shouldIgnore(newMember.guild.id, newMember)) return;
 
         const changes = [];
 
@@ -352,21 +363,22 @@ class MemberEventHandler {
             });
         }
 
-        if (oldMember.communicationDisabledUntil !== newMember.communicationDisabledUntil) {
-            if (newMember.communicationDisabledUntil) {
-                changes.push({
-                    name: 'Timeout',
-                    value: `Fino al ${eventLogger.formatTimestamp(newMember.communicationDisabledUntil)}`,
-                    inline: false
-                });
-            } else {
-                changes.push({
-                    name: 'Timeout',
-                    value: 'Rimosso',
-                    inline: false
-                });
-            }
-        }
+        // Non aggiungere il timeout ai changes perché viene loggato separatamente
+        // if (oldMember.communicationDisabledUntil !== newMember.communicationDisabledUntil) {
+        //     if (newMember.communicationDisabledUntil) {
+        //         changes.push({
+        //             name: 'Timeout',
+        //             value: `Fino al ${eventLogger.formatTimestamp(newMember.communicationDisabledUntil)}`,
+        //             inline: false
+        //         });
+        //     } else {
+        //         changes.push({
+        //             name: 'Timeout',
+        //             value: 'Rimosso',
+        //             inline: false
+        //         });
+        //     }
+        // }
 
         if (changes.length === 0) return;
 

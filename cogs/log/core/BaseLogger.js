@@ -11,14 +11,21 @@ class BaseLogger {
 
     async log(guildId, embedData) {
         try {
-            if (!this.configManager.isEventEnabled(guildId, this.eventMetadata.name)) {
+            const isEnabled = this.configManager.isEventEnabled(guildId, this.eventMetadata.name);
+            
+            if (!isEnabled) {
+                logger.debug(`[BaseLogger] Event ${this.eventMetadata.name} is not enabled for guild ${guildId}`);
                 return;
             }
 
             const channelId = this.configManager.getEventChannel(guildId, this.eventMetadata.name);
+            
             if (!channelId) {
+                logger.debug(`[BaseLogger] No channel configured for event ${this.eventMetadata.name} in guild ${guildId}`);
                 return;
             }
+
+            logger.debug(`[BaseLogger] Logging event ${this.eventMetadata.name} to channel ${channelId}`);
 
             const formatting = this.configManager.getFormatting(guildId);
 

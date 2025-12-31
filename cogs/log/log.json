@@ -21,7 +21,7 @@
             "timestamps": true
         },
         "events": {
-            "channel": {
+            "channels": {
                 "channelCreate": {
                     "enabled": true,
                     "channel": "1455960417758347275"
@@ -39,7 +39,7 @@
                     "channel": "1455960417758347275"
                 }
             },
-            "thread": {
+            "threads": {
                 "threadCreate": {
                     "enabled": true,
                     "channel": "1455960593180655881"
@@ -61,7 +61,7 @@
                     "channel": "1455960593180655881"
                 }
             },
-            "member": {
+            "members": {
                 "guildMemberAdd": {
                     "enabled": true,
                     "channel": "1363431774763483216"
@@ -75,7 +75,7 @@
                     "channel": "1455960693382578416"
                 }
             },
-            "message": {
+            "messages": {
                 "messageCreate": {
                     "enabled": false,
                     "channel": null
@@ -137,8 +137,8 @@
             },
             "voice": {
                 "voiceStateUpdate": {
-                    "enabled": true,
-                    "channel": "1455752116386664448"
+                    "enabled": false,
+                    "channel": null
                 },
                 "voiceChannelJoin": {
                     "enabled": true,
@@ -169,7 +169,7 @@
                     "channel": "1455752116386664448"
                 }
             },
-            "role": {
+            "roles": {
                 "roleCreate": {
                     "enabled": true,
                     "channel": "1455962287390195823"
@@ -183,7 +183,7 @@
                     "channel": "1455962287390195823"
                 }
             },
-            "emoji": {
+            "emojis": {
                 "emojiCreate": {
                     "enabled": true,
                     "channel": "1428464022835036210"
@@ -197,7 +197,7 @@
                     "channel": "1428464022835036210"
                 }
             },
-            "sticker": {
+            "stickers": {
                 "stickerCreate": {
                     "enabled": true,
                     "channel": "1428464022835036210"
@@ -229,7 +229,7 @@
                     "channel": "1455753264816722036"
                 }
             },
-            "invite": {
+            "invites": {
                 "inviteCreate": {
                     "enabled": true,
                     "channel": "1428464022835036210"
@@ -239,7 +239,7 @@
                     "channel": "1428464022835036210"
                 }
             },
-            "user": {
+            "users": {
                 "userUpdate": {
                     "enabled": true,
                     "channel": "1455960693382578416"
@@ -277,13 +277,13 @@
                     "channel": "1428464022835036210"
                 }
             },
-            "webhook": {
+            "webhooks": {
                 "webhooksUpdate": {
                     "enabled": true,
                     "channel": "1428464022835036210"
                 }
             },
-            "interaction": {
+            "interactions": {
                 "interactionCreate": {
                     "enabled": true,
                     "channel": "1428464022835036210"
