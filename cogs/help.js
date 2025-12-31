@@ -7,13 +7,10 @@ const categories = {
         'name': 'Moderazione',
         'commands': [
             '\\- `/ban` <utente> [reason] - Banna un membro',
+            '\\- `/unban` <utente> [reason] - Sbanna un membro',
             '\\- `/kick` <utente> - Kicka un membro',
             '\\- `/mute` <utente> - Muta un membro',
             '\\- `/unmute` <utente> - Smuta un membro',
-            '\\- `/warn remove` <user> <id> - Aggiungi un warn',
-            '\\- `/warn add` <utente> - Rimuovi un warn',
-            '\\- `/warn list` <utente> - Mostra i warn di un utente',
-            '\\- `/warn clear` <utente> - Rimuovi tutti i warn',
             '\\- `/nick` <nick> <utente> - Imposta nickname a un utente'
         ]
     },
@@ -184,7 +181,7 @@ const categories = {
         'emoji': '<:VL_CoralMC:1434320425592033391>',
         'name': 'CoralMC',
         'commands': [
-            '`Coming Soon...` 👀',
+            '`Coming Soon...` 👀'
         ]
     }
 };
@@ -287,7 +284,6 @@ class HelpCog {
 
             const view = new HelpSelectView(interaction.user.id, this.client);
             
-            // Store the view before replying
             this.client.helpViews = this.client.helpViews || new Map();
             this.client.helpViews.set(interaction.user.id, view);
             
@@ -305,10 +301,8 @@ class HelpCog {
 function setup(client) {
     const helpCog = new HelpCog(client);
     
-    // Store helpCog reference for interaction handling
     client.helpCog = helpCog;
     
-    // Clean up expired views every 5 minutes
     if (!client.helpViewCleanup) {
         client.helpViewCleanup = setInterval(() => {
             if (client.helpViews) {
@@ -322,7 +316,6 @@ function setup(client) {
         }, 5 * 60 * 1000);
     }
 
-    // Add commands to global commands array
     if (!client.globalCommands) client.globalCommands = [];
     client.globalCommands.push(...helpCog.commands);
 
