@@ -1,1 +1,16 @@
-{}
+{
+    "enabled": true,
+    "checkInterval": 60,
+    "notifications": {
+        "enabled": true,
+        "channelId": "1350074011131969600",
+        "roleId": null,
+        "announcementTime": "09:00",
+        "useEmbed": true,
+        "mentionUser": true
+    },
+    "messages": {
+        "birthday": "🎉 Buon compleanno {user}! 🎉\n🎂 Auguri da tutto il server! 🎂",
+        "dmBirthday": "🎉 Buon compleanno! 🎉\nIl server {guild} ti augura una fantastica giornata! 🎂"
+    }
+}
