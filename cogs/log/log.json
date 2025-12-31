@@ -1,17 +1,17 @@
 {
   "join_channel": "https://discord.com/api/webhooks/1441562389936865453/Fp3Wy2zA5ZPT8gOAwv4IgEG0P8t-TSww6jhZSEjFfBavLHKpiKMHRx-RfykAdUau_JVv",
   "leave_channel": "https://discord.com/api/webhooks/1441562389936865453/Fp3Wy2zA5ZPT8gOAwv4IgEG0P8t-TSww6jhZSEjFfBavLHKpiKMHRx-RfykAdUau_JVv",
-  "moderation_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
+  "moderation_channel": "https://ptb.discord.com/api/webhooks/1455752908233773146/o0S2RT1Oz31puYdhVdn1kUDV6EUfwuFTPmiY993UiKdTtWMyAKY6lmytaBoTpJ66QjZt",
   "ticket_channel": "https://discord.com/api/webhooks/1441562659479883919/SwB-F4vWdxpT1ugSEafUaHMMJ2ouLZUKBD_r20f7ASya-ycRT09roXwAXjFVWEcfsL1j",
   "autorole_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
   "automod_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
-  "message_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
+  "message_channel": "https://ptb.discord.com/api/webhooks/1455753123497771099/KtvVEINU2iZehrBg68DBvylDX_9wrlzGJIgPz2BC6p_uSqjxxL77oy_c6G1MhLAzMjqx",
   "boost_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
-  "guildlog_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
-  "voice_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",  
-  "security_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQchAKfZxy_CGjqBXq4aXG",
-  "command_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQchAKfZxy_CGjqBXq4aXG",
-  
+  "guildlog_channel": "https://ptb.discord.com/api/webhooks/1455753303269834872/7WcAofMGbJnznhLfAi-7lfb3biXQo2NxeWx5PP1-DRdh5S0tKPlTEq-MAivO3VrrHxDZ",
+  "voice_channel": "https://ptb.discord.com/api/webhooks/1455752148364169377/6tSBeXptNQdnpMtVpXtzHw7H1rxvtlkcAi6i7k1JQ4hoBcygeR0k01ZDxgUz0f2TRHX8",  
+  "security_channel": "https://ptb.discord.com/api/webhooks/1455752431253192814/2_eceJhaF_uolcEBVuy_MeaOJlNhWv_d40K9VkGzWko4djSnd17pjASmlzLs-mTUmhac",
+  "command_channel": "https://ptb.discord.com/api/webhooks/1455752682605117521/k17Azg1gvWPrm6Ltrondjco0EFH-uB2AGcQsQw2OpzNKrzF_094xSNq4GjwYuFnuCpVR",
+
   "join_message": {
     "title": "Join",
     "description": "{mention} è entrato nel server il {joined_at}.\nAccount creato {created_at}.\nMembri totali: {total_members}",
@@ -216,7 +216,7 @@
     "description": "**Canale:** {channel}\n**Modificati da:** {staffer}\n**Target:** {target}\n\n**Aggiunti:** {added_perms}\n**Rimossi:** {removed_perms}",
     "color": 16776960,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -410,7 +410,7 @@
     "description": "{user} ha aggiunto la reazione {emoji} in {channel}.\n**ID Messaggio:** {message_id}",
     "color": 3447003,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
   "reaction_remove_message": {
@@ -418,7 +418,7 @@
     "description": "{user} ha rimosso la reazione {emoji} in {channel}.\n**ID Messaggio:** {message_id}",
     "color": 15158332,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -427,7 +427,7 @@
     "description": "Un messaggio di {author} è stato pinnato in {channel}.\n**ID Messaggio:** {message_id}",
     "color": 3447003,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
   "message_unpin_message": {
@@ -435,7 +435,7 @@
     "description": "Un messaggio di {author} è stato depinnato in {channel}.\n**ID Messaggio:** {message_id}",
     "color": 15158332,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -444,7 +444,7 @@
     "description": "È stato creato un invito.\n**Codice:** {code}\n**Canale:** {channel}\n**Creato da:** {inviter}\n**Max Uses:** {max_uses}",
     "color": 65280,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
   "invite_delete_message": {
@@ -452,7 +452,7 @@
     "description": "L'invito con codice {code} è stato eliminato.\n**Canale:** {channel}",
     "color": 16711680,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -461,7 +461,7 @@
     "description": "Lo stato di {user} è cambiato da `{old_status}` a `{new_status}`.",
     "color": 3447003,
     "footer": "Valiance | Logging",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -479,7 +479,7 @@
     "description": "**Utente:** {user}\n**Motivo:** {reason}\n**Sistema:** {origin}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -488,7 +488,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Durata:** {duration}\n**Scadenza:** {expiry}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15105570,
     "footer": "Valiance | Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -497,7 +497,7 @@
     "description": "**Moderatore:** {moderator}\n**Utenti bannati:** {count}\n**Lista:** {users}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 10038562,
     "footer": "Valiance | Moderazione Massiva",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -506,7 +506,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Motivo tentato:** {reason}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 12664611,
     "footer": "Valiance | Errore Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -515,7 +515,7 @@
     "description": "**Utente:** {user}\n**Motivo:** Ban temporaneo scaduto\n**Ban originale:** {original_ban_time}\n**Durata:** {duration}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 5763719,
     "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -524,7 +524,7 @@
     "description": "**Evento:** {event}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Errore Sistema",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -533,7 +533,7 @@
     "description": "**Utente:** {user}\n**Motivo:** {reason}\n**Sistema:** {origin}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15105570,
     "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -542,7 +542,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Motivo tentato:** {reason}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 12664611,
     "footer": "Valiance | Errore Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -551,7 +551,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Durata:** {duration}\n**Scadenza:** {expiry}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15105570,
     "footer": "Valiance | Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -560,7 +560,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Motivo:** {reason}\n**Durata rimanente:** {remaining}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 5763719,
     "footer": "Valiance | Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -569,7 +569,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Durata precedente:** {old_duration}\n**Nuova durata:** {new_duration}\n**Scadenza:** {expiry}\n**Motivo:** {reason}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15105570,
     "footer": "Valiance | Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -578,7 +578,7 @@
     "description": "**Utente:** {user}\n**Durata totale:** {duration}\n**Applicato da:** {moderator}\n**Applicato il:** {applied_at}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 3447003,
     "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -587,7 +587,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Azione:** {action}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 12664611,
     "footer": "Valiance | Errore Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -596,7 +596,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15105570,
     "footer": "Valiance | Moderazione Vocale",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -605,7 +605,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 5763719,
     "footer": "Valiance | Moderazione Vocale",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -614,7 +614,7 @@
     "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Warn ID:** {warn_id}\n**Motivo precedente:** {old_reason}\n**Nuovo motivo:** {new_reason}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Moderazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -623,7 +623,7 @@
     "description": "**Utente:** {user}\n**Warn totali:** {total_warns}\n**Soglia:** {threshold}\n**Azione:** {action}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -632,7 +632,7 @@
     "description": "**Canale:** {channel}\n**Quantità:** {count}\n**Moderatore:** {moderator}\n**Motivo:** {reason}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Moderazione Messaggi",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -641,7 +641,7 @@
     "description": "**Autore:** {author}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Contenuto:** {content}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Automod",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -650,7 +650,7 @@
     "description": "**Autore:** {author}\n**Segnalato da:** {reporter}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Contenuto:** {content}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Segnalazione",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -659,7 +659,7 @@
     "description": "**Autore:** {author}\n**Canale:** {channel}\n**Link:** {url}\n**Tipo:** {type}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Automod",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -668,7 +668,7 @@
     "description": "**Autore:** {author}\n**Canale:** {channel}\n**Nome file:** {filename}\n**Dimensione:** {size}\n**Tipo:** {type}\n**URL:** {url}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 3447003,
     "footer": "Valiance | Tracking Allegati",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -677,7 +677,7 @@
     "description": "**Autore:** {author}\n**Canale:** {channel}\n**Nome file:** {filename}\n**Motivo:** {reason}\n**Azione:** {action}\n**Hash:** {hash}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Sicurezza",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -686,7 +686,7 @@
     "description": "**Autore:** {author}\n**Canale:** {channel}\n**Mentions:** {count}\n**Tipo:** {type}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Automod",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -695,7 +695,7 @@
     "description": "**Invito:** {code}\n**Creatore:** {inviter}\n**Nuovo membro:** {joiner}\n**Usi:** {uses}/{max_uses}\n**Canale:** {channel}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 5763719,
     "footer": "Valiance | Inviti",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -704,7 +704,7 @@
     "description": "**Utente:** {user}\n**Tipo:** {exploit_type}\n**Dettagli:** {details}\n**Azione:** {action}\n**Origine:** {origin}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Sicurezza Critica",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -713,7 +713,7 @@
     "description": "**Utente:** {user}\n**Comandi in {timeframe}:** {count}\n**Soglia:** {threshold}\n**Azione:** {action}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -722,7 +722,7 @@
     "description": "**Utente:** {user}\n**Canale:** {channel}\n**Messaggi in {timeframe}:** {count}\n**Soglia:** {threshold}\n**Azione:** {action}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -731,7 +731,7 @@
     "description": "**Utente:** {user}\n**Cambi in {timeframe}:** {count}\n**Nickname precedenti:** {nicknames}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -749,7 +749,7 @@
     "description": "**Utente:** {user}\n**Tipo bypass:** {bypass_type}\n**Sistema aggirato:** {system}\n**Dettagli:** {details}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -758,7 +758,7 @@
     "description": "**Utente:** {user}\n**Azione:** {action_type}\n**Richieste in {timeframe}:** {count}\n**Limite:** {limit}\n**Cooldown:** {cooldown}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Rate Limiting",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -767,7 +767,7 @@
     "description": "**Creatore:** {inviter}\n**Codice:** {code}\n**Motivo:** {reason}\n**Durata:** {max_age}\n**Max usi:** {max_uses}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Sicurezza Inviti",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -776,7 +776,7 @@
     "description": "**Utente:** {user}\n**Comando:** {command}\n**Canale:** {channel}\n**Parametri:** {params}\n**Esito:** {outcome}\n**Tempo esecuzione:** {execution_time}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 5763719,
     "footer": "Valiance | Comandi",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -785,7 +785,7 @@
     "description": "**Utente:** {user}\n**Comando:** {command}\n**Canale:** {channel}\n**Errore:** {error}\n**Parametri:** {params}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15158332,
     "footer": "Valiance | Errore Comando",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -794,7 +794,7 @@
     "description": "**Utente:** {user}\n**Comando:** {command}\n**Canale:** {channel}\n**Permessi richiesti:** {required_permissions}\n**Permessi utente:** {user_permissions}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Permessi",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -803,7 +803,7 @@
     "description": "**Utente:** {user}\n**Comando:** {command}\n**Cooldown rimanente:** {remaining}\n**Canale:** {channel}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Cooldown",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -812,7 +812,7 @@
     "description": "**Bot:** {bot}\n**Comando:** {command}\n**Canale:** {channel}\n**Motivo blocco:** Auto-moderazione bot\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Anti-Bot",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   },
 
@@ -821,7 +821,7 @@
     "description": "**Utente:** {user}\n**Comando:** {command}\n**Parametri forniti:** {provided_params}\n**Parametri attesi:** {expected_params}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
     "color": 15844367,
     "footer": "Valiance | Errore Parametri",
-    "thumbnail": "",
+    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
     "author_header": false
   }
 }
