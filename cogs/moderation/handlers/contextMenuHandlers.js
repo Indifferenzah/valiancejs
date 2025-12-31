@@ -113,7 +113,6 @@ async function handleModerationModal(interaction) {
     const action = customIdParts[1];
     const userId = customIdParts[2];
 
-    // Fetch the target member
     const member = await interaction.guild.members.fetch(userId).catch(() => null);
 
     if (!member) {
@@ -123,7 +122,6 @@ async function handleModerationModal(interaction) {
         });
     }
 
-    // Extract reason from modal
     let reason = MESSAGES.INFO.NO_REASON;
     if (interaction.fields.fields.has('reason')) {
         const reasonInput = interaction.fields.getTextInputValue('reason').trim();
@@ -132,7 +130,6 @@ async function handleModerationModal(interaction) {
         }
     }
 
-    // Permission validation
     const neededPermission = PERMISSION_MAP[action];
     if (neededPermission && !ownerOrHasPermissions(neededPermission)(interaction)) {
         return interaction.reply({
@@ -142,7 +139,6 @@ async function handleModerationModal(interaction) {
     }
 
     try {
-        // Execute the action
         switch (action) {
             case 'ban':
                 await member.ban({ reason });
@@ -153,7 +149,6 @@ async function handleModerationModal(interaction) {
                 break;
 
             case 'timeout':
-                // Extract and parse duration
                 if (!interaction.fields.fields.has('duration')) {
                     return interaction.reply({
                         content: MESSAGES.ERROR.MISSING_DURATION,
@@ -174,7 +169,6 @@ async function handleModerationModal(interaction) {
                 });
         }
 
-        // Send success message
         const successMessage = MESSAGES.SUCCESS.ACTION_COMPLETED
             .replace('{action}', action.toUpperCase())
             .replace('{user}', member.user.tag);
@@ -201,11 +195,6 @@ async function handleModerationModal(interaction) {
     }
 }
 
-/**
- * Capitalize first letter of a string
- * @param {string} str - String to capitalize
- * @returns {string} Capitalized string
- */
 function capitalizeFirst(str) {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);

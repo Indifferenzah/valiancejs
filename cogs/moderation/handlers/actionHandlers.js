@@ -68,15 +68,7 @@ async function handleBan(interaction) {
     }
 }
 
-/**
- * Handle unban command
- * Removes a ban for a user by ID
- * 
- * @param {CommandInteraction} interaction - Discord interaction
- * @returns {Promise<void>}
- */
 async function handleUnban(interaction) {
-    // Permission check
     if (!ownerOrHasPermissions(PERMISSION_MAP.unban)(interaction)) {
         return interaction.reply({
             content: MESSAGES.ERROR.NO_PERMISSION,
@@ -95,7 +87,6 @@ async function handleUnban(interaction) {
     }
 
     try {
-        // Check if user is actually banned
         const bans = await interaction.guild.bans.fetch();
         const bannedUser = bans.get(userId);
 
@@ -106,10 +97,8 @@ async function handleUnban(interaction) {
             });
         }
 
-        // Execute unban
         await interaction.guild.bans.remove(userId, reason);
 
-        // Create success embed
         const embed = createModerationEmbed({
             action: 'unban',
             target: bannedUser.user,
@@ -139,13 +128,6 @@ async function handleUnban(interaction) {
     }
 }
 
-/**
- * Handle unban autocomplete
- * Provides autocomplete suggestions for banned users
- * 
- * @param {AutocompleteInteraction} interaction - Discord autocomplete interaction
- * @returns {Promise<void>}
- */
 async function handleUnbanAutocomplete(interaction) {
     const focused = interaction.options.getFocused();
 
@@ -157,7 +139,6 @@ async function handleUnbanAutocomplete(interaction) {
             value: ban.user.id
         }));
 
-        // Filter by user input
         if (focused && focused.length > 0) {
             const query = focused.toLowerCase();
             choices = choices.filter(choice =>
@@ -166,7 +147,6 @@ async function handleUnbanAutocomplete(interaction) {
             );
         }
 
-        // Limit to 25 results (Discord limit)
         choices = choices.slice(0, 25);
 
         await interaction.respond(choices);
@@ -179,15 +159,7 @@ async function handleUnbanAutocomplete(interaction) {
     }
 }
 
-/**
- * Handle kick command
- * Removes a member from the guild
- * 
- * @param {CommandInteraction} interaction - Discord interaction
- * @returns {Promise<void>}
- */
 async function handleKick(interaction) {
-    // Permission check
     if (!ownerOrHasPermissions(PERMISSION_MAP.kick)(interaction)) {
         return interaction.reply({
             content: MESSAGES.ERROR.NO_PERMISSION,
@@ -198,7 +170,6 @@ async function handleKick(interaction) {
     const member = interaction.options.getMember('user');
     const reason = interaction.options.getString('reason') || MESSAGES.INFO.NO_REASON;
 
-    // Validation checks
     if (!member) {
         return interaction.reply({
             content: MESSAGES.ERROR.INVALID_USER,
@@ -220,7 +191,6 @@ async function handleKick(interaction) {
         });
     }
 
-    // Role hierarchy check
     if (member.roles.highest.position >= interaction.member.roles.highest.position) {
         return interaction.reply({
             content: MESSAGES.ERROR.HIERARCHY_ERROR,
@@ -229,10 +199,8 @@ async function handleKick(interaction) {
     }
 
     try {
-        // Execute kick
         await member.kick(reason);
 
-        // Create success embed
         const embed = createModerationEmbed({
             action: 'kick',
             target: member.user,
@@ -261,15 +229,7 @@ async function handleKick(interaction) {
     }
 }
 
-/**
- * Handle mute/timeout command
- * Temporarily restricts a member's ability to communicate
- * 
- * @param {CommandInteraction} interaction - Discord interaction
- * @returns {Promise<void>}
- */
 async function handleMute(interaction) {
-    // Permission check
     if (!ownerOrHasPermissions(PERMISSION_MAP.mute)(interaction)) {
         return interaction.reply({
             content: MESSAGES.ERROR.NO_PERMISSION,
@@ -281,7 +241,6 @@ async function handleMute(interaction) {
     const durationStr = interaction.options.getString('duration') || '10m';
     const reason = interaction.options.getString('reason') || MESSAGES.INFO.NO_REASON;
 
-    // Validation checks
     if (!member) {
         return interaction.reply({
             content: MESSAGES.ERROR.INVALID_USER,
@@ -303,7 +262,6 @@ async function handleMute(interaction) {
         });
     }
 
-    // Role hierarchy check
     if (member.roles.highest.position >= interaction.member.roles.highest.position) {
         return interaction.reply({
             content: MESSAGES.ERROR.HIERARCHY_ERROR,
@@ -315,10 +273,8 @@ async function handleMute(interaction) {
         const durationMs = parseDuration(durationStr);
         const formattedDuration = formatDuration(durationMs);
 
-        // Execute timeout
         await member.timeout(durationMs, reason);
 
-        // Create success embed
         const embed = createModerationEmbed({
             action: 'mute',
             target: member.user,
@@ -348,15 +304,7 @@ async function handleMute(interaction) {
     }
 }
 
-/**
- * Handle unmute command
- * Removes timeout from a member
- * 
- * @param {CommandInteraction} interaction - Discord interaction
- * @returns {Promise<void>}
- */
 async function handleUnmute(interaction) {
-    // Permission check
     if (!ownerOrHasPermissions(PERMISSION_MAP.unmute)(interaction)) {
         return interaction.reply({
             content: MESSAGES.ERROR.NO_PERMISSION,
@@ -366,7 +314,6 @@ async function handleUnmute(interaction) {
 
     const member = interaction.options.getMember('user');
 
-    // Validation checks
     if (!member) {
         return interaction.reply({
             content: MESSAGES.ERROR.INVALID_USER,
@@ -375,10 +322,8 @@ async function handleUnmute(interaction) {
     }
 
     try {
-        // Remove timeout
         await member.timeout(null);
 
-        // Create success embed
         const embed = createModerationEmbed({
             action: 'unmute',
             target: member.user,
@@ -407,15 +352,7 @@ async function handleUnmute(interaction) {
     }
 }
 
-/**
- * Handle nickname change command
- * Changes a member's nickname
- * 
- * @param {CommandInteraction} interaction - Discord interaction
- * @returns {Promise<void>}
- */
 async function handleNick(interaction) {
-    // Permission check
     if (!ownerOrHasPermissions(PERMISSION_MAP.nick)(interaction)) {
         return interaction.reply({
             content: MESSAGES.ERROR.NO_PERMISSION,
@@ -426,7 +363,6 @@ async function handleNick(interaction) {
     const member = interaction.options.getMember('user');
     const nickname = interaction.options.getString('nick');
 
-    // Validation checks
     if (!member) {
         return interaction.reply({
             content: MESSAGES.ERROR.INVALID_USER,
@@ -441,7 +377,6 @@ async function handleNick(interaction) {
         });
     }
 
-    // Role hierarchy check
     if (member.roles.highest.position >= interaction.member.roles.highest.position) {
         return interaction.reply({
             content: MESSAGES.ERROR.HIERARCHY_ERROR,
@@ -452,7 +387,6 @@ async function handleNick(interaction) {
     try {
         const oldNick = member.nickname || member.user.username;
 
-        // Change nickname
         await member.setNickname(nickname);
 
         const successMessage = MESSAGES.SUCCESS.NICK_CHANGED
