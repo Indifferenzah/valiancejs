@@ -9,6 +9,13 @@ class BanAction {
         const reason = this.buildBanReason(violationData);
 
         try {
+            // Elimina il messaggio offensivo
+            try {
+                await message.delete();
+            } catch (deleteError) {
+                // Ignora errori di eliminazione (es. messaggio già cancellato)
+            }
+
             if (this.config.notifyUser) {
                 await this.notifyUser(message.author, reason, violationData);
             }
@@ -24,6 +31,7 @@ class BanAction {
 
             return {
                 banned: true,
+                messageDeleted: true,
                 reason: reason,
                 notifiedUser: this.config.notifyUser,
                 notifiedChannel: this.config.notifyChannel,

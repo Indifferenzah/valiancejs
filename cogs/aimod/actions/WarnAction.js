@@ -18,6 +18,13 @@ class WarnAction {
         const reason = this.buildWarnReason(violationData);
 
         try {
+            // Elimina il messaggio offensivo
+            try {
+                await message.delete();
+            } catch (deleteError) {
+                // Ignora errori di eliminazione (es. messaggio già cancellato)
+            }
+
             if (typeof this.moderationCog.addWarn === 'function') {
                 await this.moderationCog.addWarn(
                     message.author.id,
@@ -36,6 +43,7 @@ class WarnAction {
 
             return {
                 warned: true,
+                messageDeleted: true,
                 reason: reason,
                 notifiedUser: this.config.notifyUser,
                 notifiedChannel: this.config.notifyChannel,

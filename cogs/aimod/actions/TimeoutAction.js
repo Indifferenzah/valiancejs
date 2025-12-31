@@ -9,6 +9,13 @@ class TimeoutAction {
         const duration = this.calculateDuration(violationData.severity);
 
         try {
+            // Elimina il messaggio offensivo
+            try {
+                await message.delete();
+            } catch (deleteError) {
+                // Ignora errori di eliminazione (es. messaggio già cancellato)
+            }
+
             await message.member.timeout(
                 duration,
                 this.buildTimeoutReason(violationData)
@@ -24,6 +31,7 @@ class TimeoutAction {
 
             return {
                 timedOut: true,
+                messageDeleted: true,
                 duration: duration,
                 durationFormatted: Formatters.formatDuration(duration),
                 notifiedUser: this.config.notifyUser,
