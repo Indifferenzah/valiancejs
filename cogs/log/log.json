@@ -118,6 +118,18 @@
                     "enabled": true,
                     "channel": "1455752842328412355"
                 },
+                "memberTimeoutAdd": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "memberTimeoutRemove": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "memberKick": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
                 "guildAuditLogEntryCreate": {
                     "enabled": true,
                     "channel": "1455752842328412355"
@@ -125,6 +137,34 @@
             },
             "voice": {
                 "voiceStateUpdate": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelJoin": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelLeave": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelSwitch": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelMute": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelDeaf": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceStreamingStart": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceStreamingStop": {
                     "enabled": true,
                     "channel": "1455752116386664448"
                 }
@@ -313,8 +353,8 @@
             "threads (threadCreate, threadDelete, threadUpdate, threadMemberUpdate, threadMembersUpdate)",
             "members (guildMemberAdd, guildMemberRemove, guildMemberUpdate)",
             "messages (messageCreate, messageDelete, messageUpdate, messageDeleteBulk, messageReactionAdd, messageReactionRemove, messageReactionRemoveAll, messageReactionRemoveEmoji)",
-            "moderation (guildBanAdd, guildBanRemove, guildAuditLogEntryCreate)",
-            "voice (voiceStateUpdate)",
+            "moderation (guildBanAdd, guildBanRemove, memberTimeoutAdd, memberTimeoutRemove, memberKick, guildAuditLogEntryCreate)",
+            "voice (voiceStateUpdate, voiceChannelJoin, voiceChannelLeave, voiceChannelSwitch, voiceChannelMute, voiceChannelDeaf, voiceStreamingStart, voiceStreamingStop)",
             "roles (roleCreate, roleDelete, roleUpdate)",
             "emojis (emojiCreate, emojiDelete, emojiUpdate)",
             "stickers (stickerCreate, stickerDelete, stickerUpdate)",

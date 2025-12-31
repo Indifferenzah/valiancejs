@@ -314,35 +314,56 @@ class VoiceEventHandler {
         let description = '';
         let color = '#FAA61A';
 
+        // Join
         if (!oldState.channel && newState.channel) {
             description = `${member.user.tag} è entrato in ${newState.channel.name}`;
             color = '#43B581';
+            this.handleVoiceChannelJoin(newState).catch(err => logger.error('[VoiceEventHandler] Join error:', err));
         }
+        // Leave
         else if (oldState.channel && !newState.channel) {
             description = `${member.user.tag} è uscito da ${oldState.channel.name}`;
             color = '#F04747';
+            this.handleVoiceChannelLeave(oldState).catch(err => logger.error('[VoiceEventHandler] Leave error:', err));
         }
+        // Switch
         else if (oldState.channel && newState.channel && oldState.channel.id !== newState.channel.id) {
             description = `${member.user.tag} si è spostato da ${oldState.channel.name} a ${newState.channel.name}`;
+            this.handleVoiceChannelSwitch(oldState, newState).catch(err => logger.error('[VoiceEventHandler] Switch error:', err));
         }
+        // Other changes
         else {
             const changes = [];
 
-            if (oldState.serverMute !== newState.serverMute) {
-                changes.push(`${newState.serverMute ? 'Mutato dal server' : 'Smutato dal server'}`);
+            if (oldState.serverMute !== newState.serverMute || oldState.selfMute !== newState.selfMute) {
+                if (oldState.serverMute !== newState.serverMute) {
+                    changes.push(`${newState.serverMute ? 'Mutato dal server' : 'Smutato dal server'}`);
+                }
+                if (oldState.selfMute !== newState.selfMute) {
+                    changes.push(`${newState.selfMute ? 'Auto-mutato' : 'Auto-smutato'}`);
+                }
+                this.handleVoiceChannelMute(oldState, newState).catch(err => logger.error('[VoiceEventHandler] Mute error:', err));
             }
-            if (oldState.serverDeaf !== newState.serverDeaf) {
-                changes.push(`${newState.serverDeaf ? 'Deafenato dal server' : 'Undeafenato dal server'}`);
+
+            if (oldState.serverDeaf !== newState.serverDeaf || oldState.selfDeaf !== newState.selfDeaf) {
+                if (oldState.serverDeaf !== newState.serverDeaf) {
+                    changes.push(`${newState.serverDeaf ? 'Deafenato dal server' : 'Undeafenato dal server'}`);
+                }
+                if (oldState.selfDeaf !== newState.selfDeaf) {
+                    changes.push(`${newState.selfDeaf ? 'Auto-deafenato' : 'Auto-undeafenato'}`);
+                }
+                this.handleVoiceChannelDeaf(oldState, newState).catch(err => logger.error('[VoiceEventHandler] Deaf error:', err));
             }
-            if (oldState.selfMute !== newState.selfMute) {
-                changes.push(`${newState.selfMute ? 'Auto-mutato' : 'Auto-smutato'}`);
-            }
-            if (oldState.selfDeaf !== newState.selfDeaf) {
-                changes.push(`${newState.selfDeaf ? 'Auto-deafenato' : 'Auto-undeafenato'}`);
-            }
+
             if (oldState.streaming !== newState.streaming) {
                 changes.push(`${newState.streaming ? 'Streaming iniziato' : 'Streaming terminato'}`);
+                if (newState.streaming) {
+                    this.handleVoiceStreamingStart(newState).catch(err => logger.error('[VoiceEventHandler] Streaming start error:', err));
+                } else {
+                    this.handleVoiceStreamingStop(oldState).catch(err => logger.error('[VoiceEventHandler] Streaming stop error:', err));
+                }
             }
+
             if (oldState.selfVideo !== newState.selfVideo) {
                 changes.push(`${newState.selfVideo ? 'Video acceso' : 'Video spento'}`);
             }
@@ -361,6 +382,139 @@ class VoiceEventHandler {
             ],
             thumbnail: member.user.displayAvatarURL({ dynamic: true }),
             color
+        });
+    }
+
+    async handleVoiceChannelJoin(state) {
+        const eventLogger = this.loggerFactory.getLogger('voiceChannelJoin');
+        if (!eventLogger) return;
+
+        const member = state.member;
+
+        await eventLogger.log(state.guild.id, {
+            title: 'Entrato in Canale Vocale',
+            description: `${member.user.tag} è entrato in un canale vocale`,
+            fields: [
+                { name: 'Utente', value: `${member.user.tag} (<@${member.id}>)`, inline: true },
+                { name: 'Canale', value: `${state.channel.name} (<#${state.channel.id}>)`, inline: true }
+            ],
+            thumbnail: member.user.displayAvatarURL({ dynamic: true }),
+            color: '#43B581'
+        });
+    }
+
+    async handleVoiceChannelLeave(state) {
+        const eventLogger = this.loggerFactory.getLogger('voiceChannelLeave');
+        if (!eventLogger) return;
+
+        const member = state.member;
+
+        await eventLogger.log(state.guild.id, {
+            title: 'Uscito da Canale Vocale',
+            description: `${member.user.tag} è uscito da un canale vocale`,
+            fields: [
+                { name: 'Utente', value: `${member.user.tag} (<@${member.id}>)`, inline: true },
+                { name: 'Canale', value: `${state.channel.name} (<#${state.channel.id}>)`, inline: true }
+            ],
+            thumbnail: member.user.displayAvatarURL({ dynamic: true }),
+            color: '#F04747'
+        });
+    }
+
+    async handleVoiceChannelSwitch(oldState, newState) {
+        const eventLogger = this.loggerFactory.getLogger('voiceChannelSwitch');
+        if (!eventLogger) return;
+
+        const member = newState.member;
+
+        await eventLogger.log(newState.guild.id, {
+            title: 'Cambio Canale Vocale',
+            description: `${member.user.tag} si è spostato tra canali vocali`,
+            fields: [
+                { name: 'Utente', value: `${member.user.tag} (<@${member.id}>)`, inline: false },
+                { name: 'Da', value: `${oldState.channel.name} (<#${oldState.channel.id}>)`, inline: true },
+                { name: 'A', value: `${newState.channel.name} (<#${newState.channel.id}>)`, inline: true }
+            ],
+            thumbnail: member.user.displayAvatarURL({ dynamic: true }),
+            color: '#FAA61A'
+        });
+    }
+
+    async handleVoiceChannelMute(oldState, newState) {
+        const eventLogger = this.loggerFactory.getLogger('voiceChannelMute');
+        if (!eventLogger) return;
+
+        const member = newState.member;
+        const isMuted = newState.serverMute || newState.selfMute;
+        const muteType = newState.serverMute ? 'server' : 'utente';
+
+        await eventLogger.log(newState.guild.id, {
+            title: isMuted ? 'Utente Mutato' : 'Utente Smutato',
+            description: `${member.user.tag} è stato ${isMuted ? 'mutato' : 'smutato'}`,
+            fields: [
+                { name: 'Utente', value: `${member.user.tag} (<@${member.id}>)`, inline: true },
+                { name: 'Canale', value: newState.channel ? `<#${newState.channel.id}>` : 'Nessuno', inline: true },
+                { name: 'Tipo', value: muteType === 'server' ? 'Dal server' : 'Auto-mute', inline: true }
+            ],
+            thumbnail: member.user.displayAvatarURL({ dynamic: true }),
+            color: isMuted ? '#F04747' : '#43B581'
+        });
+    }
+
+    async handleVoiceChannelDeaf(oldState, newState) {
+        const eventLogger = this.loggerFactory.getLogger('voiceChannelDeaf');
+        if (!eventLogger) return;
+
+        const member = newState.member;
+        const isDeaf = newState.serverDeaf || newState.selfDeaf;
+        const deafType = newState.serverDeaf ? 'server' : 'utente';
+
+        await eventLogger.log(newState.guild.id, {
+            title: isDeaf ? 'Utente Deafenato' : 'Utente Undeafenato',
+            description: `${member.user.tag} è stato ${isDeaf ? 'deafenato' : 'undeafenato'}`,
+            fields: [
+                { name: 'Utente', value: `${member.user.tag} (<@${member.id}>)`, inline: true },
+                { name: 'Canale', value: newState.channel ? `<#${newState.channel.id}>` : 'Nessuno', inline: true },
+                { name: 'Tipo', value: deafType === 'server' ? 'Dal server' : 'Auto-deaf', inline: true }
+            ],
+            thumbnail: member.user.displayAvatarURL({ dynamic: true }),
+            color: isDeaf ? '#F04747' : '#43B581'
+        });
+    }
+
+    async handleVoiceStreamingStart(state) {
+        const eventLogger = this.loggerFactory.getLogger('voiceStreamingStart');
+        if (!eventLogger) return;
+
+        const member = state.member;
+
+        await eventLogger.log(state.guild.id, {
+            title: 'Streaming Iniziato',
+            description: `${member.user.tag} ha iniziato a streammare`,
+            fields: [
+                { name: 'Utente', value: `${member.user.tag} (<@${member.id}>)`, inline: true },
+                { name: 'Canale', value: state.channel ? `<#${state.channel.id}>` : 'Nessuno', inline: true }
+            ],
+            thumbnail: member.user.displayAvatarURL({ dynamic: true }),
+            color: '#9B59B6'
+        });
+    }
+
+    async handleVoiceStreamingStop(state) {
+        const eventLogger = this.loggerFactory.getLogger('voiceStreamingStop');
+        if (!eventLogger) return;
+
+        const member = state.member;
+
+        await eventLogger.log(state.guild.id, {
+            title: 'Streaming Terminato',
+            description: `${member.user.tag} ha terminato lo streaming`,
+            fields: [
+                { name: 'Utente', value: `${member.user.tag} (<@${member.id}>)`, inline: true },
+                { name: 'Canale', value: state.channel ? `<#${state.channel.id}>` : 'Nessuno', inline: true }
+            ],
+            thumbnail: member.user.displayAvatarURL({ dynamic: true }),
+            color: '#95A5A6'
         });
     }
 }

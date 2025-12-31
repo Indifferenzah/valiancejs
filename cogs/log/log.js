@@ -227,3 +227,9 @@ class LogCog {
 }
 
 module.exports = LogCog;
+
+module.exports.setup = async (client) => {
+    const logCog = new LogCog(client);
+    await logCog.initialize();
+    return logCog;
+};

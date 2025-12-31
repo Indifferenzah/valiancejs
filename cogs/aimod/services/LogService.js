@@ -33,6 +33,14 @@ class LogService {
     async logAnalysis(data) {
         if (!this.config.enabled) return;
 
+        // Filtra i messaggi con toxicity inferiore a low (0.3)
+        const { analysisResults } = data;
+        if (analysisResults && analysisResults.toxicity !== undefined) {
+            if (analysisResults.toxicity < 0.3) {
+                return; // Non logga messaggi sotto la soglia low
+            }
+        }
+
         const embed = this.createAnalysisEmbed(data);
 
         if (this.config.useWebhook && this.webhookClient) {

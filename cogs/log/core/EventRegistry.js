@@ -187,6 +187,27 @@ const EventRegistry = {
             icon: '✅',
             color: '#43B581'
         },
+        MEMBER_TIMEOUT_ADD: {
+            name: 'memberTimeoutAdd',
+            description: 'Un membro viene messo in timeout',
+            category: 'moderation',
+            icon: '⏱️',
+            color: '#F04747'
+        },
+        MEMBER_TIMEOUT_REMOVE: {
+            name: 'memberTimeoutRemove',
+            description: 'Il timeout di un membro viene rimosso',
+            category: 'moderation',
+            icon: '✅',
+            color: '#43B581'
+        },
+        MEMBER_KICK: {
+            name: 'memberKick',
+            description: 'Un membro viene espulso dal server',
+            category: 'moderation',
+            icon: '👢',
+            color: '#F04747'
+        },
         GUILD_AUDIT_LOG_ENTRY_CREATE: {
             name: 'guildAuditLogEntryCreate',
             description: 'Viene creata una voce nell\'audit log',
@@ -351,6 +372,55 @@ const EventRegistry = {
             category: 'voice',
             icon: '🔊',
             color: '#FAA61A'
+        },
+        VOICE_CHANNEL_JOIN: {
+            name: 'voiceChannelJoin',
+            description: 'Un utente entra in un canale vocale',
+            category: 'voice',
+            icon: '🟢',
+            color: '#43B581'
+        },
+        VOICE_CHANNEL_LEAVE: {
+            name: 'voiceChannelLeave',
+            description: 'Un utente esce da un canale vocale',
+            category: 'voice',
+            icon: '🔴',
+            color: '#F04747'
+        },
+        VOICE_CHANNEL_SWITCH: {
+            name: 'voiceChannelSwitch',
+            description: 'Un utente si sposta tra canali vocali',
+            category: 'voice',
+            icon: '🔄',
+            color: '#FAA61A'
+        },
+        VOICE_CHANNEL_MUTE: {
+            name: 'voiceChannelMute',
+            description: 'Un utente viene mutato/smutato',
+            category: 'voice',
+            icon: '🔇',
+            color: '#FAA61A'
+        },
+        VOICE_CHANNEL_DEAF: {
+            name: 'voiceChannelDeaf',
+            description: 'Un utente viene deafenato/undeafenato',
+            category: 'voice',
+            icon: '🔇',
+            color: '#FAA61A'
+        },
+        VOICE_STREAMING_START: {
+            name: 'voiceStreamingStart',
+            description: 'Un utente inizia lo streaming',
+            category: 'voice',
+            icon: '📡',
+            color: '#9B59B6'
+        },
+        VOICE_STREAMING_STOP: {
+            name: 'voiceStreamingStop',
+            description: 'Un utente termina lo streaming',
+            category: 'voice',
+            icon: '📴',
+            color: '#95A5A6'
         }
     },
 
