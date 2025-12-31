@@ -170,14 +170,14 @@ const categories = {
         'emoji': '📨',
         'name': 'Inviti',
         'commands': [
-            '\\- `/invites` [utente] - Mostra inviti',
-            '\\- `.invites` [utente] - Mostra inviti',
-            '\\- `/inviteleaderboard` - Classifica inviti',
+            '\\- `/invites user` [utente] - Mostra inviti',
+            '\\- `.invites` / `.i` [utente] - Mostra inviti',
+            '\\- `/invites leaderboard` - Classifica inviti',
             '\\- `.leaderboard` / `.lb` - Classifica inviti',
             '**ADMIN:**',
-            '\\- `/invite set` <utente> <numero>',
-            '\\- `/invite add` <utente> <numero>',
-            '\\- `/invite remove` <utente> <numero>'
+            '\\- `/invites set` <utente> <numero>',
+            '\\- `/invites add` <utente> <numero>',
+            '\\- `/invites remove` <utente> <numero>'
         ]
     },
     'coralmc': {
