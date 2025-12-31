@@ -26,7 +26,7 @@ function loadCogs(client) {
         // 'coralmc/coralmc',
         'traduttore/traduttore',
         'leveling/leveling'
-        // 'invites/invites'
+        // done 'invites/invites'
     ];
 
     for (const cogPath of cogsToLoad) {
