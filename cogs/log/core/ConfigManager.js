@@ -70,7 +70,10 @@ class ConfigManager {
         }
 
         if (!this.config.guilds[guildId]) {
+            logger.info(`[LogConfigManager] Creating new guild config for ${guildId}`);
             this.config.guilds[guildId] = JSON.parse(JSON.stringify(this.config.defaults));
+            // Salva immediatamente per persistere la nuova guild
+            this.save().catch(err => logger.error('[LogConfigManager] Error saving new guild config:', err));
         }
 
         return this.config.guilds[guildId];
@@ -87,7 +90,25 @@ class ConfigManager {
         
         if (!config.enabled) return null;
         
-        const eventConfig = config.events[eventName];
+        // Importa EventRegistry per trovare la categoria dell'evento
+        const EventRegistry = require('./EventRegistry');
+        const eventInfo = EventRegistry.getEventByName(eventName);
+        
+        if (!eventInfo) {
+            logger.warn(`[LogConfigManager] Event ${eventName} not found in registry`);
+            return null;
+        }
+        
+        const categoryName = eventInfo.category;
+        
+        // Cerca nella categoria corretta
+        const categoryConfig = config.events[categoryName];
+        if (!categoryConfig) {
+            logger.warn(`[LogConfigManager] Category ${categoryName} not found in guild ${guildId} config`);
+            return null;
+        }
+        
+        const eventConfig = categoryConfig[eventName];
         if (!eventConfig || !eventConfig.enabled) return null;
         
         const channelRef = eventConfig.channel || config.channels.default;
@@ -114,7 +135,18 @@ class ConfigManager {
         
         if (!config.enabled) return false;
         
-        const eventConfig = config.events[eventName];
+        // Importa EventRegistry per trovare la categoria dell'evento
+        const EventRegistry = require('./EventRegistry');
+        const eventInfo = EventRegistry.getEventByName(eventName);
+        
+        if (!eventInfo) return false;
+        
+        const categoryName = eventInfo.category;
+        const categoryConfig = config.events[categoryName];
+        
+        if (!categoryConfig) return false;
+        
+        const eventConfig = categoryConfig[eventName];
         if (!eventConfig) return false;
         
         return eventConfig.enabled === true;
@@ -182,14 +214,28 @@ class ConfigManager {
     async enableEvent(guildId, eventName, channelId) {
         const config = this.getGuildConfig(guildId);
         
-        if (!config.events[eventName]) {
-            config.events[eventName] = {};
+        const EventRegistry = require('./EventRegistry');
+        const eventInfo = EventRegistry.getEventByName(eventName);
+        
+        if (!eventInfo) {
+            logger.warn(`[LogConfigManager] Event ${eventName} not found in registry`);
+            return;
         }
         
-        config.events[eventName].enabled = true;
+        const categoryName = eventInfo.category;
+        
+        if (!config.events[categoryName]) {
+            config.events[categoryName] = {};
+        }
+        
+        if (!config.events[categoryName][eventName]) {
+            config.events[categoryName][eventName] = {};
+        }
+        
+        config.events[categoryName][eventName].enabled = true;
         
         if (channelId) {
-            config.events[eventName].channel = channelId;
+            config.events[categoryName][eventName].channel = channelId;
         }
         
         await this.save();
@@ -198,8 +244,15 @@ class ConfigManager {
     async disableEvent(guildId, eventName) {
         const config = this.getGuildConfig(guildId);
         
-        if (config.events[eventName]) {
-            config.events[eventName].enabled = false;
+        const EventRegistry = require('./EventRegistry');
+        const eventInfo = EventRegistry.getEventByName(eventName);
+        
+        if (!eventInfo) return;
+        
+        const categoryName = eventInfo.category;
+        
+        if (config.events[categoryName] && config.events[categoryName][eventName]) {
+            config.events[categoryName][eventName].enabled = false;
             await this.save();
         }
     }
