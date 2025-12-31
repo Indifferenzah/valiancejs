@@ -1,32 +1,73 @@
 {
   "enabled": true,
-  "delete_on_violation": true,
+
+  "openai": {
+    "api_key": "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",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "max_tokens": 150,
+    "temperature": 0.3
+  },
+
+  "moderation": {
+    "enabled": true,
+    "use_openai_moderation": true,
+    "use_custom_analysis": true,
+    "check_toxicity": true,
+    "check_spam": true,
+    "check_intent": true
+  },
 
   "thresholds": {
-    "warn": 0.50,
-    "timeout": 0.90
+    "toxicity": {
+      "low": 0.3,
+      "medium": 0.5,
+      "high": 0.7,
+      "critical": 0.9
+    },
+    "spam": {
+      "low": 0.4,
+      "medium": 0.6,
+      "high": 0.8,
+      "critical": 0.95
+    },
+    "confidence": {
+      "minimum": 0.6
+    }
   },
 
-  "timeout_minutes": 10,
-
-  "bypass_admin": true,
-  "bypass_roles": [
-    "1350073967716732971",
-    "1364656451779428462"
-  ],
-
-  "models": {
-    "toxicity": "unitary/toxic-bert"
+  "actions": {
+    "delete_message": true,
+    "timeout": true,
+    "warn": true,
+    "ban": false,
+    "timeout_duration": 600000,
+    "ban_threshold": 3,
+    "notify_user": true,
+    "notify_channel": true
   },
 
-  "no_automod_channels": [],
+  "bypass": {
+    "admin": false,
+    "roles": [
+      "1350073967716732971",
+      "1364656451779428462"
+    ],
+    "users": [],
+    "channels": []
+  },
 
-  "log": {
+  "cooldown": {
     "enabled": true,
+    "duration": 4000,
+    "per_user": true
+  },
 
-    "channel_id": "", 
+  "logging": {
+    "enabled": true,
     "webhook_url": "https://discord.com/api/webhooks/1449841577777168528/V1wgtWJXfxNa142erxOZS6fM5zgptWj6DlDO4dR1N6QW6VqhwPGckknMf6zPxnO2X2IO",
-
-    "use_webhook": true
+    "channel_id": "",
+    "use_webhook": true,
+    "log_level": "info",
+    "include_content": true
   }
 }

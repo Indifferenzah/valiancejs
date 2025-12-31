@@ -22,7 +22,7 @@ function loadCogs(client) {
         'rep/reputation',
         'birthdays/birthdays',
         'counters/counters',
-        // 'aimod/aimod',
+        'aimod/aimod',
         // 'coralmc/coralmc',
         'traduttore/traduttore',
         'leveling/leveling'

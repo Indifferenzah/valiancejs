@@ -1,143 +1,255 @@
-const { PermissionFlagsBits, EmbedBuilder } = require('discord.js');
 const path = require('path');
-const fs = require('fs');
 const logger = require('../../utils/logger');
-const { analyzeText } = require('./hfClient');
-const { initLogger, logAIMod } = require('./log');
 
-function sanitizeMentions(text) {
-    if (!text) return text;
-    return text
-        .replace(/@everyone/gi, '@\u200beveryone')
-        .replace(/@here/gi, '@\u200bhere');
-}
+const ConfigManager = require('./core/ConfigManager');
+const { ACTION_TYPES, DEFAULT_THRESHOLDS } = require('./core/Constants');
+
+const OpenAIService = require('./services/OpenAIService');
+const ModerationService = require('./services/ModerationService');
+const LogService = require('./services/LogService');
+
+const ToxicityAnalyzer = require('./analyzers/ToxicityAnalyzer');
+const SpamAnalyzer = require('./analyzers/SpamAnalyzer');
+const IntentAnalyzer = require('./analyzers/IntentAnalyzer');
+
+const DeleteAction = require('./actions/DeleteAction');
+const TimeoutAction = require('./actions/TimeoutAction');
+const WarnAction = require('./actions/WarnAction');
+const BanAction = require('./actions/BanAction');
+
+const ContentAnalysisHandler = require('./handlers/ContentAnalysisHandler');
+const BypassHandler = require('./handlers/BypassHandler');
+const CooldownHandler = require('./handlers/CooldownHandler');
 
 class AIModCog {
     constructor(client) {
         this.client = client;
         this.name = 'aimod';
-
+        
         this.configPath = path.join(__dirname, 'aimod.json');
-        this.config = JSON.parse(fs.readFileSync(this.configPath, 'utf8'));
-        initLogger(this.config.log);
+        this.configManager = new ConfigManager(this.configPath);
 
         this.moderationCog = null;
-        this.cooldown = new Set();
+
+        this.initializeServices();
+        this.initializeAnalyzers();
+        this.initializeActions();
+        this.initializeHandlers();
 
         this.client.on('messageCreate', (m) => this.onMessage(m));
+
+        logger.info('[AI-MOD] Sistema di moderazione AI enterprise-level inizializzato');
+    }
+
+    initializeServices() {
+        const openaiConfig = this.configManager.getOpenAIConfig();
+        this.openAIService = new OpenAIService(openaiConfig);
+
+        this.logService = new LogService(this.configManager.getLogConfig());
+
+        logger.info('[AI-MOD] Servizi inizializzati');
+    }
+
+    initializeAnalyzers() {
+        const thresholds = this.configManager.get('thresholds', DEFAULT_THRESHOLDS);
+
+        this.analyzers = {
+            toxicity: new ToxicityAnalyzer(
+                this.openAIService,
+                thresholds.toxicity || DEFAULT_THRESHOLDS.toxicity
+            ),
+            spam: new SpamAnalyzer(
+                this.openAIService,
+                thresholds.spam || DEFAULT_THRESHOLDS.spam
+            ),
+            intent: new IntentAnalyzer(this.openAIService)
+        };
+
+        logger.info('[AI-MOD] Analyzers inizializzati');
+    }
+
+    initializeActions() {
+        const actionConfig = this.configManager.getActionConfig();
+
+        this.actions = {
+            [ACTION_TYPES.DELETE]: new DeleteAction(actionConfig),
+            [ACTION_TYPES.TIMEOUT]: new TimeoutAction(actionConfig),
+            [ACTION_TYPES.WARN]: new WarnAction(actionConfig, this.moderationCog),
+            [ACTION_TYPES.BAN]: new BanAction(actionConfig),
+            [ACTION_TYPES.NONE]: {
+                execute: async () => ({ type: ACTION_TYPES.NONE, success: true })
+            }
+        };
+
+        this.moderationService = new ModerationService(actionConfig, this.actions);
+
+        logger.info('[AI-MOD] Actions e ModerationService inizializzati');
+    }
+
+    initializeHandlers() {
+        const moderationConfig = this.configManager.getModerationConfig();
+        const bypassConfig = this.configManager.getBypassConfig();
+        const cooldownConfig = this.configManager.getCooldownConfig();
+
+        this.contentAnalysisHandler = new ContentAnalysisHandler(
+            this.analyzers,
+            moderationConfig
+        );
+
+        this.bypassHandler = new BypassHandler(bypassConfig);
+        this.cooldownHandler = new CooldownHandler(cooldownConfig);
+
+        logger.info('[AI-MOD] Handlers inizializzati');
     }
 
     bindModerationCog(moderationCog) {
         this.moderationCog = moderationCog;
-    }
-
-    isBypassed(message) {
-        if (message.author.bot) return true;
-        if (!this.config.enabled) return true;
-
-        if (this.config.bypass_admin &&
-            message.member?.permissions.has(PermissionFlagsBits.Administrator)) {
-            return true;
+        if (this.actions[ACTION_TYPES.WARN]) {
+            this.actions[ACTION_TYPES.WARN].setModerationCog(moderationCog);
         }
-
-        if (this.config.bypass_roles.length > 0 &&
-            message.member?.roles.cache.some(r => this.config.bypass_roles.includes(r.id))) {
-            return true;
-        }
-
-        if (this.config.no_automod_channels.includes(message.channel.id)) {
-            return true;
-        }
-
-        return false;
+        logger.info('[AI-MOD] Moderation cog collegato');
     }
 
     async onMessage(message) {
-        if (this.isBypassed(message)) return;
-        if (this.cooldown.has(message.author.id)) return;
+        if (!this.configManager.isEnabled()) {
+            return;
+        }
 
-        this.cooldown.add(message.author.id);
-        setTimeout(() => this.cooldown.delete(message.author.id), 4000);
+        if (!this.bypassHandler.shouldProcess(message)) {
+            return;
+        }
+
+        if (this.cooldownHandler.isOnCooldown(message.author.id)) {
+            return;
+        }
+
+        this.cooldownHandler.setCooldown(message.author.id);
 
         try {
-            const results = await analyzeText(
-                message.content,
-                this.config.models.toxicity
-            );
+            const analysisResult = await this.contentAnalysisHandler.analyzeMessage(message);
 
-            const top = results[0];
-            if (!top) return;
-
-            const label = top.label.toLowerCase();
-            const score = top.score;
-
-            const isBad =
-                label.includes('off') ||        // OFF, offensive
-                label.includes('toxic') ||      // toxic
-                label.includes('hate') ||       // hate
-                label.includes('abuse') ||      // abuse
-                label.includes('label_1');      // molti modelli = classe "bad"
-
-            if (!isBad) return;
-
-            if (score < this.config.thresholds.warn) return;
-
-            if (this.config.delete_on_violation) {
-                await message.delete().catch(() => {});
+            if (analysisResult.error) {
+                logger.error(`[AI-MOD] Errore analisi: ${analysisResult.error}`);
+                await this.logService.logError({
+                    error: analysisResult.error,
+                    context: {
+                        userId: message.author.id,
+                        channelId: message.channel.id,
+                        guildId: message.guild?.id
+                    },
+                    client: this.client
+                });
+                return;
             }
 
-            const safeContent = sanitizeMentions(message.content);
-            const notice = await message.channel.send({
-                content:
-                    `**Contenuto Rimosso**\n` +
-                    `> **Autore:** <@${message.author.id}>\n` +
-                    `> **Messaggio:** ${safeContent || '*contenuto vuoto*'}\n` +
-                    `> **Toxicity Score:** ${score.toFixed(2)}`
-            }).catch(() => null);
-
-            if (notice) {
-                setTimeout(() => {
-                    notice.delete().catch(() => {});
-                }, 3000);
-            }
-
-            await logAIMod(this.client, this.config.log, {
+            await this.logService.logAnalysis({
                 user: message.author,
                 channel: message.channel,
                 guild: message.guild,
-                messageContent: safeContent,
-                score: score,
-                action: score >= this.config.thresholds.timeout
-                    ? 'TIMEOUT'
-                    : 'WARN / DELETE'
+                messageContent: message.content,
+                analysisResults: analysisResult.analysisResults,
+                timestamp: analysisResult.timestamp,
+                client: this.client
             });
 
-
-            if (!this.moderationCog) return;
-
-            if (score >= this.config.thresholds.timeout) {
-                await message.member.timeout(
-                    this.config.timeout_minutes * 60 * 1000,
-                    `AI Moderation (score ${score.toFixed(2)})`
-                ).catch(() => {});
-            } else {
-                this.moderationCog.addWarn?.(
-                    message.author.id,
-                    `AI Moderation (toxicity ${score.toFixed(2)})`,
-                    this.client.user.id
-                );
+            if (!analysisResult.requiresAction) {
+                return;
             }
 
-            logger.warn(`[AI-MOD] ${message.author.tag} score=${score.toFixed(2)}`);
+            const moderationResult = await this.moderationService.processViolation(
+                message,
+                analysisResult.analysisResults
+            );
 
-        } catch (err) {
-            logger.error(`[AI-MOD] HF error: ${err.message}`);
+            await this.logService.logModeration({
+                user: message.author,
+                channel: message.channel,
+                guild: message.guild,
+                messageContent: message.content,
+                analysisResults: analysisResult.analysisResults,
+                action: moderationResult.action,
+                severity: moderationResult.violation.severity,
+                timestamp: new Date(),
+                client: this.client
+            });
+
+            logger.warn(
+                `[AI-MOD] ${message.author.tag} - ` +
+                `Azione: ${moderationResult.action.type} - ` +
+                `Severità: ${moderationResult.violation.severity} - ` +
+                `Score: ${analysisResult.maxScore.toFixed(2)}`
+            );
+
+        } catch (error) {
+            logger.error(`[AI-MOD] Errore processamento messaggio: ${error.message}`);
+            await this.logService.logError({
+                error: error.message,
+                context: {
+                    userId: message.author.id,
+                    channelId: message.channel.id,
+                    guildId: message.guild?.id,
+                    stack: error.stack
+                },
+                client: this.client
+            });
         }
+    }
+
+    async analyzeText(text, userId = 'unknown') {
+        const mockMessage = {
+            content: text,
+            author: { id: userId }
+        };
+
+        const analysisResult = await this.contentAnalysisHandler.analyzeMessage(mockMessage);
+        return analysisResult.analysisResults;
+    }
+
+    getStats(userId) {
+        return this.moderationService.getStats(userId);
+    }
+
+    clearHistory(userId) {
+        this.moderationService.clearHistory(userId);
+        this.analyzers.spam.clearHistory(userId);
+        this.cooldownHandler.clearCooldown(userId);
+    }
+
+    reload() {
+        this.configManager.reload();
+        
+        const moderationConfig = this.configManager.getModerationConfig();
+        const bypassConfig = this.configManager.getBypassConfig();
+        const cooldownConfig = this.configManager.getCooldownConfig();
+        const logConfig = this.configManager.getLogConfig();
+
+        this.contentAnalysisHandler.updateConfig(moderationConfig);
+        this.bypassHandler.updateConfig(bypassConfig);
+        this.cooldownHandler.updateConfig(cooldownConfig);
+        this.logService.updateConfig(logConfig);
+
+        logger.info('[AI-MOD] Configurazione ricaricata');
+    }
+
+    getStatus() {
+        return {
+            enabled: this.configManager.isEnabled(),
+            openAIInitialized: this.openAIService.isInitialized(),
+            moderationCogBound: this.moderationCog !== null,
+            analyzers: Object.keys(this.analyzers),
+            actions: Object.keys(this.actions),
+            handlers: [
+                'ContentAnalysisHandler',
+                'BypassHandler',
+                'CooldownHandler'
+            ]
+        };
     }
 }
 
 function setup(client) {
     const cog = new AIModCog(client);
+    logger.info('[AI-MOD] Cog setup completato');
     return cog;
 }
 
