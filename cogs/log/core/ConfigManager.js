@@ -1,38 +1,226 @@
-const { loadJsonSync, saveJsonSync } = require('../../../utils/jsonStore');
+const fs = require('fs').promises;
 const path = require('path');
+const logger = require('../../../utils/logger');
 
 class ConfigManager {
     constructor(configPath) {
-        this.configPath = configPath || path.join(__dirname, '..', 'log.json');
-        this.config = this.load();
+        this.configPath = configPath;
+        this.config = null;
+        this.watchers = new Map();
+        this.changeCallbacks = [];
     }
 
-    load() {
-        return loadJsonSync(this.configPath, {});
+    async load() {
+        try {
+            const data = await fs.readFile(this.configPath, 'utf8');
+            this.config = JSON.parse(data);
+            logger.info(`[LogConfigManager] Configuration loaded from ${this.configPath}`);
+            return this.config;
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                logger.warn(`[LogConfigManager] Configuration file not found, creating default...`);
+                await this.createDefault();
+                return this.config;
+            }
+            throw error;
+        }
     }
 
-    save() {
-        saveJsonSync(this.configPath, this.config);
+    async createDefault() {
+        this.config = {
+            enabled: true,
+            guilds: {},
+            defaults: {
+                enabled: true,
+                channels: {},
+                filters: {
+                    ignoreBots: true,
+                    ignoreWebhooks: true,
+                    ignoreChannels: [],
+                    ignoreRoles: [],
+                    ignoreUsers: []
+                },
+                formatting: {
+                    timezone: 'Europe/Rome',
+                    dateFormat: 'DD/MM/YYYY HH:mm:ss',
+                    embedColor: '#5865F2',
+                    thumbnails: true,
+                    timestamps: true
+                },
+                events: {}
+            }
+        };
+        await this.save();
     }
 
-    reload() {
-        this.config = this.load();
+    async save() {
+        try {
+            await fs.writeFile(this.configPath, JSON.stringify(this.config, null, 4), 'utf8');
+            logger.info(`[LogConfigManager] Configuration saved to ${this.configPath}`);
+            this.notifyChanges();
+        } catch (error) {
+            logger.error(`[LogConfigManager] Error saving configuration:`, error);
+            throw error;
+        }
     }
 
-    get(key) {
-        return this.config[key];
+    getGuildConfig(guildId) {
+        if (!this.config) {
+            throw new Error('Configuration not loaded. Call load() first.');
+        }
+
+        if (!this.config.guilds[guildId]) {
+            this.config.guilds[guildId] = JSON.parse(JSON.stringify(this.config.defaults));
+        }
+
+        return this.config.guilds[guildId];
     }
 
-    set(key, value) {
-        this.config[key] = value;
+    async updateGuildConfig(guildId, updates) {
+        const guildConfig = this.getGuildConfig(guildId);
+        this.deepMerge(guildConfig, updates);
+        await this.save();
     }
 
-    getChannel(channelKey) {
-        return this.config[`${channelKey}_channel`];
+    getEventChannel(guildId, eventName) {
+        const config = this.getGuildConfig(guildId);
+        
+        if (!config.enabled) return null;
+        
+        const eventConfig = config.events[eventName];
+        if (!eventConfig || !eventConfig.enabled) return null;
+        
+        const channelRef = eventConfig.channel || config.channels.default;
+        
+        return this.resolveChannelReference(config, channelRef);
     }
 
-    getMessage(messageKey) {
-        return this.config[`${messageKey}_message`];
+    resolveChannelReference(config, channelRef) {
+        if (!channelRef) return null;
+        
+        if (/^\d+$/.test(channelRef.toString())) {
+            return channelRef.toString();
+        }
+        
+        if (config.channels && config.channels[channelRef]) {
+            return config.channels[channelRef];
+        }
+        
+        return channelRef;
+    }
+
+    isEventEnabled(guildId, eventName) {
+        const config = this.getGuildConfig(guildId);
+        
+        if (!config.enabled) return false;
+        
+        const eventConfig = config.events[eventName];
+        if (!eventConfig) return false;
+        
+        return eventConfig.enabled === true;
+    }
+
+    shouldIgnore(guildId, entity) {
+        const config = this.getGuildConfig(guildId);
+        const filters = config.filters;
+
+        if (!entity) return false;
+
+        if (filters.ignoreBots && entity.user?.bot) return true;
+        if (filters.ignoreBots && entity.bot) return true;
+
+        if (filters.ignoreWebhooks && entity.webhookId) return true;
+
+        if (entity.channelId && filters.ignoreChannels.includes(entity.channelId)) return true;
+        if (entity.channel?.id && filters.ignoreChannels.includes(entity.channel.id)) return true;
+
+        if (entity.userId && filters.ignoreUsers.includes(entity.userId)) return true;
+        if (entity.user?.id && filters.ignoreUsers.includes(entity.user.id)) return true;
+        if (entity.id && filters.ignoreUsers.includes(entity.id)) return true;
+
+        if (entity.roles?.cache) {
+            const hasIgnoredRole = entity.roles.cache.some(role => 
+                filters.ignoreRoles.includes(role.id)
+            );
+            if (hasIgnoredRole) return true;
+        }
+
+        return false;
+    }
+
+    getFormatting(guildId) {
+        const config = this.getGuildConfig(guildId);
+        return config.formatting;
+    }
+
+    onChange(callback) {
+        this.changeCallbacks.push(callback);
+    }
+
+    notifyChanges() {
+        for (const callback of this.changeCallbacks) {
+            try {
+                callback(this.config);
+            } catch (error) {
+                logger.error('[LogConfigManager] Error in change callback:', error);
+            }
+        }
+    }
+
+    deepMerge(target, source) {
+        for (const key in source) {
+            if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                if (!target[key]) target[key] = {};
+                this.deepMerge(target[key], source[key]);
+            } else {
+                target[key] = source[key];
+            }
+        }
+        return target;
+    }
+
+    async enableEvent(guildId, eventName, channelId) {
+        const config = this.getGuildConfig(guildId);
+        
+        if (!config.events[eventName]) {
+            config.events[eventName] = {};
+        }
+        
+        config.events[eventName].enabled = true;
+        
+        if (channelId) {
+            config.events[eventName].channel = channelId;
+        }
+        
+        await this.save();
+    }
+
+    async disableEvent(guildId, eventName) {
+        const config = this.getGuildConfig(guildId);
+        
+        if (config.events[eventName]) {
+            config.events[eventName].enabled = false;
+            await this.save();
+        }
+    }
+
+    getGuildEvents(guildId) {
+        const config = this.getGuildConfig(guildId);
+        return config.events;
+    }
+
+    async resetGuildConfig(guildId) {
+        this.config.guilds[guildId] = JSON.parse(JSON.stringify(this.config.defaults));
+        await this.save();
+    }
+
+    export() {
+        return JSON.parse(JSON.stringify(this.config));
+    }
+
+    async import(config) {
+        this.config = config;
+        await this.save();
     }
 }
 

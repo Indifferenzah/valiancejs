@@ -1,827 +1,340 @@
 {
-  "join_channel": "https://discord.com/api/webhooks/1441562389936865453/Fp3Wy2zA5ZPT8gOAwv4IgEG0P8t-TSww6jhZSEjFfBavLHKpiKMHRx-RfykAdUau_JVv",
-  "leave_channel": "https://discord.com/api/webhooks/1441562389936865453/Fp3Wy2zA5ZPT8gOAwv4IgEG0P8t-TSww6jhZSEjFfBavLHKpiKMHRx-RfykAdUau_JVv",
-  "moderation_channel": "https://ptb.discord.com/api/webhooks/1455752908233773146/o0S2RT1Oz31puYdhVdn1kUDV6EUfwuFTPmiY993UiKdTtWMyAKY6lmytaBoTpJ66QjZt",
-  "ticket_channel": "https://discord.com/api/webhooks/1441562659479883919/SwB-F4vWdxpT1ugSEafUaHMMJ2ouLZUKBD_r20f7ASya-ycRT09roXwAXjFVWEcfsL1j",
-  "autorole_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
-  "automod_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
-  "message_channel": "https://ptb.discord.com/api/webhooks/1455753123497771099/KtvVEINU2iZehrBg68DBvylDX_9wrlzGJIgPz2BC6p_uSqjxxL77oy_c6G1MhLAzMjqx",
-  "boost_channel": "https://discord.com/api/webhooks/1441478158758052013/a9JtJMu2FdLIW-HgMMyNGJ7qp7bluz0dtF1YelUfO9npQtDnQhAKfZxy_CGjqBXq4aXG",
-  "guildlog_channel": "https://ptb.discord.com/api/webhooks/1455753303269834872/7WcAofMGbJnznhLfAi-7lfb3biXQo2NxeWx5PP1-DRdh5S0tKPlTEq-MAivO3VrrHxDZ",
-  "voice_channel": "https://ptb.discord.com/api/webhooks/1455752148364169377/6tSBeXptNQdnpMtVpXtzHw7H1rxvtlkcAi6i7k1JQ4hoBcygeR0k01ZDxgUz0f2TRHX8",  
-  "security_channel": "https://ptb.discord.com/api/webhooks/1455752431253192814/2_eceJhaF_uolcEBVuy_MeaOJlNhWv_d40K9VkGzWko4djSnd17pjASmlzLs-mTUmhac",
-  "command_channel": "https://ptb.discord.com/api/webhooks/1455752682605117521/k17Azg1gvWPrm6Ltrondjco0EFH-uB2AGcQsQw2OpzNKrzF_094xSNq4GjwYuFnuCpVR",
-
-  "join_message": {
-    "title": "Join",
-    "description": "{mention} è entrato nel server il {joined_at}.\nAccount creato {created_at}.\nMembri totali: {total_members}",
-    "color": 3066993,
-    "footer": "ID: {id} | {total_members} membri",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "leave_message": {
-    "title": "Left",
-    "description": "{mention} ha lasciato il server.\nAccount creato {created_at}\nTempo nel server: {time_in_server}\nRuoli: {roles}",
-    "color": 15158332,
-    "footer": "ID: {id} | {total_members} membri",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "role_change_message": {
-    "title": "Ruoli Modificati",
-    "description": "Ruoli modificati per {mention} da {staffer}.\n**Ruoli aggiunti:** {added_roles}\n**Ruoli rimossi:** {removed_roles}",
-    "color": 16776960,
-    "footer": "ID: {id} | {total_members} membri",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-
-  "ban_message": {
-    "title": "Ban",
-    "description": "{mention} è stato bannato.\n**Motivo:** {reason}\n**Staffer:** {staffer}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "unban_message": {
-    "title": "Unban",
-    "description": "{mention} è stato unbannato.\n**Staffer:** {staffer}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "kick_message": {
-    "title": "Kick",
-    "description": "{mention} è stato kickato.\n**Motivo:** {reason}\n**Staffer:** {staffer}",
-    "color": 16225061,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "mute_message": {
-    "title": "Mute",
-    "description": "{mention} è stato mutato per {duration}.\n**Motivo:** {reason}\n**Staffer:** {staffer}",
-    "color": 16225061,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "unmute_message": {
-    "title": "Unmute",
-    "description": "{mention} è stato smutato.\n**Staffer:** {staffer}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "warn_message": {
-    "title": "Warn",
-    "description": "{mention} ha ricevuto un warn.\n**Motivo:** {reason}\n**Staffer:** {staffer}\n**Warn totali:** {total_warns}",
-    "color": 16753920,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "unwarn_message": {
-    "title": "Unwarn",
-    "description": "Warn ID {warn_id} rimosso da {mention}.\n**Staffer:** {staffer}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "clearwarns_message": {
-    "title": "Clear Warns",
-    "description": "Tutti i warn di {mention} sono stati rimossi ({count} warn).\n**Staffer:** {staffer}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "nick_message": {
-    "title": "Nickname Cambiato",
-    "description": "Nickname di {mention} cambiato in {new_nick}.\n**Staffer:** {staffer}",
-    "color": 16776960,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-
-  "ticket_open_message": {
-    "title": "Ticket Aperto",
-    "description": "Ticket {channel} aperto da {mention}.\n**Numero:** {number}\n**Categoria:** {category}",
-    "color": 36665,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "ticket_close_message": {
-    "title": "Ticket Chiuso",
-    "description": "Ticket {channel} chiuso da {staffer}.\n**Numero:** {number}\n**Aperto da:** {opener}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "ticket_rename_message": {
-    "title": "Ticket Rinominato",
-    "description": "{channel} rinominato in {new_name}.\n**Numero:** {number}\n**Staffer:** {staffer}",
-    "color": 16753920,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "ticket_add_message": {
-    "title": "Utente Aggiunto al Ticket",
-    "description": "{member} aggiunto a {channel}.\n**Numero:** {number}\n**Staffer:** {staffer}",
-    "color": 16753920,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "ticket_remove_message": {
-    "title": "Utente Rimosso dal Ticket",
-    "description": "{member} rimosso da {channel}.\n**Numero:** {number}\n**Staffer:** {staffer}",
-    "color": 16753920,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "autorole_add_message": {
-    "title": "Ruolo Assegnato",
-    "description": "Ruolo {role} assegnato a {mention} tramite reazione.",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "autorole_remove_message": {
-    "title": "Ruolo Rimosso",
-    "description": "Ruolo {role} rimosso da {mention} tramite reazione.",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-
-  "automod_mute_message": {
-    "title": "Auto-Mute",
-    "description": "{mention} mutato automaticamente per {duration}.\n**Motivo:** {reason}",
-    "color": 16225061,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "automod_warn_message": {
-    "title": "Auto-Warn",
-    "description": "{mention} ha ricevuto un avviso per parola vietata: {word}",
-    "color": 16753920,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-
-  "message_delete_message": {
-    "title": "Messaggio Eliminato",
-    "description": "Messaggio eliminato in {channel}.\n**Contenuto:** {content}\n**Autore:** {mention}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "message_edit_message": {
-    "title": "Messaggio Modificato",
-    "description": "Messaggio modificato in {channel}.\n**Prima:** {old_content}\n**Dopo:** {new_content}\n**Autore:** {mention}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-
-  "boost_message": {
-    "title": "Server Boostato",
-    "description": "{mention} ha boostato il server!",
-    "color": 15990945,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "channel_permission_update_message": {
-    "title": "Permessi Canale Aggiornati",
-    "description": "**Canale:** {channel}\n**Modificati da:** {staffer}\n**Target:** {target}\n\n**Aggiunti:** {added_perms}\n**Rimossi:** {removed_perms}",
-    "color": 16776960,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "role_permission_update_message": {
-    "title": "Permessi Ruolo Aggiornati",
-    "description": "I permessi del ruolo {role} sono stati aggiornati da {staffer}.\n**Permessi aggiunti:** {added_perms}\n**Permessi rimossi:** {removed_perms}",
-    "color": 16776960,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "channel_create_message": {
-    "title": "Canale Creato",
-    "description": "Il canale {channel} è stato creato da {staffer}.\n**Tipo:** {type}\n**ID:** {id}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "channel_delete_message": {
-    "title": "Canale Eliminato",
-    "description": "Il canale {name} è stato eliminato da {staffer}.\n**Tipo:** {type}\n**ID:** {id}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "channel_update_message": {
-    "title": "Canale Aggiornato",
-    "description": "Il canale {channel} è stato aggiornato da {staffer}.\n**Modifiche:**\n{changes}\n\n{slowmode}",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "thread_create_message": {
-    "title": "Thread Creato",
-    "description": "Il thread {thread} è stato creato da {staffer}.\n**ID:** {id}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "thread_delete_message": {
-    "title": "Thread Eliminato",
-    "description": "Il thread {name} è stato eliminato da {staffer}.\n**ID:** {id}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "thread_update_message": {
-    "title": "Thread Aggiornato",
-    "description": "Il thread {thread} è stato aggiornato da {staffer}.\n**Modifiche:**\n{changes}",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "webhook_create_message": {
-    "title": "Webhook Creato",
-    "description": "Il webhook {name} è stato creato da {staffer}.\n**ID:** {id}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "webhook_delete_message": {
-    "title": "Webhook Eliminato",
-    "description": "Il webhook {name} è stato eliminato da {staffer}.\n**ID:** {id}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "webhook_update_message": {
-    "title": "Webhook Aggiornato",
-    "description": "Il webhook {name} è stato aggiornato da {staffer}.\n**Modifiche:**\n{changes}",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "emoji_create_message": {
-    "title": "Emoji Aggiunta",
-    "description": "L'emoji {emojis} è stato aggiunto da {staffer}.",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "emoji_delete_message": {
-    "title": "Emoji Rimossa",
-    "description": "L'emoji {emojis} è stato rimosso da {staffer}.",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "emoji_update_message": {
-    "title": "Emoji Aggiornata",
-    "description": "L'emoji {emojis} è stato aggiornato da {staffer}.",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "sticker_create_message": {
-    "title": "Sticker Aggiunto",
-    "description": "Lo sticker {stickers} è stato aggiunto da {staffer}.",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "sticker_delete_message": {
-    "title": "Sticker Rimosso",
-    "description": "Lo sticker {stickers} è stato rimosso da {staffer}.",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "sticker_update_message": {
-    "title": "Sticker Aggiornato",
-    "description": "Lo sticker {stickers} è stato aggiornato da {staffer}.",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "role_create_message": {
-    "title": "Ruolo Creato",
-    "description": "Il ruolo {role} è stato creato da {staffer}.\n**ID:** {id}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-  "role_delete_message": {
-    "title": "Ruolo Eliminato",
-    "description": "Il ruolo {name} è stato eliminato da {staffer}.\n**ID:** {id}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "guild_update_message": {
-    "title": "Server Aggiornato",
-    "description": "Il server è stato aggiornato da {staffer}.\n**Modifiche:**\n{changes}",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": true
-  },
-
-  "vc_join_message": {
-    "title": "Entrato in VC",
-    "description": "{mention} è entrato nel canale vocale {channel}.",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "vc_leave_message": {
-    "title": "Uscito da VC",
-    "description": "{mention} è uscito dal canale vocale {channel}.",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-  "vc_move_message": {
-    "title": "Spostato in VC",
-    "description": "{mention} si è spostato da {old_channel} a {new_channel}.",
-    "color": 16776960,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-
-  "reaction_add_message": {
-    "title": "Reazione Aggiunta",
-    "description": "{user} ha aggiunto la reazione {emoji} in {channel}.\n**ID Messaggio:** {message_id}",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-  "reaction_remove_message": {
-    "title": "Reazione Rimossa",
-    "description": "{user} ha rimosso la reazione {emoji} in {channel}.\n**ID Messaggio:** {message_id}",
-    "color": 15158332,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "message_pin_message": {
-    "title": "Messaggio Pinnato",
-    "description": "Un messaggio di {author} è stato pinnato in {channel}.\n**ID Messaggio:** {message_id}",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-  "message_unpin_message": {
-    "title": "Messaggio Depinnato",
-    "description": "Un messaggio di {author} è stato depinnato in {channel}.\n**ID Messaggio:** {message_id}",
-    "color": 15158332,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "invite_create_message": {
-    "title": "Invito Creato",
-    "description": "È stato creato un invito.\n**Codice:** {code}\n**Canale:** {channel}\n**Creato da:** {inviter}\n**Max Uses:** {max_uses}",
-    "color": 65280,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-  "invite_delete_message": {
-    "title": "Invito Eliminato",
-    "description": "L'invito con codice {code} è stato eliminato.\n**Canale:** {channel}",
-    "color": 16711680,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "presence_update_message": {
-    "title": "Stato Aggiornato",
-    "description": "Lo stato di {user} è cambiato da `{old_status}` a `{new_status}`.",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "user_update_message": {
-    "title": "Profilo Utente Aggiornato",
-    "description": "Profilo di {user} aggiornato.\n{changes}",
-    "color": 3447003,
-    "footer": "Valiance | Logging",
-    "thumbnail": "{avatar}",
-    "author_header": true
-  },
-
-  "ban_automatic_message": {
-    "title": "Ban Automatico",
-    "description": "**Utente:** {user}\n**Motivo:** {reason}\n**Sistema:** {origin}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "ban_temporary_message": {
-    "title": "Ban Temporaneo",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Durata:** {duration}\n**Scadenza:** {expiry}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15105570,
-    "footer": "Valiance | Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "ban_mass_message": {
-    "title": "Ban Massivo",
-    "description": "**Moderatore:** {moderator}\n**Utenti bannati:** {count}\n**Lista:** {users}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 10038562,
-    "footer": "Valiance | Moderazione Massiva",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "ban_failed_message": {
-    "title": "Ban Fallito",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Motivo tentato:** {reason}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 12664611,
-    "footer": "Valiance | Errore Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "unban_automatic_message": {
-    "title": "Unban Automatico",
-    "description": "**Utente:** {user}\n**Motivo:** Ban temporaneo scaduto\n**Ban originale:** {original_ban_time}\n**Durata:** {duration}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 5763719,
-    "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "audit_sync_failed_message": {
-    "title": "Sincronizzazione Audit Log Fallita",
-    "description": "**Evento:** {event}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Errore Sistema",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "kick_automatic_message": {
-    "title": "Kick Automatico",
-    "description": "**Utente:** {user}\n**Motivo:** {reason}\n**Sistema:** {origin}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15105570,
-    "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "kick_failed_message": {
-    "title": "Kick Fallito",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Motivo tentato:** {reason}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 12664611,
-    "footer": "Valiance | Errore Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "timeout_message": {
-    "title": "Timeout Applicato",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Durata:** {duration}\n**Scadenza:** {expiry}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15105570,
-    "footer": "Valiance | Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "timeout_removed_message": {
-    "title": "Timeout Rimosso",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Motivo:** {reason}\n**Durata rimanente:** {remaining}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 5763719,
-    "footer": "Valiance | Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "timeout_extended_message": {
-    "title": "Timeout Esteso",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Durata precedente:** {old_duration}\n**Nuova durata:** {new_duration}\n**Scadenza:** {expiry}\n**Motivo:** {reason}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15105570,
-    "footer": "Valiance | Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "timeout_expired_message": {
-    "title": "Timeout Scaduto",
-    "description": "**Utente:** {user}\n**Durata totale:** {duration}\n**Applicato da:** {moderator}\n**Applicato il:** {applied_at}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 3447003,
-    "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "timeout_error_message": {
-    "title": "Errore Timeout",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Azione:** {action}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 12664611,
-    "footer": "Valiance | Errore Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "voice_mute_message": {
-    "title": "Mute Vocale",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15105570,
-    "footer": "Valiance | Moderazione Vocale",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "voice_unmute_message": {
-    "title": "Unmute Vocale",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 5763719,
-    "footer": "Valiance | Moderazione Vocale",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "warn_modified_message": {
-    "title": "Warn Modificato",
-    "description": "**Utente:** {user}\n**Moderatore:** {moderator}\n**Warn ID:** {warn_id}\n**Motivo precedente:** {old_reason}\n**Nuovo motivo:** {new_reason}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Moderazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "warn_threshold_action_message": {
-    "title": "Soglia Warn Raggiunta",
-    "description": "**Utente:** {user}\n**Warn totali:** {total_warns}\n**Soglia:** {threshold}\n**Azione:** {action}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Moderazione Automatica",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "bulk_delete_message": {
-    "title": "Messaggi Eliminati in Massa",
-    "description": "**Canale:** {channel}\n**Quantità:** {count}\n**Moderatore:** {moderator}\n**Motivo:** {reason}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Moderazione Messaggi",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "message_blocked_message": {
-    "title": "Messaggio Bloccato",
-    "description": "**Autore:** {author}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Contenuto:** {content}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Automod",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "message_reported_message": {
-    "title": "Messaggio Segnalato",
-    "description": "**Autore:** {author}\n**Segnalato da:** {reporter}\n**Canale:** {channel}\n**Motivo:** {reason}\n**Contenuto:** {content}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Segnalazione",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "link_detected_message": {
-    "title": "Link Rilevato",
-    "description": "**Autore:** {author}\n**Canale:** {channel}\n**Link:** {url}\n**Tipo:** {type}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Automod",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "attachment_uploaded_message": {
-    "title": "Allegato Caricato",
-    "description": "**Autore:** {author}\n**Canale:** {channel}\n**Nome file:** {filename}\n**Dimensione:** {size}\n**Tipo:** {type}\n**URL:** {url}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 3447003,
-    "footer": "Valiance | Tracking Allegati",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "suspicious_file_message": {
-    "title": "File Sospetto Rilevato",
-    "description": "**Autore:** {author}\n**Canale:** {channel}\n**Nome file:** {filename}\n**Motivo:** {reason}\n**Azione:** {action}\n**Hash:** {hash}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Sicurezza",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "mass_mention_message": {
-    "title": "Mention di Massa Rilevate",
-    "description": "**Autore:** {author}\n**Canale:** {channel}\n**Mentions:** {count}\n**Tipo:** {type}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Automod",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "invite_used_message": {
-    "title": "Invito Utilizzato",
-    "description": "**Invito:** {code}\n**Creatore:** {inviter}\n**Nuovo membro:** {joiner}\n**Usi:** {uses}/{max_uses}\n**Canale:** {channel}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 5763719,
-    "footer": "Valiance | Inviti",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "exploit_attempt_message": {
-    "title": "⚠️ Tentativo di Exploit",
-    "description": "**Utente:** {user}\n**Tipo:** {exploit_type}\n**Dettagli:** {details}\n**Azione:** {action}\n**Origine:** {origin}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Sicurezza Critica",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "command_spam_message": {
-    "title": "Spam Comandi Rilevato",
-    "description": "**Utente:** {user}\n**Comandi in {timeframe}:** {count}\n**Soglia:** {threshold}\n**Azione:** {action}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "message_flood_message": {
-    "title": "Flood Messaggi Rilevato",
-    "description": "**Utente:** {user}\n**Canale:** {channel}\n**Messaggi in {timeframe}:** {count}\n**Soglia:** {threshold}\n**Azione:** {action}\n**Esito:** {outcome}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "rapid_nickname_change_message": {
-    "title": "Cambi Nickname Rapidi",
-    "description": "**Utente:** {user}\n**Cambi in {timeframe}:** {count}\n**Nickname precedenti:** {nicknames}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "suspicious_avatar_change_message": {
-    "title": "Avatar Sospetto Rilevato",
-    "description": "**Utente:** {user}\n**Motivo:** {reason}\n**Hash avatar:** {hash}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Sicurezza",
-    "thumbnail": "{old_avatar}",
-    "author_header": true
-  },
-
-  "bypass_attempt_message": {
-    "title": "Tentativo di Bypass Rilevato",
-    "description": "**Utente:** {user}\n**Tipo bypass:** {bypass_type}\n**Sistema aggirato:** {system}\n**Dettagli:** {details}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Anti-Abuse",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "rate_limit_message": {
-    "title": "Rate Limit Raggiunto",
-    "description": "**Utente:** {user}\n**Azione:** {action_type}\n**Richieste in {timeframe}:** {count}\n**Limite:** {limit}\n**Cooldown:** {cooldown}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Rate Limiting",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "suspicious_invite_message": {
-    "title": "Invito Sospetto Creato",
-    "description": "**Creatore:** {inviter}\n**Codice:** {code}\n**Motivo:** {reason}\n**Durata:** {max_age}\n**Max usi:** {max_uses}\n**Azione:** {action}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Sicurezza Inviti",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "command_executed_message": {
-    "title": "Comando Eseguito",
-    "description": "**Utente:** {user}\n**Comando:** {command}\n**Canale:** {channel}\n**Parametri:** {params}\n**Esito:** {outcome}\n**Tempo esecuzione:** {execution_time}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 5763719,
-    "footer": "Valiance | Comandi",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "command_failed_message": {
-    "title": "Comando Fallito",
-    "description": "**Utente:** {user}\n**Comando:** {command}\n**Canale:** {channel}\n**Errore:** {error}\n**Parametri:** {params}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15158332,
-    "footer": "Valiance | Errore Comando",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "command_no_permission_message": {
-    "title": "Comando - Permessi Insufficienti",
-    "description": "**Utente:** {user}\n**Comando:** {command}\n**Canale:** {channel}\n**Permessi richiesti:** {required_permissions}\n**Permessi utente:** {user_permissions}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Permessi",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "command_cooldown_message": {
-    "title": "Comando in Cooldown",
-    "description": "**Utente:** {user}\n**Comando:** {command}\n**Cooldown rimanente:** {remaining}\n**Canale:** {channel}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Cooldown",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "command_by_bot_message": {
-    "title": "Comando Eseguito da Bot",
-    "description": "**Bot:** {bot}\n**Comando:** {command}\n**Canale:** {channel}\n**Motivo blocco:** Auto-moderazione bot\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Anti-Bot",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  },
-
-  "command_invalid_params_message": {
-    "title": "Comando - Parametri Invalidi",
-    "description": "**Utente:** {user}\n**Comando:** {command}\n**Parametri forniti:** {provided_params}\n**Parametri attesi:** {expected_params}\n**Errore:** {error}\n**Timestamp:** {timestamp}\n**Guild ID:** {guild_id}",
-    "color": 15844367,
-    "footer": "Valiance | Errore Parametri",
-    "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
-    "author_header": false
-  }
+    "enabled": true,
+    "guilds": {},
+    "defaults": {
+        "enabled": true,
+        "channels": {
+            "default": null
+        },
+        "filters": {
+            "ignoreBots": false,
+            "ignoreWebhooks": false,
+            "ignoreChannels": [],
+            "ignoreRoles": [],
+            "ignoreUsers": []
+        },
+        "formatting": {
+            "timezone": "Europe/Rome",
+            "dateFormat": "DD/MM/YYYY HH:mm:ss",
+            "embedColor": "#5865F2",
+            "thumbnails": true,
+            "timestamps": true
+        },
+        "events": {
+            "channel": {
+                "channelCreate": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                },
+                "channelDelete": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                },
+                "channelUpdate": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                },
+                "channelPinsUpdate": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                }
+            },
+            "thread": {
+                "threadCreate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadDelete": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadUpdate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadMemberUpdate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadMembersUpdate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                }
+            },
+            "member": {
+                "guildMemberAdd": {
+                    "enabled": true,
+                    "channel": "1363431774763483216"
+                },
+                "guildMemberRemove": {
+                    "enabled": true,
+                    "channel": "1363431774763483216"
+                },
+                "guildMemberUpdate": {
+                    "enabled": true,
+                    "channel": "1455960693382578416"
+                }
+            },
+            "message": {
+                "messageCreate": {
+                    "enabled": false,
+                    "channel": null
+                },
+                "messageDelete": {
+                    "enabled": true,
+                    "channel": "1455753095505252628"
+                },
+                "messageUpdate": {
+                    "enabled": true,
+                    "channel": "1455753095505252628"
+                },
+                "messageDeleteBulk": {
+                    "enabled": true,
+                    "channel": "1455753095505252628"
+                },
+                "messageReactionAdd": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                },
+                "messageReactionRemove": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                },
+                "messageReactionRemoveAll": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                },
+                "messageReactionRemoveEmoji": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                }
+            },
+            "moderation": {
+                "guildBanAdd": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "guildBanRemove": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "guildAuditLogEntryCreate": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                }
+            },
+            "voice": {
+                "voiceStateUpdate": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                }
+            },
+            "role": {
+                "roleCreate": {
+                    "enabled": true,
+                    "channel": "1455962287390195823"
+                },
+                "roleDelete": {
+                    "enabled": true,
+                    "channel": "1455962287390195823"
+                },
+                "roleUpdate": {
+                    "enabled": true,
+                    "channel": "1455962287390195823"
+                }
+            },
+            "emoji": {
+                "emojiCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "emojiDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "emojiUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "sticker": {
+                "stickerCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stickerDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stickerUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "guild": {
+                "guildUpdate": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                },
+                "guildScheduledEventCreate": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                },
+                "guildScheduledEventUpdate": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                },
+                "guildScheduledEventDelete": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                }
+            },
+            "invite": {
+                "inviteCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "inviteDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "user": {
+                "userUpdate": {
+                    "enabled": true,
+                    "channel": "1455960693382578416"
+                }
+            },
+            "automod": {
+                "autoModerationRuleCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "autoModerationRuleUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "autoModerationRuleDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "autoModerationActionExecution": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "stage": {
+                "stageInstanceCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stageInstanceUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stageInstanceDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "webhook": {
+                "webhooksUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "interaction": {
+                "interactionCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "presence": {
+                "presenceUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            }
+        }
+    },
+    "_documentation": {
+        "description": "Enterprise-Level Discord Logging System Configuration",
+        "structure": {
+            "enabled": "Global enable/disable flag per il sistema di logging",
+            "guilds": "Configurazioni specifiche per ogni guild (viene popolato automaticamente)",
+            "defaults": "Configurazioni predefinite che vengono applicate a nuove guild",
+            "defaults.enabled": "Abilita/disabilita il logging per la guild",
+            "defaults.channels": "Canali di log predefiniti - puoi definire riferimenti personalizzati",
+            "defaults.channels.default": "Canale di log predefinito (null = disabilitato)",
+            "defaults.filters": "Filtri per ignorare determinate entità",
+            "defaults.filters.ignoreBots": "Ignora eventi dai bot",
+            "defaults.filters.ignoreWebhooks": "Ignora eventi dai webhook",
+            "defaults.filters.ignoreChannels": "Array di channel IDs da ignorare",
+            "defaults.filters.ignoreRoles": "Array di role IDs da ignorare",
+            "defaults.filters.ignoreUsers": "Array di user IDs da ignorare",
+            "defaults.formatting": "Opzioni di formattazione per i log",
+            "defaults.formatting.timezone": "Timezone per i timestamp",
+            "defaults.formatting.dateFormat": "Formato delle date",
+            "defaults.formatting.embedColor": "Colore predefinito degli embed",
+            "defaults.formatting.thumbnails": "Mostra thumbnail negli embed",
+            "defaults.formatting.timestamps": "Mostra timestamp negli embed",
+            "defaults.events": "Configurazione per ogni evento loggabile"
+        },
+        "usage": {
+            "enableEvent": "Per abilitare un evento, imposta 'enabled' a true e specifica un 'channel'",
+            "disableEvent": "Per disabilitare un evento, imposta 'enabled' a false",
+            "specificChannel": "Se 'channel' è null, viene usato il canale 'default'",
+            "channelReference": "Il campo 'channel' può essere: 1) Un ID diretto (es. '1234567890'), 2) Un riferimento definito in 'channels' (es. 'MESSAGE_LOG_CHANNEL')",
+            "exampleDirect": {
+                "guildMemberAdd": {
+                    "enabled": true,
+                    "channel": "1234567890123456789"
+                }
+            },
+            "exampleReference": {
+                "channels": {
+                    "MESSAGE_LOG_CHANNEL": "1234567890123456789",
+                    "MEMBER_LOG_CHANNEL": "9876543210987654321"
+                },
+                "events": {
+                    "messageDelete": {
+                        "enabled": true,
+                        "channel": "MESSAGE_LOG_CHANNEL"
+                    },
+                    "guildMemberAdd": {
+                        "enabled": true,
+                        "channel": "MEMBER_LOG_CHANNEL"
+                    }
+                }
+            }
+        },
+        "eventCategories": [
+            "channels (channelCreate, channelDelete, channelUpdate, channelPinsUpdate)",
+            "threads (threadCreate, threadDelete, threadUpdate, threadMemberUpdate, threadMembersUpdate)",
+            "members (guildMemberAdd, guildMemberRemove, guildMemberUpdate)",
+            "messages (messageCreate, messageDelete, messageUpdate, messageDeleteBulk, messageReactionAdd, messageReactionRemove, messageReactionRemoveAll, messageReactionRemoveEmoji)",
+            "moderation (guildBanAdd, guildBanRemove, guildAuditLogEntryCreate)",
+            "voice (voiceStateUpdate)",
+            "roles (roleCreate, roleDelete, roleUpdate)",
+            "emojis (emojiCreate, emojiDelete, emojiUpdate)",
+            "stickers (stickerCreate, stickerDelete, stickerUpdate)",
+            "guild (guildUpdate, guildScheduledEventCreate, guildScheduledEventUpdate, guildScheduledEventDelete)",
+            "invites (inviteCreate, inviteDelete)",
+            "users (userUpdate)",
+            "automod (autoModerationRuleCreate, autoModerationRuleUpdate, autoModerationRuleDelete, autoModerationActionExecution)",
+            "stage (stageInstanceCreate, stageInstanceUpdate, stageInstanceDelete)",
+            "webhooks (webhooksUpdate)",
+            "interactions (interactionCreate)",
+            "presence (presenceUpdate)"
+        ],
+        "tips": [
+            "Rimuovi i prefissi '' e '_comment' per usare effettivamente la configurazione",
+            "Puoi usare ID diretti (es. '1234567890') o riferimenti (es. 'MESSAGE_LOG_CHANNEL')",
+            "Definisci i riferimenti personalizzati in 'channels' per riutilizzarli facilmente",
+            "Puoi avere canali diversi per eventi diversi",
+            "I filtri si applicano a tutti gli eventi della guild",
+            "Le configurazioni specifiche per guild sovrascrivono i defaults",
+            "Il sistema crea automaticamente la struttura per nuove guild basandosi sui defaults"
+        ]
+    }
 }

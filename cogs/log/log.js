@@ -2,265 +2,228 @@ const path = require('path');
 const logger = require('../../utils/logger');
 
 const ConfigManager = require('./core/ConfigManager');
-const WebhookService = require('./services/WebhookService');
-const EmbedService = require('./services/EmbedService');
+const EventRegistry = require('./core/EventRegistry');
+const LoggerFactory = require('./core/LoggerFactory');
 
-const MemberEventHandler = require('./handlers/MemberEventHandler');
-const ModerationEventHandler = require('./handlers/ModerationEventHandler');
-const MemberUpdateEventHandler = require('./handlers/MemberUpdateEventHandler');
-const VoiceEventHandler = require('./handlers/VoiceEventHandler');
-const MessageEventHandler = require('./handlers/MessageEventHandler');
-const ReactionEventHandler = require('./handlers/ReactionEventHandler');
-const ChannelEventHandler = require('./handlers/ChannelEventHandler');
-const ThreadEventHandler = require('./handlers/ThreadEventHandler');
-const GuildEventHandler = require('./handlers/GuildEventHandler');
-const EmojiEventHandler = require('./handlers/EmojiEventHandler');
-const StickerEventHandler = require('./handlers/StickerEventHandler');
-const UserEventHandler = require('./handlers/UserEventHandler');
-
-const ModerationLogger = require('./loggers/ModerationLogger');
-const TicketLogger = require('./loggers/TicketLogger');
-const AutoroleLogger = require('./loggers/AutoroleLogger');
-const AutomodLogger = require('./loggers/AutomodLogger');
-const SecurityLogger = require('./loggers/SecurityLogger');
-const CommandLogger = require('./loggers/CommandLogger');
+const { ChannelEventHandler, ThreadEventHandler, MemberEventHandler } = require('./handlers/EventHandlers');
+const { MessageEventHandler, ModerationEventHandler, VoiceEventHandler } = require('./handlers/MessageModerationHandlers');
+const { RoleEventHandler, EmojiEventHandler, StickerEventHandler, GuildEventHandler, InviteEventHandler, UserEventHandler } = require('./handlers/GuildHandlers');
+const { AutoModEventHandler, StageEventHandler, WebhookEventHandler, InteractionEventHandler, PresenceEventHandler } = require('./handlers/SpecialHandlers');
 
 class LogCog {
     constructor(client) {
         this.client = client;
         this.configPath = path.join(__dirname, 'log.json');
         
-        this.config = new ConfigManager(this.configPath);
-        this.webhookService = new WebhookService();
-        this.embedService = new EmbedService(this.webhookService);
+        this.configManager = new ConfigManager(this.configPath);
+        
+        this.loggerFactory = new LoggerFactory(this.client, this.configManager);
+        
+        this.handlers = {
+            channel: null,
+            thread: null,
+            member: null,
+            message: null,
+            moderation: null,
+            voice: null,
+            role: null,
+            emoji: null,
+            sticker: null,
+            guild: null,
+            invite: null,
+            user: null,
+            automod: null,
+            stage: null,
+            webhook: null,
+            interaction: null,
+            presence: null
+        };
 
-        this.moderationLogger = new ModerationLogger(this.config, this.embedService, this.client);
-        this.ticketLogger = new TicketLogger(this.config, this.embedService, this.client);
-        this.autoroleLogger = new AutoroleLogger(this.config, this.embedService, this.client);
-        this.automodLogger = new AutomodLogger(this.config, this.embedService, this.client);
-        this.securityLogger = new SecurityLogger(this.config, this.embedService, this.client);
-        this.commandLogger = new CommandLogger(this.config, this.embedService, this.client);
+        this.initialized = false;
+    }
 
-        if (!this.client.__logHandlersRegistered) {
-            this.client.__logHandlersRegistered = true;
-            this.registerEventHandlers();
+    async initialize() {
+        try {
+            logger.info('[LogCog] Initializing enterprise logging system...');
+
+            await this.configManager.load();
+
+            this.initializeHandlers();
+
+            this.registerEventListeners();
+
+            this.initialized = true;
+            logger.info('[LogCog] Enterprise logging system initialized successfully');
+            logger.info(`[LogCog] Registered ${EventRegistry.getAllEvents().length} loggable events`);
+
+            return true;
+
+        } catch (error) {
+            logger.error('[LogCog] Error initializing logging system:', error);
+            return false;
         }
     }
 
-    registerEventHandlers() {
-        const handlers = [
-            new MemberEventHandler(this.client, this.config, this.embedService),
-            new ModerationEventHandler(this.client, this.config, this.embedService),
-            new MemberUpdateEventHandler(this.client, this.config, this.embedService),
-            new VoiceEventHandler(this.client, this.config, this.embedService),
-            new MessageEventHandler(this.client, this.config, this.embedService),
-            new ReactionEventHandler(this.client, this.config, this.embedService),
-            new ChannelEventHandler(this.client, this.config, this.embedService),
-            new ThreadEventHandler(this.client, this.config, this.embedService),
-            new GuildEventHandler(this.client, this.config, this.embedService),
-            new EmojiEventHandler(this.client, this.config, this.embedService),
-            new StickerEventHandler(this.client, this.config, this.embedService),
-            new UserEventHandler(this.client, this.config, this.embedService)
-        ];
+    initializeHandlers() {
+        this.handlers.channel = new ChannelEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.thread = new ThreadEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.member = new MemberEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.message = new MessageEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.moderation = new ModerationEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.voice = new VoiceEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.role = new RoleEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.emoji = new EmojiEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.sticker = new StickerEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.guild = new GuildEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.invite = new InviteEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.user = new UserEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.automod = new AutoModEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.stage = new StageEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.webhook = new WebhookEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.interaction = new InteractionEventHandler(this.loggerFactory, this.configManager);
+        this.handlers.presence = new PresenceEventHandler(this.loggerFactory, this.configManager);
 
-        handlers.forEach(handler => handler.register());
-        logger.info('Log handlers registrati con successo');
+        logger.info('[LogCog] Event handlers initialized');
     }
 
-    reloadConfig() {
-        this.config.reload();
-        logger.info('Log config ricaricata');
+    registerEventListeners() {
+        if (this.client.__logEventsRegistered) {
+            logger.warn('[LogCog] Event listeners already registered, skipping...');
+            return;
+        }
+
+        this.client.__logEventsRegistered = true;
+
+        this.client.on('channelCreate', (channel) => this.safeHandle(() => this.handlers.channel.handleChannelCreate(channel)));
+        this.client.on('channelDelete', (channel) => this.safeHandle(() => this.handlers.channel.handleChannelDelete(channel)));
+        this.client.on('channelUpdate', (oldChannel, newChannel) => this.safeHandle(() => this.handlers.channel.handleChannelUpdate(oldChannel, newChannel)));
+        this.client.on('channelPinsUpdate', (channel, time) => this.safeHandle(() => this.handlers.channel.handleChannelPinsUpdate(channel, time)));
+
+        this.client.on('threadCreate', (thread, newlyCreated) => this.safeHandle(() => this.handlers.thread.handleThreadCreate(thread, newlyCreated)));
+        this.client.on('threadDelete', (thread) => this.safeHandle(() => this.handlers.thread.handleThreadDelete(thread)));
+        this.client.on('threadUpdate', (oldThread, newThread) => this.safeHandle(() => this.handlers.thread.handleThreadUpdate(oldThread, newThread)));
+        this.client.on('threadMemberUpdate', (oldMember, newMember) => this.safeHandle(() => this.handlers.thread.handleThreadMemberUpdate(oldMember, newMember)));
+        this.client.on('threadMembersUpdate', (addedMembers, removedMembers, thread) => this.safeHandle(() => this.handlers.thread.handleThreadMembersUpdate(addedMembers, removedMembers, thread)));
+
+        this.client.on('guildMemberAdd', (member) => this.safeHandle(() => this.handlers.member.handleGuildMemberAdd(member)));
+        this.client.on('guildMemberRemove', (member) => this.safeHandle(() => this.handlers.member.handleGuildMemberRemove(member)));
+        this.client.on('guildMemberUpdate', (oldMember, newMember) => this.safeHandle(() => this.handlers.member.handleGuildMemberUpdate(oldMember, newMember)));
+
+        this.client.on('messageDelete', (message) => this.safeHandle(() => this.handlers.message.handleMessageDelete(message)));
+        this.client.on('messageUpdate', (oldMessage, newMessage) => this.safeHandle(() => this.handlers.message.handleMessageUpdate(oldMessage, newMessage)));
+        this.client.on('messageDeleteBulk', (messages, channel) => this.safeHandle(() => this.handlers.message.handleMessageBulkDelete(messages, channel)));
+        this.client.on('messageReactionAdd', (reaction, user) => this.safeHandle(() => this.handlers.message.handleMessageReactionAdd(reaction, user)));
+        this.client.on('messageReactionRemove', (reaction, user) => this.safeHandle(() => this.handlers.message.handleMessageReactionRemove(reaction, user)));
+        this.client.on('messageReactionRemoveAll', (message, reactions) => this.safeHandle(() => this.handlers.message.handleMessageReactionRemoveAll(message, reactions)));
+        this.client.on('messageReactionRemoveEmoji', (reaction) => this.safeHandle(() => this.handlers.message.handleMessageReactionRemoveEmoji(reaction)));
+
+        this.client.on('guildBanAdd', (ban) => this.safeHandle(() => this.handlers.moderation.handleGuildBanAdd(ban)));
+        this.client.on('guildBanRemove', (ban) => this.safeHandle(() => this.handlers.moderation.handleGuildBanRemove(ban)));
+        this.client.on('guildAuditLogEntryCreate', (auditLogEntry, guild) => this.safeHandle(() => this.handlers.moderation.handleGuildAuditLogEntryCreate(auditLogEntry, guild)));
+
+        this.client.on('voiceStateUpdate', (oldState, newState) => this.safeHandle(() => this.handlers.voice.handleVoiceStateUpdate(oldState, newState)));
+
+        this.client.on('roleCreate', (role) => this.safeHandle(() => this.handlers.role.handleRoleCreate(role)));
+        this.client.on('roleDelete', (role) => this.safeHandle(() => this.handlers.role.handleRoleDelete(role)));
+        this.client.on('roleUpdate', (oldRole, newRole) => this.safeHandle(() => this.handlers.role.handleRoleUpdate(oldRole, newRole)));
+
+        this.client.on('emojiCreate', (emoji) => this.safeHandle(() => this.handlers.emoji.handleEmojiCreate(emoji)));
+        this.client.on('emojiDelete', (emoji) => this.safeHandle(() => this.handlers.emoji.handleEmojiDelete(emoji)));
+        this.client.on('emojiUpdate', (oldEmoji, newEmoji) => this.safeHandle(() => this.handlers.emoji.handleEmojiUpdate(oldEmoji, newEmoji)));
+
+        this.client.on('stickerCreate', (sticker) => this.safeHandle(() => this.handlers.sticker.handleStickerCreate(sticker)));
+        this.client.on('stickerDelete', (sticker) => this.safeHandle(() => this.handlers.sticker.handleStickerDelete(sticker)));
+        this.client.on('stickerUpdate', (oldSticker, newSticker) => this.safeHandle(() => this.handlers.sticker.handleStickerUpdate(oldSticker, newSticker)));
+
+        this.client.on('guildUpdate', (oldGuild, newGuild) => this.safeHandle(() => this.handlers.guild.handleGuildUpdate(oldGuild, newGuild)));
+        this.client.on('guildScheduledEventCreate', (event) => this.safeHandle(() => this.handlers.guild.handleGuildScheduledEventCreate(event)));
+        this.client.on('guildScheduledEventUpdate', (oldEvent, newEvent) => this.safeHandle(() => this.handlers.guild.handleGuildScheduledEventUpdate(oldEvent, newEvent)));
+        this.client.on('guildScheduledEventDelete', (event) => this.safeHandle(() => this.handlers.guild.handleGuildScheduledEventDelete(event)));
+
+        this.client.on('inviteCreate', (invite) => this.safeHandle(() => this.handlers.invite.handleInviteCreate(invite)));
+        this.client.on('inviteDelete', (invite) => this.safeHandle(() => this.handlers.invite.handleInviteDelete(invite)));
+
+        this.client.on('userUpdate', (oldUser, newUser) => this.safeHandle(() => this.handlers.user.handleUserUpdate(oldUser, newUser)));
+
+        this.client.on('autoModerationRuleCreate', (rule) => this.safeHandle(() => this.handlers.automod.handleAutoModRuleCreate(rule)));
+        this.client.on('autoModerationRuleUpdate', (oldRule, newRule) => this.safeHandle(() => this.handlers.automod.handleAutoModRuleUpdate(oldRule, newRule)));
+        this.client.on('autoModerationRuleDelete', (rule) => this.safeHandle(() => this.handlers.automod.handleAutoModRuleDelete(rule)));
+        this.client.on('autoModerationActionExecution', (execution) => this.safeHandle(() => this.handlers.automod.handleAutoModActionExecution(execution)));
+
+        this.client.on('stageInstanceCreate', (stageInstance) => this.safeHandle(() => this.handlers.stage.handleStageInstanceCreate(stageInstance)));
+        this.client.on('stageInstanceUpdate', (oldStage, newStage) => this.safeHandle(() => this.handlers.stage.handleStageInstanceUpdate(oldStage, newStage)));
+        this.client.on('stageInstanceDelete', (stageInstance) => this.safeHandle(() => this.handlers.stage.handleStageInstanceDelete(stageInstance)));
+
+        this.client.on('webhooksUpdate', (channel) => this.safeHandle(() => this.handlers.webhook.handleWebhooksUpdate(channel)));
+
+        this.client.on('interactionCreate', (interaction) => this.safeHandle(() => this.handlers.interaction.handleInteractionCreate(interaction)));
+
+        this.client.on('presenceUpdate', (oldPresence, newPresence) => this.safeHandle(() => this.handlers.presence.handlePresenceUpdate(oldPresence, newPresence)));
+
+        logger.info('[LogCog] Event listeners registered');
     }
 
-    async logBan(user, staffer, reason) {
-        await this.moderationLogger.logBan(user, staffer, reason);
+    async safeHandle(handlerFunction) {
+        try {
+            await handlerFunction();
+        } catch (error) {
+            logger.error('[LogCog] Error in event handler:', error);
+        }
     }
 
-    async logKick(user, staffer, reason) {
-        await this.moderationLogger.logKick(user, staffer, reason);
+    async enableEvent(guildId, eventName, channelId) {
+        return await this.configManager.enableEvent(guildId, eventName, channelId);
     }
 
-    async logMute(user, staffer, reason, duration) {
-        await this.moderationLogger.logMute(user, staffer, reason, duration);
+    async disableEvent(guildId, eventName) {
+        return await this.configManager.disableEvent(guildId, eventName);
     }
 
-    async logUnmute(user, staffer) {
-        await this.moderationLogger.logUnmute(user, staffer);
+    getGuildConfig(guildId) {
+        return this.configManager.getGuildConfig(guildId);
     }
 
-    async logWarn(user, staffer, reason, totalWarns) {
-        await this.moderationLogger.logWarn(user, staffer, reason, totalWarns);
+    async updateGuildConfig(guildId, updates) {
+        return await this.configManager.updateGuildConfig(guildId, updates);
     }
 
-    async logUnwarn(user, staffer, warnId) {
-        await this.moderationLogger.logUnwarn(user, staffer, warnId);
+    getAvailableEvents() {
+        return EventRegistry.getAllEvents();
     }
 
-    async logClearWarns(user, staffer, count) {
-        await this.moderationLogger.logClearWarns(user, staffer, count);
+    getEventsByCategory(category) {
+        return EventRegistry.getEventsByCategory(category);
     }
 
-    async logNick(user, staffer, newNick) {
-        await this.moderationLogger.logNick(user, staffer, newNick);
+    getCategories() {
+        return EventRegistry.getCategoryNames();
     }
 
-    async logTicketOpen(user, channel, number, category) {
-        await this.ticketLogger.logTicketOpen(user, channel, number, category);
+    async reload() {
+        await this.configManager.load();
+        this.loggerFactory.reload();
+        logger.info('[LogCog] Configuration reloaded');
     }
 
-    async logTicketClose(channel, opener, staffer, number) {
-        await this.ticketLogger.logTicketClose(channel, opener, staffer, number);
+    async cleanup() {
+        this.client.__logEventsRegistered = false;
+        logger.info('[LogCog] Cleanup completed');
     }
 
-    async logTicketRename(channel, newName, staffer, number) {
-        await this.ticketLogger.logTicketRename(channel, newName, staffer, number);
-    }
+    getStats() {
+        const allEvents = EventRegistry.getAllEvents();
+        const categories = EventRegistry.getCategoryNames();
 
-    async logTicketAdd(member, channel, staffer, number) {
-        await this.ticketLogger.logTicketAdd(member, channel, staffer, number);
-    }
-
-    async logTicketRemove(member, channel, staffer, number) {
-        await this.ticketLogger.logTicketRemove(member, channel, staffer, number);
-    }
-
-    async logAutoroleAdd(user, role) {
-        await this.autoroleLogger.logAutoroleAdd(user, role);
-    }
-
-    async logAutoroleRemove(user, role) {
-        await this.autoroleLogger.logAutoroleRemove(user, role);
-    }
-
-    async logAutomodMute(user, reason, duration) {
-        await this.automodLogger.logAutomodMute(user, reason, duration);
-    }
-
-    async logAutomodWarn(user, word) {
-        await this.automodLogger.logAutomodWarn(user, word);
-    }
-
-    async logBanAutomatic(user, guild, reason, trigger) {
-        await this.moderationLogger.logBanAutomatic(user, guild, reason, trigger);
-    }
-
-    async logBanTemporary(user, staffer, reason, duration) {
-        await this.moderationLogger.logBanTemporary(user, staffer, reason, duration);
-    }
-
-    async logMassBan(staffer, guild, userCount, reason) {
-        await this.moderationLogger.logMassBan(staffer, guild, userCount, reason);
-    }
-
-    async logBanFailed(user, staffer, reason, error) {
-        await this.moderationLogger.logBanFailed(user, staffer, reason, error);
-    }
-
-    async logUnbanAutomatic(user, guild, reason) {
-        await this.moderationLogger.logUnbanAutomatic(user, guild, reason);
-    }
-
-    async logKickAutomatic(user, guild, reason) {
-        await this.moderationLogger.logKickAutomatic(user, guild, reason);
-    }
-
-    async logKickFailed(user, staffer, reason, error) {
-        await this.moderationLogger.logKickFailed(user, staffer, reason, error);
-    }
-
-    async logTimeout(user, staffer, reason, duration) {
-        await this.moderationLogger.logTimeout(user, staffer, reason, duration);
-    }
-
-    async logTimeoutRemoved(user, staffer) {
-        await this.moderationLogger.logTimeoutRemoved(user, staffer);
-    }
-
-    async logTimeoutExtended(user, staffer, newDuration) {
-        await this.moderationLogger.logTimeoutExtended(user, staffer, newDuration);
-    }
-
-    async logTimeoutExpired(user, guild) {
-        await this.moderationLogger.logTimeoutExpired(user, guild);
-    }
-
-    async logVoiceMute(user, staffer, channel) {
-        await this.moderationLogger.logVoiceMute(user, staffer, channel);
-    }
-
-    async logVoiceUnmute(user, staffer, channel) {
-        await this.moderationLogger.logVoiceUnmute(user, staffer, channel);
-    }
-
-    async logWarnModified(user, staffer, warnId, oldReason, newReason) {
-        await this.moderationLogger.logWarnModified(user, staffer, warnId, oldReason, newReason);
-    }
-
-    async logWarnThresholdAction(user, guild, warnCount, action) {
-        await this.moderationLogger.logWarnThresholdAction(user, guild, warnCount, action);
-    }
-
-    async logExploitAttempt(user, guild, exploitType, details) {
-        await this.securityLogger.logExploitAttempt(user, guild, exploitType, details);
-    }
-
-    async logCommandSpam(user, guild, commandCount, timeframe) {
-        await this.securityLogger.logCommandSpam(user, guild, commandCount, timeframe);
-    }
-
-    async logMessageFlood(user, guild, messageCount, timeframe) {
-        await this.securityLogger.logMessageFlood(user, guild, messageCount, timeframe);
-    }
-
-    async logRapidNicknameChange(user, guild, changeCount, oldNick, newNick) {
-        await this.securityLogger.logRapidNicknameChange(user, guild, changeCount, oldNick, newNick);
-    }
-
-    async logSuspiciousAvatarChange(user, guild, reason) {
-        await this.securityLogger.logSuspiciousAvatarChange(user, guild, reason);
-    }
-
-    async logBypassAttempt(user, guild, bypassType, details) {
-        await this.securityLogger.logBypassAttempt(user, guild, bypassType, details);
-    }
-
-    async logRateLimit(user, guild, endpoint, retryAfter) {
-        await this.securityLogger.logRateLimit(user, guild, endpoint, retryAfter);
-    }
-
-    async logSuspiciousInvite(invite, guild, reason) {
-        await this.securityLogger.logSuspiciousInvite(invite, guild, reason);
-    }
-
-    async logCommandExecuted(user, guild, commandName, channel, args) {
-        await this.commandLogger.logCommandExecuted(user, guild, commandName, channel, args);
-    }
-
-    async logCommandFailed(user, guild, commandName, error, channel) {
-        await this.commandLogger.logCommandFailed(user, guild, commandName, error, channel);
-    }
-
-    async logCommandNoPermission(user, guild, commandName, requiredPermission, channel) {
-        await this.commandLogger.logCommandNoPermission(user, guild, commandName, requiredPermission, channel);
-    }
-
-    async logCommandCooldown(user, guild, commandName, remainingTime, channel) {
-        await this.commandLogger.logCommandCooldown(user, guild, commandName, remainingTime, channel);
-    }
-
-    async logCommandByBot(botUser, guild, commandName, channel) {
-        await this.commandLogger.logCommandByBot(botUser, guild, commandName, channel);
-    }
-
-    async logInvalidParameters(user, guild, commandName, invalidParams, channel) {
-        await this.commandLogger.logInvalidParameters(user, guild, commandName, invalidParams, channel);
+        return {
+            totalEvents: allEvents.length,
+            totalCategories: categories.length,
+            categories: categories.map(cat => ({
+                name: cat,
+                eventCount: EventRegistry.getEventsByCategory(cat).length
+            })),
+            initialized: this.initialized
+        };
     }
 }
 
-function setup(client) {
-    const cog = new LogCog(client);
-    client.logCog = cog;
-    return cog;
-}
-
-module.exports = { setup, LogCog };
+module.exports = LogCog;
