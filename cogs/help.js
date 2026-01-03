@@ -71,7 +71,9 @@ const categories = {
         'commands': [
             '\\- `/tts join` <messaggio> - Entra nel canale vocale',
             '\\- `/tts setchannel` <canale> - Imposta canale TTS',
-            '\\- `/tts leave` - Esci dal canale vocale'
+            '\\- `/tts leave` - Esci dal canale vocale',
+            '**ADMIN:**',
+            '\\- `/tts blacklist` <utente> - Aggiungi/rimuovi un utente dalla blacklist TTS'
         ]
     },
     'cw': {

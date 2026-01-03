@@ -28,9 +28,11 @@ class TTSCog {
 
         this.configPath = path.join(__dirname, "tts.json");
         this.mainConfigPath = path.join(__dirname, "../../config.json");
+        this.blacklistPath = path.join(__dirname, "blacklisted.json");
         this.config = loadJsonSync(this.configPath, {
             channel: null
         });
+        this.blacklist = loadJsonSync(this.blacklistPath, []);
 
         this.connections = new Map();
         this.players = new Map();
@@ -61,11 +63,47 @@ class TTSCog {
                     sub.setName("leave")
                         .setDescription("Il bot lascia la VC")
                 )
+                .addSubcommand(sub =>
+                    sub.setName("blacklist")
+                        .setDescription("Aggiungi/rimuovi un utente dalla blacklist TTS")
+                        .addUserOption(opt =>
+                            opt.setName("user")
+                                .setDescription("Utente da blacklistare/rimuovere")
+                                .setRequired(true)
+                        )
+                )
         ];
     }
 
     saveConfig() {
         saveJsonSync(this.configPath, this.config);
+    }
+
+    saveBlacklist() {
+        saveJsonSync(this.blacklistPath, this.blacklist);
+    }
+
+    isBlacklisted(userId) {
+        return this.blacklist.includes(userId);
+    }
+
+    addToBlacklist(userId) {
+        if (!this.isBlacklisted(userId)) {
+            this.blacklist.push(userId);
+            this.saveBlacklist();
+            return true;
+        }
+        return false;
+    }
+
+    removeFromBlacklist(userId) {
+        const index = this.blacklist.indexOf(userId);
+        if (index > -1) {
+            this.blacklist.splice(index, 1);
+            this.saveBlacklist();
+            return true;
+        }
+        return false;
     }
 
     async generateMP3(text, guildId) {
@@ -363,12 +401,37 @@ class TTSCog {
         });
     }
 
+    async handleBlacklist(interaction) {
+        if (!ownerOrHasPermissions(PermissionFlagsBits.Administrator)(interaction)) {
+            return interaction.reply({ content: "❌ Non hai i permessi.", ephemeral: true });
+        }
+
+        const user = interaction.options.getUser("user");
+
+        if (this.isBlacklisted(user.id)) {
+            this.removeFromBlacklist(user.id);
+            return interaction.reply({
+                content: `✅ **${user.tag}** è stato rimosso dalla blacklist TTS.`,
+                ephemeral: true
+            });
+        } else {
+            this.addToBlacklist(user.id);
+            return interaction.reply({
+                content: `✅ **${user.tag}** è stato aggiunto alla blacklist TTS. I suoi messaggi non verranno più letti.`,
+                ephemeral: true
+            });
+        }
+    }
+
     // ========== MESSAGE LISTENER FIXATO ==========
 
     setupListeners() {
         this.client.on("messageCreate", async msg => {
             if (!msg.guild) return;
             if (msg.author.bot) return;
+
+            // Controlla se l'utente è nella blacklist
+            if (this.isBlacklisted(msg.author.id)) return;
 
             const guildId = msg.guild.id;
             const botVC = this.botVoiceChannel.get(guildId);
@@ -521,6 +584,7 @@ function setup(client) {
         if (sub === "setchannel") return cog.handleSetChannel(interaction);
         if (sub === "join") return cog.handleJoin(interaction);
         if (sub === "leave") return cog.handleLeave(interaction);
+        if (sub === "blacklist") return cog.handleBlacklist(interaction);
     });
 
     if (!client.globalCommands) client.globalCommands = [];
