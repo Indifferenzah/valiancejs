@@ -2,7 +2,6 @@
   "enabled": true,
 
   "openai": {
-    "api_key": "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",
     "model": "gpt-4.1-mini-2025-04-14",
     "max_tokens": 150,
     "temperature": 0.3
