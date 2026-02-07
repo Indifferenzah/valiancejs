@@ -50,7 +50,11 @@ class InviteTrackerCog {
 
         this.commands = this._registerCommands();
 
-        this._initialize();
+        if (this.client.isReady()) {
+            this._initialize();
+        } else {
+            this.client.once('ready', () => this._initialize());
+        }
     }
 
     _loadDatabase() {
@@ -154,8 +158,17 @@ class InviteTrackerCog {
     }
 
     async _initialize() {
-        const guild = this.client.guilds.cache.first();
-        
+        let guild = this.client.guilds.cache.first();
+
+        if (!guild) {
+            try {
+                const guilds = await this.client.guilds.fetch();
+                guild = guilds.first() || null;
+            } catch (error) {
+                logger.error(`[${MODULE_NAME}] Failed to fetch guilds during initialization:`, error);
+            }
+        }
+
         if (!guild) {
             logger.warn(`[${MODULE_NAME}] No guild found during initialization.`);
             return;
