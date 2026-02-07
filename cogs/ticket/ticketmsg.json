@@ -33,5 +33,19 @@
         "color": 36665,
         "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
         "footer": "Valiance | Ticket System"
+    },
+    "inactivity_warn": {
+        "title": "Ticket inattivo",
+        "description": "{staff} questo ticket è inattivo da **24h**.\nValutate se chiuderlo.",
+        "color": 16753920,
+        "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
+        "footer": "Valiance | Ticket System"
+    },
+    "user_left": {
+        "title": "Utente uscito",
+        "description": "L'utente {member} ha lasciato il server mentre il ticket era aperto.",
+        "color": 16711680,
+        "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
+        "footer": "Valiance | Ticket System"
     }
 }

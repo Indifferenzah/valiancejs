@@ -15,6 +15,7 @@ const path = require('path');
 const { isOwner, ownerOrHasPermissions } = require('../../utils/botUtils');
 const { loadJsonSync, saveJsonSync } = require('../../utils/jsonStore');
 const logger = require('../../utils/logger');
+const { createTranscript } = require('discord-html-transcripts');
 
 const BASE_DIR = __dirname;
 const CONFIG_PATH = path.join(__dirname, '../../config.json');
@@ -31,6 +32,9 @@ class TicketCog {
         this.ticketOwners = this.loadTicketOwners();
         this.closedTickets = loadJsonSync(CLOSED_TICKETS_JSON, {});
         this.blacklist = loadJsonSync(BLACKLIST_JSON, []);
+        this.inactivityTimer = null;
+        this.inactivityWarnMs = 24 * 60 * 60 * 1000;
+        this.inactivityCloseMs = 48 * 60 * 60 * 1000;
     }
 
     saveTickets() {
@@ -245,6 +249,32 @@ class TicketCog {
                     option.setName('user')
                         .setDescription('Utente a cui inviare il transcript')
                         .setRequired(true)),
+
+            new SlashCommandBuilder()
+                .setName('priority')
+                .setDescription('Imposta la priorità del ticket')
+                .addStringOption(option =>
+                    option.setName('type')
+                        .setDescription('Priorità')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: '🔴 high', value: 'high' },
+                            { name: '🟠 medium', value: 'medium' },
+                            { name: '🟢 low', value: 'low' },
+                            { name: 'neutral', value: 'neutral' }
+                        )),
+
+            new SlashCommandBuilder()
+                .setName('pin')
+                .setDescription('Pin del ticket in alto nella categoria'),
+
+            new SlashCommandBuilder()
+                .setName('unpin')
+                .setDescription('Rimuove il pin dal ticket'),
+
+            new SlashCommandBuilder()
+                .setName('flamer')
+                .setDescription('Ripulisce il proprietario del ticket')
         ];
     }
 
@@ -279,7 +309,262 @@ class TicketCog {
             case 'sendtranscript':
                 await this.handleSendTranscript(interaction);
                 break;
+            case 'priority':
+                await this.handlePriority(interaction);
+                break;
+            case 'pin':
+                await this.handlePin(interaction);
+                break;
+            case 'unpin':
+                await this.handleUnpin(interaction);
+                break;
+            case 'flamer':
+                await this.handleFlamer(interaction);
+                break;
         }
+    }
+
+    getStaffRoleId() {
+        return this.config.ticket_staff_role_id || null;
+    }
+
+    isStaffMember(member) {
+        const staffRoleId = this.getStaffRoleId();
+        if (staffRoleId && member?.roles?.cache?.has(staffRoleId)) return true;
+        return member?.permissions?.has?.(PermissionFlagsBits.Administrator) || false;
+    }
+
+    getPriorityEmoji(type) {
+        switch (type) {
+            case 'high':
+                return '🔴';
+            case 'medium':
+                return '🟠';
+            case 'low':
+                return '🟢';
+            default:
+                return null;
+        }
+    }
+
+    normalizeTicketName(name) {
+        if (!name) return '';
+        let normalized = name.trim();
+        const pinEmoji = '📌';
+        const priorityRegex = /^(🔴|🟠|🟢)\s+/u;
+
+        if (normalized.startsWith(`${pinEmoji} `)) {
+            normalized = normalized.slice(pinEmoji.length + 1);
+        }
+
+        normalized = normalized.replace(priorityRegex, '');
+        return normalized.trim();
+    }
+
+    buildTicketName({ baseName, pinned, priorityEmoji }) {
+        let name = baseName;
+        if (priorityEmoji) {
+            name = `${priorityEmoji} ${name}`;
+        }
+        if (pinned) {
+            name = `📌 ${name}`;
+        }
+        return name;
+    }
+
+    ensureTicketActivity(ticketInfo) {
+        if (!ticketInfo) return;
+        if (!ticketInfo.lastActivityAt) {
+            ticketInfo.lastActivityAt = Date.now();
+        }
+    }
+
+    startInactivityWatcher() {
+        if (this.inactivityTimer) return;
+        this.inactivityTimer = setInterval(() => {
+            this.checkInactivity().catch(() => {});
+        }, 10 * 60 * 1000);
+    }
+
+    async checkInactivity() {
+        const now = Date.now();
+        for (const [channelId, info] of Object.entries(this.ticketOwners)) {
+            const channel = this.client.channels.cache.get(channelId);
+            if (!channel || !channel.isTextBased()) {
+                delete this.ticketOwners[channelId];
+                continue;
+            }
+
+            this.ensureTicketActivity(info);
+            const lastActivity = info.lastActivityAt || now;
+            const warnAt = info.warnedAt || 0;
+
+            if (!warnAt && now - lastActivity >= this.inactivityWarnMs) {
+                await this.sendInactivityWarning(channel);
+                info.warnedAt = now;
+                this.saveTickets();
+            }
+
+            if (now - lastActivity >= this.inactivityCloseMs) {
+                await this.autoCloseTicket(channel, 'Inattivita');
+            }
+        }
+
+        this.saveTickets();
+    }
+
+    async sendInactivityWarning(channel) {
+        const staffRoleId = this.getStaffRoleId();
+        const staffMention = staffRoleId ? `<@&${staffRoleId}>` : '@staff';
+        const warnTemplate = this.ticketMessages.inactivity_warn;
+
+        if (warnTemplate) {
+            const embed = new EmbedBuilder()
+                .setTitle(warnTemplate.title)
+                .setDescription(
+                    warnTemplate.description.replace('{staff}', staffMention)
+                )
+                .setColor(warnTemplate.color || 0xffa500);
+
+            if (warnTemplate.thumbnail) embed.setThumbnail(warnTemplate.thumbnail);
+            if (warnTemplate.footer) embed.setFooter({ text: warnTemplate.footer });
+
+            await channel.send({ embeds: [embed] }).catch(() => {});
+            return;
+        }
+
+        await channel.send(`${staffMention} ⚠️ Ticket inattivo da 24h.`).catch(() => {});
+    }
+
+    async autoCloseTicket(channel, reason) {
+        const ticketInfo = this.ticketOwners[channel.id];
+        if (!ticketInfo) return;
+
+        await this.generateAndSendTranscript(channel, ticketInfo, this.client.user, reason);
+
+        delete this.ticketOwners[channel.id];
+        this.saveTickets();
+
+        await channel.delete().catch(() => {});
+    }
+
+    async generateAndSendTranscript(channel, ticketInfo, staffUser, reason) {
+        const staffRoleId = this.getStaffRoleId();
+        const ticketNumber = ticketInfo.number || 1;
+        const ownerId = this.getOwnerId(ticketInfo);
+
+        const messages = [];
+        let lastId;
+        while (true) {
+            const options = { limit: 100 };
+            if (lastId) options.before = lastId;
+            const fetchedMessages = await channel.messages.fetch(options);
+            if (fetchedMessages.size === 0) break;
+            messages.push(...fetchedMessages.values());
+            lastId = fetchedMessages.last().id;
+        }
+
+        messages.reverse();
+        const transcriptText = messages
+            .map(msg => this.formatMessageForTranscript(msg, staffRoleId))
+            .join('\n');
+
+        const transcriptDir = path.join(__dirname, '../../transcripts');
+        if (!fs.existsSync(transcriptDir)) {
+            fs.mkdirSync(transcriptDir, { recursive: true });
+        }
+
+        const txtFilename = path.join(transcriptDir, `transcript-${ticketNumber}.txt`);
+        fs.writeFileSync(txtFilename, transcriptText, 'utf8');
+
+        let htmlFilename = null;
+        try {
+            const htmlBuffer = await createTranscript(channel, {
+                limit: -1,
+                returnBuffer: true,
+                filename: `transcript-${ticketNumber}.html`
+            });
+            htmlFilename = path.join(transcriptDir, `transcript-${ticketNumber}.html`);
+            fs.writeFileSync(htmlFilename, htmlBuffer);
+        } catch (error) {
+            logger.error(`Error generating HTML transcript: ${error.message}`);
+        }
+
+        const embedData = this.config.ticket_transcript_embed || {};
+        const openerUser = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
+        const opener = openerUser ? openerUser.toString() : 'Unknown';
+        const staffer = staffUser ? staffUser.toString() : 'Unknown';
+        const channelName = channel.name;
+        const buttonId = ticketInfo.button || '';
+
+        const ticketVars = {
+            '{opener}': opener,
+            '{staffer}': staffer,
+            '{name}': channelName,
+            '{id}': buttonId,
+            '{channel}': channel.toString(),
+            '{number}': String(ticketNumber),
+            '{mention}': opener,
+            '{reason}': reason || 'N/A'
+        };
+
+        const answers = ticketInfo.answers || {};
+        for (const [k, v] of Object.entries(answers)) {
+            ticketVars[k] = (v && v.trim() !== '') ? v : 'N/A';
+        }
+
+        const applyVars = (str) =>
+            Object.entries(ticketVars).reduce((acc, [k, v]) => acc.replace(new RegExp(k, 'g'), v), str || '');
+
+        const transcriptEmbed = new EmbedBuilder()
+            .setTitle(applyVars(embedData.title || 'Transcript del Ticket'))
+            .setDescription(applyVars(embedData.description || 'Ecco il transcript del ticket.'))
+            .setColor(embedData.color || 0x00ff00);
+
+        if (embedData.thumbnail) transcriptEmbed.setThumbnail(embedData.thumbnail);
+        if (embedData.footer) transcriptEmbed.setFooter({ text: applyVars(embedData.footer) });
+
+        const files = [{ attachment: txtFilename, name: `transcript-${ticketNumber}.txt` }];
+        if (htmlFilename && fs.existsSync(htmlFilename)) {
+            files.push({ attachment: htmlFilename, name: `transcript-${ticketNumber}.html` });
+        }
+
+        const payload = {
+            embeds: [transcriptEmbed],
+            files
+        };
+
+        const transcriptChannelId = this.config.ticket_transcript_channel_id;
+        if (transcriptChannelId) {
+            const transcriptChannel = this.client.channels.cache.get(transcriptChannelId);
+            if (transcriptChannel) {
+                await transcriptChannel.send(payload).catch(err =>
+                    logger.error(`Error sending transcript to channel: ${err.message}`)
+                );
+            }
+        }
+
+        try {
+            if (openerUser) {
+                await openerUser.send({
+                    ...payload,
+                    content: applyVars('Transcript del ticket #{number}')
+                });
+            }
+        } catch (error) {
+            logger.error(`Could not send transcript to owner: ${error.message}`);
+        }
+
+        this.closedTickets[ticketNumber.toString()] = {
+            owner: ownerId,
+            transcript_file: txtFilename,
+            transcript_html: htmlFilename,
+            closed_at: new Date().toISOString(),
+            button: ticketInfo.button || '',
+            channel_name: channel.name,
+            answers
+        };
+        saveJsonSync(CLOSED_TICKETS_JSON, this.closedTickets);
     }
 
     async handleTicketPanel(interaction) {
@@ -605,7 +890,11 @@ class TicketCog {
                 owner: interaction.user.id,
                 button: buttonConfig.id,
                 number: ticketNumber,
-                answers: answerVars
+                answers: answerVars,
+                lastActivityAt: Date.now(),
+                warnedAt: 0,
+                pinned: false,
+                priority: 'neutral'
             };
 
             const outsideMessage = applyTemplate(buttonConfig.outside_message || 'Ticket aperto!');
@@ -725,104 +1014,7 @@ class TicketCog {
         await interaction.deferReply({ ephemeral: true }).catch(() => {});
 
         try {
-            const messages = [];
-            const staffRoleId = this.config.ticket_staff_role_id;
-
-            let lastId;
-            while (true) {
-                const options = { limit: 100 };
-                if (lastId) options.before = lastId;
-
-                const fetchedMessages = await channel.messages.fetch(options);
-                if (fetchedMessages.size === 0) break;
-
-                messages.push(...fetchedMessages.values());
-                lastId = fetchedMessages.last().id;
-            }
-
-            messages.reverse();
-            const transcript = messages.map(msg => this.formatMessageForTranscript(msg, staffRoleId)).join('\n');
-
-            const ticketNumber = ticketInfo.number || 1;
-            const ownerId = this.getOwnerId(ticketInfo);
-            const transcriptDir = path.join(__dirname, '../../transcripts');
-            if (!fs.existsSync(transcriptDir)) {
-                fs.mkdirSync(transcriptDir, { recursive: true });
-            }
-
-            const filename = path.join(transcriptDir, `transcript-${ticketNumber}.txt`);
-            fs.writeFileSync(filename, transcript, 'utf8');
-
-            const embedData = this.config.ticket_transcript_embed || {};
-            const openerUser = ownerId ? await this.client.users.fetch(ownerId).catch(() => null) : null;
-            const opener = openerUser ? openerUser.toString() : 'Unknown';
-            const staffer = interaction.user ? interaction.user.toString() : 'Unknown';
-            const channelName = channel.name;
-            const buttonId = ticketInfo.button || '';
-
-            const ticketVars = {
-                '{opener}': opener,
-                '{staffer}': staffer,
-                '{name}': channelName,
-                '{id}': buttonId,
-                '{channel}': channel.toString(),
-                '{number}': String(ticketNumber),
-                '{mention}': opener
-            };
-
-            const answers = ticketInfo.answers || {};
-            for (const [k, v] of Object.entries(answers)) {
-                ticketVars[k] = (v && v.trim() !== '') ? v : 'N/A';
-            }
-
-            const applyVars = (str) =>
-                Object.entries(ticketVars).reduce((acc, [k, v]) => acc.replace(new RegExp(k, 'g'), v), str || '');
-
-            const transcriptEmbed = new EmbedBuilder()
-                .setTitle(applyVars(embedData.title || 'Transcript del Ticket'))
-                .setDescription(applyVars(embedData.description || 'Ecco il transcript del ticket.'))
-                .setColor(embedData.color || 0x00ff00);
-
-            if (embedData.thumbnail) transcriptEmbed.setThumbnail(embedData.thumbnail);
-            if (embedData.footer) transcriptEmbed.setFooter({ text: applyVars(embedData.footer) });
-
-            const payload = {
-                embeds: [transcriptEmbed],
-                files: [{ attachment: filename, name: `transcript-${ticketNumber}.txt` }]
-            };
-
-            const transcriptChannelId = this.config.ticket_transcript_channel_id;
-            if (transcriptChannelId) {
-                const transcriptChannel = this.client.channels.cache.get(transcriptChannelId);
-                if (transcriptChannel) {
-                    await transcriptChannel.send(payload).catch(err =>
-                        logger.error(`Error sending transcript to channel: ${err.message}`)
-                    );
-                } else {
-                    logger.error('Canale transcript non trovato!');
-                }
-            }
-
-            try {
-                if (openerUser) {
-                    await openerUser.send({
-                        ...payload,
-                        content: applyVars('Transcript del ticket #{number}')
-                    });
-                }
-            } catch (error) {
-                logger.error(`Could not send transcript to owner: ${error.message}`);
-            }
-
-            this.closedTickets[ticketNumber.toString()] = {
-                owner: ownerId,
-                transcript_file: filename,
-                closed_at: new Date().toISOString(),
-                button: ticketInfo.button || '',
-                channel_name: channel.name,
-                answers
-            };
-            saveJsonSync(CLOSED_TICKETS_JSON, this.closedTickets);
+            await this.generateAndSendTranscript(channel, ticketInfo, interaction.user, 'Chiusura manuale');
 
             if (this.client.logCog) {
                 try {
@@ -1123,8 +1315,11 @@ class TicketCog {
             }
         }
 
-        const filename = ticketInfo.transcript_file;
-        if (!fs.existsSync(filename)) {
+        let filename = ticketInfo.transcript_html || ticketInfo.transcript_file;
+        if (!filename || !fs.existsSync(filename)) {
+            filename = ticketInfo.transcript_file;
+        }
+        if (!filename || !fs.existsSync(filename)) {
             await interaction.reply({ content: '❌ Transcript non trovato!', ephemeral: true });
             return;
         }
@@ -1134,7 +1329,7 @@ class TicketCog {
         }
         await interaction.deferReply({ ephemeral: true }).catch(() => {});
         await interaction.followUp({
-            files: [{ attachment: filename, name: `transcript-${number}.txt` }],
+            files: [{ attachment: filename, name: path.basename(filename) }],
             ephemeral: true
         });
     }
@@ -1154,11 +1349,13 @@ class TicketCog {
         let filename = null;
 
         if (this.closedTickets[ticketStr]) {
-            filename = this.closedTickets[ticketStr].transcript_file;
+            filename = this.closedTickets[ticketStr].transcript_html || this.closedTickets[ticketStr].transcript_file;
         }
 
         if (!filename) {
-            filename = path.join(__dirname, '../../transcripts', `transcript-${number}.txt`);
+            const htmlCandidate = path.join(__dirname, '../../transcripts', `transcript-${number}.html`);
+            const txtCandidate = path.join(__dirname, '../../transcripts', `transcript-${number}.txt`);
+            filename = fs.existsSync(htmlCandidate) ? htmlCandidate : txtCandidate;
         }
 
         if (!fs.existsSync(filename)) {
@@ -1174,7 +1371,7 @@ class TicketCog {
         try {
             await user.send({
                 content: `Transcript del ticket #${number}`,
-                files: [{ attachment: filename, name: `transcript-${number}.txt` }]
+                files: [{ attachment: filename, name: path.basename(filename) }]
             });
 
             await interaction.followUp({
@@ -1215,11 +1412,49 @@ class TicketCog {
 function setup(client) {
     const cog = new TicketCog(client);
 
+    cog.startInactivityWatcher();
+
     client.on('interactionCreate', async (interaction) => {
         if (interaction.isChatInputCommand()) {
-            const commandNames = ['ticketpanel', 'close', 'rename', 'blacklist', 'add', 'remove', 'list', 'transcript', 'sendtranscript'];
+            const commandNames = ['ticketpanel', 'close', 'rename', 'blacklist', 'add', 'remove', 'list', 'transcript', 'sendtranscript', 'priority', 'pin', 'unpin', 'flamer'];
             if (commandNames.includes(interaction.commandName)) {
                 await cog.handleCommand(interaction);
+            }
+        }
+    });
+
+    client.on('messageCreate', async (message) => {
+        if (!message.guild || message.author.bot) return;
+        const ticketInfo = cog.ticketOwners[message.channel.id];
+        if (!ticketInfo) return;
+        ticketInfo.lastActivityAt = Date.now();
+        ticketInfo.warnedAt = 0;
+        cog.saveTickets();
+    });
+
+    client.on('guildMemberRemove', async (member) => {
+        const tickets = Object.entries(cog.ticketOwners)
+            .filter(([_, info]) => cog.getOwnerId(info) === member.id);
+
+        if (tickets.length === 0) return;
+
+        const template = cog.ticketMessages.user_left;
+        for (const [channelId] of tickets) {
+            const channel = client.channels.cache.get(channelId);
+            if (!channel || !channel.isTextBased()) continue;
+
+            if (template) {
+                const embed = new EmbedBuilder()
+                    .setTitle(template.title)
+                    .setDescription(template.description.replace('{member}', member.user.toString()))
+                    .setColor(template.color || 0xff0000);
+
+                if (template.thumbnail) embed.setThumbnail(template.thumbnail);
+                if (template.footer) embed.setFooter({ text: template.footer });
+
+                await channel.send({ embeds: [embed] }).catch(() => {});
+            } else {
+                await channel.send(`⚠️ ${member.user} ha lasciato il server.`).catch(() => {});
             }
         }
     });
