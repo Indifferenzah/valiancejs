@@ -7,6 +7,14 @@
   "ignored_role_ids": [],
   "announce_channel_id": "1350074011131969600",
   "level_base_xp": 100,
+  "message_xp_min": 8,
+  "message_xp_max": 15,
+  "message_xp_per_char": 0.05,
+  "message_xp_char_cap": 200,
+  "message_xp_max_total": 50,
+  "voice_xp_per_min": 3,
+  "voice_min_seconds": 30,
+  "voice_ignored_channel_ids": [],
   "role_levels": {
     "5": "",
     "10": ""
