@@ -131,6 +131,21 @@ async function handleUnban(interaction) {
 async function handleUnbanAutocomplete(interaction) {
     const focused = interaction.options.getFocused();
 
+    const isUnknownInteraction = (error) => {
+        return error?.code === 10062 || error?.rawError?.code === 10062;
+    };
+
+    const safeRespond = async (choices) => {
+        if (interaction.responded) return;
+        try {
+            await interaction.respond(choices);
+        } catch (error) {
+            if (!isUnknownInteraction(error)) {
+                logger.error(`[${MODULE_NAME}] Unban autocomplete respond error:`, error);
+            }
+        }
+    };
+
     try {
         const bans = await interaction.guild.bans.fetch();
 
@@ -148,14 +163,13 @@ async function handleUnbanAutocomplete(interaction) {
         }
 
         choices = choices.slice(0, 25);
-
-        await interaction.respond(choices);
+        await safeRespond(choices);
     } catch (error) {
-        logger.error(`[${MODULE_NAME}] Unban autocomplete error:`, error);
-
-        if (!interaction.responded) {
-            await interaction.respond([]);
+        if (!isUnknownInteraction(error)) {
+            logger.error(`[${MODULE_NAME}] Unban autocomplete error:`, error);
         }
+
+        await safeRespond([]);
     }
 }
 
