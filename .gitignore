@@ -75,3 +75,4 @@ temp/
 *.zip
 cogs/leveling/levels.json
 .env
+.env.example
