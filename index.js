@@ -17,6 +17,7 @@ const {
   reloadGlobalConfig,
   reloadAll,
 } = require("./src/services/reloadService");
+const { testDb } = require("./src/testdb");
 
 // Importazione event handlers
 const { onReady } = require("./src/events/ready");
@@ -71,10 +72,14 @@ module.exports = {
 };
 
 // Avvia il bot
-client
-  .login(process.env.TOKEN)
-  .then(() => logger.info("Bot login successful"))
-  .catch((error) => {
-    logger.error(`Failed to login: ${error.message}`);
-    process.exit(1);
+testDb()
+  .catch((error) => logger.error(`[DB] Test error: ${error.message}`))
+  .finally(() => {
+    client
+      .login(process.env.TOKEN)
+      .then(() => logger.info("Bot login successful"))
+      .catch((error) => {
+        logger.error(`Failed to login: ${error.message}`);
+        process.exit(1);
+      });
   });
