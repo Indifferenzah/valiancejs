@@ -5,8 +5,8 @@
 // Map che tiene traccia delle sessioni di gioco attive per guild
 const activeSessions = new Map();
 
-// Flag per indicare se il bot sta aspettando un messaggio di ruleset
-let waitingForRuleset = false;
+// Map per indicare l'utente che sta impostando il ruleset per guild
+const waitingForRulesetByGuild = new Map();
 
 // Flag per indicare se il bot sta aspettando un messaggio di benvenuto
 let waitingForWelcome = false;
@@ -21,14 +21,27 @@ const recentWelcomes = new Set();
 const recentBoosts = new Set();
 
 module.exports = {
-    activeSessions,
-    waitingForRuleset,
-    waitingForWelcome,
-    waitingForBoost,
-    recentWelcomes,
-    recentBoosts,
-    // Funzioni per modificare le flag
-    setWaitingForRuleset: (value) => { module.exports.waitingForRuleset = value; },
-    setWaitingForWelcome: (value) => { module.exports.waitingForWelcome = value; },
-    setWaitingForBoost: (value) => { module.exports.waitingForBoost = value; }
+  activeSessions,
+  waitingForRulesetByGuild,
+  waitingForWelcome,
+  waitingForBoost,
+  recentWelcomes,
+  recentBoosts,
+  // Funzioni per modificare le flag
+  setWaitingForRuleset: (guildId, userId) => {
+    if (!guildId) return;
+    if (userId) {
+      waitingForRulesetByGuild.set(guildId, userId);
+    } else {
+      waitingForRulesetByGuild.delete(guildId);
+    }
+  },
+  getWaitingForRulesetUserId: (guildId) =>
+    waitingForRulesetByGuild.get(guildId),
+  setWaitingForWelcome: (value) => {
+    module.exports.waitingForWelcome = value;
+  },
+  setWaitingForBoost: (value) => {
+    module.exports.waitingForBoost = value;
+  },
 };

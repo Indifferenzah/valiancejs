@@ -62,7 +62,7 @@ module.exports = {
   client,
   config,
   activeSessions,
-  waitingForRuleset: sessionState.waitingForRuleset,
+  waitingForRulesetByGuild: sessionState.waitingForRulesetByGuild,
   waitingForWelcome: sessionState.waitingForWelcome,
   waitingForBoost: sessionState.waitingForBoost,
   cleanupSession,
