@@ -1,0 +1,140 @@
+{
+  "2": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-2.txt",
+    "closed_at": "2025-10-20T19:02:25.653137",
+    "button": "general",
+    "channel_name": "ticket-2"
+  },
+  "3": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-3.txt",
+    "closed_at": "2025-10-24T16:44:45.590693",
+    "button": "general",
+    "channel_name": "ticket-3"
+  },
+  "55": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\transcripts\\transcript-55.txt",
+    "closed_at": "2025-11-20T19:09:48.066Z",
+    "button": "general",
+    "channel_name": "ticket-55"
+  },
+  "69": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\valiancejs\\transcripts\\transcript-69.txt",
+    "closed_at": "2025-12-12T22:04:10.241Z",
+    "button": "provino",
+    "channel_name": "ticket-69",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "70": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\valiancejs\\transcripts\\transcript-70.txt",
+    "closed_at": "2025-12-12T22:10:46.071Z",
+    "button": "provino",
+    "channel_name": "ticket-70",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "147": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-147.txt",
+    "closed_at": "2025-12-30T16:10:11.761Z",
+    "button": "general",
+    "channel_name": "ticket-147",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "148": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-148.txt",
+    "transcript_html": null,
+    "closed_at": "2026-02-07T04:51:51.054Z",
+    "button": "general",
+    "channel_name": "ticket-148",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "149": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-149.txt",
+    "transcript_html": null,
+    "closed_at": "2026-02-07T17:51:09.286Z",
+    "button": "general",
+    "channel_name": "ticket-149",
+    "answers": {
+      "{q1}": "aeggg",
+      "{q2}": "aghaer",
+      "{q3}": "N/A"
+    }
+  },
+  "150": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-150.txt",
+    "transcript_html": null,
+    "closed_at": "2026-02-07T18:05:15.455Z",
+    "button": "general",
+    "channel_name": "ticket-150",
+    "answers": {
+      "{q1}": "rjdtj",
+      "{q2}": "tjddjt",
+      "{q3}": "N/A"
+    }
+  },
+  "151": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-151.txt",
+    "transcript_html": null,
+    "closed_at": "2026-02-07T18:08:51.877Z",
+    "button": "general",
+    "channel_name": "ticket-151",
+    "answers": {
+      "{q1}": "shgsr",
+      "{q2}": "shsrh",
+      "{q3}": "N/A"
+    }
+  },
+  "152": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-152.txt",
+    "transcript_html": null,
+    "closed_at": "2026-02-07T18:11:28.055Z",
+    "button": "general",
+    "channel_name": "ticket-152",
+    "answers": {
+      "{q1}": "shgsr",
+      "{q2}": "shsrh",
+      "{q3}": "N/A"
+    }
+  },
+  "153": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-153.txt",
+    "closed_at": "2026-02-07T18:23:12.057Z",
+    "button": "general",
+    "channel_name": "ticket-153",
+    "answers": {
+      "{q1}": "srhst",
+      "{q2}": "hsht",
+      "{q3}": "N/A"
+    }
+  }
+}
