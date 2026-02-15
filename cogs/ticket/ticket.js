@@ -202,11 +202,15 @@ class TicketCog {
 
             new SlashCommandBuilder()
                 .setName('add')
-                .setDescription('Aggiungi un utente al ticket')
+                .setDescription('Aggiungi un utente o un ruolo al ticket')
                 .addUserOption(option =>
-                    option.setName('member')
+                    option.setName('utente')
                         .setDescription('Utente da aggiungere')
-                        .setRequired(true)),
+                        .setRequired(false))
+                .addRoleOption(option =>
+                    option.setName('ruolo')
+                        .setDescription('Ruolo da aggiungere')
+                        .setRequired(false)),
 
             new SlashCommandBuilder()
                 .setName('remove')
@@ -957,7 +961,8 @@ class TicketCog {
     }
 
     async handleAdd(interaction) {
-        const member = interaction.options.getUser('member');
+        const member = interaction.options.getUser('utente');
+        const role = interaction.options.getRole('ruolo');
         const channel = interaction.channel;
 
         if (!this.ticketOwners[channel.id]) {
@@ -971,17 +976,34 @@ class TicketCog {
             return;
         }
 
+        if (!member && !role) {
+            await interaction.reply({ content: '❌ Devi specificare almeno un utente o un ruolo da aggiungere!', ephemeral: true });
+            return;
+        }
+
+        const targets = [];
+        if (member) targets.push(member);
+        if (role) targets.push(role);
+
         try {
-            await channel.permissionOverwrites.edit(member, {
-                ViewChannel: true,
-                SendMessages: true
-            });
+            for (const target of targets) {
+                await channel.permissionOverwrites.edit(target, {
+                    ViewChannel: true,
+                    SendMessages: true
+                });
+            }
+
+            const mentions = targets.map(target => target.toString()).join(', ');
 
             const addMsg = this.ticketMessages.add;
             if (addMsg) {
                 const embed = new EmbedBuilder()
                     .setTitle(addMsg.title)
-                    .setDescription(addMsg.description.replace('{member}', member.toString()))
+                    .setDescription(
+                        addMsg.description
+                            .replace('{member}', mentions)
+                            .replace('{role}', mentions)
+                    )
                     .setColor(addMsg.color);
 
                 if (addMsg.thumbnail) embed.setThumbnail(addMsg.thumbnail);
@@ -989,7 +1011,7 @@ class TicketCog {
 
                 await interaction.reply({ embeds: [embed], ephemeral: false });
             } else {
-                await interaction.reply({ content: `✅ ${member} aggiunto!`, ephemeral: false });
+                await interaction.reply({ content: `✅ ${mentions} aggiunto/a al ticket!`, ephemeral: false });
             }
         } catch (error) {
             await interaction.reply({ content: `❌ Errore: ${error.message}`, ephemeral: true });

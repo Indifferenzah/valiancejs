@@ -21,7 +21,7 @@ const categories = {
             '\\- `/ticketpanel` - Crea pannello ticket',
             '\\- `/close` - Chiudi ticket',
             '\\- `/transcript` <id ticket> - Visualizza transcript di un ticket',
-            '\\- `/add` <utente> - Aggiungi utente al ticket',
+            '\\- `/add` [utente] [ruolo] - Aggiungi utente/ruolo al ticket',
             '\\- `/remove` <utente> - Rimuovi utente dal ticket',
             '\\- `/rename` <nome> - Rinomina ticket',
             '\\- `/blacklist` <utente> - Blacklist utente',

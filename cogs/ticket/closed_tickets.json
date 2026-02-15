@@ -1447,31 +1447,27 @@
     }
   },
   "156": {
-    "owner": "690999990566518815",
-    "transcript_file": "/home/container/transcripts/transcript-156.txt",
-    "closed_at": "2026-01-05T19:01:55.980Z",
-    "button": "provino",
-    "channel_name": "provino-cw",
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-156.txt",
+    "closed_at": "2026-02-15T13:14:15.830Z",
+    "button": "general",
+    "channel_name": "ticket-156",
     "answers": {
-      "{q1}": "Alteratoh",
-      "{q2}": "Clan",
-      "{q3}": "N/A",
-      "{q4}": "coral/hypixel/mmc",
-      "{q5}": "quando volete, per me anche ora"
+      "{q1}": "eg",
+      "{q2}": "srg",
+      "{q3}": "SRG"
     }
   },
   "157": {
-    "owner": "1221480717528334480",
-    "transcript_file": "/home/container/transcripts/transcript-157.txt",
-    "closed_at": "2026-01-09T22:35:49.772Z",
-    "button": "provino",
-    "channel_name": "provino-cw",
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-157.txt",
+    "closed_at": "2026-02-15T13:15:51.010Z",
+    "button": "coaching",
+    "channel_name": "ticket-157",
     "answers": {
-      "{q1}": "defcon10",
-      "{q2}": "clan",
-      "{q3}": "nessuno",
-      "{q4}": "mmc",
-      "{q5}": "tutti  i giorni"
+      "{q1}": "age",
+      "{q2}": "rgras",
+      "{q3}": "srgsrg"
     }
   },
   "158": {

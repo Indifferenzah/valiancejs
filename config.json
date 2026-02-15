@@ -83,7 +83,7 @@
         {
           "id": "q1",
           "label": "Qual è il tuo IGN (Nick in Game)?",
-          "placeholder": "DrNooB_",
+          "placeholder": "Riluttante",
           "required": true,
           "type": "short"
         },
@@ -118,7 +118,7 @@
         {
           "id": "q1",
           "label": "Qual è il tuo IGN (Nick in Game)?",
-          "placeholder": "DrNooB_",
+          "placeholder": "Riluttante",
           "required": true,
           "type": "short"
         },
@@ -163,7 +163,7 @@
         {
           "id": "q1",
           "label": "Qual è il tuo IGN (Nick in Game)?",
-          "placeholder": "DrNooB_",
+          "placeholder": "Riluttante",
           "required": true,
           "type": "short"
         },
@@ -196,6 +196,41 @@
           "type": "short"
         }
       ]
+    },
+    {
+      "id": "coaching",
+      "label": "Coaching",
+      "emoji": "<a:greenstar:1363853986477637793>",
+      "style": "secondary",
+      "outside_message": "{mention} ha aperto un ticket nella categoria **Coaching**. <@&1350073958933729371> <@&1472557389755580449>",
+      "embed_message": "{mention}, ti chiedo di non taggare lo Staff nell'attesa.\n\n> **IGN:** {q1}\n> **Coaching:** {q2}\n> **Disponibilità:** {q3}",
+      "roles": [
+        "1350073958933729371",
+        "1472557389755580449"
+      ],
+      "questions": [
+        {
+          "id": "q1",
+          "label": "Qual è il tuo IGN (Nick in Game)?",
+          "placeholder": "Riluttante",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q2",
+          "label": "Quali tecniche vuoi migliorare?",
+          "placeholder": "Bridging / PVP / Game Sense...",
+          "required": true,
+          "type": "short"
+        },
+        {
+          "id": "q3",
+          "label": "Quando sei disponibile?",
+          "placeholder": "Venerdì alle 15:00",
+          "required": true,
+          "type": "short"
+        }
+      ]
     }
   ],
   "moderation": {
@@ -214,13 +249,13 @@
     "footer": "Valiance | Ticket System",
     "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png"
   },
-  "ticket_panel_channel_id": "1350074054350078034",
-  "ticket_panel_message_id": "1455591803926347826",
+  "ticket_panel_channel_id": "1350074017536544799",
+  "ticket_panel_message_id": "1472581893005381825",
   "prefixes": [
     "v!",
     "!"
   ],
-  "ticket_counter": 155,
+  "ticket_counter": 206,
   "ticket_max_per_user": 1,
   "bot_status": "dnd",
   "bot_activity_type": "watching",
