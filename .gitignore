@@ -76,3 +76,4 @@ temp/
 cogs/leveling/levels.json
 .env
 .env.example
+/.claude/

@@ -2114,6 +2114,30 @@
       "{q5}": "Sabato 16:00"
     }
   },
+  "207": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-207.txt",
+    "closed_at": "2026-03-15T02:35:25.094Z",
+    "button": "general",
+    "channel_name": "ticket-207",
+    "answers": {
+      "{q1}": "f",
+      "{q2}": "f",
+      "{q3}": "f"
+    }
+  },
+  "208": {
+    "owner": "1123622103917285418",
+    "transcript_file": "C:\\Users\\massi\\Documents\\Devs\\Valiance-\\valiancejs\\transcripts\\transcript-208.txt",
+    "closed_at": "2026-03-15T02:41:33.544Z",
+    "button": "general",
+    "channel_name": "test",
+    "answers": {
+      "{q1}": "b",
+      "{q2}": "b",
+      "{q3}": "b"
+    }
+  },
   "None": {
     "owner": 1416493333190283300,
     "transcript_file": "transcripts/transcript-None.txt",

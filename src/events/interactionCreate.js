@@ -16,44 +16,8 @@ async function onInteractionCreate(client, interaction) {
         }
     }
 
-    // Gestione interazioni ticket
-    const ticketCog = client.cogs.get('ticket');
-    if (ticketCog) {
-        if (interaction.isButton()) {
-            // Gestione bottoni del pannello ticket (general, partnership, staff, ecc.)
-            const ticketButtons = ticketCog.config.ticket_buttons || [];
-            const isTicketButton = ticketButtons.some(btn => btn.id === interaction.customId);
-            
-            if (isTicketButton) {
-                await ticketCog.handleTicketButton(interaction);
-                return;
-            }
-            
-            // Gestione bottoni interni al ticket
-            if (interaction.customId === 'ticket_close') {
-                await ticketCog.handleCloseButton(interaction);
-                return;
-            }
-            if (interaction.customId === 'confirm_close') {
-                await ticketCog.handleConfirmClose(interaction);
-                return;
-            }
-            if (interaction.customId === 'cancel_close') {
-                await ticketCog.handleCancelClose(interaction);
-                return;
-            }
-        }
-
-        if (interaction.isModalSubmit()) {
-            // Gestione modal per aprire ticket
-            if (interaction.customId.startsWith('ticket_modal:')) {
-                await ticketCog.handleTicketModal(interaction);
-                return;
-            }
-        }
-    }
-
     // Gestione pulsante verifica
+    // Nota: bottoni/modal del ticket sono gestiti direttamente dal listener interno di ticket.js
     if (interaction.isButton()) {
         if (interaction.customId === 'verify_button') {
             if (client.verifyView) {
