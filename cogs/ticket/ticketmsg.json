@@ -33,5 +33,12 @@
         "color": 36665,
         "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
         "footer": "Valiance | Ticket System"
+    },
+    "member_left": {
+        "title": "Utente uscito dal server",
+        "description": "{mention} ({tag}) ha lasciato il server.\nQuesto ticket potrebbe non ricevere risposta.",
+        "color": 16711680,
+        "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png",
+        "footer": "Valiance | Ticket System"
     }
 }

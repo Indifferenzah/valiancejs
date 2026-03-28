@@ -27,6 +27,7 @@ const {
 } = require('./src/handlers/buttonHandlers');
 
 const { handleTicketModal } = require('./src/handlers/modalHandlers');
+const { handleMemberLeave } = require('./src/handlers/memberHandlers');
 
 // ── Cog ────────────────────────────────────────────────────────────────────
 
@@ -128,6 +129,10 @@ function setup(client) {
             }
         }
     });
+
+    client.on('guildMemberRemove', (member) => handleMemberLeave(member).catch(err =>
+        logger.error(`[${MODULE_NAME}] guildMemberRemove error: ${err.message}`)
+    ));
 
     if (!client.globalCommands) client.globalCommands = [];
     client.globalCommands.push(...cog.commands);

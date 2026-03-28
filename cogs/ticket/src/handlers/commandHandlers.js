@@ -100,12 +100,34 @@ async function handleBlacklist(interaction) {
     if (!isStaff(interaction.member)) {
         return interaction.reply({ content: MESSAGES.ERROR.NO_PERMISSION, ephemeral: true });
     }
-    const member = interaction.options.getUser('member');
-    const added  = store.toggleBlacklist(member.id);
-    const content = added
-        ? MESSAGES.SUCCESS.BLACKLIST_ADDED.replace('{member}', member.toString())
-        : MESSAGES.SUCCESS.BLACKLIST_REMOVED.replace('{member}', member.toString());
-    await interaction.reply({ content, ephemeral: true });
+    const sub = interaction.options.getSubcommand();
+
+    if (sub === 'add') {
+        const user = interaction.options.getUser('user');
+        if (store.isBlacklisted(user.id)) {
+            return interaction.reply({ content: `⚠️ ${user} è già nella blacklist!`, ephemeral: true });
+        }
+        store.toggleBlacklist(user.id);
+        return interaction.reply({ content: MESSAGES.SUCCESS.BLACKLIST_ADDED.replace('{member}', user.toString()), ephemeral: true });
+    }
+
+    if (sub === 'remove') {
+        const user = interaction.options.getUser('user');
+        if (!store.isBlacklisted(user.id)) {
+            return interaction.reply({ content: `⚠️ ${user} non è nella blacklist!`, ephemeral: true });
+        }
+        store.toggleBlacklist(user.id);
+        return interaction.reply({ content: MESSAGES.SUCCESS.BLACKLIST_REMOVED.replace('{member}', user.toString()), ephemeral: true });
+    }
+
+    if (sub === 'list') {
+        const list = store.getBlacklist();
+        if (list.length === 0) {
+            return interaction.reply({ content: '📋 La blacklist è vuota.', ephemeral: true });
+        }
+        const mentions = list.map(id => `<@${id}>`).join('\n');
+        return interaction.reply({ content: `📋 **Blacklist (${list.length}):**\n${mentions}`, ephemeral: true });
+    }
 }
 
 async function handleAdd(interaction) {

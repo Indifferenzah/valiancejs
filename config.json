@@ -249,13 +249,13 @@
     "footer": "Valiance | Ticket System",
     "thumbnail": "https://i.postimg.cc/0NZGWpJs/Logo-Crown.png"
   },
-  "ticket_panel_channel_id": "1350074017536544799",
-  "ticket_panel_message_id": "1472581893005381825",
+  "ticket_panel_channel_id": "1351184266284896347",
+  "ticket_panel_message_id": "1487583617130565847",
   "prefixes": [
     "v!",
     "!"
   ],
-  "ticket_counter": 208,
+  "ticket_counter": 211,
   "ticket_max_per_user": 1,
   "bot_status": "dnd",
   "bot_activity_type": "watching",

@@ -86,6 +86,10 @@ class TicketStore {
         return this._blacklist.includes(userId);
     }
 
+    getBlacklist() {
+        return [...this._blacklist];
+    }
+
     /**
      * Toggles a user's blacklist status.
      * @returns {boolean} true if added, false if removed.

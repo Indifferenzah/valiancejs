@@ -21,11 +21,24 @@ function getCommands() {
 
         new SlashCommandBuilder()
             .setName('blacklist')
-            .setDescription('Aggiungi/rimuovi un utente dalla blacklist dei ticket')
-            .addUserOption(o =>
-                o.setName('member')
-                    .setDescription('Utente da blacklistare / de-blacklistare')
-                    .setRequired(true)),
+            .setDescription('Gestisci la blacklist dei ticket')
+            .addSubcommand(sub =>
+                sub.setName('add')
+                    .setDescription('Aggiungi un utente alla blacklist')
+                    .addUserOption(o =>
+                        o.setName('user')
+                            .setDescription('Utente da aggiungere')
+                            .setRequired(true)))
+            .addSubcommand(sub =>
+                sub.setName('remove')
+                    .setDescription('Rimuovi un utente dalla blacklist')
+                    .addUserOption(o =>
+                        o.setName('user')
+                            .setDescription('Utente da rimuovere')
+                            .setRequired(true)))
+            .addSubcommand(sub =>
+                sub.setName('list')
+                    .setDescription('Mostra tutti gli utenti in blacklist')),
 
         new SlashCommandBuilder()
             .setName('add')

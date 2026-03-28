@@ -4,14 +4,15 @@ const MODULE_NAME = 'TICKET';
 
 const BASE_DIR = __dirname;
 const ROOT_DIR  = path.join(BASE_DIR, '../..');
+const DATA_DIR  = path.join(ROOT_DIR, 'data');
 
 const PATHS = {
     CONFIG:         path.join(ROOT_DIR, 'config.json'),
-    TICKET_JSON:    path.join(BASE_DIR, 'ticket.json'),
-    CLOSED_TICKETS: path.join(BASE_DIR, 'closed_tickets.json'),
-    TICKET_MSGS:    path.join(BASE_DIR, 'ticketmsg.json'),
-    BLACKLIST:      path.join(BASE_DIR, 'blacklist.json'),
-    TRANSCRIPTS:    path.join(ROOT_DIR, 'transcripts'),
+    TICKET_JSON:    path.join(DATA_DIR,  'ticket.json'),
+    CLOSED_TICKETS: path.join(DATA_DIR,  'closed_tickets.json'),
+    BLACKLIST:      path.join(DATA_DIR,  'blacklist.json'),
+    TICKET_MSGS:    path.join(BASE_DIR,  'ticketmsg.json'),
+    TRANSCRIPTS:    path.join(ROOT_DIR,  'transcripts'),
 };
 
 const ROLE_IDS = {
