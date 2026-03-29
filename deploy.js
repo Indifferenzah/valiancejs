@@ -18,9 +18,6 @@ const { commands: baseCommands, contextMenus } = require('./src/commands/builder
 // Comandi ticket
 const { getCommands: getTicketCommands } = require('./cogs/ticket/src/commands');
 
-// Comandi log
-const logCommands = require('./cogs/log/commands');
-
 // Comandi counters (il costruttore non usa il client)
 const { CountersCog } = (() => {
     // Esporta solo la classe senza avviare il bot
@@ -35,7 +32,6 @@ const allCommands = [
     ...baseCommands,
     ...contextMenus,
     ...getTicketCommands(),
-    ...logCommands,
 ];
 
 if (CountersCog) {

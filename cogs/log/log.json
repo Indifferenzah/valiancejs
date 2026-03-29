@@ -4,8 +4,7 @@
         "1350073876339490826": {
             "enabled": true,
             "channels": {
-                "default": null,
-                "digest": "1487610886779572224"
+                "default": null
             },
             "filters": {
                 "ignoreBots": false,

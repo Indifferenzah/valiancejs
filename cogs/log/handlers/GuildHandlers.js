@@ -1,12 +1,5 @@
-'use strict';
-
 const { AuditLogEvent } = require('discord.js');
 const logger = require('../../../utils/logger');
-
-// Feature imports
-const historyTracker = require('../features/historyTracker');
-const watchlist = require('../features/watchlist');
-const dailyDigest = require('../features/dailyDigest');
 
 class RoleEventHandler {
     constructor(loggerFactory, configManager) {
@@ -127,8 +120,7 @@ class EmojiEventHandler {
                 { name: 'Animato', value: emoji.animated ? 'Sì' : 'No', inline: true },
                 { name: 'Creato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true },
                 { name: 'URL', value: `[Clicca qui](${emoji.url})`, inline: false }
-            ],
-            color: '#43B581'
+            ]
         });
     }
 
@@ -173,8 +165,7 @@ class EmojiEventHandler {
                 { name: 'Modificato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true },
                 { name: '\u200b', value: '\u200b', inline: false },
                 ...changes
-            ],
-            color: '#FAA61A'
+            ]
         });
     }
 }
@@ -201,8 +192,7 @@ class StickerEventHandler {
                 { name: 'Descrizione', value: sticker.description || 'Nessuna', inline: false },
                 { name: 'Tags', value: sticker.tags || 'Nessuno', inline: true },
                 { name: 'Creato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true }
-            ],
-            color: '#43B581'
+            ]
         });
     }
 
@@ -247,8 +237,7 @@ class StickerEventHandler {
                 { name: 'Modificato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true },
                 { name: '\u200b', value: '\u200b', inline: false },
                 ...changes
-            ],
-            color: '#FAA61A'
+            ]
         });
     }
 }
@@ -280,13 +269,27 @@ class GuildEventHandler {
         ]);
 
         if (oldGuild.iconURL() !== newGuild.iconURL()) {
-            changes.push({ name: 'Icona', value: 'Modificata', inline: true });
+            changes.push({
+                name: 'Icona',
+                value: 'Modificata',
+                inline: true
+            });
         }
+
         if (oldGuild.bannerURL() !== newGuild.bannerURL()) {
-            changes.push({ name: 'Banner', value: 'Modificato', inline: true });
+            changes.push({
+                name: 'Banner',
+                value: 'Modificato',
+                inline: true
+            });
         }
+
         if (oldGuild.splashURL() !== newGuild.splashURL()) {
-            changes.push({ name: 'Splash', value: 'Modificato', inline: true });
+            changes.push({
+                name: 'Splash',
+                value: 'Modificato',
+                inline: true
+            });
         }
 
         if (changes.length === 0) return;
@@ -300,8 +303,7 @@ class GuildEventHandler {
             fields: [
                 { name: 'Modificato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: false },
                 ...changes
-            ],
-            color: '#FAA61A'
+            ]
         });
     }
 
@@ -320,8 +322,7 @@ class GuildEventHandler {
                 { name: 'Canale', value: event.channel ? `<#${event.channelId}>` : 'Esterno', inline: true },
                 { name: 'Creatore', value: event.creator ? `${event.creator.tag}` : 'Sconosciuto', inline: true },
                 { name: 'Descrizione', value: eventLogger.truncate(event.description || 'Nessuna', 1024), inline: false }
-            ],
-            color: '#43B581'
+            ]
         });
     }
 
@@ -346,8 +347,7 @@ class GuildEventHandler {
                 { name: 'Evento', value: newEvent.name, inline: true },
                 { name: '\u200b', value: '\u200b', inline: false },
                 ...changes
-            ],
-            color: '#FAA61A'
+            ]
         });
     }
 
@@ -389,8 +389,7 @@ class InviteEventHandler {
                 { name: 'Durata', value: invite.maxAge === 0 ? 'Permanente' : `${invite.maxAge / 3600} ore`, inline: true },
                 { name: 'Temporaneo', value: invite.temporary ? 'Sì' : 'No', inline: true },
                 { name: 'URL', value: invite.url, inline: false }
-            ],
-            color: '#43B581'
+            ]
         });
     }
 
@@ -418,9 +417,6 @@ class UserEventHandler {
     }
 
     async handleUserUpdate(oldUser, newUser) {
-        // Traccia cambiamento di username/avatar nella storia
-        await historyTracker.trackUsernameChange(oldUser, newUser).catch(() => {});
-
         const guilds = newUser.client.guilds.cache.filter(guild => guild.members.cache.has(newUser.id));
 
         for (const guild of guilds.values()) {
@@ -438,25 +434,12 @@ class UserEventHandler {
             if (oldUser.avatarURL() !== newUser.avatarURL()) {
                 changes.push({
                     name: 'Avatar',
-                    value: oldUser.avatarURL() ? `[Prima](${oldUser.avatarURL()}) → [Dopo](${newUser.avatarURL() || 'rimosso'})` : 'Aggiunto',
+                    value: 'Modificato',
                     inline: true
                 });
             }
 
             if (changes.length === 0) continue;
-
-            // Controlla watchlist
-            const isWatched = await watchlist.isWatched(guild.id, newUser.id).catch(() => false);
-            if (isWatched) {
-                await watchlist.logWatchedAction(
-                    guild,
-                    newUser,
-                    'Profilo Aggiornato',
-                    changes.map(c => `**${c.name}:** ${c.value}`).join('\n'),
-                    this.loggerFactory,
-                    null
-                ).catch(() => {});
-            }
 
             await eventLogger.log(guild.id, {
                 title: 'Utente Aggiornato',
@@ -465,8 +448,7 @@ class UserEventHandler {
                 fields: [
                     { name: 'Utente', value: `${newUser.tag} (<@${newUser.id}>)`, inline: false },
                     ...changes
-                ],
-                color: '#FAA61A'
+                ]
             });
         }
     }

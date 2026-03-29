@@ -9,7 +9,7 @@ function loadCogs(client) {
     "ticket/ticket",
     // "moderation/moderation",
     // "autorole/autorole",
-    "log/log",
+    // "log/log",
     // "fun/fun",
     // "regole/regole",
     // "tts/tts",

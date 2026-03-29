@@ -1,14 +1,5 @@
-'use strict';
-
 const { AuditLogEvent } = require('discord.js');
 const logger = require('../../../utils/logger');
-
-// Feature imports
-const antiSnipe = require('../features/antiSnipe');
-const editDiff = require('../features/editDiff');
-const imageRecovery = require('../features/imageRecovery');
-const duplicateDetector = require('../features/duplicateDetector');
-const dailyDigest = require('../features/dailyDigest');
 
 class MessageEventHandler {
     constructor(loggerFactory, configManager) {
@@ -16,170 +7,59 @@ class MessageEventHandler {
         this.configManager = configManager;
     }
 
-    async handleMessageCreate(message) {
-        try {
-            if (!message.guild) return;
-            if (message.author?.bot) return;
-
-            // Cache messaggi con allegati per recupero immagini
-            if (message.attachments && message.attachments.size > 0) {
-                await imageRecovery.cacheMessage(message);
-            }
-
-            // Traccia duplicati
-            await duplicateDetector.trackMessage(message);
-
-            // Controlla duplicati e logga se trovati
-            const { isDuplicate, count } = await duplicateDetector.checkDuplicate(message);
-            if (isDuplicate) {
-                const eventLogger = this.loggerFactory.getLogger('messageCreate');
-                if (eventLogger && this.configManager.isEventEnabled(message.guild.id, 'messageCreate')) {
-                    await eventLogger.log(message.guild.id, {
-                        title: '⚠️ Messaggio Duplicato Rilevato',
-                        description: `${message.author.tag} ha inviato lo stesso messaggio ${count} volte in 10 minuti`,
-                        fields: [
-                            { name: 'Autore', value: `${message.author.tag} (<@${message.author.id}>)`, inline: true },
-                            { name: 'Canale', value: `<#${message.channel.id}>`, inline: true },
-                            { name: 'Ripetizioni', value: count.toString(), inline: true },
-                            { name: 'Contenuto', value: eventLogger.truncate(message.content || '*nessun testo*', 512), inline: false }
-                        ],
-                        thumbnail: message.author.displayAvatarURL({ dynamic: true }),
-                        color: '#FAA61A'
-                    });
-                }
-            }
-
-            // Traccia evento per daily digest
-            await dailyDigest.trackEvent(message.guild.id, 'messageCreate');
-
-        } catch (err) {
-            logger.error('[MessageEventHandler] Errore handleMessageCreate:', err);
-        }
-    }
-
     async handleMessageDelete(message) {
         if (!message.guild) return;
-
-        // Prova a recuperare il messaggio completo se parziale
-        if (message.partial) {
-            try {
-                message = await message.fetch();
-            } catch {
-                // Messaggio non recuperabile, usa i dati parziali
-            }
-        }
-
-        // Salta messaggi di bot
-        if (message.author?.bot) return;
 
         const eventLogger = this.loggerFactory.getLogger('messageDelete');
         if (!eventLogger) return;
 
         if (this.configManager.shouldIgnore(message.guild.id, message)) return;
-        if (message.author && this.configManager.shouldIgnore(message.guild.id, message.author)) return;
+        if (this.configManager.shouldIgnore(message.guild.id, message.author)) return;
 
-        // Salva per anti-snipe PRIMA di loggare
-        await antiSnipe.saveDeletedMessage(message);
-
-        // Traccia per daily digest
-        await dailyDigest.trackEvent(message.guild.id, 'messageDelete');
-
-        // Cerca allegati in cache
-        const cached = await imageRecovery.getMessageCache(message.id);
-        const cachedAttachments = cached?.attachmentsParsed || [];
-
-        let executor = null;
-        try {
-            if (message.author) {
-                executor = await eventLogger.getExecutor(message.guild, AuditLogEvent.MessageDelete, message.author.id);
-            }
-        } catch { /* ignora */ }
-
-        const fields = [
-            { name: 'Autore', value: message.author ? `${message.author.tag} (<@${message.author.id}>)` : 'Sconosciuto', inline: true },
-            { name: 'Canale', value: `<#${message.channel.id}>`, inline: true },
-            { name: 'Eliminato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true },
-            { name: 'Contenuto', value: message.content ? `\`\`\`\n${eventLogger.truncate(message.content, 1010)}\n\`\`\`` : '*Nessun contenuto testuale*', inline: false },
-            { name: 'ID Messaggio', value: message.id, inline: true },
-            { name: 'Creato il', value: eventLogger.formatTimestamp(message.createdAt), inline: true }
-        ];
-
-        // Allegati: preferisce quelli live, altrimenti usa la cache
-        const liveAttachments = message.attachments && message.attachments.size > 0
-            ? Array.from(message.attachments.values()).map(a => ({ url: a.url, name: a.name || 'file' }))
-            : [];
-        const allAttachments = liveAttachments.length > 0 ? liveAttachments : cachedAttachments;
-
-        if (allAttachments.length > 0) {
-            fields.push({
-                name: `📎 Allegati (${allAttachments.length})`,
-                value: allAttachments.map(a => `[${a.name || 'file'}](${a.url})`).join('\n').substring(0, 1024),
-                inline: false
-            });
-        } else {
-            fields.push({ name: 'Allegati', value: 'Nessuno', inline: true });
-        }
+        const executor = await eventLogger.getExecutor(message.guild, AuditLogEvent.MessageDelete, message.author.id);
 
         await eventLogger.log(message.guild.id, {
             title: 'Messaggio Eliminato',
-            description: `Un messaggio di ${message.author?.tag || 'Sconosciuto'} è stato eliminato in ${message.channel}`,
-            fields,
-            thumbnail: message.author?.displayAvatarURL({ dynamic: true }),
-            footer: { text: `Autore ID: ${message.author?.id || 'N/A'}` },
+            description: `Un messaggio di ${message.author.tag} è stato eliminato in ${message.channel}`,
+            fields: [
+                { name: 'Autore', value: `${message.author.tag} (<@${message.author.id}>)`, inline: true },
+                { name: 'Canale', value: `<#${message.channel.id}>`, inline: true },
+                { name: 'Eliminato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true },
+                { name: 'Contenuto', value: eventLogger.truncate(message.content || '*Nessun contenuto testuale*', 1024), inline: false },
+                { name: 'Allegati', value: message.attachments.size > 0 ? `${message.attachments.size} file` : 'Nessuno', inline: true },
+                { name: 'ID Messaggio', value: message.id, inline: true },
+                { name: 'Creato il', value: eventLogger.formatTimestamp(message.createdAt), inline: true }
+            ],
+            thumbnail: message.author.displayAvatarURL({ dynamic: true }),
+            footer: { text: `Autore ID: ${message.author.id}` },
             color: '#F04747'
         });
     }
 
     async handleMessageUpdate(oldMessage, newMessage) {
         if (!newMessage.guild) return;
-
-        // Prova a recuperare messaggi parziali
-        if (oldMessage.partial) {
-            try { oldMessage = await oldMessage.fetch(); } catch { /* ignora */ }
-        }
-        if (newMessage.partial) {
-            try { newMessage = await newMessage.fetch(); } catch { /* ignora */ }
-        }
-
         if (!oldMessage.content && !newMessage.content) return;
         if (oldMessage.content === newMessage.content) return;
-
-        // Salta bot
-        if (newMessage.author?.bot) return;
 
         const eventLogger = this.loggerFactory.getLogger('messageUpdate');
         if (!eventLogger) return;
 
         if (this.configManager.shouldIgnore(newMessage.guild.id, newMessage)) return;
-        if (newMessage.author && this.configManager.shouldIgnore(newMessage.guild.id, newMessage.author)) return;
-
-        // Salva per edit-snipe
-        await antiSnipe.saveEditedMessage(oldMessage, newMessage);
-
-        // Traccia per daily digest
-        await dailyDigest.trackEvent(newMessage.guild.id, 'messageUpdate');
-
-        // Calcola diff
-        const diff = editDiff.computeDiff(
-            oldMessage.content || '',
-            newMessage.content || ''
-        );
+        if (this.configManager.shouldIgnore(newMessage.guild.id, newMessage.author)) return;
 
         await eventLogger.log(newMessage.guild.id, {
             title: 'Messaggio Modificato',
-            description: `Un messaggio di ${newMessage.author?.tag || 'Sconosciuto'} è stato modificato in ${newMessage.channel}`,
+            description: `Un messaggio di ${newMessage.author.tag} è stato modificato in ${newMessage.channel}`,
             fields: [
-                { name: 'Autore', value: newMessage.author ? `${newMessage.author.tag} (<@${newMessage.author.id}>)` : 'Sconosciuto', inline: true },
+                { name: 'Autore', value: `${newMessage.author.tag} (<@${newMessage.author.id}>)`, inline: true },
                 { name: 'Canale', value: `<#${newMessage.channel.id}>`, inline: true },
                 { name: 'Link', value: `[Vai al messaggio](${newMessage.url})`, inline: true },
-                { name: 'Prima', value: oldMessage.content ? `\`\`\`\n${eventLogger.truncate(oldMessage.content, 1010)}\n\`\`\`` : '*Nessun contenuto*', inline: false },
-                { name: 'Dopo', value: newMessage.content ? `\`\`\`\n${eventLogger.truncate(newMessage.content, 1010)}\n\`\`\`` : '*Nessun contenuto*', inline: false },
-                { name: 'Differenza', value: eventLogger.truncate(diff, 1024), inline: false },
+                { name: 'Prima', value: eventLogger.truncate(oldMessage.content || '*Nessun contenuto*', 1024), inline: false },
+                { name: 'Dopo', value: eventLogger.truncate(newMessage.content || '*Nessun contenuto*', 1024), inline: false },
                 { name: 'ID Messaggio', value: newMessage.id, inline: true }
             ],
-            thumbnail: newMessage.author?.displayAvatarURL({ dynamic: true }),
-            footer: { text: `Autore ID: ${newMessage.author?.id || 'N/A'}` },
-            color: '#5865F2'
+            thumbnail: newMessage.author.displayAvatarURL({ dynamic: true }),
+            footer: { text: `Autore ID: ${newMessage.author.id}` }
         });
     }
 
@@ -188,9 +68,6 @@ class MessageEventHandler {
 
         const eventLogger = this.loggerFactory.getLogger('messageDeleteBulk');
         if (!eventLogger) return;
-
-        // Traccia per daily digest
-        await dailyDigest.trackEvent(channel.guild.id, 'messageDelete').catch(() => {});
 
         const messageList = Array.from(messages.values())
             .sort((a, b) => a.createdTimestamp - b.createdTimestamp)
@@ -229,8 +106,7 @@ class MessageEventHandler {
                 { name: 'Canale', value: `<#${reaction.message.channel.id}>`, inline: true },
                 { name: 'Messaggio', value: `[Vai al messaggio](${reaction.message.url})`, inline: false }
             ],
-            thumbnail: user.displayAvatarURL({ dynamic: true }),
-            color: '#43B581'
+            thumbnail: user.displayAvatarURL({ dynamic: true })
         });
     }
 
@@ -306,8 +182,6 @@ class ModerationEventHandler {
     async handleGuildBanAdd(ban) {
         const eventLogger = this.loggerFactory.getLogger('guildBanAdd');
         if (!eventLogger) return;
-
-        await dailyDigest.trackEvent(ban.guild.id, 'guildBanAdd').catch(() => {});
 
         const executor = await eventLogger.getExecutor(ban.guild, AuditLogEvent.MemberBanAdd, ban.user.id);
 
@@ -517,13 +391,6 @@ class VoiceEventHandler {
 
         const member = state.member;
 
-        // Traccia sessione vocale
-        const voiceTracker = require('../features/voiceTracker');
-        await voiceTracker.trackJoin(member, state.channel).catch(() => {});
-
-        // Traccia per daily digest
-        await dailyDigest.trackEvent(state.guild.id, 'voiceChannelJoin').catch(() => {});
-
         await eventLogger.log(state.guild.id, {
             title: 'Entrato in Canale Vocale',
             description: `${member.user.tag} è entrato in un canale vocale`,
@@ -532,7 +399,7 @@ class VoiceEventHandler {
                 { name: 'Canale', value: `${state.channel.name} (<#${state.channel.id}>)`, inline: true }
             ],
             thumbnail: member.user.displayAvatarURL({ dynamic: true }),
-            color: '#9B59B6'
+            color: '#43B581'
         });
     }
 
@@ -542,10 +409,6 @@ class VoiceEventHandler {
 
         const member = state.member;
 
-        // Traccia uscita sessione vocale
-        const voiceTracker = require('../features/voiceTracker');
-        await voiceTracker.trackLeave(member, state.channel).catch(() => {});
-
         await eventLogger.log(state.guild.id, {
             title: 'Uscito da Canale Vocale',
             description: `${member.user.tag} è uscito da un canale vocale`,
@@ -554,7 +417,7 @@ class VoiceEventHandler {
                 { name: 'Canale', value: `${state.channel.name} (<#${state.channel.id}>)`, inline: true }
             ],
             thumbnail: member.user.displayAvatarURL({ dynamic: true }),
-            color: '#9B59B6'
+            color: '#F04747'
         });
     }
 
@@ -563,11 +426,6 @@ class VoiceEventHandler {
         if (!eventLogger) return;
 
         const member = newState.member;
-
-        // Aggiorna tracker: lascia il vecchio canale, entra nel nuovo
-        const voiceTracker = require('../features/voiceTracker');
-        await voiceTracker.trackLeave(member, oldState.channel).catch(() => {});
-        await voiceTracker.trackJoin(member, newState.channel).catch(() => {});
 
         await eventLogger.log(newState.guild.id, {
             title: 'Cambio Canale Vocale',
@@ -578,7 +436,7 @@ class VoiceEventHandler {
                 { name: 'A', value: `${newState.channel.name} (<#${newState.channel.id}>)`, inline: true }
             ],
             thumbnail: member.user.displayAvatarURL({ dynamic: true }),
-            color: '#9B59B6'
+            color: '#FAA61A'
         });
     }
 
@@ -599,7 +457,7 @@ class VoiceEventHandler {
                 { name: 'Tipo', value: muteType === 'server' ? 'Dal server' : 'Auto-mute', inline: true }
             ],
             thumbnail: member.user.displayAvatarURL({ dynamic: true }),
-            color: '#9B59B6'
+            color: isMuted ? '#F04747' : '#43B581'
         });
     }
 
@@ -620,7 +478,7 @@ class VoiceEventHandler {
                 { name: 'Tipo', value: deafType === 'server' ? 'Dal server' : 'Auto-deaf', inline: true }
             ],
             thumbnail: member.user.displayAvatarURL({ dynamic: true }),
-            color: '#9B59B6'
+            color: isDeaf ? '#F04747' : '#43B581'
         });
     }
 
@@ -656,7 +514,7 @@ class VoiceEventHandler {
                 { name: 'Canale', value: state.channel ? `<#${state.channel.id}>` : 'Nessuno', inline: true }
             ],
             thumbnail: member.user.displayAvatarURL({ dynamic: true }),
-            color: '#9B59B6'
+            color: '#95A5A6'
         });
     }
 }
