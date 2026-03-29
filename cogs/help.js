@@ -18,14 +18,33 @@ const categories = {
         'emoji': '🎫',
         'name': 'Ticket',
         'commands': [
-            '\\- `/ticketpanel` - Crea pannello ticket',
             '\\- `/close` - Chiudi ticket',
-            '\\- `/transcript` <id ticket> - Visualizza transcript di un ticket',
-            '\\- `/add` [utente] [ruolo] - Aggiungi utente/ruolo al ticket',
-            '\\- `/remove` <utente> - Rimuovi utente dal ticket',
             '\\- `/rename` <nome> - Rinomina ticket',
-            '\\- `/blacklist` <utente> - Blacklist utente',
-            '\\- `/sendtranscript` <id ticket> <utente> - Manda transcript di un ticket in DM'
+            '\\- `/add` [utente] [ruolo] - Aggiungi utente/ruolo al ticket',
+            '\\- `/remove` [utente] [ruolo] - Rimuovi utente/ruolo dal ticket',
+            '\\- `/list` <utente> - Mostra ticket aperti e chiusi di un utente',
+            '\\- `/transcript` <numero> - Scarica transcript di un ticket',
+            '**ADMIN:**',
+            '\\- `/ticketpanel` - Crea pannello ticket',
+            '\\- `/sendtranscript` <numero> <utente> - Manda transcript in DM',
+            '\\- `/blacklist add` <utente> - Aggiungi utente alla blacklist',
+            '\\- `/blacklist remove` <utente> - Rimuovi utente dalla blacklist',
+            '\\- `/blacklist list` - Mostra la blacklist'
+        ]
+    },
+    'log': {
+        'emoji': '📋',
+        'name': 'Log',
+        'commands': [
+            '\\- `/snipe` - Mostra l\'ultimo messaggio eliminato nel canale',
+            '\\- `/editsnipe` - Mostra l\'ultimo messaggio modificato nel canale',
+            '\\- `/voicestats` [utente] [giorni] - Statistiche tempo in vocale',
+            '\\- `/voiceleaderboard` - Classifica top 10 per tempo in vocale',
+            '\\- `/history` <utente> - Cronologia cambi username/avatar',
+            '**STAFF:**',
+            '\\- `/watchlist add` <utente> [motivo] - Monitora un utente',
+            '\\- `/watchlist remove` <utente> - Smetti di monitorare un utente',
+            '\\- `/watchlist list` - Mostra tutti gli utenti monitorati'
         ]
     },
     'utility': {

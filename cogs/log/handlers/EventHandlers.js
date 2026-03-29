@@ -1,5 +1,13 @@
+'use strict';
+
 const { AuditLogEvent } = require('discord.js');
 const logger = require('../../../utils/logger');
+
+// Feature imports
+const newAccountAlert = require('../features/newAccountAlert');
+const raidDetector = require('../features/raidDetector');
+const watchlist = require('../features/watchlist');
+const dailyDigest = require('../features/dailyDigest');
 
 class ChannelEventHandler {
     constructor(loggerFactory, configManager) {
@@ -13,6 +21,8 @@ class ChannelEventHandler {
         const eventLogger = this.loggerFactory.getLogger('channelCreate');
         if (!eventLogger) return;
 
+        await dailyDigest.trackEvent(channel.guild.id, 'channelCreate').catch(() => {});
+
         const executor = await eventLogger.getExecutor(channel.guild, AuditLogEvent.ChannelCreate, channel.id);
 
         await eventLogger.log(channel.guild.id, {
@@ -25,7 +35,8 @@ class ChannelEventHandler {
                 { name: 'Categoria', value: channel.parent?.name || 'Nessuna', inline: true },
                 { name: 'Creato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true },
                 { name: 'Timestamp', value: eventLogger.formatTimestamp(channel.createdAt), inline: false }
-            ]
+            ],
+            color: '#43B581'
         });
     }
 
@@ -79,7 +90,8 @@ class ChannelEventHandler {
                 { name: 'Modificato da', value: executor ? `${executor.tag}` : 'Sconosciuto', inline: true },
                 { name: '\u200b', value: '\u200b', inline: false },
                 ...changes
-            ]
+            ],
+            color: '#FAA61A'
         });
     }
 
@@ -95,7 +107,8 @@ class ChannelEventHandler {
             fields: [
                 { name: 'Canale', value: `${channel.name} (<#${channel.id}>)`, inline: true },
                 { name: 'Ultimo Pin', value: eventLogger.formatTimestamp(time), inline: true }
-            ]
+            ],
+            color: '#5865F2'
         });
     }
 
@@ -137,7 +150,8 @@ class ThreadEventHandler {
                 { name: 'Creatore', value: thread.ownerId ? `<@${thread.ownerId}>` : 'Sconosciuto', inline: true },
                 { name: 'Archiviato Auto', value: `${thread.autoArchiveDuration} minuti`, inline: true },
                 { name: 'Nuovo', value: newlyCreated ? 'Sì' : 'No', inline: true }
-            ]
+            ],
+            color: '#43B581'
         });
     }
 
@@ -181,7 +195,8 @@ class ThreadEventHandler {
                 { name: 'Thread', value: `${newThread.name} (<#${newThread.id}>)`, inline: true },
                 { name: '\u200b', value: '\u200b', inline: false },
                 ...changes
-            ]
+            ],
+            color: '#FAA61A'
         });
     }
 
@@ -197,7 +212,8 @@ class ThreadEventHandler {
             fields: [
                 { name: 'Utente', value: `<@${newMember.userId}>`, inline: true },
                 { name: 'Thread', value: `<#${newMember.id}>`, inline: true }
-            ]
+            ],
+            color: '#FAA61A'
         });
     }
 
@@ -229,7 +245,8 @@ class ThreadEventHandler {
 
         await eventLogger.log(thread.guild.id, {
             title: 'Membri Thread Aggiornati',
-            fields
+            fields,
+            color: '#FAA61A'
         });
     }
 }
@@ -238,6 +255,17 @@ class MemberEventHandler {
     constructor(loggerFactory, configManager) {
         this.loggerFactory = loggerFactory;
         this.configManager = configManager;
+        // ID del canale di alert raid (configurabile)
+        this.raidAlertChannelId = null;
+        this.staffRoleId = null;
+    }
+
+    /**
+     * Imposta il canale per gli alert raid
+     */
+    setRaidConfig(raidAlertChannelId, staffRoleId) {
+        this.raidAlertChannelId = raidAlertChannelId;
+        this.staffRoleId = staffRoleId;
     }
 
     async handleGuildMemberAdd(member) {
@@ -246,23 +274,77 @@ class MemberEventHandler {
 
         if (this.configManager.shouldIgnore(member.guild.id, member)) return;
 
+        // Traccia per daily digest
+        await dailyDigest.trackEvent(member.guild.id, 'guildMemberAdd').catch(() => {});
+
+        // Rileva raid
+        await raidDetector.trackJoin(member).catch(() => {});
+        const raidInfo = await raidDetector.checkRaid(member.guild).catch(() => ({ isRaid: false }));
+        await raidDetector.cleanOldEntries().catch(() => {});
+
+        if (raidInfo.isRaid) {
+            const alertChannelId = this.raidAlertChannelId ||
+                this.configManager.getEventChannel(member.guild.id, 'guildMemberAdd');
+            await raidDetector.sendRaidAlert(
+                member.guild,
+                raidInfo,
+                alertChannelId,
+                this.staffRoleId
+            ).catch(() => {});
+        }
+
+        // Controlla account nuovo
+        const { isNew, ageDays } = newAccountAlert.checkNewAccount(member);
+        const accountColor = newAccountAlert.getAccountColor(isNew, ageDays);
+        const alertField = newAccountAlert.getAlertField(isNew, ageDays);
+
         const accountAge = Date.now() - member.user.createdTimestamp;
         const accountAgeDays = Math.floor(accountAge / (1000 * 60 * 60 * 24));
+
+        const fields = [
+            { name: 'Utente', value: `${member.user.tag}`, inline: true },
+            { name: 'ID', value: member.user.id, inline: true },
+            { name: 'Bot', value: member.user.bot ? 'Sì' : 'No', inline: true },
+            { name: 'Account Creato', value: eventLogger.formatTimestamp(member.user.createdAt), inline: false },
+            { name: 'Età Account', value: `${accountAgeDays} giorni`, inline: true },
+            { name: 'Membro #', value: member.guild.memberCount.toString(), inline: true }
+        ];
+
+        // Aggiungi alert se account nuovo
+        if (alertField) {
+            fields.push(alertField);
+        }
+
+        // Controlla watchlist
+        const isWatched = await watchlist.isWatched(member.guild.id, member.id).catch(() => false);
+        if (isWatched) {
+            fields.push({
+                name: '🔍 Watchlist',
+                value: '**Questo utente è nella watchlist!**',
+                inline: false
+            });
+        }
 
         await eventLogger.log(member.guild.id, {
             title: 'Membro Entrato',
             description: `${member.user.tag} è entrato nel server`,
             thumbnail: member.user.displayAvatarURL({ dynamic: true, size: 256 }),
-            fields: [
-                { name: 'Utente', value: `${member.user.tag}`, inline: true },
-                { name: 'ID', value: member.user.id, inline: true },
-                { name: 'Bot', value: member.user.bot ? 'Sì' : 'No', inline: true },
-                { name: 'Account Creato', value: eventLogger.formatTimestamp(member.user.createdAt), inline: false },
-                { name: 'Età Account', value: `${accountAgeDays} giorni`, inline: true },
-                { name: 'Membro #', value: member.guild.memberCount.toString(), inline: true }
-            ],
-            footer: { text: `ID: ${member.user.id}` }
+            fields,
+            footer: { text: `ID: ${member.user.id}` },
+            color: isNew ? accountColor : '#43B581'
         });
+
+        // Se in watchlist, log extra
+        if (isWatched) {
+            await watchlist.logWatchedAction(
+                member.guild,
+                member.user,
+                'Ingresso nel Server',
+                `${member.user.tag} è entrato nel server`,
+                this.loggerFactory,
+                null
+            ).catch(() => {});
+        }
     }
 
     async handleGuildMemberRemove(member) {
@@ -270,6 +352,9 @@ class MemberEventHandler {
         if (!eventLogger) return;
 
         if (this.configManager.shouldIgnore(member.guild.id, member)) return;
+
+        // Traccia per daily digest
+        await dailyDigest.trackEvent(member.guild.id, 'guildMemberRemove').catch(() => {});
 
         // Controlla se è stato kickato
         const kickLogger = this.loggerFactory.getLogger('memberKick');
@@ -281,19 +366,17 @@ class MemberEventHandler {
                 });
 
                 const kickLog = auditLogs.entries.first();
-                
-                // Se c'è un kick recente (ultimi 5 secondi) per questo utente
-                if (kickLog && 
-                    kickLog.targetId === member.id && 
+
+                if (kickLog &&
+                    kickLog.targetId === member.id &&
                     Date.now() - kickLog.createdTimestamp < 5000) {
-                    
-                    // Logga il kick nell'evento specifico
+
+                    await dailyDigest.trackEvent(member.guild.id, 'memberKick').catch(() => {});
                     await this.handleMemberKick(member, member.guild);
-                    // Non continuare con il log normale di guildMemberRemove
                     return;
                 }
             } catch (error) {
-                logger.error('[MemberEventHandler] Error checking kick audit log:', error);
+                logger.error('[MemberEventHandler] Errore controllo kick audit log:', error);
             }
         }
 
@@ -314,7 +397,7 @@ class MemberEventHandler {
                 { name: 'Membri Rimasti', value: member.guild.memberCount.toString(), inline: true }
             ],
             footer: { text: `ID: ${member.user.id}` },
-            color: '#F04747'
+            color: '#FAA61A'
         });
     }
 
@@ -324,10 +407,9 @@ class MemberEventHandler {
         // Controlla timeout add/remove PRIMA di loggare l'update generale
         if (oldMember.communicationDisabledUntil !== newMember.communicationDisabledUntil) {
             if (newMember.communicationDisabledUntil && !oldMember.communicationDisabledUntil) {
-                // Timeout aggiunto
+                await dailyDigest.trackEvent(newMember.guild.id, 'memberTimeoutAdd').catch(() => {});
                 await this.handleMemberTimeoutAdd(oldMember, newMember);
             } else if (!newMember.communicationDisabledUntil && oldMember.communicationDisabledUntil) {
-                // Timeout rimosso
                 await this.handleMemberTimeoutRemove(oldMember, newMember);
             }
         }
@@ -363,26 +445,22 @@ class MemberEventHandler {
             });
         }
 
-        // Non aggiungere il timeout ai changes perché viene loggato separatamente
-        // if (oldMember.communicationDisabledUntil !== newMember.communicationDisabledUntil) {
-        //     if (newMember.communicationDisabledUntil) {
-        //         changes.push({
-        //             name: 'Timeout',
-        //             value: `Fino al ${eventLogger.formatTimestamp(newMember.communicationDisabledUntil)}`,
-        //             inline: false
-        //         });
-        //     } else {
-        //         changes.push({
-        //             name: 'Timeout',
-        //             value: 'Rimosso',
-        //             inline: false
-        //         });
-        //     }
-        // }
-
         if (changes.length === 0) return;
 
         const executor = await eventLogger.getExecutor(newMember.guild, AuditLogEvent.MemberUpdate, newMember.id);
+
+        // Controlla watchlist
+        const isWatched = await watchlist.isWatched(newMember.guild.id, newMember.id).catch(() => false);
+        if (isWatched) {
+            await watchlist.logWatchedAction(
+                newMember.guild,
+                newMember.user,
+                'Membro Aggiornato',
+                changes.map(c => `**${c.name}:** ${c.value}`).join('\n'),
+                this.loggerFactory,
+                null
+            ).catch(() => {});
+        }
 
         await eventLogger.log(newMember.guild.id, {
             title: 'Membro Aggiornato',
@@ -394,7 +472,8 @@ class MemberEventHandler {
                 { name: '\u200b', value: '\u200b', inline: false },
                 ...changes
             ],
-            footer: { text: `ID: ${newMember.id}` }
+            footer: { text: `ID: ${newMember.id}` },
+            color: '#FAA61A'
         });
     }
 
@@ -468,17 +547,17 @@ class MemberEventHandler {
 
     getTimeoutDuration(until) {
         if (!until) return 'N/A';
-        
+
         const now = Date.now();
         const end = new Date(until).getTime();
         const diff = end - now;
-        
+
         if (diff <= 0) return 'Scaduto';
-        
+
         const minutes = Math.floor(diff / 60000);
         const hours = Math.floor(minutes / 60);
         const days = Math.floor(hours / 24);
-        
+
         if (days > 0) return `${days} giorn${days === 1 ? 'o' : 'i'}`;
         if (hours > 0) return `${hours} or${hours === 1 ? 'a' : 'e'}`;
         return `${minutes} minut${minutes === 1 ? 'o' : 'i'}`;
