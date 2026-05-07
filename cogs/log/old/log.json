@@ -1,0 +1,973 @@
+{
+    "enabled": true,
+    "guilds": {
+        "1350073876339490826": {
+            "enabled": true,
+            "channels": {
+                "default": null
+            },
+            "filters": {
+                "ignoreBots": false,
+                "ignoreWebhooks": false,
+                "ignoreChannels": [],
+                "ignoreRoles": [],
+                "ignoreUsers": []
+            },
+            "formatting": {
+                "timezone": "Europe/Rome",
+                "dateFormat": "DD/MM/YYYY HH:mm:ss",
+                "embedColor": "#5865F2",
+                "thumbnails": true,
+                "timestamps": true
+            },
+            "events": {
+                "channels": {
+                    "channelCreate": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    },
+                    "channelDelete": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    },
+                    "channelUpdate": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    },
+                    "channelPinsUpdate": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    }
+                },
+                "threads": {
+                    "threadCreate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadDelete": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadUpdate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadMemberUpdate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadMembersUpdate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    }
+                },
+                "members": {
+                    "guildMemberAdd": {
+                        "enabled": true,
+                        "channel": "1363431774763483216"
+                    },
+                    "guildMemberRemove": {
+                        "enabled": true,
+                        "channel": "1363431774763483216"
+                    },
+                    "guildMemberUpdate": {
+                        "enabled": true,
+                        "channel": "1455960693382578416"
+                    }
+                },
+                "messages": {
+                    "messageCreate": {
+                        "enabled": false,
+                        "channel": null
+                    },
+                    "messageDelete": {
+                        "enabled": true,
+                        "channel": "1455753095505252628"
+                    },
+                    "messageUpdate": {
+                        "enabled": true,
+                        "channel": "1455753095505252628"
+                    },
+                    "messageDeleteBulk": {
+                        "enabled": true,
+                        "channel": "1455753095505252628"
+                    },
+                    "messageReactionAdd": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    },
+                    "messageReactionRemove": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    },
+                    "messageReactionRemoveAll": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    },
+                    "messageReactionRemoveEmoji": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    }
+                },
+                "moderation": {
+                    "guildBanAdd": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "guildBanRemove": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "memberTimeoutAdd": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "memberTimeoutRemove": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "memberKick": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "guildAuditLogEntryCreate": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    }
+                },
+                "voice": {
+                    "voiceStateUpdate": {
+                        "enabled": false,
+                        "channel": null
+                    },
+                    "voiceChannelJoin": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelLeave": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelSwitch": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelMute": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelDeaf": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceStreamingStart": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceStreamingStop": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    }
+                },
+                "roles": {
+                    "roleCreate": {
+                        "enabled": true,
+                        "channel": "1455962287390195823"
+                    },
+                    "roleDelete": {
+                        "enabled": true,
+                        "channel": "1455962287390195823"
+                    },
+                    "roleUpdate": {
+                        "enabled": true,
+                        "channel": "1455962287390195823"
+                    }
+                },
+                "emojis": {
+                    "emojiCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "emojiDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "emojiUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "stickers": {
+                    "stickerCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stickerDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stickerUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "guild": {
+                    "guildUpdate": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    },
+                    "guildScheduledEventCreate": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    },
+                    "guildScheduledEventUpdate": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    },
+                    "guildScheduledEventDelete": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    }
+                },
+                "invites": {
+                    "inviteCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "inviteDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "users": {
+                    "userUpdate": {
+                        "enabled": true,
+                        "channel": "1455960693382578416"
+                    }
+                },
+                "automod": {
+                    "autoModerationRuleCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "autoModerationRuleUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "autoModerationRuleDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "autoModerationActionExecution": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "stage": {
+                    "stageInstanceCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stageInstanceUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stageInstanceDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "webhooks": {
+                    "webhooksUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "interactions": {
+                    "interactionCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "presence": {
+                    "presenceUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                }
+            }
+        },
+        "1424858623024169003": {
+            "enabled": true,
+            "channels": {
+                "default": null
+            },
+            "filters": {
+                "ignoreBots": false,
+                "ignoreWebhooks": false,
+                "ignoreChannels": [],
+                "ignoreRoles": [],
+                "ignoreUsers": []
+            },
+            "formatting": {
+                "timezone": "Europe/Rome",
+                "dateFormat": "DD/MM/YYYY HH:mm:ss",
+                "embedColor": "#5865F2",
+                "thumbnails": true,
+                "timestamps": true
+            },
+            "events": {
+                "channels": {
+                    "channelCreate": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    },
+                    "channelDelete": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    },
+                    "channelUpdate": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    },
+                    "channelPinsUpdate": {
+                        "enabled": true,
+                        "channel": "1455960417758347275"
+                    }
+                },
+                "threads": {
+                    "threadCreate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadDelete": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadUpdate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadMemberUpdate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    },
+                    "threadMembersUpdate": {
+                        "enabled": true,
+                        "channel": "1455960593180655881"
+                    }
+                },
+                "members": {
+                    "guildMemberAdd": {
+                        "enabled": true,
+                        "channel": "1363431774763483216"
+                    },
+                    "guildMemberRemove": {
+                        "enabled": true,
+                        "channel": "1363431774763483216"
+                    },
+                    "guildMemberUpdate": {
+                        "enabled": true,
+                        "channel": "1455960693382578416"
+                    }
+                },
+                "messages": {
+                    "messageCreate": {
+                        "enabled": false,
+                        "channel": null
+                    },
+                    "messageDelete": {
+                        "enabled": true,
+                        "channel": "1455753095505252628"
+                    },
+                    "messageUpdate": {
+                        "enabled": true,
+                        "channel": "1455753095505252628"
+                    },
+                    "messageDeleteBulk": {
+                        "enabled": true,
+                        "channel": "1455753095505252628"
+                    },
+                    "messageReactionAdd": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    },
+                    "messageReactionRemove": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    },
+                    "messageReactionRemoveAll": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    },
+                    "messageReactionRemoveEmoji": {
+                        "enabled": true,
+                        "channel": "1455961236314259618"
+                    }
+                },
+                "moderation": {
+                    "guildBanAdd": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "guildBanRemove": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "memberTimeoutAdd": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "memberTimeoutRemove": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "memberKick": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    },
+                    "guildAuditLogEntryCreate": {
+                        "enabled": true,
+                        "channel": "1455752842328412355"
+                    }
+                },
+                "voice": {
+                    "voiceStateUpdate": {
+                        "enabled": false,
+                        "channel": null
+                    },
+                    "voiceChannelJoin": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelLeave": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelSwitch": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelMute": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceChannelDeaf": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceStreamingStart": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    },
+                    "voiceStreamingStop": {
+                        "enabled": true,
+                        "channel": "1455752116386664448"
+                    }
+                },
+                "roles": {
+                    "roleCreate": {
+                        "enabled": true,
+                        "channel": "1455962287390195823"
+                    },
+                    "roleDelete": {
+                        "enabled": true,
+                        "channel": "1455962287390195823"
+                    },
+                    "roleUpdate": {
+                        "enabled": true,
+                        "channel": "1455962287390195823"
+                    }
+                },
+                "emojis": {
+                    "emojiCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "emojiDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "emojiUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "stickers": {
+                    "stickerCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stickerDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stickerUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "guild": {
+                    "guildUpdate": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    },
+                    "guildScheduledEventCreate": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    },
+                    "guildScheduledEventUpdate": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    },
+                    "guildScheduledEventDelete": {
+                        "enabled": true,
+                        "channel": "1455753264816722036"
+                    }
+                },
+                "invites": {
+                    "inviteCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "inviteDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "users": {
+                    "userUpdate": {
+                        "enabled": true,
+                        "channel": "1455960693382578416"
+                    }
+                },
+                "automod": {
+                    "autoModerationRuleCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "autoModerationRuleUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "autoModerationRuleDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "autoModerationActionExecution": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "stage": {
+                    "stageInstanceCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stageInstanceUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    },
+                    "stageInstanceDelete": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "webhooks": {
+                    "webhooksUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "interactions": {
+                    "interactionCreate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                },
+                "presence": {
+                    "presenceUpdate": {
+                        "enabled": true,
+                        "channel": "1428464022835036210"
+                    }
+                }
+            }
+        }
+    },
+    "defaults": {
+        "enabled": true,
+        "channels": {
+            "default": null
+        },
+        "filters": {
+            "ignoreBots": false,
+            "ignoreWebhooks": false,
+            "ignoreChannels": [],
+            "ignoreRoles": [],
+            "ignoreUsers": []
+        },
+        "formatting": {
+            "timezone": "Europe/Rome",
+            "dateFormat": "DD/MM/YYYY HH:mm:ss",
+            "embedColor": "#5865F2",
+            "thumbnails": true,
+            "timestamps": true
+        },
+        "events": {
+            "channels": {
+                "channelCreate": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                },
+                "channelDelete": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                },
+                "channelUpdate": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                },
+                "channelPinsUpdate": {
+                    "enabled": true,
+                    "channel": "1455960417758347275"
+                }
+            },
+            "threads": {
+                "threadCreate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadDelete": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadUpdate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadMemberUpdate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                },
+                "threadMembersUpdate": {
+                    "enabled": true,
+                    "channel": "1455960593180655881"
+                }
+            },
+            "members": {
+                "guildMemberAdd": {
+                    "enabled": true,
+                    "channel": "1363431774763483216"
+                },
+                "guildMemberRemove": {
+                    "enabled": true,
+                    "channel": "1363431774763483216"
+                },
+                "guildMemberUpdate": {
+                    "enabled": true,
+                    "channel": "1455960693382578416"
+                }
+            },
+            "messages": {
+                "messageCreate": {
+                    "enabled": false,
+                    "channel": null
+                },
+                "messageDelete": {
+                    "enabled": true,
+                    "channel": "1455753095505252628"
+                },
+                "messageUpdate": {
+                    "enabled": true,
+                    "channel": "1455753095505252628"
+                },
+                "messageDeleteBulk": {
+                    "enabled": true,
+                    "channel": "1455753095505252628"
+                },
+                "messageReactionAdd": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                },
+                "messageReactionRemove": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                },
+                "messageReactionRemoveAll": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                },
+                "messageReactionRemoveEmoji": {
+                    "enabled": true,
+                    "channel": "1455961236314259618"
+                }
+            },
+            "moderation": {
+                "guildBanAdd": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "guildBanRemove": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "memberTimeoutAdd": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "memberTimeoutRemove": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "memberKick": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                },
+                "guildAuditLogEntryCreate": {
+                    "enabled": true,
+                    "channel": "1455752842328412355"
+                }
+            },
+            "voice": {
+                "voiceStateUpdate": {
+                    "enabled": false,
+                    "channel": null
+                },
+                "voiceChannelJoin": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelLeave": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelSwitch": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelMute": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceChannelDeaf": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceStreamingStart": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                },
+                "voiceStreamingStop": {
+                    "enabled": true,
+                    "channel": "1455752116386664448"
+                }
+            },
+            "roles": {
+                "roleCreate": {
+                    "enabled": true,
+                    "channel": "1455962287390195823"
+                },
+                "roleDelete": {
+                    "enabled": true,
+                    "channel": "1455962287390195823"
+                },
+                "roleUpdate": {
+                    "enabled": true,
+                    "channel": "1455962287390195823"
+                }
+            },
+            "emojis": {
+                "emojiCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "emojiDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "emojiUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "stickers": {
+                "stickerCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stickerDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stickerUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "guild": {
+                "guildUpdate": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                },
+                "guildScheduledEventCreate": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                },
+                "guildScheduledEventUpdate": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                },
+                "guildScheduledEventDelete": {
+                    "enabled": true,
+                    "channel": "1455753264816722036"
+                }
+            },
+            "invites": {
+                "inviteCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "inviteDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "users": {
+                "userUpdate": {
+                    "enabled": true,
+                    "channel": "1455960693382578416"
+                }
+            },
+            "automod": {
+                "autoModerationRuleCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "autoModerationRuleUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "autoModerationRuleDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "autoModerationActionExecution": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "stage": {
+                "stageInstanceCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stageInstanceUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                },
+                "stageInstanceDelete": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "webhooks": {
+                "webhooksUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "interactions": {
+                "interactionCreate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            },
+            "presence": {
+                "presenceUpdate": {
+                    "enabled": true,
+                    "channel": "1428464022835036210"
+                }
+            }
+        }
+    },
+    "_documentation": {
+        "description": "Enterprise-Level Discord Logging System Configuration",
+        "structure": {
+            "enabled": "Global enable/disable flag per il sistema di logging",
+            "guilds": "Configurazioni specifiche per ogni guild (viene popolato automaticamente)",
+            "defaults": "Configurazioni predefinite che vengono applicate a nuove guild",
+            "defaults.enabled": "Abilita/disabilita il logging per la guild",
+            "defaults.channels": "Canali di log predefiniti - puoi definire riferimenti personalizzati",
+            "defaults.channels.default": "Canale di log predefinito (null = disabilitato)",
+            "defaults.filters": "Filtri per ignorare determinate entità",
+            "defaults.filters.ignoreBots": "Ignora eventi dai bot",
+            "defaults.filters.ignoreWebhooks": "Ignora eventi dai webhook",
+            "defaults.filters.ignoreChannels": "Array di channel IDs da ignorare",
+            "defaults.filters.ignoreRoles": "Array di role IDs da ignorare",
+            "defaults.filters.ignoreUsers": "Array di user IDs da ignorare",
+            "defaults.formatting": "Opzioni di formattazione per i log",
+            "defaults.formatting.timezone": "Timezone per i timestamp",
+            "defaults.formatting.dateFormat": "Formato delle date",
+            "defaults.formatting.embedColor": "Colore predefinito degli embed",
+            "defaults.formatting.thumbnails": "Mostra thumbnail negli embed",
+            "defaults.formatting.timestamps": "Mostra timestamp negli embed",
+            "defaults.events": "Configurazione per ogni evento loggabile"
+        },
+        "usage": {
+            "enableEvent": "Per abilitare un evento, imposta 'enabled' a true e specifica un 'channel'",
+            "disableEvent": "Per disabilitare un evento, imposta 'enabled' a false",
+            "specificChannel": "Se 'channel' è null, viene usato il canale 'default'",
+            "channelReference": "Il campo 'channel' può essere: 1) Un ID diretto (es. '1234567890'), 2) Un riferimento definito in 'channels' (es. 'MESSAGE_LOG_CHANNEL')",
+            "exampleDirect": {
+                "guildMemberAdd": {
+                    "enabled": true,
+                    "channel": "1234567890123456789"
+                }
+            },
+            "exampleReference": {
+                "channels": {
+                    "MESSAGE_LOG_CHANNEL": "1234567890123456789",
+                    "MEMBER_LOG_CHANNEL": "9876543210987654321"
+                },
+                "events": {
+                    "messageDelete": {
+                        "enabled": true,
+                        "channel": "MESSAGE_LOG_CHANNEL"
+                    },
+                    "guildMemberAdd": {
+                        "enabled": true,
+                        "channel": "MEMBER_LOG_CHANNEL"
+                    }
+                }
+            }
+        },
+        "eventCategories": [
+            "channels (channelCreate, channelDelete, channelUpdate, channelPinsUpdate)",
+            "threads (threadCreate, threadDelete, threadUpdate, threadMemberUpdate, threadMembersUpdate)",
+            "members (guildMemberAdd, guildMemberRemove, guildMemberUpdate)",
+            "messages (messageCreate, messageDelete, messageUpdate, messageDeleteBulk, messageReactionAdd, messageReactionRemove, messageReactionRemoveAll, messageReactionRemoveEmoji)",
+            "moderation (guildBanAdd, guildBanRemove, memberTimeoutAdd, memberTimeoutRemove, memberKick, guildAuditLogEntryCreate)",
+            "voice (voiceStateUpdate, voiceChannelJoin, voiceChannelLeave, voiceChannelSwitch, voiceChannelMute, voiceChannelDeaf, voiceStreamingStart, voiceStreamingStop)",
+            "roles (roleCreate, roleDelete, roleUpdate)",
+            "emojis (emojiCreate, emojiDelete, emojiUpdate)",
+            "stickers (stickerCreate, stickerDelete, stickerUpdate)",
+            "guild (guildUpdate, guildScheduledEventCreate, guildScheduledEventUpdate, guildScheduledEventDelete)",
+            "invites (inviteCreate, inviteDelete)",
+            "users (userUpdate)",
+            "automod (autoModerationRuleCreate, autoModerationRuleUpdate, autoModerationRuleDelete, autoModerationActionExecution)",
+            "stage (stageInstanceCreate, stageInstanceUpdate, stageInstanceDelete)",
+            "webhooks (webhooksUpdate)",
+            "interactions (interactionCreate)",
+            "presence (presenceUpdate)"
+        ],
+        "tips": [
+            "Rimuovi i prefissi '' e '_comment' per usare effettivamente la configurazione",
+            "Puoi usare ID diretti (es. '1234567890') o riferimenti (es. 'MESSAGE_LOG_CHANNEL')",
+            "Definisci i riferimenti personalizzati in 'channels' per riutilizzarli facilmente",
+            "Puoi avere canali diversi per eventi diversi",
+            "I filtri si applicano a tutti gli eventi della guild",
+            "Le configurazioni specifiche per guild sovrascrivono i defaults",
+            "Il sistema crea automaticamente la struttura per nuove guild basandosi sui defaults"
+        ]
+    }
+}

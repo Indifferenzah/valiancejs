@@ -1,4 +1,9 @@
 {
-  "cw_channel_id": "",
-  "cw_results": []
+    "embed_title": "CW Interna",
+  "embed_description": "`{data} - {ora}`\n**Numero:** {numerocw}\n## TEAMS\n**ROSSO**\n{rossi}\n\n**VERDE:**\n{verdi}\n\n**MAPPE:**\n{mappe}\n## <a:VL_Trophy:1426256022993113119> Vincitore: Team __{vincitore}__\n**RECAP:**\n{recap}",
+    "embed_color": 3447003,
+    "footer": "Valiance | CW Interna",
+
+    "prefix_map": "(#{num_map})",
+    "prefix_recap": "**#{num_recap}:**"
 }

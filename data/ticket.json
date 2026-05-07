@@ -1,0 +1,61 @@
+{
+  "1479848925338013826": {
+    "owner": 1353303255639261244,
+    "button": "coaching",
+    "number": 237,
+    "answers": {
+      "{q1}": "Zaydos",
+      "{q2}": "PVP",
+      "{q3}": "ora e dopo"
+    },
+    "close_message_id": 1479848928160645323
+  },
+  "1498384161474347029": {
+    "owner": 557206159057092649,
+    "button": "coaching",
+    "number": 339,
+    "answers": {
+      "{q1}": "Devillo_ITA",
+      "{q2}": "tutto",
+      "{q3}": "ora o domani a qualsiasi ora del pomeriggio"
+    },
+    "close_message_id": 1498384168545947828
+  },
+  "1500943818378313879": {
+    "owner": 1201581907964592199,
+    "button": "provino",
+    "number": 331,
+    "answers": {
+      "{q1}": "rubenino",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "martedi alle 15:00"
+    },
+    "close_message_id": 1500943821062803650
+  },
+  "1501312138504044705": {
+    "owner": 1501307786166931587,
+    "button": "general",
+    "number": 334,
+    "answers": {
+      "{q1}": "Tho3as1_15",
+      "{q2}": "entrare nel clan valiance su minecraft",
+      "{q3}": "N/A"
+    },
+    "close_message_id": 1501312141964349521
+  },
+  "1501981444015390720": {
+    "owner": 829754991547514920,
+    "button": "cw",
+    "number": 335,
+    "answers": {
+      "{q1}": "Teog_",
+      "{q2}": "Tits",
+      "{q3}": "https://discord.gg/3jQyTwCx",
+      "{q4}": "shavelikeabomber, michelemolteni, e ancora idk",
+      "{q5}": "Sabato e domenica pomeriggio/sera"
+    },
+    "close_message_id": 1501981449107275926
+  }
+}

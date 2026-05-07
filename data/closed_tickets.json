@@ -1,0 +1,3942 @@
+{
+  "2": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-2.txt",
+    "closed_at": "2025-10-17T10:52:23.232411",
+    "button": "general",
+    "channel_name": "ticket-2"
+  },
+  "3": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-3.txt",
+    "closed_at": "2025-10-17T10:52:51.204645",
+    "button": "general",
+    "channel_name": "ticket-3"
+  },
+  "4": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-4.txt",
+    "closed_at": "2025-10-17T10:53:03.644938",
+    "button": "general",
+    "channel_name": "ticket-4"
+  },
+  "5": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-5.txt",
+    "closed_at": "2025-10-15T20:13:50.864289",
+    "button": "general",
+    "channel_name": "ticket-4"
+  },
+  "7": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-7.txt",
+    "closed_at": "2025-10-15T20:14:40.124697",
+    "button": "general",
+    "channel_name": "ticket-6"
+  },
+  "8": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-8.txt",
+    "closed_at": "2025-10-15T20:27:11.388997",
+    "button": "general",
+    "channel_name": "test"
+  },
+  "9": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-9.txt",
+    "closed_at": "2025-10-15T20:26:50.954074",
+    "button": "general",
+    "channel_name": "abc"
+  },
+  "10": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-10.txt",
+    "closed_at": "2025-10-15T20:23:31.747672",
+    "button": "general",
+    "channel_name": "ticket-10"
+  },
+  "11": {
+    "owner": 1108109780511371500,
+    "transcript_file": "transcripts/transcript-11.txt",
+    "closed_at": "2025-10-16T19:13:10.024347",
+    "button": "provino",
+    "channel_name": "ticket-11"
+  },
+  "13": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-13.txt",
+    "closed_at": "2025-10-16T20:00:28.961393",
+    "button": "general",
+    "channel_name": "test2"
+  },
+  "14": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-14.txt",
+    "closed_at": "2025-10-16T20:38:00.304298",
+    "button": "general",
+    "channel_name": "test"
+  },
+  "15": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-15.txt",
+    "closed_at": "2025-10-17T10:54:20.529203",
+    "button": "general",
+    "channel_name": "ticket-15"
+  },
+  "16": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-16.txt",
+    "closed_at": "2025-10-17T11:10:52.707260",
+    "button": "general",
+    "channel_name": "ticket-16"
+  },
+  "17": {
+    "owner": 954700817959616500,
+    "transcript_file": "transcripts/transcript-17.txt",
+    "closed_at": "2025-10-18T07:41:49.307916",
+    "button": "provino",
+    "channel_name": "ticket-17"
+  },
+  "18": {
+    "owner": 799989494073000000,
+    "transcript_file": "transcripts/transcript-18.txt",
+    "closed_at": "2025-10-21T20:17:34.106409",
+    "button": "general",
+    "channel_name": "media-apply"
+  },
+  "19": {
+    "owner": 930171299781832700,
+    "transcript_file": "transcripts/transcript-19.txt",
+    "closed_at": "2025-10-27T19:54:59.553556",
+    "button": "cw",
+    "channel_name": "cw-egirl"
+  },
+  "20": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-20.txt",
+    "closed_at": "2025-10-20T16:15:27.975719",
+    "button": "general",
+    "channel_name": "nigger-v2000"
+  },
+  "22": {
+    "owner": 1280436891044282400,
+    "transcript_file": "transcripts/transcript-22.txt",
+    "closed_at": "2025-10-21T18:16:58.553927",
+    "button": "cw",
+    "channel_name": "cw-defiance"
+  },
+  "23": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-23.txt",
+    "closed_at": "2025-10-24T14:46:18.432173",
+    "button": "general",
+    "channel_name": "ticket-23"
+  },
+  "24": {
+    "owner": 1430528693599735800,
+    "transcript_file": "transcripts/transcript-24.txt",
+    "closed_at": "2025-10-25T17:58:37.473020",
+    "button": "provino",
+    "channel_name": "ynwkarma-clan"
+  },
+  "25": {
+    "owner": 1090287874492072000,
+    "transcript_file": "transcripts/transcript-25.txt",
+    "closed_at": "2025-10-26T15:47:49.462784",
+    "button": "provino",
+    "channel_name": "ticket-25"
+  },
+  "26": {
+    "owner": 1123622103917285400,
+    "transcript_file": "transcripts/transcript-26.txt",
+    "closed_at": "2025-10-26T18:34:39.725755",
+    "button": "general",
+    "channel_name": "ticket-26"
+  },
+  "27": {
+    "owner": 1220788267427823900,
+    "transcript_file": "transcripts/transcript-27.txt",
+    "closed_at": "2025-10-27T16:38:19.692277",
+    "button": "general",
+    "channel_name": "ticket-27"
+  },
+  "28": {
+    "owner": 1280436891044282400,
+    "transcript_file": "transcripts/transcript-28.txt",
+    "closed_at": "2025-11-08T18:49:59.923964",
+    "button": "cw",
+    "channel_name": "cw-defiance"
+  },
+  "29": {
+    "owner": 753364390270599200,
+    "transcript_file": "transcripts/transcript-29.txt",
+    "closed_at": "2025-10-27T16:46:18.005480",
+    "button": "cw",
+    "channel_name": "ticket-29"
+  },
+  "30": {
+    "owner": 1362790090891333600,
+    "transcript_file": "transcripts/transcript-30.txt",
+    "closed_at": "2025-10-30T06:12:54.197789",
+    "button": "general",
+    "channel_name": "ticket-30"
+  },
+  "31": {
+    "owner": 1429421261984895000,
+    "transcript_file": "transcripts/transcript-31.txt",
+    "closed_at": "2025-10-30T20:29:46.185038",
+    "button": "provino",
+    "channel_name": "ticket-31"
+  },
+  "32": {
+    "owner": 992425872801931300,
+    "transcript_file": "transcripts/transcript-32.txt",
+    "closed_at": "2025-11-01T08:40:23.538660",
+    "button": "cw",
+    "channel_name": "ticket-32"
+  },
+  "33": {
+    "owner": 1332700099737948200,
+    "transcript_file": "transcripts/transcript-33.txt",
+    "closed_at": "2025-11-01T21:14:00.530602",
+    "button": "general",
+    "channel_name": "ticket-33"
+  },
+  "35": {
+    "owner": 1108109780511371500,
+    "transcript_file": "transcripts/transcript-35.txt",
+    "closed_at": "2025-11-02T18:15:26.401199",
+    "button": "provino",
+    "channel_name": "ticket-35"
+  },
+  "36": {
+    "owner": 1429421261984895000,
+    "transcript_file": "transcripts/transcript-36.txt",
+    "closed_at": "2025-11-02T23:01:27.707068",
+    "button": "general",
+    "channel_name": "ticket-36"
+  },
+  "37": {
+    "owner": 1419438517766848500,
+    "transcript_file": "transcripts/transcript-37.txt",
+    "closed_at": "2025-11-03T20:41:44.075566",
+    "button": "general",
+    "channel_name": "ticket-37"
+  },
+  "38": {
+    "owner": 1312751549889380400,
+    "transcript_file": "transcripts/transcript-38.txt",
+    "closed_at": "2025-11-04T10:08:29.604778",
+    "button": "provino",
+    "channel_name": "ticket-38"
+  },
+  "39": {
+    "owner": 1399672004411654100,
+    "transcript_file": "transcripts/transcript-39.txt",
+    "closed_at": "2025-11-04T16:03:16.118691",
+    "button": "provino",
+    "channel_name": "ticket-39"
+  },
+  "40": {
+    "owner": 1395519462903644200,
+    "transcript_file": "transcripts/transcript-40.txt",
+    "closed_at": "2025-11-04T16:10:11.880400",
+    "button": "provino",
+    "channel_name": "ticket-40"
+  },
+  "41": {
+    "owner": 1194307709001019400,
+    "transcript_file": "transcripts/transcript-41.txt",
+    "closed_at": "2025-11-12T19:29:00.878688",
+    "button": "cw",
+    "channel_name": "cw-silence"
+  },
+  "42": {
+    "owner": 1434936317858283500,
+    "transcript_file": "transcripts/transcript-42.txt",
+    "closed_at": "2025-11-09T15:11:46.812065",
+    "button": "provino",
+    "channel_name": "provino-cw"
+  },
+  "43": {
+    "owner": 1009926886866043000,
+    "transcript_file": "transcripts/transcript-43.txt",
+    "closed_at": "2025-11-09T18:23:26.762669",
+    "button": "provino",
+    "channel_name": "attesa-xp"
+  },
+  "44": {
+    "owner": 1312751549889380400,
+    "transcript_file": "transcripts/transcript-44.txt",
+    "closed_at": "2025-11-15T06:06:05.486757",
+    "button": "cw",
+    "channel_name": "cw-athenis"
+  },
+  "45": {
+    "owner": 1072237098695921800,
+    "transcript_file": "transcripts/transcript-45.txt",
+    "closed_at": "2025-11-15T23:03:18.887992",
+    "button": "cw",
+    "channel_name": "cw-sailence"
+  },
+  "46": {
+    "owner": 1169706955401601000,
+    "transcript_file": "transcripts/transcript-46.txt",
+    "closed_at": "2025-11-16T22:25:46.134326",
+    "button": "cw",
+    "channel_name": "cw-nexus"
+  },
+  "47": {
+    "owner": 1104832917470990500,
+    "transcript_file": "transcripts/transcript-47.txt",
+    "closed_at": "2025-11-13T16:30:09.294733",
+    "button": "provino",
+    "channel_name": "ticket-47"
+  },
+  "48": {
+    "owner": "1009926886866043000",
+    "transcript_file": "/home/container/transcripts/transcript-48.txt",
+    "closed_at": "2025-11-22T13:18:21.700Z",
+    "button": "provino",
+    "channel_name": "provino-cw"
+  },
+  "49": {
+    "owner": "1312751549889380400",
+    "transcript_file": "/home/container/transcripts/transcript-49.txt",
+    "closed_at": "2025-12-03T19:06:16.604Z",
+    "button": "cw",
+    "channel_name": "cw-athenis",
+    "answers": {}
+  },
+  "50": {
+    "owner": 1213589306262823000,
+    "transcript_file": "transcripts/transcript-50.txt",
+    "closed_at": "2025-11-16T15:37:02.103089",
+    "button": "provino",
+    "channel_name": "ticket-50"
+  },
+  "51": {
+    "owner": 1169706955401601000,
+    "transcript_file": "transcripts/transcript-51.txt",
+    "closed_at": "2025-11-18T17:32:09.837443",
+    "button": "general",
+    "channel_name": "ticket-51"
+  },
+  "52": {
+    "owner": "944329366555471900",
+    "transcript_file": "/home/container/transcripts/transcript-52.txt",
+    "closed_at": "2025-11-22T14:25:07.500Z",
+    "button": "provino",
+    "channel_name": "attesa-xp"
+  },
+  "53": {
+    "owner": 1180919961540120600,
+    "transcript_file": "transcripts/transcript-53.txt",
+    "closed_at": "2025-11-17T20:11:40.354731",
+    "button": "general",
+    "channel_name": "ticket-53"
+  },
+  "54": {
+    "owner": "980489713758662700",
+    "transcript_file": "/home/container/transcripts/transcript-54.txt",
+    "closed_at": "2025-11-22T14:25:23.477Z",
+    "button": "provino",
+    "channel_name": "attesa-xp"
+  },
+  "55": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-55.txt",
+    "closed_at": "2025-11-20T20:03:46.011Z",
+    "button": "general",
+    "channel_name": "ticket-55"
+  },
+  "59": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-59.txt",
+    "closed_at": "2025-11-20T20:41:21.208Z",
+    "button": "general",
+    "channel_name": "ticket-59"
+  },
+  "60": {
+    "owner": "1197637273819287556",
+    "transcript_file": "/home/container/transcripts/transcript-60.txt",
+    "closed_at": "2025-11-21T13:29:30.721Z",
+    "button": "provino",
+    "channel_name": "ticket-60"
+  },
+  "61": {
+    "owner": "894579686036865094",
+    "transcript_file": "/home/container/transcripts/transcript-61.txt",
+    "closed_at": "2025-11-22T09:52:58.378Z",
+    "button": "general",
+    "channel_name": "ticket-61"
+  },
+  "62": {
+    "owner": "613312674243149834",
+    "transcript_file": "/home/container/transcripts/transcript-62.txt",
+    "closed_at": "2025-11-22T11:06:32.386Z",
+    "button": "general",
+    "channel_name": "ticket-62"
+  },
+  "63": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-63.txt",
+    "closed_at": "2025-11-26T17:19:39.344Z",
+    "button": "general",
+    "channel_name": "ticket-63",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "a"
+    }
+  },
+  "64": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-64.txt",
+    "closed_at": "2025-11-26T17:20:19.061Z",
+    "button": "general",
+    "channel_name": "ticket-64",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "a"
+    }
+  },
+  "65": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-65.txt",
+    "closed_at": "2025-11-26T17:40:38.942Z",
+    "button": "cw",
+    "channel_name": "ticket-65",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "a",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "66": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-66.txt",
+    "closed_at": "2025-11-26T17:57:31.031Z",
+    "button": "general",
+    "channel_name": "ticket-66",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "67": {
+    "owner": "1197637273819287556",
+    "transcript_file": "/home/container/transcripts/transcript-67.txt",
+    "closed_at": "2025-11-28T17:06:34.463Z",
+    "button": "provino",
+    "channel_name": "attesa-provino",
+    "answers": {
+      "{q1}": "universoS75",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "tutti i giorni"
+    }
+  },
+  "68": {
+    "owner": "954477533921935360",
+    "transcript_file": "/home/container/transcripts/transcript-68.txt",
+    "closed_at": "2025-11-27T21:16:46.871Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "ImCarpa",
+      "{q2}": "Entrambi :)",
+      "{q3}": "Non me li ricordo fratellino",
+      "{q4}": "Coral",
+      "{q5}": "Di solito sera. Domani sera verso le 8/8:30 dovrei essere libero"
+    }
+  },
+  "69": {
+    "owner": "1072237098695921756",
+    "transcript_file": "/home/container/transcripts/transcript-69.txt",
+    "closed_at": "2025-11-27T17:22:03.308Z",
+    "button": "cw",
+    "channel_name": "cw-news",
+    "answers": {
+      "{q1}": "chandrino",
+      "{q2}": "News",
+      "{q3}": "Gruppo privato",
+      "{q4}": "Chandrino schelzy foluid spyld_",
+      "{q5}": "Adesso domani"
+    }
+  },
+  "70": {
+    "owner": "1072237098695921756",
+    "transcript_file": "/home/container/transcripts/transcript-70.txt",
+    "closed_at": "2025-11-27T21:43:32.946Z",
+    "button": "cw",
+    "channel_name": "cw-news",
+    "answers": {
+      "{q1}": "chandrino",
+      "{q2}": "News",
+      "{q3}": "gruppo priv",
+      "{q4}": "chandrino, spyld, foluid schelzy",
+      "{q5}": "domani"
+    }
+  },
+  "71": {
+    "owner": "1419438517766848622",
+    "transcript_file": "/home/container/transcripts/transcript-71.txt",
+    "closed_at": "2025-11-29T21:25:46.026Z",
+    "button": "general",
+    "channel_name": "ticket-71",
+    "answers": {
+      "{q1}": "wallah",
+      "{q2}": "wallah",
+      "{q3}": "spostami immigrato"
+    }
+  },
+  "72": {
+    "owner": "1004995981697351680",
+    "transcript_file": "/home/container/transcripts/transcript-72.txt",
+    "closed_at": "2025-12-12T22:13:06.107Z",
+    "button": "provino",
+    "channel_name": "attesa-xp",
+    "answers": {
+      "{q1}": "Astrattooh",
+      "{q2}": "clan",
+      "{q3}": "Noctarsia",
+      "{q4}": "Coral,Hypixel,",
+      "{q5}": "devo vedere quando rientro"
+    }
+  },
+  "73": {
+    "owner": "997522085633085461",
+    "transcript_file": "/home/container/transcripts/transcript-73.txt",
+    "closed_at": "2025-12-10T14:57:47.415Z",
+    "button": "provino",
+    "channel_name": "attesa-xp",
+    "answers": {
+      "{q1}": "ER_CIOLONE",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Nessuno sincero",
+      "{q5}": "Pure ora"
+    }
+  },
+  "74": {
+    "owner": "661570028033933312",
+    "transcript_file": "/home/container/transcripts/transcript-74.txt",
+    "closed_at": "2025-12-05T12:52:34.405Z",
+    "button": "provino",
+    "channel_name": "ticket-74",
+    "answers": {
+      "{q1}": "PathBateman_",
+      "{q2}": "clan, 9,455 xp",
+      "{q3}": "Negazioneh, stimpybubbles_, SickMat, Allegria_",
+      "{q4}": "coral",
+      "{q5}": "mi regolerò in base alle vostre disponibilità"
+    }
+  },
+  "75": {
+    "owner": "1273222633583939609",
+    "transcript_file": "/home/container/transcripts/transcript-75.txt",
+    "closed_at": "2025-12-11T18:02:31.420Z",
+    "button": "provino",
+    "channel_name": "ticket-75",
+    "answers": {
+      "{q1}": "HolyStoms_",
+      "{q2}": "7.7k divisione Diamante",
+      "{q3}": "sonoAstrox",
+      "{q4}": "Coral",
+      "{q5}": "16:30 oggi"
+    }
+  },
+  "76": {
+    "owner": "1185886646881763474",
+    "transcript_file": "/home/container/transcripts/transcript-76.txt",
+    "closed_at": "2025-12-10T14:57:18.486Z",
+    "button": "cw",
+    "channel_name": "cw-cam",
+    "answers": {
+      "{q1}": "avisos",
+      "{q2}": "CAM",
+      "{q3}": "privato",
+      "{q4}": "overlapa scyde pippoariaecoca born2shjne",
+      "{q5}": "ora"
+    }
+  },
+  "77": {
+    "owner": "1121094880131817492",
+    "transcript_file": "/home/container/transcripts/transcript-77.txt",
+    "closed_at": "2025-12-11T11:54:52.563Z",
+    "button": "provino",
+    "channel_name": "attesa-xp",
+    "answers": {
+      "{q1}": "wInfiaaa",
+      "{q2}": "Clan",
+      "{q3}": "Isaac2011",
+      "{q4}": "Coral e mmc",
+      "{q5}": "Oggi alle 18 forse oppure domani pomeriggio"
+    }
+  },
+  "78": {
+    "owner": "1191024007869374565",
+    "transcript_file": "/home/container/transcripts/transcript-78.txt",
+    "closed_at": "2025-12-10T14:57:09.629Z",
+    "button": "provino",
+    "channel_name": "ticket-78",
+    "answers": {
+      "{q1}": "Goblin_Cazzuto",
+      "{q2}": "Cw contro voi",
+      "{q3}": "N/A",
+      "{q4}": "CoralMc",
+      "{q5}": "il weekend"
+    }
+  },
+  "79": {
+    "owner": "1298305092239364096",
+    "transcript_file": "/home/container/transcripts/transcript-79.txt",
+    "closed_at": "2025-12-13T08:54:18.819Z",
+    "button": "provino",
+    "channel_name": "ticket-79",
+    "answers": {
+      "{q1}": "NotD4ni_",
+      "{q2}": "Clan al momento 34k",
+      "{q3}": "NotDxxn, NotScarpaa e altri",
+      "{q4}": "Hypixel e Coral",
+      "{q5}": "Quando volete basta che non sia orario scolastico (8:00 - 14:00)"
+    }
+  },
+  "80": {
+    "owner": "1197637273819287556",
+    "transcript_file": "/home/container/transcripts/transcript-80.txt",
+    "closed_at": "2025-12-18T14:17:06.222Z",
+    "button": "provino",
+    "channel_name": "provino",
+    "answers": {
+      "{q1}": "universoS75",
+      "{q2}": "CW",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "tutti i giorni dalle 14:00 alle 16"
+    }
+  },
+  "83": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-83.txt",
+    "closed_at": "2025-12-12T21:33:47.258Z",
+    "button": "provino",
+    "channel_name": "ticket-83",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "84": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-84.txt",
+    "closed_at": "2025-12-12T21:35:01.915Z",
+    "button": "provino",
+    "channel_name": "ticket-84",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "85": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-85.txt",
+    "closed_at": "2025-12-12T21:35:17.492Z",
+    "button": "provino",
+    "channel_name": "ticket-85",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "86": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-86.txt",
+    "closed_at": "2025-12-12T21:42:59.781Z",
+    "button": "provino",
+    "channel_name": "ticket-86",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "87": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-87.txt",
+    "closed_at": "2025-12-12T22:05:09.894Z",
+    "button": "provino",
+    "channel_name": "ticket-87",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "88": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-88.txt",
+    "closed_at": "2025-12-12T22:09:39.859Z",
+    "button": "provino",
+    "channel_name": "ticket-88",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "89": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-89.txt",
+    "closed_at": "2025-12-12T22:31:25.109Z",
+    "button": "general",
+    "channel_name": "ticket-89",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "90": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-90.txt",
+    "closed_at": "2025-12-12T22:42:27.763Z",
+    "button": "general",
+    "channel_name": "ticket-90",
+    "answers": {
+      "{q1}": "uwu",
+      "{q2}": "ssijdjsijdjis",
+      "{q3}": "N/A"
+    }
+  },
+  "91": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-91.txt",
+    "closed_at": "2025-12-12T22:44:59.563Z",
+    "button": "general",
+    "channel_name": "ticket-91",
+    "answers": {
+      "{q1}": "DrNooB_",
+      "{q2}": "Vorrei chiedere il depex del nostro nabbo dottore",
+      "{q3}": "N/A"
+    }
+  },
+  "92": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-92.txt",
+    "closed_at": "2025-12-12T22:48:28.118Z",
+    "button": "general",
+    "channel_name": "ticket-92",
+    "answers": {
+      "{q1}": "cccc",
+      "{q2}": "xxxx",
+      "{q3}": "xxx"
+    }
+  },
+  "93": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-93.txt",
+    "closed_at": "2025-12-12T22:51:38.432Z",
+    "button": "general",
+    "channel_name": "ticket-93",
+    "answers": {
+      "{q1}": "sssss",
+      "{q2}": "sssss",
+      "{q3}": "sssss"
+    }
+  },
+  "94": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-94.txt",
+    "closed_at": "2025-12-12T22:59:22.622Z",
+    "button": "general",
+    "channel_name": "ticket-94",
+    "answers": {
+      "{q1}": "tttt",
+      "{q2}": "ttttt",
+      "{q3}": "suca"
+    }
+  },
+  "95": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-95.txt",
+    "closed_at": "2025-12-12T23:03:28.064Z",
+    "button": "general",
+    "channel_name": "ticket-95",
+    "answers": {
+      "{q1}": "dddddd",
+      "{q2}": "ddddd",
+      "{q3}": "UwU"
+    }
+  },
+  "96": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-96.txt",
+    "closed_at": "2025-12-12T23:04:36.381Z",
+    "button": "general",
+    "channel_name": "ticket-96",
+    "answers": {
+      "{q1}": "ddddd",
+      "{q2}": "ddddd",
+      "{q3}": "Viva i toast"
+    }
+  },
+  "97": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-97.txt",
+    "closed_at": "2025-12-12T23:06:23.564Z",
+    "button": "general",
+    "channel_name": "ticket-97",
+    "answers": {
+      "{q1}": "aa",
+      "{q2}": "aa",
+      "{q3}": "N/A"
+    }
+  },
+  "98": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-98.txt",
+    "closed_at": "2025-12-12T23:18:12.095Z",
+    "button": "general",
+    "channel_name": "ticket-98",
+    "answers": {
+      "{q1}": "sssss",
+      "{q2}": "sss",
+      "{q3}": "sss"
+    }
+  },
+  "99": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-99.txt",
+    "closed_at": "2025-12-12T23:19:51.474Z",
+    "button": "general",
+    "channel_name": "ticket-99",
+    "answers": {
+      "{q1}": "ss",
+      "{q2}": "ss",
+      "{q3}": "ss"
+    }
+  },
+  "100": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-100.txt",
+    "closed_at": "2025-12-12T23:21:00.017Z",
+    "button": "general",
+    "channel_name": "ticket-100",
+    "answers": {
+      "{q1}": "ffff",
+      "{q2}": "dddd",
+      "{q3}": "dds"
+    }
+  },
+  "101": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-101.txt",
+    "closed_at": "2025-12-12T23:22:48.414Z",
+    "button": "general",
+    "channel_name": "ticket-101",
+    "answers": {
+      "{q1}": "d",
+      "{q2}": "ss",
+      "{q3}": "ss"
+    }
+  },
+  "102": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-102.txt",
+    "closed_at": "2025-12-12T23:51:17.227Z",
+    "button": "general",
+    "channel_name": "ticket-102",
+    "answers": {
+      "{q1}": "dfdf",
+      "{q2}": "dfddfd",
+      "{q3}": "fddqaw"
+    }
+  },
+  "103": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-103.txt",
+    "closed_at": "2025-12-12T23:51:14.208Z",
+    "button": "general",
+    "channel_name": "ticket-103",
+    "answers": {
+      "{q1}": "asas",
+      "{q2}": "asaas",
+      "{q3}": "asas"
+    }
+  },
+  "104": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-104.txt",
+    "closed_at": "2025-12-12T23:51:04.748Z",
+    "button": "general",
+    "channel_name": "ticket-104",
+    "answers": {
+      "{q1}": "ssssssss",
+      "{q2}": "ssssssssssssss",
+      "{q3}": "sssssssssssss"
+    }
+  },
+  "105": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-105.txt",
+    "closed_at": "2025-12-12T23:51:01.677Z",
+    "button": "general",
+    "channel_name": "ticket-105",
+    "answers": {
+      "{q1}": "ssss",
+      "{q2}": "ssssssssssssss",
+      "{q3}": "ssssssss"
+    }
+  },
+  "106": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-106.txt",
+    "closed_at": "2025-12-12T23:50:57.697Z",
+    "button": "general",
+    "channel_name": "ticket-106",
+    "answers": {
+      "{q1}": "aaaa",
+      "{q2}": "aaa",
+      "{q3}": "aaa"
+    }
+  },
+  "107": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-107.txt",
+    "closed_at": "2025-12-12T23:50:54.972Z",
+    "button": "general",
+    "channel_name": "ticket-107",
+    "answers": {
+      "{q1}": "c",
+      "{q2}": "cccccccccccccc",
+      "{q3}": "cccccccccccc"
+    }
+  },
+  "108": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-108.txt",
+    "closed_at": "2025-12-12T23:50:50.998Z",
+    "button": "general",
+    "channel_name": "ticket-108",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "aAaA",
+      "{q3}": "N/A"
+    }
+  },
+  "109": {
+    "owner": "1067455515719909446",
+    "transcript_file": "/home/container/transcripts/transcript-109.txt",
+    "closed_at": "2025-12-12T23:50:46.642Z",
+    "button": "general",
+    "channel_name": "ticket-109",
+    "answers": {
+      "{q1}": "dddd",
+      "{q2}": "dddd",
+      "{q3}": "dddd"
+    }
+  },
+  "110": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-110.txt",
+    "closed_at": "2025-12-12T23:50:44.966Z",
+    "button": "general",
+    "channel_name": "ticket-110",
+    "answers": {
+      "{q1}": "aaa",
+      "{q2}": "aAaA",
+      "{q3}": "N/A"
+    }
+  },
+  "111": {
+    "owner": "1067455515719909446",
+    "transcript_file": "/home/container/transcripts/transcript-111.txt",
+    "closed_at": "2025-12-12T23:50:38.872Z",
+    "button": "general",
+    "channel_name": "ticket-111",
+    "answers": {
+      "{q1}": "dddddd",
+      "{q2}": "ddddddddddd",
+      "{q3}": "dddddddddd"
+    }
+  },
+  "112": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-112.txt",
+    "closed_at": "2025-12-13T00:05:20.651Z",
+    "button": "general",
+    "channel_name": "ticket-112",
+    "answers": {
+      "{q1}": "aaaaaaaaaa",
+      "{q2}": "aaaaaaaaaa",
+      "{q3}": "aaaaaaaaaaaaaaaaaa"
+    }
+  },
+  "113": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-113.txt",
+    "closed_at": "2025-12-13T00:05:17.607Z",
+    "button": "general",
+    "channel_name": "ticket-113",
+    "answers": {
+      "{q1}": "q",
+      "{q2}": "AaAa",
+      "{q3}": "N/A"
+    }
+  },
+  "114": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-114.txt",
+    "closed_at": "2025-12-13T00:05:14.221Z",
+    "button": "general",
+    "channel_name": "ticket-114",
+    "answers": {
+      "{q1}": "ddddd",
+      "{q2}": "ddd",
+      "{q3}": "ddddddddddddddd"
+    }
+  },
+  "115": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-115.txt",
+    "closed_at": "2025-12-13T00:04:58.300Z",
+    "button": "general",
+    "channel_name": "ticket-115",
+    "answers": {
+      "{q1}": "ssssssss",
+      "{q2}": "ssssssss",
+      "{q3}": "ssssssssssssss"
+    }
+  },
+  "116": {
+    "owner": "1067455515719909446",
+    "transcript_file": "/home/container/transcripts/transcript-116.txt",
+    "closed_at": "2025-12-13T00:05:11.884Z",
+    "button": "general",
+    "channel_name": "ticket-116",
+    "answers": {
+      "{q1}": "dddddddd",
+      "{q2}": "dddddddddddd",
+      "{q3}": "ddddddddddddd"
+    }
+  },
+  "117": {
+    "owner": "1067455515719909446",
+    "transcript_file": "/home/container/transcripts/transcript-117.txt",
+    "closed_at": "2025-12-13T00:29:22.879Z",
+    "button": "general",
+    "channel_name": "ticket-117",
+    "answers": {
+      "{q1}": "dddd",
+      "{q2}": "ddddddddd",
+      "{q3}": "dddddddddddddd"
+    }
+  },
+  "118": {
+    "owner": "1067455515719909446",
+    "transcript_file": "/home/container/transcripts/transcript-118.txt",
+    "closed_at": "2025-12-13T00:29:15.680Z",
+    "button": "general",
+    "channel_name": "ticket-118",
+    "answers": {
+      "{q1}": "sssssss",
+      "{q2}": "ssssssssssssss",
+      "{q3}": "ssssssssssssss"
+    }
+  },
+  "119": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-119.txt",
+    "closed_at": "2025-12-13T00:10:28.481Z",
+    "button": "provino",
+    "channel_name": "ticket-119",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A",
+      "{q4}": "a",
+      "{q5}": "a"
+    }
+  },
+  "120": {
+    "owner": "1067455515719909446",
+    "transcript_file": "/home/container/transcripts/transcript-120.txt",
+    "closed_at": "2025-12-13T00:10:25.025Z",
+    "button": "general",
+    "channel_name": "ticket-120",
+    "answers": {
+      "{q1}": "sssssss",
+      "{q2}": "ssssss",
+      "{q3}": "ssssssssssss"
+    }
+  },
+  "121": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-121.txt",
+    "closed_at": "2025-12-13T00:29:12.250Z",
+    "button": "general",
+    "channel_name": "ticket-121",
+    "answers": {
+      "{q1}": "ddddddd",
+      "{q2}": "dddddddddddddddd",
+      "{q3}": "ddddddddddd"
+    }
+  },
+  "122": {
+    "owner": "687333016921440317",
+    "transcript_file": "/home/container/transcripts/transcript-122.txt",
+    "closed_at": "2025-12-13T00:29:18.618Z",
+    "button": "general",
+    "channel_name": "ticket-122",
+    "answers": {
+      "{q1}": "ssssssssss",
+      "{q2}": "sssssssssssssssss",
+      "{q3}": "sssssssssssss"
+    }
+  },
+  "123": {
+    "owner": "954477533921935360",
+    "transcript_file": "/home/container/transcripts/transcript-123.txt",
+    "closed_at": "2025-12-13T19:19:19.072Z",
+    "button": "general",
+    "channel_name": "attesa-riscontro",
+    "answers": {
+      "{q1}": "ImCarpa",
+      "{q2}": "Vorrei sapere come diventare Helper :)",
+      "{q3}": "N/A"
+    }
+  },
+  "124": {
+    "owner": "1349113742205521961",
+    "transcript_file": "/home/container/transcripts/transcript-124.txt",
+    "closed_at": "2025-12-14T15:42:48.588Z",
+    "button": "provino",
+    "channel_name": "ticket-124",
+    "answers": {
+      "{q1}": "Tiny_____",
+      "{q2}": "Clan",
+      "{q3}": "Non ricordo i Nick passati scusate",
+      "{q4}": "Coral",
+      "{q5}": "Lunedî dalle 17 fino alle 19, weekend alternati, mercoledì orario ugale al lunedì e veberdi dalle 15 alle 17"
+    }
+  },
+  "125": {
+    "owner": "1334535608474931283",
+    "transcript_file": "/home/container/transcripts/transcript-125.txt",
+    "closed_at": "2025-12-14T19:35:47.402Z",
+    "button": "general",
+    "channel_name": "ticket-125",
+    "answers": {
+      "{q1}": "palle67",
+      "{q2}": "NON IM FA SCRIVERE NIENTE AIUTO",
+      "{q3}": "67"
+    }
+  },
+  "126": {
+    "owner": "1151937097838624828",
+    "transcript_file": "/home/container/transcripts/transcript-126.txt",
+    "closed_at": "2025-12-16T14:35:31.563Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "DevaITA",
+      "{q2}": "Clan",
+      "{q3}": "nessuno",
+      "{q4}": "CoralMC",
+      "{q5}": "direi domani verso le 15:30/16 o adesso"
+    }
+  },
+  "127": {
+    "owner": "725658730263478292",
+    "transcript_file": "/home/container/transcripts/transcript-127.txt",
+    "closed_at": "2025-12-15T18:09:30.858Z",
+    "button": "provino",
+    "channel_name": "ticket-127",
+    "answers": {
+      "{q1}": "XGiosuX",
+      "{q2}": "clan, 56,700",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Oggi"
+    }
+  },
+  "128": {
+    "owner": "1360923109011624007",
+    "transcript_file": "/home/container/transcripts/transcript-128.txt",
+    "closed_at": "2025-12-18T21:37:39.242Z",
+    "button": "provino",
+    "channel_name": "ticket-128",
+    "answers": {
+      "{q1}": "olmosxsso",
+      "{q2}": "cw e clan",
+      "{q3}": "daniolmo77 pokemondroga92",
+      "{q4}": "coralmc mmc",
+      "{q5}": "cim ettiamo d'accordo in privat"
+    }
+  },
+  "129": {
+    "owner": "1272209744437842072",
+    "transcript_file": "/home/container/transcripts/transcript-129.txt",
+    "closed_at": "2025-12-19T19:15:23.768Z",
+    "button": "cw",
+    "channel_name": "cw-presence",
+    "answers": {
+      "{q1}": "Dolceh",
+      "{q2}": "Presence",
+      "{q3}": "https://discord.gg/msk35UvZc",
+      "{q4}": "Dolceh, Luke, ghost e Aven",
+      "{q5}": "Venerdì alle 17"
+    }
+  },
+  "130": {
+    "owner": "619983881101115402",
+    "transcript_file": "/home/container/transcripts/transcript-130.txt",
+    "closed_at": "2025-12-16T23:28:05.686Z",
+    "button": "general",
+    "channel_name": "ticket-130",
+    "answers": {
+      "{q1}": "dio bestia",
+      "{q2}": "un dildo di gomma",
+      "{q3}": "possibilmente riciclabile"
+    }
+  },
+  "131": {
+    "owner": "810140325313118219",
+    "transcript_file": "/home/container/transcripts/transcript-131.txt",
+    "closed_at": "2025-12-23T22:03:36.892Z",
+    "button": "provino",
+    "channel_name": "ticket-131",
+    "answers": {
+      "{q1}": "DrNobb_",
+      "{q2}": "Clan",
+      "{q3}": "DrProo_",
+      "{q4}": "Quarantena.rip",
+      "{q5}": "quando fede ti risponde su tg"
+    }
+  },
+  "132": {
+    "owner": "1191024007869374565",
+    "transcript_file": "/home/container/transcripts/transcript-132.txt",
+    "closed_at": "2025-12-22T22:03:44.297Z",
+    "button": "provino",
+    "channel_name": "ticket-132",
+    "answers": {
+      "{q1}": "Goblin_Cazzuti",
+      "{q2}": "53,385k xp divis.",
+      "{q3}": "N/A",
+      "{q4}": "CoralMc",
+      "{q5}": "il pomeriggio"
+    }
+  },
+  "133": {
+    "owner": "1136047425677701160",
+    "transcript_file": "/home/container/transcripts/transcript-133.txt",
+    "closed_at": "2025-12-22T22:23:24.323Z",
+    "button": "provino",
+    "channel_name": "ticket-133",
+    "answers": {
+      "{q1}": "Matteo2011007",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "ora o Comunque domani a quest ora"
+    }
+  },
+  "134": {
+    "owner": "810890907989049384",
+    "transcript_file": "/home/container/transcripts/transcript-134.txt",
+    "closed_at": "2025-12-23T22:02:28.469Z",
+    "button": "provino",
+    "channel_name": "ticket-134",
+    "answers": {
+      "{q1}": "GabriNumberOne",
+      "{q2}": "Provino Founder",
+      "{q3}": "GabriNumberOne",
+      "{q4}": "Coralmc minemen",
+      "{q5}": "ora"
+    }
+  },
+  "135": {
+    "owner": "522776552786624522",
+    "transcript_file": "/home/container/transcripts/transcript-135.txt",
+    "closed_at": "2025-12-24T17:32:26.097Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "OverLapa",
+      "{q2}": "cw",
+      "{q3}": "pvpshard",
+      "{q4}": "coral/mmc",
+      "{q5}": "sempre operativo."
+    }
+  },
+  "144": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-144.txt",
+    "closed_at": "2025-12-25T18:26:38.306Z",
+    "button": "general",
+    "channel_name": "ticket-144",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "145": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-145.txt",
+    "closed_at": "2025-12-25T18:26:51.310Z",
+    "button": "general",
+    "channel_name": "ticket-145",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "146": {
+    "owner": "1169706955401601100",
+    "transcript_file": "/home/container/transcripts/transcript-146.txt",
+    "closed_at": "2025-12-26T15:03:37.109Z",
+    "button": "provino",
+    "channel_name": "ticket-146",
+    "answers": {
+      "{q1}": "TetixBad",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "coralmc",
+      "{q5}": "boh"
+    }
+  },
+  "147": {
+    "owner": "1386257921226051606",
+    "transcript_file": "/home/container/transcripts/transcript-147.txt",
+    "closed_at": "2026-01-05T19:02:04.769Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "Zankiri",
+      "{q2}": "CW",
+      "{q3}": "Apostic",
+      "{q4}": "Cs2",
+      "{q5}": "sempre"
+    }
+  },
+  "148": {
+    "owner": "1213204284087341178",
+    "transcript_file": "/home/container/transcripts/transcript-148.txt",
+    "closed_at": "2026-01-02T11:49:02.480Z",
+    "button": "cw",
+    "channel_name": "cw-1ly",
+    "answers": {
+      "{q1}": "oCharlieKirk",
+      "{q2}": "1ly",
+      "{q3}": "https://discord.gg/prqZQGZF",
+      "{q4}": "oCharliekirk, polonord564, __leale__, 3egos, BringSwagBack/SynDecoy, Particolare__",
+      "{q5}": "Da vedere"
+    }
+  },
+  "149": {
+    "owner": "939931130893836348",
+    "transcript_file": "/home/container/transcripts/transcript-149.txt",
+    "closed_at": "2026-01-05T19:04:42.263Z",
+    "button": "provino",
+    "channel_name": "provino-cwmember",
+    "answers": {
+      "{q1}": "vergadibreeze",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coralmc",
+      "{q5}": "Quasi sempre"
+    }
+  },
+  "150": {
+    "owner": "1029280075914424381",
+    "transcript_file": "/home/container/transcripts/transcript-150.txt",
+    "closed_at": "2026-01-23T14:29:55.074Z",
+    "button": "general",
+    "channel_name": "candidatura-web",
+    "answers": {
+      "{q1}": "LarryOP",
+      "{q2}": "Posso accordarmi con il vostro dev per rifarvi il sito?",
+      "{q3}": "N/A"
+    }
+  },
+  "151": {
+    "owner": "1240500746865344554",
+    "transcript_file": "/home/container/transcripts/transcript-151.txt",
+    "closed_at": "2025-12-29T20:51:58.541Z",
+    "button": "general",
+    "channel_name": "attesa-invito",
+    "answers": {
+      "{q1}": "donxss",
+      "{q2}": "invito al clan",
+      "{q3}": "N/A"
+    }
+  },
+  "152": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-152.txt",
+    "closed_at": "2025-12-30T16:32:50.124Z",
+    "button": "general",
+    "channel_name": "ticket-152",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "153": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-153.txt",
+    "closed_at": "2025-12-30T16:33:01.808Z",
+    "button": "general",
+    "channel_name": "ticket-153",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "154": {
+    "owner": "1123622103917285418",
+    "transcript_file": "/home/container/transcripts/transcript-154.txt",
+    "closed_at": "2025-12-31T21:46:32.570Z",
+    "button": "general",
+    "channel_name": "ticket-154",
+    "answers": {
+      "{q1}": "a",
+      "{q2}": "a",
+      "{q3}": "N/A"
+    }
+  },
+  "155": {
+    "owner": "1153647975822794784",
+    "transcript_file": "/home/container/transcripts/transcript-155.txt",
+    "closed_at": "2026-01-02T18:01:32.982Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "Repubblicah",
+      "{q2}": "CW",
+      "{q3}": "4callum, GoatRepu, rrepubblica",
+      "{q4}": "Coral, MMC",
+      "{q5}": "domani verso le 18 e 30"
+    }
+  },
+  "156": {
+    "owner": "690999990566518815",
+    "transcript_file": "/home/container/transcripts/transcript-156.txt",
+    "closed_at": "2026-01-05T19:01:55.980Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "Alteratoh",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "coral/hypixel/mmc",
+      "{q5}": "quando volete, per me anche ora"
+    }
+  },
+  "157": {
+    "owner": "1221480717528334480",
+    "transcript_file": "/home/container/transcripts/transcript-157.txt",
+    "closed_at": "2026-01-09T22:35:49.772Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "defcon10",
+      "{q2}": "clan",
+      "{q3}": "nessuno",
+      "{q4}": "mmc",
+      "{q5}": "tutti  i giorni"
+    }
+  },
+  "158": {
+    "owner": "881696590463647764",
+    "transcript_file": "/home/container/transcripts/transcript-158.txt",
+    "closed_at": "2026-01-03T22:13:25.047Z",
+    "button": "provino",
+    "channel_name": "ticket-158",
+    "answers": {
+      "{q1}": "mxchyonlycheell",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "solo coral",
+      "{q5}": "sabato 15:00"
+    }
+  },
+  "159": {
+    "owner": "1392902417787519006",
+    "transcript_file": "/home/container/transcripts/transcript-159.txt",
+    "closed_at": "2026-01-03T15:58:40.783Z",
+    "button": "cw",
+    "channel_name": "ticket-159",
+    "answers": {
+      "{q1}": "Magik_Rick",
+      "{q2}": "lagrintarecord",
+      "{q3}": "eh poi",
+      "{q4}": "rooclee vequve magic_rick. erpupone",
+      "{q5}": "ora"
+    }
+  },
+  "160": {
+    "owner": "1151551070061990019",
+    "transcript_file": "/home/container/transcripts/transcript-160.txt",
+    "closed_at": "2026-01-05T17:18:28.393Z",
+    "button": "provino",
+    "channel_name": "ticket-160",
+    "answers": {
+      "{q1}": "LagFaul /  hitgratis",
+      "{q2}": "cw",
+      "{q3}": "e493 / karlosdevrij / karlos9mnt / GiannaNannini / NoHamasP / Briger / poi non mi ricordo",
+      "{q4}": "coral e mmc",
+      "{q5}": "sempre tranne nell' orario scolastico"
+    }
+  },
+  "161": {
+    "owner": "997522085633085461",
+    "transcript_file": "/home/container/transcripts/transcript-161.txt",
+    "closed_at": "2026-01-04T17:36:01.986Z",
+    "button": "provino",
+    "channel_name": "ticket-161",
+    "answers": {
+      "{q1}": "ER_CIOLONE",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Ora"
+    }
+  },
+  "162": {
+    "owner": "943188659820191755",
+    "transcript_file": "/home/container/transcripts/transcript-162.txt",
+    "closed_at": "2026-01-04T21:12:06.463Z",
+    "button": "cw",
+    "channel_name": "ticket-162",
+    "answers": {
+      "{q1}": "pelonso",
+      "{q2}": "panino",
+      "{q3}": ".",
+      "{q4}": "io",
+      "{q5}": "zembre bronti"
+    }
+  },
+  "163": {
+    "owner": "1370416858636881930",
+    "transcript_file": "/home/container/transcripts/transcript-163.txt",
+    "closed_at": "2026-01-04T23:31:04.165Z",
+    "button": "general",
+    "channel_name": "ticket-163",
+    "answers": {
+      "{q1}": "Francesco Marzano",
+      "{q2}": "Mi dite che gestisce le cw",
+      "{q3}": "N/A"
+    }
+  },
+  "164": {
+    "owner": "1370416858636881930",
+    "transcript_file": "/home/container/transcripts/transcript-164.txt",
+    "closed_at": "2026-01-05T18:58:08.149Z",
+    "button": "general",
+    "channel_name": "attesa-invito",
+    "answers": {
+      "{q1}": "Patrizio official",
+      "{q2}": "Mettermi cw player",
+      "{q3}": "N/A"
+    }
+  },
+  "165": {
+    "owner": "1197637273819287556",
+    "transcript_file": "/home/container/transcripts/transcript-165.txt",
+    "closed_at": "2026-01-06T10:37:08.040Z",
+    "button": "provino",
+    "channel_name": "ticket-165",
+    "answers": {
+      "{q1}": "universoS75",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "quasi tutti i giorni dalle 14 alle 16"
+    }
+  },
+  "166": {
+    "owner": "1060253107377934357",
+    "transcript_file": "/home/container/transcripts/transcript-166.txt",
+    "closed_at": "2026-01-06T17:03:49.931Z",
+    "button": "cw",
+    "channel_name": "ticket-166",
+    "answers": {
+      "{q1}": "MxfiaNapoletana",
+      "{q2}": "Entrophy",
+      "{q3}": "suca non lo ho",
+      "{q4}": "io, indra, billy, rocly",
+      "{q5}": "ORA"
+    }
+  },
+  "167": {
+    "owner": "1068862596419166258",
+    "transcript_file": "/home/container/transcripts/transcript-167.txt",
+    "closed_at": "2026-01-07T15:50:34.107Z",
+    "button": "cw",
+    "channel_name": "ticket-167",
+    "answers": {
+      "{q1}": "svasticoso",
+      "{q2}": "entropy",
+      "{q3}": "discord",
+      "{q4}": "io mxfianapoletana dllspoofer e rimpiango",
+      "{q5}": "oggi"
+    }
+  },
+  "168": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-168.txt",
+    "closed_at": "2026-01-07T17:32:34.575Z",
+    "button": "provino",
+    "channel_name": "ticket-168",
+    "answers": {
+      "{q1}": "_Gabri45",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coralmc",
+      "{q5}": "18:30"
+    }
+  },
+  "169": {
+    "owner": "1433169528187129987",
+    "transcript_file": "/home/container/transcripts/transcript-169.txt",
+    "closed_at": "2026-01-09T21:20:03.277Z",
+    "button": "provino",
+    "channel_name": "ticket-169",
+    "answers": {
+      "{q1}": "Pachito_var",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Ora"
+    }
+  },
+  "170": {
+    "owner": "1169706955401601100",
+    "transcript_file": "/home/container/transcripts/transcript-170.txt",
+    "closed_at": "2026-01-13T13:20:40.127Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "TetixBad",
+      "{q2}": "entrambi",
+      "{q3}": "N/A",
+      "{q4}": "mmc",
+      "{q5}": "idk"
+    }
+  },
+  "171": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-171.txt",
+    "closed_at": "2026-01-10T15:45:25.660Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "_Gabri45",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Sabato 20/19 di sera"
+    }
+  },
+  "172": {
+    "owner": "1402695521545617511",
+    "transcript_file": "/home/container/transcripts/transcript-172.txt",
+    "closed_at": "2026-01-10T16:46:13.686Z",
+    "button": "provino",
+    "channel_name": "ticket-172",
+    "answers": {
+      "{q1}": "lobotomja",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "boh"
+    }
+  },
+  "173": {
+    "owner": "717861718914760715",
+    "transcript_file": "/home/container/transcripts/transcript-173.txt",
+    "closed_at": "2026-01-14T13:36:00.347Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "hrzqr",
+      "{q2}": "Clan",
+      "{q3}": "Thuymer / iTzAnDw",
+      "{q4}": "Coral / MMc",
+      "{q5}": "non ho orari stabili"
+    }
+  },
+  "174": {
+    "owner": "1445834015411273931",
+    "transcript_file": "/home/container/transcripts/transcript-174.txt",
+    "closed_at": "2026-01-12T22:58:55.811Z",
+    "button": "general",
+    "channel_name": "ticket-174",
+    "answers": {
+      "{q1}": "Rhyie",
+      "{q2}": "Entrare clan",
+      "{q3}": "N/A"
+    }
+  },
+  "175": {
+    "owner": "1235604603001634896",
+    "transcript_file": "/home/container/transcripts/transcript-175.txt",
+    "closed_at": "2026-01-12T15:43:54.952Z",
+    "button": "provino",
+    "channel_name": "ticket-175",
+    "answers": {
+      "{q1}": "PuraPurissima",
+      "{q2}": "clan",
+      "{q3}": "??",
+      "{q4}": "coral/mmc",
+      "{q5}": "ora"
+    }
+  },
+  "176": {
+    "owner": "474546248167325706",
+    "transcript_file": "/home/container/transcripts/transcript-176.txt",
+    "closed_at": "2026-01-22T05:30:50.030Z",
+    "button": "cw",
+    "channel_name": "ticket-176",
+    "answers": {
+      "{q1}": "Mxlchio",
+      "{q2}": "flawless",
+      "{q3}": "https://discord.gg/tXtjxqjan",
+      "{q4}": "Anfe, vio, avveh e bho mqnu penso, o altri",
+      "{q5}": "Sabato alle 17"
+    }
+  },
+  "177": {
+    "owner": "1165905303003475968",
+    "transcript_file": "/home/container/transcripts/transcript-177.txt",
+    "closed_at": "2026-01-23T14:51:14.225Z",
+    "button": "provino",
+    "channel_name": "ticket-177",
+    "answers": {
+      "{q1}": "lil_tony04",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "oggi 20:00"
+    }
+  },
+  "178": {
+    "owner": "1168546143488196648",
+    "transcript_file": "/home/container/transcripts/transcript-178.txt",
+    "closed_at": "2026-02-02T23:22:10.369Z",
+    "button": "provino",
+    "channel_name": "provino",
+    "answers": {
+      "{q1}": "ItsDaniz_",
+      "{q2}": "Clan",
+      "{q3}": "__SonoPro__",
+      "{q4}": "CoralMc",
+      "{q5}": "Per questo dobbiamo organizzarci"
+    }
+  },
+  "179": {
+    "owner": "1258407876737896600",
+    "transcript_file": "/home/container/transcripts/transcript-179.txt",
+    "closed_at": "2026-02-06T22:35:35.271Z",
+    "button": "provino",
+    "channel_name": "provino",
+    "answers": {
+      "{q1}": "_xLukx_",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "martedì alle 4"
+    }
+  },
+  "180": {
+    "owner": "1001076698089017415",
+    "transcript_file": "/home/container/transcripts/transcript-180.txt",
+    "closed_at": "2026-02-02T15:08:15.244Z",
+    "button": "provino",
+    "channel_name": "provino",
+    "answers": {
+      "{q1}": "uciruzzo",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Venerdì alle 15:30"
+    }
+  },
+  "181": {
+    "owner": "1153647975822794784",
+    "transcript_file": "/home/container/transcripts/transcript-181.txt",
+    "closed_at": "2026-01-31T21:53:29.373Z",
+    "button": "general",
+    "channel_name": "media",
+    "answers": {
+      "{q1}": "REEPUU",
+      "{q2}": "mettete autopromo",
+      "{q3}": "N/A"
+    }
+  },
+  "182": {
+    "owner": "939931130893836348",
+    "transcript_file": "/home/container/transcripts/transcript-182.txt",
+    "closed_at": "2026-01-31T18:48:27.357Z",
+    "button": "provino",
+    "channel_name": "ticket-182",
+    "answers": {
+      "{q1}": "vergadibreeze",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coralmc",
+      "{q5}": "Stasera e tutto domenica"
+    }
+  },
+  "183": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-183.txt",
+    "closed_at": "2026-02-01T14:32:47.353Z",
+    "button": "provino",
+    "channel_name": "ticket-183",
+    "answers": {
+      "{q1}": "Gabri_1",
+      "{q2}": "Clan",
+      "{q3}": "_Gabri45",
+      "{q4}": "Coral",
+      "{q5}": "Non lo so"
+    }
+  },
+  "184": {
+    "owner": "1036591962909851729",
+    "transcript_file": "/home/container/transcripts/transcript-184.txt",
+    "closed_at": "2026-02-01T14:19:54.564Z",
+    "button": "general",
+    "channel_name": "ticket-184",
+    "answers": {
+      "{q1}": "The_Darkness_Me",
+      "{q2}": "Entrare per ora nei Valiance  ho 2000 Xp",
+      "{q3}": "N/A"
+    }
+  },
+  "185": {
+    "owner": "989251973763194962",
+    "transcript_file": "/home/container/transcripts/transcript-185.txt",
+    "closed_at": "2026-02-01T14:19:47.821Z",
+    "button": "provino",
+    "channel_name": "ticket-185",
+    "answers": {
+      "{q1}": "Yaaqovv",
+      "{q2}": "clan",
+      "{q3}": "iacii__ MementoMqri ecc ecc",
+      "{q4}": "coral",
+      "{q5}": "quando volete"
+    }
+  },
+  "186": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-186.txt",
+    "closed_at": "2026-02-01T19:17:52.085Z",
+    "button": "provino",
+    "channel_name": "ticket-186",
+    "answers": {
+      "{q1}": "_Gabri45",
+      "{q2}": "Clan",
+      "{q3}": "_Gabri45",
+      "{q4}": "Coral",
+      "{q5}": "Venerdì alle 17"
+    }
+  },
+  "187": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-187.txt",
+    "closed_at": "2026-02-01T19:24:54.821Z",
+    "button": "general",
+    "channel_name": "ticket-187",
+    "answers": {
+      "{q1}": "Gabri_1",
+      "{q2}": "Voglio capire una cosa quanto è il minimo xp clan?",
+      "{q3}": "N/A"
+    }
+  },
+  "188": {
+    "owner": "878974017258795048",
+    "transcript_file": "/home/container/transcripts/transcript-188.txt",
+    "closed_at": "2026-02-09T09:12:26.198Z",
+    "button": "general",
+    "channel_name": "ticket-188",
+    "answers": {
+      "{q1}": "BoShade",
+      "{q2}": "ho messo la pack dell’enchant per vedere che prot hanno le persone sulle gambe vedo il numero 0 ma non cambia qualcuno sa come fixarlo o se avete la texture pack che worka?",
+      "{q3}": "N/A"
+    }
+  },
+  "189": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-189.txt",
+    "closed_at": "2026-02-03T15:44:15.624Z",
+    "button": "general",
+    "channel_name": "ticket-189",
+    "answers": {
+      "{q1}": "_Gabri45",
+      "{q2}": "Vorrei sapere quanto è il minimo xp",
+      "{q3}": "N/A"
+    }
+  },
+  "190": {
+    "owner": "1102225761076785322",
+    "transcript_file": "/home/container/transcripts/transcript-190.txt",
+    "closed_at": "2026-02-05T17:09:23.882Z",
+    "button": "provino",
+    "channel_name": "ticket-190",
+    "answers": {
+      "{q1}": "Kloofrezz",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "durante il pomeriggio"
+    }
+  },
+  "191": {
+    "owner": "1153647975822794784",
+    "transcript_file": "/home/container/transcripts/transcript-191.txt",
+    "closed_at": "2026-02-09T17:09:29.168Z",
+    "button": "general",
+    "channel_name": "attesa-invito",
+    "answers": {
+      "{q1}": "REEPUU",
+      "{q2}": "Avevo cambiato nick e volevo essere ri invitato nei vyrtus",
+      "{q3}": "N/A"
+    }
+  },
+  "192": {
+    "owner": "1452061617389965487",
+    "transcript_file": "/home/container/transcripts/transcript-192.txt",
+    "closed_at": "2026-02-06T14:14:11.594Z",
+    "button": "general",
+    "channel_name": "ticket-192",
+    "answers": {
+      "{q1}": "Leopardy90",
+      "{q2}": "Requisiti per entrare nel clan valiance",
+      "{q3}": "no"
+    }
+  },
+  "193": {
+    "owner": "1462131285458948189",
+    "transcript_file": "/home/container/transcripts/transcript-193.txt",
+    "closed_at": "2026-02-06T22:34:50.123Z",
+    "button": "provino",
+    "channel_name": "ticket-193",
+    "answers": {
+      "{q1}": "kripxicc",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral.Minemen",
+      "{q5}": "Martedi alle 4:30"
+    }
+  },
+  "194": {
+    "owner": "1056925694606721125",
+    "transcript_file": "/home/container/transcripts/transcript-194.txt",
+    "closed_at": "2026-02-06T20:27:40.188Z",
+    "button": "general",
+    "channel_name": "ticket-194",
+    "answers": {
+      "{q1}": "matteo3000",
+      "{q2}": "partnership?",
+      "{q3}": "N/A"
+    }
+  },
+  "195": {
+    "owner": "1004006463078924298",
+    "transcript_file": "/home/container/transcripts/transcript-195.txt",
+    "closed_at": "2026-02-07T11:21:13.811Z",
+    "button": "provino",
+    "channel_name": "ticket-195",
+    "answers": {
+      "{q1}": "miciuz",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral / mmc",
+      "{q5}": "subito"
+    }
+  },
+  "196": {
+    "owner": "1210550231091908674",
+    "transcript_file": "/home/container/transcripts/transcript-196.txt",
+    "closed_at": "2026-02-07T22:33:04.852Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "TheWilloh",
+      "{q2}": "Clan",
+      "{q3}": "Willo",
+      "{q4}": "Coral",
+      "{q5}": "Adesso, Stasera dalle 6.30 alle 7.40 o dalle 9 alle 23.00"
+    }
+  },
+  "197": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-197.txt",
+    "closed_at": "2026-02-07T16:21:22.521Z",
+    "button": "provino",
+    "channel_name": "ticket-197",
+    "answers": {
+      "{q1}": "Gabru_1",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Ora"
+    }
+  },
+  "198": {
+    "owner": "1012416175923286136",
+    "transcript_file": "/home/container/transcripts/transcript-198.txt",
+    "closed_at": "2026-02-11T00:30:38.623Z",
+    "button": "general",
+    "channel_name": "ticket-198",
+    "answers": {
+      "{q1}": "k1rom_",
+      "{q2}": "adsdas",
+      "{q3}": "adsadsads"
+    }
+  },
+  "199": {
+    "owner": "1191024007869374565",
+    "transcript_file": "/home/container/transcripts/transcript-199.txt",
+    "closed_at": "2026-02-13T17:04:53.152Z",
+    "button": "provino",
+    "channel_name": "ticket-199",
+    "answers": {
+      "{q1}": "Goblin_Cazzuto",
+      "{q2}": "Clan",
+      "{q3}": "//",
+      "{q4}": "Coral my life 🔥💥",
+      "{q5}": "il weekend di sera o pomeriggio"
+    }
+  },
+  "200": {
+    "owner": "943188659820191755",
+    "transcript_file": "/home/container/transcripts/transcript-200.txt",
+    "closed_at": "2026-02-12T17:38:52.946Z",
+    "button": "general",
+    "channel_name": "ticket-200",
+    "answers": {
+      "{q1}": "negro1",
+      "{q2}": "segnalare un coleader",
+      "{q3}": "è negro, puzza e abusa di potere"
+    }
+  },
+  "201": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-201.txt",
+    "closed_at": "2026-02-13T13:55:35.478Z",
+    "button": "provino",
+    "channel_name": "ticket-201",
+    "answers": {
+      "{q1}": "Gabri_1",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Ora"
+    }
+  },
+  "202": {
+    "owner": "1208096916030627970",
+    "transcript_file": "/home/container/transcripts/transcript-202.txt",
+    "closed_at": "2026-02-14T13:30:18.604Z",
+    "button": "provino",
+    "channel_name": "ticket-202",
+    "answers": {
+      "{q1}": "ItsDavlooo",
+      "{q2}": "CW",
+      "{q3}": "DAVLOOOLIVE",
+      "{q4}": "Coral",
+      "{q5}": "Ora o domani quando volete"
+    }
+  },
+  "203": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-203.txt",
+    "closed_at": "2026-02-14T13:29:23.288Z",
+    "button": "general",
+    "channel_name": "ticket-203",
+    "answers": {
+      "{q1}": "Gabri_1",
+      "{q2}": "Sono nel clan ma quando entro in call sono mutato e non posso né parlare ne ascoltare",
+      "{q3}": "N/A"
+    }
+  },
+  "204": {
+    "owner": "1446879035522158785",
+    "transcript_file": "/home/container/transcripts/transcript-204.txt",
+    "closed_at": "2026-02-14T13:38:38.475Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "_ShadowMagic",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Sabato 12:00"
+    }
+  },
+  "205": {
+    "owner": "1035994805462913167",
+    "transcript_file": "/home/container/transcripts/transcript-205.txt",
+    "closed_at": "2026-02-14T16:49:27.408Z",
+    "button": "provino",
+    "channel_name": "ticket-205",
+    "answers": {
+      "{q1}": "Raoulygamer11",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Sabato 16:00"
+    }
+  },
+  "206": {
+    "owner": "1353303255639261244",
+    "transcript_file": "/home/container/transcripts/transcript-206.txt",
+    "closed_at": "2026-02-15T13:18:25.407Z",
+    "button": "general",
+    "channel_name": "ticket-206",
+    "answers": {
+      "{q1}": "gabryboss2020",
+      "{q2}": "vorrei diventare fortino nel pvp e nei bridge",
+      "{q3}": "N/A"
+    }
+  },
+  "207": {
+    "owner": "1368127297143443522",
+    "transcript_file": "/home/container/transcripts/transcript-207.txt",
+    "closed_at": "2026-02-15T16:56:19.959Z",
+    "button": "coaching",
+    "channel_name": "ticket-207",
+    "answers": {
+      "{q1}": "ChriNumberOne",
+      "{q2}": "PVP",
+      "{q3}": "Ora"
+    }
+  },
+  "208": {
+    "owner": "943188659820191755",
+    "transcript_file": "/home/container/transcripts/transcript-208.txt",
+    "closed_at": "2026-02-15T17:55:34.939Z",
+    "button": "coaching",
+    "channel_name": "coaching",
+    "answers": {
+      "{q1}": "pelonso",
+      "{q2}": "tuto",
+      "{q3}": "adesso"
+    }
+  },
+  "209": {
+    "owner": "1168546143488196648",
+    "transcript_file": "/home/container/transcripts/transcript-209.txt",
+    "closed_at": "2026-02-18T15:17:47.747Z",
+    "button": "coaching",
+    "channel_name": "coaching-dani",
+    "answers": {
+      "{q1}": "ItsDaniz_",
+      "{q2}": "PVP",
+      "{q3}": "Da discutere"
+    }
+  },
+  "210": {
+    "owner": "1353333587239243818",
+    "transcript_file": "/home/container/transcripts/transcript-210.txt",
+    "closed_at": "2026-02-16T15:26:03.277Z",
+    "button": "coaching",
+    "channel_name": "attesa-risposta",
+    "answers": {
+      "{q1}": "Gabri_1",
+      "{q2}": "PVP",
+      "{q3}": "Ora"
+    }
+  },
+  "211": {
+    "owner": "1409899003092533271",
+    "transcript_file": "/home/container/transcripts/transcript-211.txt",
+    "closed_at": "2026-02-16T14:04:19.730Z",
+    "button": "coaching",
+    "channel_name": "coaching-fede351",
+    "answers": {
+      "{q1}": "Fede351",
+      "{q2}": "PVP",
+      "{q3}": "ora oppure durante la settimana tutti i giorni tranne il lunedi e mercoledi dalle 14:50 alle 16:30 più o meno"
+    }
+  },
+  "212": {
+    "owner": "887670174977761310",
+    "transcript_file": "/home/container/transcripts/transcript-212.txt",
+    "closed_at": "2026-02-20T14:44:54.964Z",
+    "button": "coaching",
+    "channel_name": "coaching-its_zeus",
+    "answers": {
+      "{q1}": "Its_Zeus28",
+      "{q2}": "Game sense",
+      "{q3}": "Lunedì alle 17:00"
+    }
+  },
+  "213": {
+    "owner": "1210550231091908674",
+    "transcript_file": "/home/container/transcripts/transcript-213.txt",
+    "closed_at": "2026-02-18T18:00:22.285Z",
+    "button": "coaching",
+    "channel_name": "coaching-willo",
+    "answers": {
+      "{q1}": "TheWilloh",
+      "{q2}": "Bridging e Gamesense, magari un po' di Pvp, visto che in generale vorrei affinare le mie tecniche da player già esperto.",
+      "{q3}": "Ora (no voc), Domani Pomeriggio dalle 3.20 alle 4.30"
+    }
+  },
+  "214": {
+    "owner": "1462920415948050714",
+    "transcript_file": "/home/container/transcripts/transcript-214.txt",
+    "closed_at": "2026-02-16T15:14:09.111Z",
+    "button": "coaching",
+    "channel_name": "ticket-214",
+    "answers": {
+      "{q1}": "hikup9",
+      "{q2}": "RBW Gamesense",
+      "{q3}": "bho"
+    }
+  },
+  "215": {
+    "owner": "1036591962909851729",
+    "transcript_file": "/home/container/transcripts/transcript-215.txt",
+    "closed_at": "2026-02-17T21:53:06.419Z",
+    "button": "coaching",
+    "channel_name": "coaching-darkness",
+    "answers": {
+      "{q1}": "The_Darkness_Me",
+      "{q2}": "Pvp",
+      "{q3}": "Oggi dopo le 15"
+    }
+  },
+  "216": {
+    "owner": "1470038476190646293",
+    "transcript_file": "/home/container/transcripts/transcript-216.txt",
+    "closed_at": "2026-02-19T10:12:50.815Z",
+    "button": "provino",
+    "channel_name": "attesa-risposta",
+    "answers": {
+      "{q1}": "matewoh_",
+      "{q2}": "vorrei provare clan primario oppure il secondario",
+      "{q3}": "N/A",
+      "{q4}": "coralMC",
+      "{q5}": "oggi, 14:00, domani 15:00"
+    }
+  },
+  "217": {
+    "owner": "1200552892105502852",
+    "transcript_file": "/home/container/transcripts/transcript-217.txt",
+    "closed_at": "2026-02-28T23:37:05.596Z",
+    "button": "general",
+    "channel_name": "candidatura-web",
+    "answers": {
+      "{q1}": "d3xts",
+      "{q2}": "sono un developer, vi interesserebbe un restyle del sito web free?",
+      "{q3}": "N/A"
+    }
+  },
+  "218": {
+    "owner": "339395859147915275",
+    "transcript_file": "/home/container/transcripts/transcript-218.txt",
+    "closed_at": "2026-02-22T13:40:04.026Z",
+    "button": "coaching",
+    "channel_name": "ticket-218",
+    "answers": {
+      "{q1}": "scyde",
+      "{q2}": "tuttoo",
+      "{q3}": "se mi pagate tutto il giorno"
+    }
+  },
+  "219": {
+    "owner": "1467972670669717689",
+    "transcript_file": "/home/container/transcripts/transcript-219.txt",
+    "closed_at": "2026-02-24T17:58:23.106Z",
+    "button": "provino",
+    "channel_name": "provino-cw-billi",
+    "answers": {
+      "{q1}": "tekkyer",
+      "{q2}": "boh entrambi",
+      "{q3}": "nop",
+      "{q4}": "coral",
+      "{q5}": "boh"
+    }
+  },
+  "220": {
+    "owner": "960963778864881694",
+    "transcript_file": "/home/container/transcripts/transcript-220.txt",
+    "closed_at": "2026-03-05T21:36:57.711Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "Giacomo0818",
+      "{q2}": "clan",
+      "{q3}": "Giacomo_0834",
+      "{q4}": "coral, hypexl",
+      "{q5}": "sabato verso le 15/16"
+    }
+  },
+  "221": {
+    "owner": "1319958309561958502",
+    "transcript_file": "/home/container/transcripts/transcript-221.txt",
+    "closed_at": "2026-02-24T13:08:37.943Z",
+    "button": "general",
+    "channel_name": "ticket-221",
+    "answers": {
+      "{q1}": "Gioyou_",
+      "{q2}": "Voglio essere smutato nelle call, non ho bisogno di aiuto in game voglio essere solo smutato nelle call, per favore",
+      "{q3}": "N/A"
+    }
+  },
+  "222": {
+    "owner": "1470038476190646293",
+    "transcript_file": "/home/container/transcripts/transcript-222.txt",
+    "closed_at": "2026-02-27T17:15:41.641Z",
+    "button": "provino",
+    "channel_name": "invito-v2",
+    "answers": {
+      "{q1}": "matewoh_",
+      "{q2}": "vailance, o secondario",
+      "{q3}": "N/A",
+      "{q4}": "coralMC",
+      "{q5}": "ora, fino alle 17:30, domani, non so bene se pomeriggio o mattina, faccio sapere."
+    }
+  },
+  "223": {
+    "owner": "1198001214076485772",
+    "transcript_file": "/home/container/transcripts/transcript-223.txt",
+    "closed_at": "2026-03-02T19:47:57.720Z",
+    "button": "coaching",
+    "channel_name": "coaching-amphrocio",
+    "answers": {
+      "{q1}": "UrBed",
+      "{q2}": "Bedfight",
+      "{q3}": "quando c'è violenza"
+    }
+  },
+  "224": {
+    "owner": "686293114566344749",
+    "transcript_file": "/home/container/transcripts/transcript-224.txt",
+    "closed_at": "2026-03-01T16:29:49.536Z",
+    "button": "cw",
+    "channel_name": "cw-paradise",
+    "answers": {
+      "{q1}": "scriptato",
+      "{q2}": "Paradise",
+      "{q3}": "https://discord.gg/mMBfbgZg",
+      "{q4}": "boh vediamo in ticket",
+      "{q5}": "ci organizziamo assieme"
+    }
+  },
+  "225": {
+    "owner": "1465735539205476498",
+    "transcript_file": "/home/container/transcripts/transcript-225.txt",
+    "closed_at": "2026-03-05T21:39:27.696Z",
+    "button": "general",
+    "channel_name": "join-clan-in-game",
+    "answers": {
+      "{q1}": "Manu790",
+      "{q2}": "facevo parte del clan valiance ma da un giiorno a l'altro non ne faccio piu parte.",
+      "{q3}": "avevo incontrato un  ragazzo su coral che mi avevo invitato in questo modo mi sono unito"
+    }
+  },
+  "226": {
+    "owner": "913869217177141289",
+    "transcript_file": "/home/container/transcripts/transcript-226.txt",
+    "closed_at": "2026-02-28T22:37:26.678Z",
+    "button": "provino",
+    "channel_name": "ticket-226",
+    "answers": {
+      "{q1}": "Mr_Feni0",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "quasi sempre"
+    }
+  },
+  "227": {
+    "owner": "485829145025052683",
+    "transcript_file": "/home/container/transcripts/transcript-227.txt",
+    "closed_at": "2026-02-28T21:57:04.414Z",
+    "button": "provino",
+    "channel_name": "ticket-227",
+    "answers": {
+      "{q1}": "Cap_Rex",
+      "{q2}": "Clan",
+      "{q3}": "nessuno",
+      "{q4}": "Coral",
+      "{q5}": "sta sera/ dopo le 16 il pomeriggio in settimana"
+    }
+  },
+  "228": {
+    "owner": "1012769047655481465",
+    "transcript_file": "/home/container/transcripts/transcript-228.txt",
+    "closed_at": "2026-03-02T20:09:34.253Z",
+    "button": "coaching",
+    "channel_name": "coaching-deep98",
+    "answers": {
+      "{q1}": "Deep98",
+      "{q2}": "PvP/gamesens",
+      "{q3}": "Sempre disponibile"
+    }
+  },
+  "229": {
+    "owner": "1467972670669717689",
+    "transcript_file": "/home/container/transcripts/transcript-229.txt",
+    "closed_at": "2026-03-05T21:39:54.839Z",
+    "button": "cw",
+    "channel_name": "cw-itwinker",
+    "answers": {
+      "{q1}": "plxza",
+      "{q2}": "itwinker",
+      "{q3}": "non lo abbiamo usiamo meet",
+      "{q4}": "plxza,adem1925,auraman1328,rjsaa,fabiogrosso",
+      "{q5}": "oggi appena potete"
+    }
+  },
+  "230": {
+    "owner": "1038761461578739763",
+    "transcript_file": "/home/container/transcripts/transcript-230.txt",
+    "closed_at": "2026-03-03T17:05:09.480Z",
+    "button": "general",
+    "channel_name": "ticket-230",
+    "answers": {
+      "{q1}": "N3onnino",
+      "{q2}": "Candidatura per Helper o Mod.",
+      "{q3}": "Vorrei diventare Mod della chat, se non pexate direttamente a mod allora Helper"
+    }
+  },
+  "231": {
+    "owner": "593714050865692673",
+    "transcript_file": "/home/container/transcripts/transcript-231.txt",
+    "closed_at": "2026-03-04T17:01:29.183Z",
+    "button": "provino",
+    "channel_name": "ticket-231",
+    "answers": {
+      "{q1}": "Sqntoh",
+      "{q2}": "clan cw",
+      "{q3}": "sqantogh",
+      "{q4}": "coral",
+      "{q5}": "tutto"
+    }
+  },
+  "232": {
+    "owner": "1467972670669717689",
+    "transcript_file": "/home/container/transcripts/transcript-232.txt",
+    "closed_at": "2026-03-10T08:44:17.587Z",
+    "button": "cw",
+    "channel_name": "cw-defiance",
+    "answers": {
+      "{q1}": "plxza",
+      "{q2}": "defiance",
+      "{q3}": "non ce l'ho il permesso agli inviti",
+      "{q4}": "plxza indra inside e nuvola",
+      "{q5}": "boh tutto oggi"
+    }
+  },
+  "233": {
+    "owner": "857186941875388458",
+    "transcript_file": "/home/container/transcripts/transcript-233.txt",
+    "closed_at": "2026-03-06T19:17:14.236Z",
+    "button": "provino",
+    "channel_name": "ticket-233",
+    "answers": {
+      "{q1}": "gamer12_000",
+      "{q2}": "Clan",
+      "{q3}": "Gamer12_00",
+      "{q4}": "Coral",
+      "{q5}": "Fra 30 minuti"
+    }
+  },
+  "234": {
+    "owner": "1244246889772351553",
+    "transcript_file": "/home/container/transcripts/transcript-234.txt",
+    "closed_at": "2026-03-09T18:31:42.418Z",
+    "button": "provino",
+    "channel_name": "ticket-234",
+    "answers": {
+      "{q1}": "dislessia",
+      "{q2}": "cw-clan",
+      "{q3}": "dislessiq",
+      "{q4}": "coral mc",
+      "{q5}": "domenica e sabato e altri giorni ma non sono sicuri"
+    }
+  },
+  "235": {
+    "owner": "1381341830402281673",
+    "transcript_file": "/home/container/transcripts/transcript-235.txt",
+    "closed_at": "2026-03-06T21:07:08.997Z",
+    "button": "general",
+    "channel_name": "ticket-235",
+    "answers": {
+      "{q1}": "ItzOnlyIlm4nnux",
+      "{q2}": "Entrare valiance",
+      "{q3}": "N/A"
+    }
+  },
+  "236": {
+    "owner": "310489317833310219",
+    "transcript_file": "/home/container/transcripts/transcript-236.txt",
+    "closed_at": "2026-03-08T11:22:58.112Z",
+    "button": "provino",
+    "channel_name": "ticket-236",
+    "answers": {
+      "{q1}": "carmelonobile",
+      "{q2}": "clan",
+      "{q3}": "carmelonobile",
+      "{q4}": "coral",
+      "{q5}": "sempre"
+    }
+  },
+  "237": {
+    "owner": "1353303255639261244",
+    "transcript_file": "/home/container/transcripts/transcript-237.txt",
+    "closed_at": "2026-03-07T15:06:06.866Z",
+    "button": "coaching",
+    "channel_name": "ticket-237",
+    "answers": {
+      "{q1}": "Zaydos",
+      "{q2}": "PVP",
+      "{q3}": "ora e dopo"
+    }
+  },
+  "238": {
+    "owner": "727698084875730955",
+    "transcript_file": "/home/container/transcripts/transcript-238.txt",
+    "closed_at": "2026-03-08T15:09:46.471Z",
+    "button": "provino",
+    "channel_name": "ticket-238",
+    "answers": {
+      "{q1}": "K1Godz",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral e hyp da alt",
+      "{q5}": "fafwa"
+    }
+  },
+  "239": {
+    "owner": "1446879035522158785",
+    "transcript_file": "/home/container/transcripts/transcript-239.txt",
+    "closed_at": "2026-03-08T13:02:30.776Z",
+    "button": "provino",
+    "channel_name": "ticket-239",
+    "answers": {
+      "{q1}": "_ShadowMagic",
+      "{q2}": "Clan",
+      "{q3}": "XRicky_13",
+      "{q4}": "Coral",
+      "{q5}": "Oggi alle 12:00"
+    }
+  },
+  "240": {
+    "owner": "1240014231345172489",
+    "transcript_file": "/home/container/transcripts/transcript-240.txt",
+    "closed_at": "2026-03-10T08:43:34.730Z",
+    "button": "provino",
+    "channel_name": "ticket-240",
+    "answers": {
+      "{q1}": "ciotola24",
+      "{q2}": "clan",
+      "{q3}": "no",
+      "{q4}": "coral mineman",
+      "{q5}": "ora"
+    }
+  },
+  "241": {
+    "owner": "1370416858636881930",
+    "transcript_file": "/home/container/transcripts/transcript-241.txt",
+    "closed_at": "2026-03-10T08:52:22.112Z",
+    "button": "general",
+    "channel_name": "ticket-241",
+    "answers": {
+      "{q1}": "Somaliaa",
+      "{q2}": "Perché mi avete tolto il ruolo cw",
+      "{q3}": "N/A"
+    }
+  },
+  "242": {
+    "owner": "860539348490387466",
+    "transcript_file": "/home/container/transcripts/transcript-242.txt",
+    "closed_at": "2026-03-10T15:06:14.426Z",
+    "button": "general",
+    "channel_name": "ticket-242",
+    "answers": {
+      "{q1}": "Rafim10",
+      "{q2}": "Vorrei avere la possibilità di fare il provino per mod, o perlomeno la chiave join. Capisco che quando la ho ottenuta sono uscito e me la avete tolta, ma adesso sono disposto a rimanere nel clan fino a che io non muoia",
+      "{q3}": "Sono 010, molto occupato con la scuola e posso comunicare anche in spagnolo. Gracias  y Hasta Luego"
+    }
+  },
+  "243": {
+    "owner": "1038761461578739763",
+    "transcript_file": "/home/container/transcripts/transcript-243.txt",
+    "closed_at": "2026-03-13T22:53:14.228Z",
+    "button": "general",
+    "channel_name": "ticket-243",
+    "answers": {
+      "{q1}": "N3onnino",
+      "{q2}": "Ho appena creato il mio server discord che uscirà presto, volevo avere il permesso di mettere la Valiance texture pack di Gabri e Debb nella sezione dato che in live me la chiedono sempre, ovviamente dando i crediti al team e a loro 2",
+      "{q3}": "N/A"
+    }
+  },
+  "244": {
+    "owner": "1017346061842526209",
+    "transcript_file": "/home/container/transcripts/transcript-244.txt",
+    "closed_at": "2026-03-10T22:23:46.667Z",
+    "button": "general",
+    "channel_name": "ticket-244",
+    "answers": {
+      "{q1}": "cappelladura",
+      "{q2}": "server di merda non fa registrare",
+      "{q3}": "N/A"
+    }
+  },
+  "245": {
+    "owner": "1463252268580212847",
+    "transcript_file": "/home/container/transcripts/transcript-245.txt",
+    "closed_at": "2026-03-12T14:08:38.762Z",
+    "button": "provino",
+    "channel_name": "ticket-245",
+    "answers": {
+      "{q1}": "Sk2Ro0t",
+      "{q2}": "Clan(academy se sta)",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "ogni giorno a qualsiasi ora"
+    }
+  },
+  "246": {
+    "owner": "1397219885997752361",
+    "transcript_file": "/home/container/transcripts/transcript-246.txt",
+    "closed_at": "2026-03-13T13:06:39.475Z",
+    "button": "provino",
+    "channel_name": "ticket-246",
+    "answers": {
+      "{q1}": "lilwaynes",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral e mmc",
+      "{q5}": "tutti i giorni dalle 14 alle 17"
+    }
+  },
+  "247": {
+    "owner": "1068862596419166258",
+    "transcript_file": "/home/container/transcripts/transcript-247.txt",
+    "closed_at": "2026-03-15T22:10:10.933Z",
+    "button": "cw",
+    "channel_name": "cw-defiance",
+    "answers": {
+      "{q1}": "Indrahex",
+      "{q2}": "Defiance",
+      "{q3}": "Ghh",
+      "{q4}": "Bho",
+      "{q5}": "Domani"
+    }
+  },
+  "248": {
+    "owner": "1474730675218153593",
+    "transcript_file": "/home/container/transcripts/transcript-248.txt",
+    "closed_at": "2026-03-12T21:45:06.139Z",
+    "button": "coaching",
+    "channel_name": "ticket-248",
+    "answers": {
+      "{q1}": "omadonnah",
+      "{q2}": "gaymsens",
+      "{q3}": "per te sempre baby"
+    }
+  },
+  "249": {
+    "owner": "1324411809519636597",
+    "transcript_file": "/home/container/transcripts/transcript-249.txt",
+    "closed_at": "2026-03-24T15:26:27.464Z",
+    "button": "general",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "Lillosreyli",
+      "{q2}": "Io ho cambiato nome e quindi mi ha fatto uscire dal clan prima mi chiamavo mr_moon vorrei sapere se posso essere riaggiunto nel clan",
+      "{q3}": "N/A"
+    }
+  },
+  "250": {
+    "owner": "698834203672051753",
+    "transcript_file": "/home/container/transcripts/transcript-250.txt",
+    "closed_at": "2026-03-28T09:59:20.689Z",
+    "button": "coaching",
+    "channel_name": "coaching-xalepux",
+    "answers": {
+      "{q1}": "xAlepux",
+      "{q2}": "gamesense e pvp",
+      "{q3}": "non lo so"
+    }
+  },
+  "251": {
+    "owner": "1061076867781759054",
+    "transcript_file": "/home/container/transcripts/transcript-251.txt",
+    "closed_at": "2026-03-14T19:45:04.577Z",
+    "button": "cw",
+    "channel_name": "ticket-251",
+    "answers": {
+      "{q1}": "vaced",
+      "{q2}": "velvwet",
+      "{q3}": "nn lo abbiamo",
+      "{q4}": "io shardcam lilwayne kyrtez o non lo so",
+      "{q5}": "oggi alle 19"
+    }
+  },
+  "252": {
+    "owner": "1480905836481220690",
+    "transcript_file": "/home/container/transcripts/transcript-252.txt",
+    "closed_at": "2026-03-23T21:24:28.246Z",
+    "button": "cw",
+    "channel_name": "cw-swaggers",
+    "answers": {
+      "{q1}": "Itors",
+      "{q2}": "Swaggers",
+      "{q3}": "https://discord.gg/sWaagbHx",
+      "{q4}": "Abbiamo tipo 20 cw player, decideremo",
+      "{q5}": "Concordiamo orario nel ticket"
+    }
+  },
+  "253": {
+    "owner": "954477533921935360",
+    "transcript_file": "/home/container/transcripts/transcript-253.txt",
+    "closed_at": "2026-03-15T17:45:41.973Z",
+    "button": "general",
+    "channel_name": "ticket-253",
+    "answers": {
+      "{q1}": "ImCarpa",
+      "{q2}": "Salve, come probabilmente già sapete sono il capo degli All-In... O almeno lo ero. Gli All-In hanno fatto una fusione con gli Astral e il clan è stato eliminato. Ovviamente non abbiamo buttato via il server discord, vogliamo creare qualcosa di grande usando il nostro server discord centrato praticamente SOLO sui tornei! Stiamo già riorganizzando il nostro server discord in modo che sia perfetto e funzionale per gestire al meglio i tornei. Stiamo già prendendo soldi e server per iniziare con il botto..  Oltre a fare tornei startati da noi... Abbiamo pensato anche di fare qualcosa per gli altri clan di coral. Abbiamo pensato di fare in modo che anche gli altri clan potessero creare e hostare tornei tramite noi. Basta aprire un ticket nel nostro discord e dirci come volete farlo e quanti soldi volete dare. Noi non chiediamo niente in cambio, solo un po' di \"sponsor\" da parte vostra. Perchè dovreste fare tornei da noi quando potete farli da voi? Perche se li hostate da noi intanto abbiamo server Minecraft dedicato per farli, non dovete pensare a niente per la gestione, avrete la sponsorizzazione da parte nostra perche il torneo verrà segnato come vostro, se il progetto va bene noi avremmo moltaaa più utenza che vuole partecipare ai tornei e probabilmente avrete molti più partecipanti. Noi intanto vi chiediamo anche solo se volete, per ora, fare uno scambio di sponsor. Quindi magari mettere un canale con scritto \"tornei\" \"All-In\" e mettere il nostro server ds. Noi ovviamente faremo la stessa cosa con voi e con tutti gli altri. Poi se in futuro vorrete fare tornei tramite noi, basta che aprite ticket ed è fatta!",
+      "{q3}": "N/A"
+    }
+  },
+  "254": {
+    "owner": "1111308293302915244",
+    "transcript_file": "/home/container/transcripts/transcript-254.txt",
+    "closed_at": "2026-03-15T14:32:28.076Z",
+    "button": "general",
+    "channel_name": "ticket-254",
+    "answers": {
+      "{q1}": "ciao",
+      "{q2}": "ciao",
+      "{q3}": "ciao! mi andava di aprire ticket"
+    }
+  },
+  "255": {
+    "owner": "825676396059688980",
+    "transcript_file": "/home/container/transcripts/transcript-255.txt",
+    "closed_at": "2026-03-17T19:08:42.387Z",
+    "button": "provino",
+    "channel_name": "cw-member-streqked",
+    "answers": {
+      "{q1}": "Streqked",
+      "{q2}": "CW",
+      "{q3}": "tanti",
+      "{q4}": "mmc and coral",
+      "{q5}": "basta taggarmi"
+    }
+  },
+  "256": {
+    "owner": "695568744969404506",
+    "transcript_file": "/home/container/transcripts/transcript-256.txt",
+    "closed_at": "2026-03-16T07:17:27.544Z",
+    "button": "coaching",
+    "channel_name": "ticket-256",
+    "answers": {
+      "{q1}": "v4hj",
+      "{q2}": "boxing",
+      "{q3}": "ora"
+    }
+  },
+  "257": {
+    "owner": "526847113112322048",
+    "transcript_file": "/home/container/transcripts/transcript-257.txt",
+    "closed_at": "2026-03-17T12:11:08.911Z",
+    "button": "provino",
+    "channel_name": "provino-sukable",
+    "answers": {
+      "{q1}": "Suka_Ble",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral, Minemen",
+      "{q5}": "Anche ora"
+    }
+  },
+  "258": {
+    "owner": "1110927543760068618",
+    "transcript_file": "/home/container/transcripts/transcript-258.txt",
+    "closed_at": "2026-03-17T10:43:54.805Z",
+    "button": "provino",
+    "channel_name": "provino-pino",
+    "answers": {
+      "{q1}": "Pino3373",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "anche ora"
+    }
+  },
+  "259": {
+    "owner": "995027962682425427",
+    "transcript_file": "/home/container/transcripts/transcript-259.txt",
+    "closed_at": "2026-03-16T21:34:05.483Z",
+    "button": "coaching",
+    "channel_name": "ticket-259",
+    "answers": {
+      "{q1}": "wyyloo",
+      "{q2}": "Pvp",
+      "{q3}": "Martedì 16:30"
+    }
+  },
+  "260": {
+    "owner": "1244246889772351553",
+    "transcript_file": "/home/container/transcripts/transcript-260.txt",
+    "closed_at": "2026-03-18T21:30:48.631Z",
+    "button": "general",
+    "channel_name": "provino-media",
+    "answers": {
+      "{q1}": "dislessiq",
+      "{q2}": "posso mettere il mio account tik tik/ i miei video su tik tok per sponzorizzarmi e diventare prossimamente media su coral?",
+      "{q3}": "N/A"
+    }
+  },
+  "261": {
+    "owner": "727698084875730955",
+    "transcript_file": "/home/container/transcripts/transcript-261.txt",
+    "closed_at": "2026-03-19T22:06:56.726Z",
+    "button": "provino",
+    "channel_name": "provino-cw",
+    "answers": {
+      "{q1}": "K1Godz",
+      "{q2}": "clan",
+      "{q3}": "heh",
+      "{q4}": "coral e hyp",
+      "{q5}": "sempre"
+    }
+  },
+  "262": {
+    "owner": "1368127297143443522",
+    "transcript_file": "/home/container/transcripts/transcript-262.txt",
+    "closed_at": "2026-03-21T21:36:56.466Z",
+    "button": "coaching",
+    "channel_name": "coaching-chri",
+    "answers": {
+      "{q1}": "ChriNumberOne",
+      "{q2}": "Pvp e possibilmente boxing e bedfight",
+      "{q3}": "oggi fino alle 5"
+    }
+  },
+  "263": {
+    "owner": "1390640059702837363",
+    "transcript_file": "/home/container/transcripts/transcript-263.txt",
+    "closed_at": "2026-03-20T15:08:03.279Z",
+    "button": "general",
+    "channel_name": "provino-staff",
+    "answers": {
+      "{q1}": "Pelli1308",
+      "{q2}": "Salve, volevo chiedere se avevate bisogna di staffer che moderino il discord, sembra una bella community, e ho molte esperienze nell ambito della moderazione e della gestione dei server discord, se ci sono provini da fare sono pronto a 20/30 anche 50 domande, però sarebbe bello darvi una mano.\n-pelli",
+      "{q3}": "N/A"
+    }
+  },
+  "264": {
+    "owner": "726131873075429488",
+    "transcript_file": "/home/container/transcripts/transcript-264.txt",
+    "closed_at": "2026-03-27T15:19:22.816Z",
+    "button": "general",
+    "channel_name": "richiesta-collab",
+    "answers": {
+      "{q1}": "OnlyBeffa",
+      "{q2}": "Vorrei parlare di un eventuale proposta di \"collaborazione\", per un progetto ovvero ShadesMC,\nho gia' parlato precedentemente con Gabri, pero' vorrei mostrare il progetto a debb per spiegarli precisamente cosa voglio fare, e come funzionano le meccaniche del server stesso.",
+      "{q3}": "Ho gia' il progetto concreto, che posso mostrarvi con i vostri occhi."
+    }
+  },
+  "265": {
+    "owner": "1295403836252618793",
+    "transcript_file": "/home/container/transcripts/transcript-265.txt",
+    "closed_at": "2026-03-24T06:00:28.778Z",
+    "button": "provino",
+    "channel_name": "join-mafia-v2",
+    "answers": {
+      "{q1}": "MafiaSicxliana",
+      "{q2}": "Clan",
+      "{q3}": "Horwia",
+      "{q4}": "CoralMC",
+      "{q5}": "Sempre"
+    }
+  },
+  "266": {
+    "owner": "1474730675218153593",
+    "transcript_file": "/home/container/transcripts/transcript-266.txt",
+    "closed_at": "2026-03-22T22:06:37.883Z",
+    "button": "general",
+    "channel_name": "ticket-266",
+    "answers": {
+      "{q1}": "omadonnah",
+      "{q2}": "ho bisogno di soldi",
+      "{q3}": "100€?"
+    }
+  },
+  "267": {
+    "owner": "1111308293302915244",
+    "transcript_file": "/home/container/transcripts/transcript-267.txt",
+    "closed_at": "2026-03-22T21:55:56.376Z",
+    "button": "general",
+    "channel_name": "ticket-267",
+    "answers": {
+      "{q1}": "altoemoro",
+      "{q2}": "mi da fstidio che in attesa supporto non posso esser supportato perchè non posso parlare",
+      "{q3}": "N/A"
+    }
+  },
+  "268": {
+    "owner": "1464668480337871072",
+    "transcript_file": "/home/container/transcripts/transcript-268.txt",
+    "closed_at": "2026-03-23T21:23:35.204Z",
+    "button": "provino",
+    "channel_name": "ticket-268",
+    "answers": {
+      "{q1}": "hiti1234",
+      "{q2}": "viliance",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "sempre dopo le tre"
+    }
+  },
+  "269": {
+    "owner": "884796661161938965",
+    "transcript_file": "/home/container/transcripts/transcript-269.txt",
+    "closed_at": "2026-03-23T17:13:07.047Z",
+    "button": "general",
+    "channel_name": "ticket-269",
+    "answers": {
+      "{q1}": "KvaradamFM",
+      "{q2}": "targhetta media",
+      "{q3}": "N/A"
+    }
+  },
+  "270": {
+    "owner": "1324708734706122784",
+    "transcript_file": "/home/container/transcripts/transcript-270.txt",
+    "closed_at": "2026-03-23T21:23:23.687Z",
+    "button": "general",
+    "channel_name": "ticket-270",
+    "answers": {
+      "{q1}": "daga",
+      "{q2}": "dhasg",
+      "{q3}": "che"
+    }
+  },
+  "271": {
+    "owner": "1376472129305972756",
+    "transcript_file": "/home/container/transcripts/transcript-271.txt",
+    "closed_at": "2026-03-27T18:02:30.107Z",
+    "button": "coaching",
+    "channel_name": "coaching-giuseppon",
+    "answers": {
+      "{q1}": "giuseppon",
+      "{q2}": "voglio imparare boxing",
+      "{q3}": "boh varia in base ai giorni e cosa devo fare"
+    }
+  },
+  "272": {
+    "owner": "1244246889772351553",
+    "transcript_file": "/home/container/transcripts/transcript-272.txt",
+    "closed_at": "2026-03-25T11:34:51.117Z",
+    "button": "general",
+    "channel_name": "ticket-272",
+    "answers": {
+      "{q1}": "dislessiq",
+      "{q2}": "potete mettere su promo il mio tik tok? #valianceontop",
+      "{q3}": "N/A"
+    }
+  },
+  "273": {
+    "owner": "1359549709940687029",
+    "transcript_file": "/home/container/transcripts/transcript-273.txt",
+    "closed_at": "2026-03-25T21:53:09.271Z",
+    "button": "provino",
+    "channel_name": "provino-clan-champion",
+    "answers": {
+      "{q1}": "Champion_120",
+      "{q2}": "valiance",
+      "{q3}": "N/A",
+      "{q4}": "coralmc",
+      "{q5}": "pure oggi"
+    }
+  },
+  "274": {
+    "owner": "1203069045990236161",
+    "transcript_file": "/home/container/transcripts/transcript-274.txt",
+    "closed_at": "2026-03-27T14:30:49.632Z",
+    "button": "provino",
+    "channel_name": "provino-clan-sniferix",
+    "answers": {
+      "{q1}": "Itsinfernix_",
+      "{q2}": "Valiance",
+      "{q3}": "N/A",
+      "{q4}": "CoralMC",
+      "{q5}": "Pure oggi"
+    }
+  },
+  "275": {
+    "owner": "1342804353060442172",
+    "transcript_file": "/home/container/transcripts/transcript-275.txt",
+    "closed_at": "2026-03-26T16:16:11.853Z",
+    "button": "provino",
+    "channel_name": "ticket-275",
+    "answers": {
+      "{q1}": "gerth0",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "sempre dopo le 15"
+    }
+  },
+  "276": {
+    "owner": "1134772773571526696",
+    "transcript_file": "/home/container/transcripts/transcript-276.txt",
+    "closed_at": "2026-03-27T14:29:45.162Z",
+    "button": "provino",
+    "channel_name": "ticket-276",
+    "answers": {
+      "{q1}": "SamTro23",
+      "{q2}": "Valiance",
+      "{q3}": "nessuno",
+      "{q4}": "CoralMC",
+      "{q5}": "Sabato dalle 18:00 in poi"
+    }
+  },
+  "277": {
+    "owner": "1134772773571526696",
+    "transcript_file": "/home/container/transcripts/transcript-277.txt",
+    "closed_at": "2026-03-27T22:17:26.946Z",
+    "button": "provino",
+    "channel_name": "ticket-277",
+    "answers": {
+      "{q1}": "SamTro23",
+      "{q2}": "Valiance",
+      "{q3}": "nessuno",
+      "{q4}": "CoralMC",
+      "{q5}": "Sabato dalle 18:00 in poi"
+    }
+  },
+  "278": {
+    "owner": "1477591273325199491",
+    "transcript_file": "/home/container/transcripts/transcript-278.txt",
+    "closed_at": "2026-03-28T11:15:56.695Z",
+    "button": "general",
+    "channel_name": "amici",
+    "answers": {
+      "{q1}": "lizzymm",
+      "{q2}": "amici",
+      "{q3}": "N/A"
+    }
+  },
+  "279": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-279.txt",
+    "closed_at": "2026-03-28T09:58:37.374Z",
+    "button": "general",
+    "channel_name": "attesa-invitov2-dado",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "entrare nel server minecraft",
+      "{q3}": "N/A"
+    }
+  },
+  "280": {
+    "owner": "1134772773571526696",
+    "transcript_file": "/home/container/transcripts/transcript-280.txt",
+    "closed_at": "2026-03-28T13:39:43.194Z",
+    "button": "provino",
+    "channel_name": "ticket-280",
+    "answers": {
+      "{q1}": "SamTro23",
+      "{q2}": "Valiance",
+      "{q3}": "nessuno",
+      "{q4}": "CoralMC",
+      "{q5}": "Sabato(oggi) alle 18:00"
+    }
+  },
+  "281": {
+    "owner": "1329513344721354834",
+    "transcript_file": "/home/container/transcripts/transcript-281.txt",
+    "closed_at": "2026-03-28T14:27:35.406Z",
+    "button": "coaching",
+    "channel_name": "ticket-281",
+    "answers": {
+      "{q1}": "Martinacute1",
+      "{q2}": "pvp e combo",
+      "{q3}": "sabato 15:30"
+    }
+  },
+  "282": {
+    "owner": "1221836199295979610",
+    "transcript_file": "/home/container/transcripts/transcript-282.txt",
+    "closed_at": "2026-03-29T10:08:38.504Z",
+    "button": "provino",
+    "channel_name": "join-v2",
+    "answers": {
+      "{q1}": "franscorpion_",
+      "{q2}": "Clan",
+      "{q3}": "//",
+      "{q4}": "CoralMc",
+      "{q5}": "Domenica 17:30"
+    }
+  },
+  "283": {
+    "owner": "1127930734317948979",
+    "transcript_file": "/home/container/transcripts/transcript-283.txt",
+    "closed_at": "2026-04-04T00:10:33.677Z",
+    "button": "general",
+    "channel_name": "candidatura-web",
+    "answers": {
+      "{q1}": "plebaa",
+      "{q2}": "Volevo sapere se avete bisogno di un Web Developer che può dare un mano (gratis).",
+      "{q3}": "N/A"
+    }
+  },
+  "284": {
+    "owner": "1463252268580212847",
+    "transcript_file": "/home/container/transcripts/transcript-284.txt",
+    "closed_at": "2026-04-01T18:17:31.031Z",
+    "button": "coaching",
+    "channel_name": "coaching-aletv",
+    "answers": {
+      "{q1}": "Sk2Ro0t",
+      "{q2}": "PVP",
+      "{q3}": "Se si può organizzare"
+    }
+  },
+  "285": {
+    "owner": "1191024007869374565",
+    "transcript_file": "/home/container/transcripts/transcript-285.txt",
+    "closed_at": "2026-04-03T07:37:31.599Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "Goblin_Cazzuto",
+      "{q2}": "Clan",
+      "{q3}": "//",
+      "{q4}": "CoralMc",
+      "{q5}": "oggi"
+    }
+  },
+  "286": {
+    "owner": "1287438192806596671",
+    "transcript_file": "/home/container/transcripts/transcript-286.txt",
+    "closed_at": "2026-04-06T09:08:16.688Z",
+    "button": "coaching",
+    "channel_name": "coaching-cantojaredneil",
+    "answers": {
+      "{q1}": "cantojaredneil",
+      "{q2}": "PVP",
+      "{q3}": "Oggi tutta la giornata sono libero"
+    }
+  },
+  "287": {
+    "owner": "1221836199295979610",
+    "transcript_file": "/home/container/transcripts/transcript-287.txt",
+    "closed_at": "2026-04-01T13:05:18.780Z",
+    "button": "provino",
+    "channel_name": "ticket-287",
+    "answers": {
+      "{q1}": "franscorpion_",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "//"
+    }
+  },
+  "288": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-288.txt",
+    "closed_at": "2026-04-03T07:35:20.539Z",
+    "button": "provino",
+    "channel_name": "ticket-288",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "clan",
+      "{q3}": "non ce li ho",
+      "{q4}": "coralMC",
+      "{q5}": "quasi sempre"
+    }
+  },
+  "289": {
+    "owner": "1470038476190646293",
+    "transcript_file": "/home/container/transcripts/transcript-289.txt",
+    "closed_at": "2026-04-03T08:22:23.582Z",
+    "button": "provino",
+    "channel_name": "ticket-289",
+    "answers": {
+      "{q1}": "matewoh_",
+      "{q2}": "primario dato il reset delle exp e vorrei tenare di entrare",
+      "{q3}": "N/A",
+      "{q4}": "coralMC",
+      "{q5}": "ora fino alle 18:00"
+    }
+  },
+  "290": {
+    "owner": "906610837928685648",
+    "transcript_file": "/home/container/transcripts/transcript-290.txt",
+    "closed_at": "2026-04-03T19:09:14.226Z",
+    "button": "provino",
+    "channel_name": "ticket-290",
+    "answers": {
+      "{q1}": "Daxkbs",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "fino alle 4,20"
+    }
+  },
+  "291": {
+    "owner": "906610837928685648",
+    "transcript_file": "/home/container/transcripts/transcript-291.txt",
+    "closed_at": "2026-04-03T20:13:46.867Z",
+    "button": "provino",
+    "channel_name": "ticket-291",
+    "answers": {
+      "{q1}": "Daxkbs",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "ora"
+    }
+  },
+  "292": {
+    "owner": "1461463227861958686",
+    "transcript_file": "/home/container/transcripts/transcript-292.txt",
+    "closed_at": "2026-04-03T23:42:09.314Z",
+    "button": "general",
+    "channel_name": "ticket-292",
+    "answers": {
+      "{q1}": "AyoMazzo",
+      "{q2}": "Ruolo member clan",
+      "{q3}": "N/A"
+    }
+  },
+  "293": {
+    "owner": "1169706955401601100",
+    "transcript_file": "/home/container/transcripts/transcript-293.txt",
+    "closed_at": "2026-04-04T09:21:59.125Z",
+    "button": "provino",
+    "channel_name": "ticket-293",
+    "answers": {
+      "{q1}": "AyoTetix",
+      "{q2}": "CLan",
+      "{q3}": "fxgaa, TetixBad",
+      "{q4}": "CoralMC",
+      "{q5}": "ora"
+    }
+  },
+  "294": {
+    "owner": "1134772773571526696",
+    "transcript_file": "/home/container/transcripts/transcript-294.txt",
+    "closed_at": "2026-04-07T17:15:33.867Z",
+    "button": "coaching",
+    "channel_name": "coaching-samtro23",
+    "answers": {
+      "{q1}": "SamTro23",
+      "{q2}": "PVP",
+      "{q3}": "oggi alle 18"
+    }
+  },
+  "295": {
+    "owner": "723902906721501204",
+    "transcript_file": "/home/container/transcripts/transcript-295.txt",
+    "closed_at": "2026-04-04T12:50:25.998Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "ImSimoo__",
+      "{q2}": "Clan",
+      "{q3}": "Solo questo",
+      "{q4}": "Coral",
+      "{q5}": "Anche ora"
+    }
+  },
+  "296": {
+    "owner": "943965491565846538",
+    "transcript_file": "/home/container/transcripts/transcript-296.txt",
+    "closed_at": "2026-04-05T15:43:37.970Z",
+    "button": "provino",
+    "channel_name": "ticket-296",
+    "answers": {
+      "{q1}": "ITSpainYT",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Adesso pk poi no"
+    }
+  },
+  "297": {
+    "owner": "695568744969404506",
+    "transcript_file": "/home/container/transcripts/transcript-297.txt",
+    "closed_at": "2026-04-04T22:22:09.980Z",
+    "button": "coaching",
+    "channel_name": "coaching-v4hj",
+    "answers": {
+      "{q1}": "v4hj",
+      "{q2}": "bocsing",
+      "{q3}": "ora"
+    }
+  },
+  "298": {
+    "owner": "1287081456765501621",
+    "transcript_file": "/home/container/transcripts/transcript-298.txt",
+    "closed_at": "2026-04-05T14:06:51.883Z",
+    "button": "provino",
+    "channel_name": "ticket-298",
+    "answers": {
+      "{q1}": "fedettuu1234",
+      "{q2}": "provino",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "sempre"
+    }
+  },
+  "299": {
+    "owner": "906610837928685648",
+    "transcript_file": "/home/container/transcripts/transcript-299.txt",
+    "closed_at": "2026-04-05T12:19:08.205Z",
+    "button": "provino",
+    "channel_name": "ticket-299",
+    "answers": {
+      "{q1}": "daxkbs",
+      "{q2}": "staff",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "domani sera o ora"
+    }
+  },
+  "300": {
+    "owner": "1198001214076485772",
+    "transcript_file": "/home/container/transcripts/transcript-300.txt",
+    "closed_at": "2026-04-05T14:06:44.193Z",
+    "button": "general",
+    "channel_name": "ticket-300",
+    "answers": {
+      "{q1}": "Tagikistan",
+      "{q2}": "Buona pasqua a tutto lo staff",
+      "{q3}": "N/A"
+    }
+  },
+  "301": {
+    "owner": "1470038476190646293",
+    "transcript_file": "/home/container/transcripts/transcript-301.txt",
+    "closed_at": "2026-04-05T23:00:26.669Z",
+    "button": "provino",
+    "channel_name": "ticket-301",
+    "answers": {
+      "{q1}": "matewoh_",
+      "{q2}": "primario o V2",
+      "{q3}": "N/A",
+      "{q4}": "coralMC",
+      "{q5}": "ora fino alle 16:30"
+    }
+  },
+  "302": {
+    "owner": "1352272224522076203",
+    "transcript_file": "/home/container/transcripts/transcript-302.txt",
+    "closed_at": "2026-04-05T23:00:08.644Z",
+    "button": "provino",
+    "channel_name": "ticket-302",
+    "answers": {
+      "{q1}": "iTonno",
+      "{q2}": "Clan",
+      "{q3}": "RIKIJONAS, RIKIJONAS_, NotRiki_ ( sono account con cui giocavo da bambino e le statistiche sono penose )",
+      "{q4}": "Coral",
+      "{q5}": "Non lo so esattamente, possiamo organizzarci poi"
+    }
+  },
+  "303": {
+    "owner": "906610837928685648",
+    "transcript_file": "/home/container/transcripts/transcript-303.txt",
+    "closed_at": "2026-04-06T22:11:29.498Z",
+    "button": "provino",
+    "channel_name": "invito-v2",
+    "answers": {
+      "{q1}": "daxkbs",
+      "{q2}": "staff",
+      "{q3}": ".",
+      "{q4}": "coral",
+      "{q5}": "ora"
+    }
+  },
+  "304": {
+    "owner": "1391173944115204207",
+    "transcript_file": "/home/container/transcripts/transcript-304.txt",
+    "closed_at": "2026-04-05T20:14:10.870Z",
+    "button": "general",
+    "channel_name": "ticket-304",
+    "answers": {
+      "{q1}": "MJzerti",
+      "{q2}": "I want to join for voc",
+      "{q3}": "N/A"
+    }
+  },
+  "305": {
+    "owner": "1352272224522076203",
+    "transcript_file": "/home/container/transcripts/transcript-305.txt",
+    "closed_at": "2026-04-06T23:58:18.206Z",
+    "button": "provino",
+    "channel_name": "ticket-305",
+    "answers": {
+      "{q1}": "iTonno",
+      "{q2}": "Clan",
+      "{q3}": "RIKIJONAS, RIKIJONAS_, NotRiki_",
+      "{q4}": "Coral",
+      "{q5}": "Molto spesso, di preciso non so"
+    }
+  },
+  "306": {
+    "owner": "1169706955401601100",
+    "transcript_file": "/home/container/transcripts/transcript-306.txt",
+    "closed_at": "2026-04-08T20:51:06.480Z",
+    "button": "provino",
+    "channel_name": "ticket-306",
+    "answers": {
+      "{q1}": "AyoTetix",
+      "{q2}": "Cw",
+      "{q3}": "TetixBad,fxgaa",
+      "{q4}": "Coral",
+      "{q5}": "domani tutto il giorno"
+    }
+  },
+  "307": {
+    "owner": "1067150678352478229",
+    "transcript_file": "/home/container/transcripts/transcript-307.txt",
+    "closed_at": "2026-04-07T09:35:57.519Z",
+    "button": "provino",
+    "channel_name": "ticket-307",
+    "answers": {
+      "{q1}": "MANIaK_13",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Oggi alle 11 e 30 oppure non so, quasi sempre"
+    }
+  },
+  "308": {
+    "owner": "1479156852452491409",
+    "transcript_file": "/home/container/transcripts/transcript-308.txt",
+    "closed_at": "2026-04-07T09:36:02.946Z",
+    "button": "provino",
+    "channel_name": "ticket-308",
+    "answers": {
+      "{q1}": "FELPA_BIANCAXD_",
+      "{q2}": "Valiance",
+      "{q3}": "diavdthegoat",
+      "{q4}": "coralmc",
+      "{q5}": "oggi alle 12 ho domani per le 3 o giovadi per le 5"
+    }
+  },
+  "309": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-309.txt",
+    "closed_at": "2026-04-07T14:57:41.599Z",
+    "button": "coaching",
+    "channel_name": "ticket-309",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "tutto",
+      "{q3}": "martedi alle 17"
+    }
+  },
+  "310": {
+    "owner": "1341126861828128829",
+    "transcript_file": "/home/container/transcripts/transcript-310.txt",
+    "closed_at": "2026-04-12T10:16:20.595Z",
+    "button": "provino",
+    "channel_name": "join-v2",
+    "answers": {
+      "{q1}": "Tranduil52",
+      "{q2}": "clclan",
+      "{q3}": "tranduil53",
+      "{q4}": "mcplayhd e coral",
+      "{q5}": "credo tra poco"
+    }
+  },
+  "311": {
+    "owner": "695568744969404506",
+    "transcript_file": "/home/container/transcripts/transcript-311.txt",
+    "closed_at": "2026-04-09T19:00:50.293Z",
+    "button": "general",
+    "channel_name": "ticket-311",
+    "answers": {
+      "{q1}": "v4hj",
+      "{q2}": "supporto",
+      "{q3}": "vorregli proporre il ban per \" will.hem\""
+    }
+  },
+  "312": {
+    "owner": "1342811028886388769",
+    "transcript_file": "/home/container/transcripts/transcript-312.txt",
+    "closed_at": "2026-04-21T17:11:19.486Z",
+    "button": "provino",
+    "channel_name": "invito-v2",
+    "answers": {
+      "{q1}": "NickRi2008",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "CoralMC",
+      "{q5}": "ora"
+    }
+  },
+  "313": {
+    "owner": "1191738004839084193",
+    "transcript_file": "/home/container/transcripts/transcript-313.txt",
+    "closed_at": "2026-04-10T20:42:51.466Z",
+    "button": "general",
+    "channel_name": "ticket-313",
+    "answers": {
+      "{q1}": "xshallow",
+      "{q2}": "che nobb e un nobb",
+      "{q3}": "boh"
+    }
+  },
+  "314": {
+    "owner": "1127930734317948979",
+    "transcript_file": "/home/container/transcripts/transcript-314.txt",
+    "closed_at": "2026-04-16T18:39:35.141Z",
+    "button": "general",
+    "channel_name": "non-chiudere",
+    "answers": {
+      "{q1}": "plebaa",
+      "{q2}": "Un ragazzo nel vostro clan mi sta minacciando di ban + insulti + discriminazione.",
+      "{q3}": "N/A"
+    }
+  },
+  "315": {
+    "owner": "1368127297143443522",
+    "transcript_file": "/home/container/transcripts/transcript-315.txt",
+    "closed_at": "2026-04-15T13:45:38.243Z",
+    "button": "coaching",
+    "channel_name": "coching-chrinumberone",
+    "answers": {
+      "{q1}": "ChriNumberOne",
+      "{q2}": "Pvp",
+      "{q3}": "oggi"
+    }
+  },
+  "316": {
+    "owner": "1265324126864932925",
+    "transcript_file": "/home/container/transcripts/transcript-316.txt",
+    "closed_at": "2026-04-20T20:34:33.213Z",
+    "button": "provino",
+    "channel_name": "invito-v2",
+    "answers": {
+      "{q1}": "Esiliatqh",
+      "{q2}": "Clan",
+      "{q3}": "yTony",
+      "{q4}": "Coral",
+      "{q5}": "sempre tranne la mattina fino alle 14"
+    }
+  },
+  "317": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-317.txt",
+    "closed_at": "2026-04-14T18:50:08.732Z",
+    "button": "general",
+    "channel_name": "ticket-317",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "vorrei che faceste 1 cosa",
+      "{q3}": "N/A"
+    }
+  },
+  "318": {
+    "owner": "1111308293302915244",
+    "transcript_file": "/home/container/transcripts/transcript-318.txt",
+    "closed_at": "2026-04-16T09:35:48.853Z",
+    "button": "general",
+    "channel_name": "nuovo-ouner",
+    "answers": {
+      "{q1}": "NonFuori",
+      "{q2}": "Vorrei diventare ouner, se sarebbi ouner eliminasssin tutti i gæy ( come gabri) dal server discordS.",
+      "{q3}": "viva la fica"
+    }
+  },
+  "319": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-319.txt",
+    "closed_at": "2026-04-17T15:23:26.755Z",
+    "button": "general",
+    "channel_name": "join-v2",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "entrare nel clan v2",
+      "{q3}": "N/A"
+    }
+  },
+  "320": {
+    "owner": "1485198162804084894",
+    "transcript_file": "/home/container/transcripts/transcript-320.txt",
+    "closed_at": "2026-04-17T15:23:33.781Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-nyxoy",
+    "answers": {
+      "{q1}": "nyxoyxzannabig",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coralmc",
+      "{q5}": "Sempre tranne giorni di scuola fino alle 2"
+    }
+  },
+  "321": {
+    "owner": "1153755688514891859",
+    "transcript_file": "/home/container/transcripts/transcript-321.txt",
+    "closed_at": "2026-04-18T21:06:51.157Z",
+    "button": "coaching",
+    "channel_name": "ticket-321",
+    "answers": {
+      "{q1}": "xyty_",
+      "{q2}": "Boxing",
+      "{q3}": "da discutere successivamente"
+    }
+  },
+  "322": {
+    "owner": "1153755688514891859",
+    "transcript_file": "/home/container/transcripts/transcript-322.txt",
+    "closed_at": "2026-04-18T21:09:29.722Z",
+    "button": "general",
+    "channel_name": "ticket-322",
+    "answers": {
+      "{q1}": "xyty_",
+      "{q2}": "stavo rispondendo ma uno staffer mi chiude il ticket in faccia a not",
+      "{q3}": "Not è testimone"
+    }
+  },
+  "323": {
+    "owner": "1240014231345172489",
+    "transcript_file": "/home/container/transcripts/transcript-323.txt",
+    "closed_at": "2026-04-19T15:33:13.029Z",
+    "button": "coaching",
+    "channel_name": "ticket-323",
+    "answers": {
+      "{q1}": "k7qz",
+      "{q2}": "tutte sono scarso :(",
+      "{q3}": "stasera"
+    }
+  },
+  "324": {
+    "owner": "1411341130871734392",
+    "transcript_file": "/home/container/transcripts/transcript-324.txt",
+    "closed_at": "2026-04-22T15:02:47.273Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "Parkurer11",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral mc",
+      "{q5}": "Oggi se va bene, sennò domani sera"
+    }
+  },
+  "325": {
+    "owner": "1312751549889380355",
+    "transcript_file": "/home/container/transcripts/transcript-325.txt",
+    "closed_at": "2026-04-24T17:45:04.334Z",
+    "button": "cw",
+    "channel_name": "cw-darkness",
+    "answers": {
+      "{q1}": "Marlex25",
+      "{q2}": "Darkness",
+      "{q3}": "https://discord.gg/2KhrmNhKqB",
+      "{q4}": "Dobbiamo fare il sondaggio, Ve lo dirò a breve",
+      "{q5}": "Pomeriggio presto"
+    }
+  },
+  "326": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-326.txt",
+    "closed_at": "2026-04-21T17:11:04.572Z",
+    "button": "general",
+    "channel_name": "invito-",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "quanta xp serve per entrare",
+      "{q3}": "N/A"
+    }
+  },
+  "327": {
+    "owner": "1352272224522076203",
+    "transcript_file": "/home/container/transcripts/transcript-327.txt",
+    "closed_at": "2026-04-20T19:42:38.992Z",
+    "button": "provino",
+    "channel_name": "ticket-327",
+    "answers": {
+      "{q1}": "iTonno",
+      "{q2}": "Clan",
+      "{q3}": "RIKIJONAS, RIKIJONAS_, NotRiki_",
+      "{q4}": "Coral",
+      "{q5}": "Dipende"
+    }
+  },
+  "328": {
+    "owner": "1368127297143443522",
+    "transcript_file": "/home/container/transcripts/transcript-328.txt",
+    "closed_at": "2026-04-20T19:58:47.757Z",
+    "button": "coaching",
+    "channel_name": "ticket-328",
+    "answers": {
+      "{q1}": "ChriNumberOne",
+      "{q2}": "Tutto",
+      "{q3}": "Quando vuole Gabri"
+    }
+  },
+  "329": {
+    "owner": "1302695866490159225",
+    "transcript_file": "/home/container/transcripts/transcript-329.txt",
+    "closed_at": "2026-05-02T18:18:18.249Z",
+    "button": "general",
+    "channel_name": "ticket-329",
+    "answers": {
+      "{q1}": "Vulpix12surf",
+      "{q2}": "Per il momento esco dal clan , riapriro appena rientrero",
+      "{q3}": "N/A"
+    }
+  },
+  "330": {
+    "owner": "1009926886866043001",
+    "transcript_file": "/home/container/transcripts/transcript-330.txt",
+    "closed_at": "2026-05-04T20:14:56.799Z",
+    "button": "provino",
+    "channel_name": "ticket-330",
+    "answers": {
+      "{q1}": "GiovaneStxlin",
+      "{q2}": "CW",
+      "{q3}": "N/A",
+      "{q4}": "MMC/Coral",
+      "{q5}": "non lo so accordiamoci nel ticket"
+    }
+  },
+  "331": {
+    "owner": "559053052150284298",
+    "transcript_file": "/home/container/transcripts/transcript-331.txt",
+    "closed_at": "2026-04-24T20:11:16.317Z",
+    "button": "coaching",
+    "channel_name": "coaching-al-premium-fr4",
+    "answers": {
+      "{q1}": "SeSeiForteSali",
+      "{q2}": "PVP + GODBRIDGE + BLOCCO PIAZZAMENTO",
+      "{q3}": "DOMANI SO A CASA ALL DAY HIHIHIHIHIHIHI"
+    }
+  },
+  "332": {
+    "owner": "1302695866490159225",
+    "transcript_file": "/home/container/transcripts/transcript-332.txt",
+    "closed_at": "2026-05-05T16:13:01.483Z",
+    "button": "general",
+    "channel_name": "ticket-332",
+    "answers": {
+      "{q1}": "Vulpix12surf",
+      "{q2}": "Vorrei sapere come e se si può sponsorizzare nel canale dove c’è il bot notifyme (non ricordo il nome del canale sorry)",
+      "{q3}": "N/A"
+    }
+  },
+  "333": {
+    "owner": "1426634301268819978",
+    "transcript_file": "/home/container/transcripts/transcript-333.txt",
+    "closed_at": "2026-05-05T15:27:47.496Z",
+    "button": "provino",
+    "channel_name": "ticket-333",
+    "answers": {
+      "{q1}": "salamalekum209",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "3-2 ore anche 5"
+    }
+  },
+  "334": {
+    "owner": "1012769047655481465",
+    "transcript_file": "/home/container/transcripts/transcript-334.txt",
+    "closed_at": "2026-04-24T19:10:42.616Z",
+    "button": "provino",
+    "channel_name": "ticket-334",
+    "answers": {
+      "{q1}": "Deep98",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Sempre"
+    }
+  },
+  "335": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-335.txt",
+    "closed_at": "2026-04-25T13:25:23.386Z",
+    "button": "general",
+    "channel_name": "ticket-335",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "vorrei candidarmi media",
+      "{q3}": "N/A"
+    }
+  },
+  "336": {
+    "owner": "1257438553969787004",
+    "transcript_file": "/home/container/transcripts/transcript-336.txt",
+    "closed_at": "2026-05-02T22:17:53.168Z",
+    "button": "provino",
+    "channel_name": "ticket-336",
+    "answers": {
+      "{q1}": "GiuliaStorti",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "coral",
+      "{q5}": "pomeriggi e sere mattina ho scuola"
+    }
+  },
+  "337": {
+    "owner": "1153647975822794784",
+    "transcript_file": "/home/container/transcripts/transcript-337.txt",
+    "closed_at": "2026-04-28T11:02:14.274Z",
+    "button": "general",
+    "channel_name": "gabri-rispondi-ciccione",
+    "answers": {
+      "{q1}": "repu",
+      "{q2}": "ridatemi il media e mettete il video in autopromo",
+      "{q3}": "N/A"
+    }
+  },
+  "338": {
+    "owner": "944329366555471872",
+    "transcript_file": "/home/container/transcripts/transcript-338.txt",
+    "closed_at": "2026-05-07T14:24:11.925Z",
+    "button": "general",
+    "channel_name": "clip-montage",
+    "answers": {
+      "{q1}": "Bellosup72",
+      "{q2}": "volevo chiedere se magari un membro dei Valiance con delle clip valido me le poteva mandare e io gli facevo un montage ovviamente gratuito",
+      "{q3}": "N/A"
+    }
+  },
+  "340": {
+    "owner": "1030501788777979955",
+    "transcript_file": "/home/container/transcripts/transcript-340.txt",
+    "closed_at": "2026-05-02T22:17:34.952Z",
+    "button": "provino",
+    "channel_name": "attesa-invito-v2",
+    "answers": {
+      "{q1}": "_NotFra_",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Hypixel",
+      "{q5}": "Dipende"
+    }
+  },
+  "341": {
+    "owner": "1172633026262487040",
+    "transcript_file": "/home/container/transcripts/transcript-341.txt",
+    "closed_at": "2026-04-29T19:13:52.494Z",
+    "button": "provino",
+    "channel_name": "provino-illorichillone",
+    "answers": {
+      "{q1}": "ILLORICHILLONE",
+      "{q2}": "Clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "Dipende"
+    }
+  },
+  "342": {
+    "owner": "1312751549889380355",
+    "transcript_file": "/home/container/transcripts/transcript-342.txt",
+    "closed_at": "2026-05-01T12:47:11.973Z",
+    "button": "cw",
+    "channel_name": "cw-darkness",
+    "answers": {
+      "{q1}": "marlex25",
+      "{q2}": "Darkness",
+      "{q3}": "https://discord.gg/2KhrmNhKqB",
+      "{q4}": "marlex25, justnute , tutinaverde e ultimo da decidere",
+      "{q5}": "sabato o venerdì"
+    }
+  },
+  "343": {
+    "owner": "1342811028886388769",
+    "transcript_file": "/home/container/transcripts/transcript-343.txt",
+    "closed_at": "2026-05-02T22:16:37.040Z",
+    "button": "provino",
+    "channel_name": "ticket-343",
+    "answers": {
+      "{q1}": "NickRi2008",
+      "{q2}": "clan",
+      "{q3}": "N/A",
+      "{q4}": "Coral",
+      "{q5}": "ora"
+    }
+  },
+  "344": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-344.txt",
+    "closed_at": "2026-04-30T16:46:59.844Z",
+    "button": "general",
+    "channel_name": "ticket-344",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "partnership",
+      "{q3}": "N/A"
+    }
+  },
+  "345": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-345.txt",
+    "closed_at": "2026-05-01T08:41:26.192Z",
+    "button": "general",
+    "channel_name": "ticket-345",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "una domanda ma il tag???",
+      "{q3}": "N/A"
+    }
+  },
+  "346": {
+    "owner": "1362388106682171502",
+    "transcript_file": "/home/container/transcripts/transcript-346.txt",
+    "closed_at": "2026-05-01T09:58:26.236Z",
+    "button": "general",
+    "channel_name": "ticket-346",
+    "answers": {
+      "{q1}": "dado375",
+      "{q2}": "diventare streamer",
+      "{q3}": "N/A"
+    }
+  },
+  "None": {
+    "owner": 1416493333190283300,
+    "transcript_file": "transcripts/transcript-None.txt",
+    "closed_at": "2025-10-21T18:18:09.060600",
+    "button": "cw",
+    "channel_name": "cw-vegance"
+  }
+}

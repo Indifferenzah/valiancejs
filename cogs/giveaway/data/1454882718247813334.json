@@ -1,0 +1,18 @@
+{
+  "guild_id": "1350073876339490826",
+  "channel_id": "1454869869802688736",
+  "message_id": "1454882718247813334",
+  "prize": "Nitro Basic",
+  "description": "# Nitro Basic\\n**Requisiti:**\\nAvere almeno __10 inviti__.\\n\\nPer vedere i proprio inviti fare `.i` in <#1350074044250329179>.",
+  "duration_text": "7d",
+  "expire_epoch": 1767546270,
+  "number_winners": 1,
+  "host": "1123622103917285418",
+  "created_by": "1123622103917285418",
+  "created_at": "2025-12-28T17:04:30.320Z",
+  "updated_at": "2025-12-28T17:05:08.775Z",
+  "status": "ended",
+  "entrants": [],
+  "winners": [],
+  "end_message_template": "🎉 Giveaway terminato!\nVincitore: {winner} — Premio: {prize} — Finito {expire} (Host: {host})"
+}

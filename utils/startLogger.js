@@ -9,7 +9,7 @@ const mesi = [
 // Directory che diventa:  /home/container/../startlogs
 // Quindi:                 /home/startlogs   (se Pterodactyl lo permette)
 // oppure                 /yourproject/startlogs (in locale)
-const logsDir = path.resolve(process.cwd(), '../startlogs');
+const logsDir = path.resolve(process.cwd(), 'logs_start');
 
 // Crea la cartella se non esiste
 if (!fs.existsSync(logsDir)) {

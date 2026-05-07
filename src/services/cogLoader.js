@@ -7,25 +7,25 @@ const path = require("path");
 function loadCogs(client) {
   const cogsToLoad = [
     "ticket/ticket",
-    // "moderation/moderation",
-    // "autorole/autorole",
+    "moderation/moderation",
+    "autorole/autorole",
     "log/log",
-    // "fun/fun",
-    // "regole/regole",
-    // "tts/tts",
-    // "cw/cw",
-    // "giveaway/giveaway",
-    // "help",
-    // "util/reminders",
-    // "social/marriage",
-    // "rep/reputation",
-    // "birthdays/birthdays",
-    "counters/counters"
+    "fun/fun",
+    "regole/regole",
+    "tts/tts",
+    "cw/cw",
+    "giveaway/giveaway",
+    "help",
+    "util/reminders",
+    "social/marriage",
+    "rep/reputation",
+    "birthdays/birthdays",
+    "counters/counters",
     // "aimod/aimod",
     // 'coralmc/coralmc',
-    // "traduttore/traduttore",
-    // "leveling/leveling",
-    // done 'invites/invites'
+    "traduttore/traduttore",
+    "leveling/leveling",
+    "invites/invites"
   ];
 
   const results = [];

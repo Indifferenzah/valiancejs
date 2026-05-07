@@ -2,6 +2,7 @@
   "enabled": true,
 
   "openai": {
+    "api_key": "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",
     "model": "gpt-4.1-mini-2025-04-14",
     "max_tokens": 150,
     "temperature": 0.3
@@ -12,7 +13,7 @@
     "use_openai_moderation": true,
     "use_custom_analysis": true,
     "check_toxicity": true,
-    "check_spam": true,
+    "check_spam": false,
     "check_intent": true
   },
 
@@ -36,7 +37,7 @@
 
   "actions": {
     "delete_message": true,
-    "timeout": true,
+    "timeout": false,
     "warn": true,
     "ban": false,
     "timeout_duration": 600000,
@@ -46,7 +47,7 @@
   },
 
   "bypass": {
-    "admin": false,
+    "admin": true,
     "roles": [
       "1350073967716732971",
       "1364656451779428462"

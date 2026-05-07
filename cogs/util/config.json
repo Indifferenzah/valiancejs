@@ -1,3 +1,15 @@
 {
-  "reminders": []
+  "enabled": true,
+  "default_send_in_dm": true,
+  "default_channel_id": "1350074011131969600",
+  "cooldown_seconds": 10,
+  "max_per_user": 10,
+  "timezone": "Europe/Rome",
+  "messages": {
+    "created": "✅ Promemoria creato per {time}.",
+    "deleted": "🗑️ Promemoria eliminato.",
+    "list_header": "📋 I tuoi promemoria:",
+    "remind_format": "⏰ {mention} Promemoria: {message}",
+    "no_reminders": "Non hai promemoria."
+  }
 }
