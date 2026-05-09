@@ -74,7 +74,6 @@ async function cleanOldEntries() {
             [cutoff]
         );
         if (result.changes > 0) {
-            logger.debug(`[DuplicateDetector] Rimosse ${result.changes} voci vecchie`);
         }
     } catch (err) {
         logger.error('[DuplicateDetector] Errore cleanOldEntries:', err);

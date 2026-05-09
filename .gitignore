@@ -76,4 +76,9 @@ temp/
 cogs/leveling/levels.json
 .env
 .env.example
-/.claude/
+data/log.db-shm
+data/log.db-wal
+/data/
+package-lock.json
+deploy.js
+api-1.json

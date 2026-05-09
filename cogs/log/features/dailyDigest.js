@@ -23,6 +23,17 @@ function getTodayDate() {
     }).split('/').reverse().join('-'); // YYYY-MM-DD
 }
 
+function getYesterdayDate() {
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    return d.toLocaleDateString('it-IT', {
+        timeZone: TIMEZONE,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).split('/').reverse().join('-');
+}
+
 /**
  * Incrementa il contatore per un tipo di evento
  * @param {string} guildId
@@ -65,7 +76,7 @@ async function sendDigest(guild, channelId, client) {
         const channel = await client.channels.fetch(channelId).catch(() => null);
         if (!channel || !channel.isTextBased()) return;
 
-        const date = getTodayDate();
+        const date = getYesterdayDate();
         const rows = await db.all(
             'SELECT event_type, count FROM log_daily_events WHERE guild_id = ? AND date = ?',
             [guild.id, date]

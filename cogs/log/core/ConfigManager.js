@@ -88,10 +88,7 @@ class ConfigManager {
     getEventChannel(guildId, eventName) {
         const config = this.getGuildConfig(guildId);
         
-        if (!config.enabled) {
-            logger.debug(`[LogConfigManager] Guild ${guildId} logging is disabled`);
-            return null;
-        }
+        if (!config.enabled) return null;
         
         // Importa EventRegistry per trovare la categoria dell'evento
         const EventRegistry = require('./EventRegistry');
@@ -103,24 +100,17 @@ class ConfigManager {
         }
         
         const categoryName = eventInfo.category;
-        logger.debug(`[LogConfigManager] Event ${eventName} is in category ${categoryName}`);
-        
-        // Cerca nella categoria corretta
+
         const categoryConfig = config.events[categoryName];
         if (!categoryConfig) {
             logger.warn(`[LogConfigManager] Category ${categoryName} not found in guild ${guildId} config`);
-            logger.debug(`[LogConfigManager] Available categories: ${Object.keys(config.events).join(', ')}`);
             return null;
         }
-        
+
         const eventConfig = categoryConfig[eventName];
-        if (!eventConfig || !eventConfig.enabled) {
-            logger.debug(`[LogConfigManager] Event ${eventName} not enabled or not configured`);
-            return null;
-        }
-        
+        if (!eventConfig || !eventConfig.enabled) return null;
+
         const channelRef = eventConfig.channel || config.channels.default;
-        logger.debug(`[LogConfigManager] Channel reference for ${eventName}: ${channelRef}`);
         
         return this.resolveChannelReference(config, channelRef);
     }

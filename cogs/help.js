@@ -2,209 +2,220 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, StringSelectMenuBui
 const logger = require('../utils/logger');
 
 const categories = {
-    'moderation': {
-        'emoji': '🛡️',
-        'name': 'Moderazione',
-        'commands': [
-            '\\- `/ban` <utente> [reason] - Banna un membro',
-            '\\- `/unban` <utente> [reason] - Sbanna un membro',
-            '\\- `/kick` <utente> - Kicka un membro',
-            '\\- `/mute` <utente> - Muta un membro',
-            '\\- `/unmute` <utente> - Smuta un membro',
-            '\\- `/nick` <nick> <utente> - Imposta nickname a un utente'
-        ]
-    },
-    'ticket': {
-        'emoji': '🎫',
-        'name': 'Ticket',
-        'commands': [
-            '\\- `/close` - Chiudi ticket',
-            '\\- `/rename` <nome> - Rinomina ticket',
-            '\\- `/add` [utente] [ruolo] - Aggiungi utente/ruolo al ticket',
-            '\\- `/remove` [utente] [ruolo] - Rimuovi utente/ruolo dal ticket',
-            '\\- `/list` <utente> - Mostra ticket aperti e chiusi di un utente',
-            '\\- `/transcript` <numero> - Scarica transcript di un ticket',
-            '**ADMIN:**',
-            '\\- `/ticketpanel` - Crea pannello ticket',
-            '\\- `/sendtranscript` <numero> <utente> - Manda transcript in DM',
-            '\\- `/blacklist add` <utente> - Aggiungi utente alla blacklist',
-            '\\- `/blacklist remove` <utente> - Rimuovi utente dalla blacklist',
-            '\\- `/blacklist list` - Mostra la blacklist'
-        ]
-    },
-    'log': {
-        'emoji': '📋',
-        'name': 'Log',
-        'commands': [
-            '\\- `/snipe` - Mostra l\'ultimo messaggio eliminato nel canale',
-            '\\- `/editsnipe` - Mostra l\'ultimo messaggio modificato nel canale',
-            '\\- `/voicestats` [utente] [giorni] - Statistiche tempo in vocale',
-            '\\- `/voiceleaderboard` - Classifica top 10 per tempo in vocale',
-            '\\- `/history` <utente> - Cronologia cambi username/avatar',
-            '**STAFF:**',
-            '\\- `/watchlist add` <utente> [motivo] - Monitora un utente',
-            '\\- `/watchlist remove` <utente> - Smetti di monitorare un utente',
-            '\\- `/watchlist list` - Mostra tutti gli utenti monitorati'
-        ]
-    },
-    'utility': {
-        'emoji': '🔧',
-        'name': 'Utilità',
-        'commands': [
-            '\\- `/ping` - Mostra latenza bot',
-            '\\- `/uptime` - Mostra uptime bot',
-            '\\- `/purge` <messaggi> - Elimina messaggi',
-            '\\- `/traduci` <messaggio> <lingua> - Traduci un messaggio',
-            '**ADMIN**',
-            '\\- `/embed` - Crea embed personalizzato',
-            '\\- `/regole` - Manda le regole del server',
-            '\\- `/verify panel` - Manda messaggio verifica',
-            '\\- `/verify forceverify` <membro> - Verifica forzata per un membro'
-        ]
-    },
-    'autorole': {
-        'emoji': '🎭',
-        'name': 'AutoRole',
-        'commands': [
-            '**ADMIN:**',
-            '\\- `/createreact` <id messaggio> <emoji> <ruolo> - Crea messaggio reazione ruoli'
-        ]
-    },
-    'fun': {
-        'emoji': '🎲',
-        'name': 'Fun',
-        'commands': [
-            '\\- `/coinflip` - Lancia una moneta',
-            '\\- `/roll` - Tira un dado',
-            '\\- `/avatar` [utente] - Mostra l\'avatar di un utente',
-            '\\- `/userinfo` [utente] - Mostra informazioni su un utente',
-            '\\- `/serverinfo` - Mostra informazioni sul server',
-            '\\- `/marry` <utente> - Sposa un utente',
-            '\\- `/divorce` <utente> - Divorzia da un utente',
-            '\\- `/relationship` [utente] - Mostra relazioni'
-        ]
-    },
-    'tts': {
-        'emoji': '📝',
-        'name': 'TTS',
-        'commands': [
-            '\\- `/tts join` <messaggio> - Entra nel canale vocale',
-            '\\- `/tts setchannel` <canale> - Imposta canale TTS',
-            '\\- `/tts leave` - Esci dal canale vocale',
-            '**ADMIN:**',
-            '\\- `/tts blacklist` <utente> - Aggiungi/rimuovi un utente dalla blacklist TTS'
-        ]
-    },
-    'cw': {
-        'emoji': '📆',
-        'name': 'Clan Wars',
-        'commands': [
-            '\\- `/ruleset` - Mostra ruleset',
-            '**ADMIN:**',
-            '\\- `/cwend` - Termina partita CW',
-            '\\- `/setruleset` - Imposta ruleset',
-            '\\- `/cw` <numero> <data> <ora> <rossi> <verdi> <mappa> <recap> <vincitore> - Invia punteggio CW',
-        ]
-    },
-    'giveaway': {
-        'emoji': '🎉',
-        'name': 'Giveaway',
-        'commands': [
-            '**ADMIN:**',
-            '\\- `/giveaway create` <premio> <durata> [numero vincitori]- Crea giveaway',
-            '\\- `/giveaway remove` <id giveaway> <utente> - Rimuovi forzatamente un membro dal giveaway (solo owner o admin)',
-            '\\- `/giveaway reroll` <id giveaway> - Estrai nuovi vincitori aggiuntivi (non sostituisce i precedenti)',
-            '\\- `/giveaway end` <id giveaway> - Termina un giveaway immediatamente (solo owner o admin)',
-            '\\- `/giveaway blacklist add` <utente> - Impedisci ad utenti di entrare nei giveaway',
-            '\\- `/giveaway blacklist remove` <utente> - Permetti ad un utente blacklistato di entrare nei giveaway',
-            '\\- `/giveaway blacklist list` - Mostra la blacklist'
-        ]
-    },
-    'bday': {
-        'emoji': '🎁',
-        'name': 'Birthday',
-        'commands': [
-            '\\- `/birthday set` <data> - Imposta compleanno',
-            '\\- `/birthday remove` - Rimuovi compleanno',
-            '\\- `/birthday when` [utente] - Mostra compleanno di un utente',
-            '\\- `/birthday next` - Mostra i prossimi compleanni',
-        ]
-    },
-    'rep': {
-        'emoji': '✅',
-        'name': 'Reputation',
-        'commands': [
-            '\\- `/rep add` (`+rep`) <utente> [motivo] - Aggiungi reputation',
-            '\\- `/rep remove` (`-rep`) <utente> [motivo] - Rimuovi reputation',
-            '\\- `/rep show` [utente] - Mostra reputation di un utente',
-        ]
-    },
-    'reminder': {
-        'emoji': '🔔',
-        'name': 'Reminders',
-        'commands': [
-            '\\- `/remind add` <quando> <messaggio> [manda in dm] - Crea promemoria',
-            '\\- `/remind delete` <id> - Rimuovi promemoria',
-            '\\- `/remind list` - Mostra promemoria',
-        ]
-    },
-    'counters': {
-        'emoji': '🔢',
-        'name': 'Counters',
-        'commands': [
-            '**ADMIN:**',
-            '\\- `/counter start` [tipi] - Crea e avvia i counter (es. total_members,role_members,bots)',
-            '\\- `/counter stop` - Ferma ed elimina i counter',
-            '\\- `/counter enable` <tipo> [canale] - Abilita un counter su un canale',
-            '\\- `/counter disable` <tipo> - Disabilita un counter',
-            '\\- `/counter setname` <tipo> <template> - Imposta il nome (usa {count})',
-            '\\- `/counter setrole` <ruolo> - Imposta il ruolo per `role_members`',
-            '\\- `/counter list` - Elenca i counter attivi',
-            '\\- `/counter migrate` - Migra i counter creati con il vecchio sistema (se trovati)'
-        ]
-    },
-    'levels': {
-        'emoji': '📈',
-        'name': 'Livelli',
-        'commands': [
-            '\\- `/rank` [utente] - Mostra il livello e gli XP di un utente',
-            '\\- `/leaderboard` [limite] - Mostra la classifica XP del server',
-            '**ADMIN:**',
-            '\\- `/level give` <utente> <quantità> - Aggiunge livelli a un utente',
-            '\\- `/level set` <utente> <livello> - Imposta un livello preciso',
-            '\\- `/level remove` <utente> <quantità> - Rimuove livelli a un utente',
-            '\\- `/level givexp` <utente> <xp> - Aggiunge XP a un utente',
-            '\\- `/level setxp` <utente> <xp> - Imposta gli XP di un utente',
-            '\\- `/level removexp` <utente> <xp> - Rimuove XP a un utente',
-            '\\- `/leveling enable` - Abilita il sistema livelli',
-            '\\- `/leveling disable` - Disabilita il sistema livelli',
-            '\\- `/leveling setchannel` [id_canale] - Imposta il canale annunci level-up',
-            '\\- `/rlevel add` <livello> <ruolo> - Assegna un ruolo a un livello',
-            '\\- `/rlevel remove` <livello> - Rimuove il ruolo da un livello',
-            '\\- `/rlevel show` - Mostra i ruoli level-based'
-        ]
-    },
-    'invites': {
-        'emoji': '📨',
-        'name': 'Inviti',
-        'commands': [
-            '\\- `/invites user` [utente] - Mostra inviti',
-            '\\- `.invites` / `.i` [utente] - Mostra inviti',
-            '\\- `/invites leaderboard` - Classifica inviti',
-            '\\- `.leaderboard` / `.lb` - Classifica inviti',
-            '**ADMIN:**',
-            '\\- `/invites set` <utente> <numero>',
-            '\\- `/invites add` <utente> <numero>',
-            '\\- `/invites remove` <utente> <numero>'
-        ]
-    },
-    'coralmc': {
-        'emoji': '<:VL_CoralMC:1434320425592033391>',
-        'name': 'CoralMC',
-        'commands': [
-            '`Coming Soon...` 👀'
-        ]
-    }
+  moderation: {
+    emoji: "🛡️",
+    name: "Moderazione",
+    commands: [
+      "\\- `/ban` <utente> [reason] - Banna un membro",
+      "\\- `/unban` <utente> [reason] - Sbanna un membro",
+      "\\- `/kick` <utente> - Kicka un membro",
+      "\\- `/mute` <utente> - Muta un membro",
+      "\\- `/unmute` <utente> - Smuta un membro",
+      "\\- `/nick` <nick> <utente> - Imposta nickname a un utente",
+    ],
+  },
+  ticket: {
+    emoji: "🎫",
+    name: "Ticket",
+    commands: [
+      "\\- `/close` - Chiudi ticket",
+      "\\- `/rename` <nome> - Rinomina ticket",
+      "\\- `/add` [utente] [ruolo] - Aggiungi utente/ruolo al ticket",
+      "\\- `/remove` [utente] [ruolo] - Rimuovi utente/ruolo dal ticket",
+      "\\- `/list` <utente> - Mostra ticket aperti e chiusi di un utente",
+      "\\- `/transcript` <numero> - Scarica transcript di un ticket",
+      "**ADMIN:**",
+      "\\- `/ticketpanel` - Crea pannello ticket",
+      "\\- `/sendtranscript` <numero> <utente> - Manda transcript in DM",
+      "\\- `/blacklist add` <utente> - Aggiungi utente alla blacklist",
+      "\\- `/blacklist remove` <utente> - Rimuovi utente dalla blacklist",
+      "\\- `/blacklist list` - Mostra la blacklist",
+    ],
+  },
+  log: {
+    emoji: "📋",
+    name: "Log",
+    commands: [
+      "\\- `/snipe` - Mostra l'ultimo messaggio eliminato nel canale",
+      "\\- `/editsnipe` - Mostra l'ultimo messaggio modificato nel canale",
+      "\\- `/voicestats` [utente] [giorni] - Statistiche tempo in vocale",
+      "\\- `/voiceleaderboard` - Classifica top 10 per tempo in vocale",
+      "\\- `/history` <utente> - Cronologia cambi username/avatar",
+      "**STAFF:**",
+      "\\- `/watchlist add` <utente> [motivo] - Monitora un utente",
+      "\\- `/watchlist remove` <utente> - Smetti di monitorare un utente",
+      "\\- `/watchlist list` - Mostra tutti gli utenti monitorati",
+    ],
+  },
+  utility: {
+    emoji: "🔧",
+    name: "Utilità",
+    commands: [
+      "\\- `/ping` - Mostra latenza bot",
+      "\\- `/uptime` - Mostra uptime bot",
+      "\\- `/purge` <messaggi> - Elimina messaggi",
+      "\\- `/traduci` <messaggio> <lingua> - Traduci un messaggio",
+      "**ADMIN**",
+      "\\- `/embed` - Crea embed personalizzato",
+      "\\- `/regole` - Manda le regole del server",
+      "\\- `/verify panel` - Manda messaggio verifica",
+      "\\- `/verify forceverify` <membro> - Verifica forzata per un membro",
+    ],
+  },
+  autorole: {
+    emoji: "🎭",
+    name: "AutoRole",
+    commands: [
+      "**ADMIN:**",
+      "\\- `/createreact` <id messaggio> <emoji> <ruolo> - Crea messaggio reazione ruoli",
+    ],
+  },
+  fun: {
+    emoji: "🎲",
+    name: "Fun",
+    commands: [
+      "\\- `/coinflip` - Lancia una moneta",
+      "\\- `/roll` - Tira un dado",
+      "\\- `/avatar` [utente] - Mostra l'avatar di un utente",
+      "\\- `/userinfo` [utente] - Mostra informazioni su un utente",
+      "\\- `/serverinfo` - Mostra informazioni sul server",
+      "\\- `/marry` <utente> - Sposa un utente",
+      "\\- `/divorce` <utente> - Divorzia da un utente",
+      "\\- `/relationship` [utente] - Mostra relazioni",
+    ],
+  },
+  tts: {
+    emoji: "📝",
+    name: "TTS",
+    commands: [
+      "\\- `/tts join` <messaggio> - Entra nel canale vocale",
+      "\\- `/tts setchannel` <canale> - Imposta canale TTS",
+      "\\- `/tts leave` - Esci dal canale vocale",
+      "**ADMIN:**",
+      "\\- `/tts blacklist` <utente> - Aggiungi/rimuovi un utente dalla blacklist TTS",
+    ],
+  },
+  cw: {
+    emoji: "📆",
+    name: "Clan Wars",
+    commands: [
+      "\\- `/ruleset` - Mostra ruleset",
+      "**ADMIN:**",
+      "\\- `/cwend` - Termina partita CW",
+      "\\- `/setruleset` - Imposta ruleset",
+      "\\- `/cw` <numero> <data> <ora> <rossi> <verdi> <mappa> <recap> <vincitore> - Invia punteggio CW",
+    ],
+  },
+  giveaway: {
+    emoji: "🎉",
+    name: "Giveaway",
+    commands: [
+      "**ADMIN:**",
+      "\\- `/giveaway create` <premio> <durata> [numero vincitori]- Crea giveaway",
+      "\\- `/giveaway remove` <id giveaway> <utente> - Rimuovi forzatamente un membro dal giveaway (solo owner o admin)",
+      "\\- `/giveaway reroll` <id giveaway> - Estrai nuovi vincitori aggiuntivi (non sostituisce i precedenti)",
+      "\\- `/giveaway end` <id giveaway> - Termina un giveaway immediatamente (solo owner o admin)",
+      "\\- `/giveaway blacklist add` <utente> - Impedisci ad utenti di entrare nei giveaway",
+      "\\- `/giveaway blacklist remove` <utente> - Permetti ad un utente blacklistato di entrare nei giveaway",
+      "\\- `/giveaway blacklist list` - Mostra la blacklist",
+    ],
+  },
+  bday: {
+    emoji: "🎁",
+    name: "Birthday",
+    commands: [
+      "\\- `/birthday set` <data> - Imposta compleanno",
+      "\\- `/birthday remove` - Rimuovi compleanno",
+      "\\- `/birthday when` [utente] - Mostra compleanno di un utente",
+      "\\- `/birthday next` - Mostra i prossimi compleanni",
+    ],
+  },
+  rep: {
+    emoji: "✅",
+    name: "Reputation",
+    commands: [
+      "\\- `/rep add` (`+rep`) <utente> [motivo] - Aggiungi reputation",
+      "\\- `/rep remove` (`-rep`) <utente> [motivo] - Rimuovi reputation",
+      "\\- `/rep show` [utente] - Mostra reputation di un utente",
+    ],
+  },
+  reminder: {
+    emoji: "🔔",
+    name: "Reminders",
+    commands: [
+      "\\- `/remind add` <quando> <messaggio> [manda in dm] - Crea promemoria",
+      "\\- `/remind delete` <id> - Rimuovi promemoria",
+      "\\- `/remind list` - Mostra promemoria",
+    ],
+  },
+  counters: {
+    emoji: "🔢",
+    name: "Counters",
+    commands: [
+      "**ADMIN:**",
+      "\\- `/counter start` [tipi] - Crea e avvia i counter (es. total_members,role_members,bots)",
+      "\\- `/counter stop` - Ferma ed elimina i counter",
+      "\\- `/counter enable` <tipo> [canale] - Abilita un counter su un canale",
+      "\\- `/counter disable` <tipo> - Disabilita un counter",
+      "\\- `/counter setname` <tipo> <template> - Imposta il nome (usa {count})",
+      "\\- `/counter setrole` <ruolo> - Imposta il ruolo per `role_members`",
+      "\\- `/counter list` - Elenca i counter attivi",
+      "\\- `/counter migrate` - Migra i counter creati con il vecchio sistema (se trovati)",
+    ],
+  },
+  levels: {
+    emoji: "📈",
+    name: "Livelli",
+    commands: [
+      "\\- `/rank` [utente] - Mostra il livello e gli XP di un utente",
+      "\\- `/leaderboard` [limite] - Mostra la classifica XP del server",
+      "**ADMIN:**",
+      "\\- `/level give` <utente> <quantità> - Aggiunge livelli a un utente",
+      "\\- `/level set` <utente> <livello> - Imposta un livello preciso",
+      "\\- `/level remove` <utente> <quantità> - Rimuove livelli a un utente",
+      "\\- `/level givexp` <utente> <xp> - Aggiunge XP a un utente",
+      "\\- `/level setxp` <utente> <xp> - Imposta gli XP di un utente",
+      "\\- `/level removexp` <utente> <xp> - Rimuove XP a un utente",
+      "\\- `/leveling enable` - Abilita il sistema livelli",
+      "\\- `/leveling disable` - Disabilita il sistema livelli",
+      "\\- `/leveling setchannel` [id_canale] - Imposta il canale annunci level-up",
+      "\\- `/rlevel add` <livello> <ruolo> - Assegna un ruolo a un livello",
+      "\\- `/rlevel remove` <livello> - Rimuove il ruolo da un livello",
+      "\\- `/rlevel show` - Mostra i ruoli level-based",
+    ],
+  },
+  invites: {
+    emoji: "📨",
+    name: "Inviti",
+    commands: [
+      "\\- `/invites user` [utente] - Mostra inviti",
+      "\\- `.invites` / `.i` [utente] - Mostra inviti",
+      "\\- `/invites leaderboard` - Classifica inviti",
+      "\\- `.leaderboard` / `.lb` - Classifica inviti",
+      "**ADMIN:**",
+      "\\- `/invites set` <utente> <numero>",
+      "\\- `/invites add` <utente> <numero>",
+      "\\- `/invites remove` <utente> <numero>",
+    ],
+  },
+  coralmc: {
+    emoji: "<:VL_CoralMC:1434320425592033391>",
+    name: "CoralMC",
+    commands: [
+      "\\- `/coral player` <username> - Stats giocatore (Profilo, Bedwars, KitPvP, Duels)",
+      "\\- `/coral matches` <gamemode> <player> - Match recenti",
+      "\\- `/coral match` <gamemode> <id> - Dettagli partita",
+      "\\- `/coral leaderboard` <gamemode> - Classifica globale",
+      "\\- `/coral clan` [nome] - Dettagli clan Bedwars",
+      "\\- `/coral search` <query> - Cerca giocatori",
+      "\\- `/coral cup leaderboard` - Classifica CoralCUP",
+      "\\- `/coral cup team` <id> - Dettagli team CoralCUP",
+      "**ADMIN:**",
+      "\\- `/coralcog stats` - Statistiche interne cog",
+      "\\- `/coralcog cache clear` - Svuota la cache",
+      "\\- `/coralcog cache info` - Info cache",
+    ],
+  },
 };
 
 class HelpSelectView {
@@ -216,12 +227,7 @@ class HelpSelectView {
     }
 
     createComponents() {
-        const options = [
-            new StringSelectMenuOptionBuilder()
-                .setLabel('Tutti')
-                .setValue('all')
-                .setEmoji('📋')
-        ];
+        const options = [];
 
         for (const [key, cat] of Object.entries(categories)) {
             const option = new StringSelectMenuOptionBuilder()
@@ -253,25 +259,14 @@ class HelpSelectView {
                 .setTitle('📋 Comandi Disponibili')
                 .setColor(0x00ff00);
 
-            if (selected === 'all') {
-                embed.setDescription('Ecco una lista di tutti i comandi slash disponibili su questo bot:');
-                for (const [key, cat] of Object.entries(categories)) {
-                    embed.addFields({
-                        name: `${cat.emoji} ${cat.name}`,
-                        value: cat.commands.join('\n'),
-                        inline: false
-                    });
-                }
-            } else {
-                const cat = categories[selected];
-                embed.setTitle(`${cat.emoji} ${cat.name}`);
-                embed.setDescription(`Comandi disponibili nella categoria **${cat.name}**:`);
-                embed.addFields({
-                    name: 'Comandi',
-                    value: cat.commands.join('\n'),
-                    inline: false
-                });
-            }
+            const cat = categories[selected];
+            embed.setTitle(`${cat.emoji} ${cat.name}`);
+            embed.setDescription(`Comandi disponibili nella categoria **${cat.name}**:`);
+            embed.addFields({
+                name: 'Comandi',
+                value: cat.commands.join('\n'),
+                inline: false
+            });
 
             embed.setFooter({ text: 'Valiance Bot | "<campo>" indica un campo obbligatorio; "[campo]" indica un campo opzionale.' });
 

@@ -1,0 +1,47 @@
+{
+  "baseUrl": "https://coralmc.it/api/v1",
+  "contact": "indifferenzah",
+  "cache": {
+    "ttlSeconds": 60,
+    "enabled": true
+  },
+  "rateLimit": {
+    "maxRequestsPerSecond": 5
+  },
+  "collector": {
+    "timeoutMs": 30000
+  },
+  "leaderboard": {
+    "entriesPerPage": 10
+  },
+  "pagination": {
+    "logsPerPage": 10
+  },
+  "allowedChannels": [],
+  "admin": {
+    "allowedRoles": [],
+    "allowedUsers": [],
+    "requireAdministratorPermission": true
+  },
+  "colors": {
+    "profile": "#5865F2",
+    "bedwars": "#E74C3C",
+    "kitpvp": "#E67E22",
+    "duels": "#3498DB",
+    "clan": "#2ECC71",
+    "coralcup": "#F1C40F",
+    "matches": "#9B59B6",
+    "error": "#FF0000",
+    "admin": "#95A5A6"
+  },
+  "errors": {
+    "playerNotFound": "❌ Giocatore **{username}** non trovato su CoralMC.",
+    "matchNotFound": "❌ Match **#{id}** non trovato.",
+    "clanNotFound": "❌ Clan non trovato.",
+    "apiError": "⚠️ Errore API CoralMC ({status}). Riprova tra poco.",
+    "timeout": "⏱️ La richiesta ha impiegato troppo tempo. Riprova.",
+    "rateLimit": "🚦 Troppe richieste. Attendi qualche secondo.",
+    "channelNotAllowed": "🔒 Questo comando non è disponibile in questo canale.",
+    "notAllowed": "🔒 Non hai i permessi per eseguire questo comando."
+  }
+}
