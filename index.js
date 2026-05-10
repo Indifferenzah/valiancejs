@@ -27,6 +27,7 @@ const { onGuildMemberAdd } = require("./src/events/guildMemberAdd");
 const { onGuildMemberUpdate } = require("./src/events/guildMemberUpdate");
 const { onMessageCreate } = require("./src/events/messageCreate");
 const { printBootReport } = require("./src/services/bootReport");
+const { startApiServer } = require("./src/api/server");
 
 // Importazione dello stato globale
 const { activeSessions, cleanupSession } = require("./src/game/gameManager");
@@ -70,6 +71,9 @@ module.exports = {
   reloadGlobalConfig: () => reloadGlobalConfig(client),
   reloadAll: () => reloadAll(client),
 };
+
+// Avvia la dashboard API
+startApiServer().catch((err) => logger.error(`[API] Failed to start: ${err.message}`));
 
 // Avvia il bot
 testDb()

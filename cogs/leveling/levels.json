@@ -1,289 +1,5345 @@
 {
   "1350073876339490826": {
-    "559053052150284298": {
-      "xp": 12,
-      "level": 0,
-      "lastMessageAt": 1767110541521
-    },
     "1123622103917285418": {
-      "xp": 217,
-      "level": 1,
-      "lastMessageAt": 1778358442784,
-      "message_xp": 47,
-      "voice_xp": 132,
-      "voice_seconds": 3920,
-      "lastVoiceAt": 1778362245622
+      "xp": 1015405,
+      "level": 100,
+      "lastMessageAt": 1778160014065,
+      "message_xp": 6193,
+      "voice_xp": 4565,
+      "voice_seconds": 135206,
+      "lastVoiceAt": 1777810294383
     },
-    "1432790711987863614": {
-      "xp": 12,
-      "level": 0,
-      "lastMessageAt": 1767111554698
+    "917860455094042625": {
+      "xp": 11957,
+      "level": 10,
+      "lastMessageAt": 1776450136844,
+      "message_xp": 1875,
+      "voice_xp": 9487,
+      "voice_seconds": 280792,
+      "lastVoiceAt": 1777573168682
     },
-    "1029280075914424381": {
-      "xp": 8,
-      "level": 0,
-      "lastMessageAt": 1767112274615
+    "1112969588360089650": {
+      "xp": 3065,
+      "level": 5,
+      "lastMessageAt": 1776875796182,
+      "message_xp": 266,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
     },
-    "607955803592327168": {
-      "xp": 61,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 61,
-      "voice_seconds": 1830,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770488468162
+    "559053052150284298": {
+      "xp": 44345,
+      "level": 21,
+      "lastMessageAt": 1778176665325,
+      "message_xp": 20525,
+      "voice_xp": 8637,
+      "voice_seconds": 255685,
+      "lastVoiceAt": 1778005517601
     },
-    "1168546143488196648": {
-      "xp": 61,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 61,
-      "voice_seconds": 1830,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770488468166
+    "1295403836252618793": {
+      "xp": 5292,
+      "level": 7,
+      "lastMessageAt": 1777351234110,
+      "message_xp": 425,
+      "voice_xp": 3689,
+      "voice_seconds": 108801,
+      "lastVoiceAt": 1777227120850
+    },
+    "954477533921935360": {
+      "xp": 1090,
+      "level": 3,
+      "lastMessageAt": 1775744535456,
+      "message_xp": 93,
+      "voice_xp": 145,
+      "voice_seconds": 4207,
+      "lastVoiceAt": 1773164026880
     },
     "322010066817384450": {
-      "xp": 15,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 15,
-      "voice_seconds": 450,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770487054638
+      "xp": 9493,
+      "level": 9,
+      "lastMessageAt": 1776870845159,
+      "message_xp": 699,
+      "voice_xp": 8369,
+      "voice_seconds": 247643,
+      "lastVoiceAt": 1778164811751
     },
-    "713085247117459476": {
-      "xp": 2,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 2,
-      "voice_seconds": 60,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770486606058
-    },
-    "810890907989049384": {
-      "xp": 324,
-      "level": 1,
-      "message_xp": 21,
-      "voice_xp": 303,
-      "voice_seconds": 9093,
-      "lastMessageAt": 1778362000765,
-      "lastVoiceAt": 1778362245624
+    "869131659071610971": {
+      "xp": 5898,
+      "level": 7,
+      "lastMessageAt": 1778146485396,
+      "message_xp": 3331,
+      "voice_xp": 820,
+      "voice_seconds": 24196,
+      "lastVoiceAt": 1778011997755
     },
     "964986129491316847": {
-      "xp": 361,
-      "level": 1,
-      "message_xp": 55,
-      "voice_xp": 306,
-      "voice_seconds": 9180,
-      "lastMessageAt": 1776806096399,
-      "lastVoiceAt": 1778362245618
+      "xp": 129415,
+      "level": 35,
+      "lastMessageAt": 1778162624976,
+      "message_xp": 16104,
+      "voice_xp": 94465,
+      "voice_seconds": 2793614,
+      "lastVoiceAt": 1778179603781
     },
-    "1111308293302915244": {
-      "xp": 123,
-      "level": 1,
-      "message_xp": 8,
-      "voice_xp": 115,
-      "voice_seconds": 3450,
-      "lastMessageAt": 1778359330465,
-      "lastVoiceAt": 1775082787785
+    "810890907989049384": {
+      "xp": 100457,
+      "level": 31,
+      "lastMessageAt": 1778171256797,
+      "message_xp": 11852,
+      "voice_xp": 78839,
+      "voice_seconds": 2330869,
+      "lastVoiceAt": 1778179603849
     },
-    "1179439390796284036": {
-      "xp": 61,
+    "1198001214076485772": {
+      "xp": 30642,
+      "level": 17,
+      "lastMessageAt": 1775585098992,
+      "message_xp": 2348,
+      "voice_xp": 27570,
+      "voice_seconds": 816254,
+      "lastVoiceAt": 1775049131445
+    },
+    "1038864662755819662": {
+      "xp": 13,
       "level": 0,
-      "message_xp": 0,
-      "voice_xp": 61,
-      "voice_seconds": 1830,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770488468176
+      "lastMessageAt": 1766225233355
+    },
+    "1130010990021459998": {
+      "xp": 339,
+      "level": 1,
+      "lastMessageAt": 1775289198270,
+      "message_xp": 14,
+      "voice_xp": 295,
+      "voice_seconds": 8727,
+      "lastVoiceAt": 1771015027954
+    },
+    "1312751549889380355": {
+      "xp": 3084,
+      "level": 5,
+      "lastMessageAt": 1777639593861,
+      "message_xp": 1460,
+      "voice_xp": 249,
+      "voice_seconds": 7285,
+      "lastVoiceAt": 1773242444629
+    },
+    "1416493333190283264": {
+      "xp": 103,
+      "level": 1,
+      "lastMessageAt": 1766605753350
+    },
+    "474546248167325706": {
+      "xp": 32921,
+      "level": 18,
+      "lastMessageAt": 1778172714933,
+      "message_xp": 9925,
+      "voice_xp": 6869,
+      "voice_seconds": 203398,
+      "lastVoiceAt": 1778172942231
+    },
+    "1126964084919783445": {
+      "xp": 73,
+      "level": 0,
+      "lastMessageAt": 1777463642499,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1370042687155343390": {
+      "xp": 48,
+      "level": 0,
+      "lastMessageAt": 1766581456984
+    },
+    "1132582205881864273": {
+      "xp": 612,
+      "level": 2,
+      "lastMessageAt": 1777629708405,
+      "message_xp": 126,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "899693031421251585": {
+      "xp": 33,
+      "level": 0,
+      "lastMessageAt": 1766436736268
     },
     "943188659820191755": {
-      "xp": 240,
+      "xp": 50611,
+      "level": 22,
+      "lastMessageAt": 1778084838653,
+      "message_xp": 2263,
+      "voice_xp": 42948,
+      "voice_seconds": 1268236,
+      "lastVoiceAt": 1778179604976
+    },
+    "982244768950153246": {
+      "xp": 18733,
+      "level": 13,
+      "lastMessageAt": 1771673443195,
+      "message_xp": 2304,
+      "voice_xp": 551,
+      "voice_seconds": 16391,
+      "lastVoiceAt": 1771255349014
+    },
+    "848166634544037898": {
+      "xp": 4628,
+      "level": 6,
+      "lastMessageAt": 1778106869655,
+      "message_xp": 1099,
+      "voice_xp": 1664,
+      "voice_seconds": 49095,
+      "lastVoiceAt": 1775770641032
+    },
+    "1345841634566344840": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1766257531948,
+      "message_xp": 0,
+      "voice_xp": 1,
+      "voice_seconds": 37,
+      "lastVoiceAt": 1771614762819
+    },
+    "1141361624826007612": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1766260514876
+    },
+    "1378715933580857485": {
+      "xp": 9490,
+      "level": 9,
+      "lastMessageAt": 1778165749874,
+      "message_xp": 1763,
+      "voice_xp": 281,
+      "voice_seconds": 8126,
+      "lastVoiceAt": 1776890314829
+    },
+    "704589416873721908": {
+      "xp": 462,
+      "level": 2,
+      "lastMessageAt": 1767883814100
+    },
+    "810140325313118219": {
+      "xp": 320,
       "level": 1,
-      "message_xp": 17,
-      "voice_xp": 223,
-      "voice_seconds": 6672,
-      "lastMessageAt": 1770487481654,
-      "lastVoiceAt": 1778362245617
+      "lastMessageAt": 1771541165992,
+      "message_xp": 22,
+      "voice_xp": 106,
+      "voice_seconds": 3081,
+      "lastVoiceAt": 1778099421817
+    },
+    "1278074985545732158": {
+      "xp": 27,
+      "level": 0,
+      "lastMessageAt": 1772715665724,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "995027962682425427": {
+      "xp": 521,
+      "level": 2,
+      "lastMessageAt": 1773696805488,
+      "message_xp": 78,
+      "voice_xp": 196,
+      "voice_seconds": 5728,
+      "lastVoiceAt": 1777644303973
+    },
+    "1388909339225489429": {
+      "xp": 41,
+      "level": 0,
+      "lastMessageAt": 1766331526484
+    },
+    "1270812960608227499": {
+      "xp": 356,
+      "level": 1,
+      "lastMessageAt": 1772879584151,
+      "message_xp": 70,
+      "voice_xp": 65,
+      "voice_seconds": 1924,
+      "lastVoiceAt": 1774800724932
+    },
+    "725267964407971902": {
+      "xp": 23,
+      "level": 0,
+      "lastMessageAt": 1766621150654
+    },
+    "756484999854686249": {
+      "xp": 80,
+      "level": 0,
+      "lastMessageAt": 1776189520653,
+      "message_xp": 26,
+      "voice_xp": 33,
+      "voice_seconds": 982,
+      "lastVoiceAt": 1777738218301
+    },
+    "1220865229953564852": {
+      "xp": 371,
+      "level": 1,
+      "lastMessageAt": 1778138354517,
+      "message_xp": 88,
+      "voice_xp": 117,
+      "voice_seconds": 3343,
+      "lastVoiceAt": 1773509233801
+    },
+    "1334535608474931283": {
+      "xp": 1592,
+      "level": 3,
+      "lastMessageAt": 1776262533810,
+      "message_xp": 665,
+      "voice_xp": 546,
+      "voice_seconds": 15988,
+      "lastVoiceAt": 1775570688217
+    },
+    "1191024007869374565": {
+      "xp": 339,
+      "level": 1,
+      "lastMessageAt": 1774891548004,
+      "message_xp": 320,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1167874270945345556": {
+      "xp": 890,
+      "level": 2,
+      "lastMessageAt": 1773861542683,
+      "message_xp": 29,
+      "voice_xp": 784,
+      "voice_seconds": 23088,
+      "lastVoiceAt": 1776970422357
+    },
+    "755511421160390858": {
+      "xp": 864,
+      "level": 2,
+      "lastMessageAt": 1766341760501,
+      "message_xp": 0,
+      "voice_xp": 853,
+      "voice_seconds": 25058,
+      "lastVoiceAt": 1776610327754
+    },
+    "776473809749540894": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1766346891056
+    },
+    "1274513439209029654": {
+      "xp": 13034,
+      "level": 11,
+      "lastMessageAt": 1772205887329,
+      "message_xp": 239,
+      "voice_xp": 12492,
+      "voice_seconds": 370191,
+      "lastVoiceAt": 1777924634908
+    },
+    "865375109568135188": {
+      "xp": 11473,
+      "level": 10,
+      "lastMessageAt": 1777628324202,
+      "message_xp": 390,
+      "voice_xp": 9247,
+      "voice_seconds": 273387,
+      "lastVoiceAt": 1777915690131
+    },
+    "1090301930510753925": {
+      "xp": 4655,
+      "level": 6,
+      "lastMessageAt": 1768220908413
+    },
+    "1449129712160080014": {
+      "xp": 1611,
+      "level": 4,
+      "lastMessageAt": 1775533237060,
+      "message_xp": 294,
+      "voice_xp": 229,
+      "voice_seconds": 6590,
+      "lastVoiceAt": 1776890434863
+    },
+    "802855882215784468": {
+      "xp": 2827,
+      "level": 5,
+      "lastMessageAt": 1777629650047,
+      "message_xp": 1901,
+      "voice_xp": 558,
+      "voice_seconds": 16607,
+      "lastVoiceAt": 1778011307743
+    },
+    "1360923109011624007": {
+      "xp": 158,
+      "level": 1,
+      "lastMessageAt": 1767657290155
+    },
+    "1136047425677701160": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1766415777332
+    },
+    "1368127297143443522": {
+      "xp": 15964,
+      "level": 12,
+      "lastMessageAt": 1778159464639,
+      "message_xp": 903,
+      "voice_xp": 13078,
+      "voice_seconds": 386348,
+      "lastVoiceAt": 1778179605275
+    },
+    "1366391843201486888": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1766428597347
+    },
+    "1345408556416893052": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1766429036578,
+      "message_xp": 0,
+      "voice_xp": 3,
+      "voice_seconds": 91,
+      "lastVoiceAt": 1777640163678
+    },
+    "1137322115700367380": {
+      "xp": 1147,
+      "level": 3,
+      "lastMessageAt": 1767280374846
+    },
+    "1192504082812907600": {
+      "xp": 702,
+      "level": 2,
+      "lastMessageAt": 1767320316901
+    },
+    "876351392497954856": {
+      "xp": 60,
+      "level": 0,
+      "lastMessageAt": 1770371203373
+    },
+    "1010833313944064091": {
+      "xp": 34,
+      "level": 0,
+      "lastMessageAt": 1768152891741
+    },
+    "779454803822247936": {
+      "xp": 83,
+      "level": 0,
+      "lastMessageAt": 1766434742151,
+      "message_xp": 0,
+      "voice_xp": 70,
+      "voice_seconds": 1956,
+      "lastVoiceAt": 1776289171853
+    },
+    "899643002903986177": {
+      "xp": 133,
+      "level": 1,
+      "lastMessageAt": 1766434797477,
+      "message_xp": 0,
+      "voice_xp": 118,
+      "voice_seconds": 3511,
+      "lastVoiceAt": 1774718301641
+    },
+    "1438210870525038602": {
+      "xp": 281,
+      "level": 1,
+      "lastMessageAt": 1774125974884,
+      "message_xp": 14,
+      "voice_xp": 253,
+      "voice_seconds": 7543,
+      "lastVoiceAt": 1774716175682
+    },
+    "994643151669178368": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1766437021806
+    },
+    "1414139880006619156": {
+      "xp": 6341,
+      "level": 7,
+      "lastMessageAt": 1774210646196,
+      "message_xp": 140,
+      "voice_xp": 5216,
+      "voice_seconds": 154043,
+      "lastVoiceAt": 1774369196681
+    },
+    "929441046222499901": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1766439776203
+    },
+    "339395859147915275": {
+      "xp": 17209,
+      "level": 13,
+      "lastMessageAt": 1778011307243,
+      "message_xp": 3355,
+      "voice_xp": 10999,
+      "voice_seconds": 324512,
+      "lastVoiceAt": 1778089761512
+    },
+    "1271200541963321374": {
+      "xp": 67,
+      "level": 0,
+      "lastMessageAt": 1766443380001,
+      "message_xp": 0,
+      "voice_xp": 59,
+      "voice_seconds": 1737,
+      "lastVoiceAt": 1772982240438
+    },
+    "887670174977761310": {
+      "xp": 147,
+      "level": 1,
+      "lastMessageAt": 1771403594223,
+      "message_xp": 79,
+      "voice_xp": 19,
+      "voice_seconds": 567,
+      "lastVoiceAt": 1770904988404
+    },
+    "1201262621630943265": {
+      "xp": 489,
+      "level": 2,
+      "lastMessageAt": 1772987341732,
+      "message_xp": 40,
+      "voice_xp": 9,
+      "voice_seconds": 248,
+      "lastVoiceAt": 1770821712038
+    },
+    "1272209744437842072": {
+      "xp": 60,
+      "level": 0,
+      "lastMessageAt": 1766504652754
+    },
+    "709040683364646973": {
+      "xp": 363,
+      "level": 1,
+      "lastMessageAt": 1766757744303
+    },
+    "864883257832898610": {
+      "xp": 642,
+      "level": 2,
+      "lastMessageAt": 1774263982881,
+      "message_xp": 71,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "431525947817328651": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1766518060092
+    },
+    "1344339820553703528": {
+      "xp": 16,
+      "level": 0,
+      "lastMessageAt": 1766525330377,
+      "message_xp": 0,
+      "voice_xp": 6,
+      "voice_seconds": 171,
+      "lastVoiceAt": 1773516207574
+    },
+    "522776552786624522": {
+      "xp": 823,
+      "level": 2,
+      "lastMessageAt": 1773585320610,
+      "message_xp": 306,
+      "voice_xp": 370,
+      "voice_seconds": 11023,
+      "lastVoiceAt": 1773079338710
+    },
+    "1095324441669533726": {
+      "xp": 861,
+      "level": 2,
+      "lastMessageAt": 1774601066908,
+      "message_xp": 94,
+      "voice_xp": 401,
+      "voice_seconds": 11821,
+      "lastVoiceAt": 1777753436707
+    },
+    "1332700099737948274": {
+      "xp": 64,
+      "level": 0,
+      "lastMessageAt": 1766601788613
+    },
+    "1360231862768762903": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1766570622938,
+      "message_xp": 0,
+      "voice_xp": 2,
+      "voice_seconds": 65,
+      "lastVoiceAt": 1770994558092
+    },
+    "1146005594034159726": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1766571905865
+    },
+    "1326609055757635721": {
+      "xp": 987,
+      "level": 3,
+      "lastMessageAt": 1769045402987,
+      "message_xp": 0,
+      "voice_xp": 820,
+      "voice_seconds": 24214,
+      "lastVoiceAt": 1777996517360
+    },
+    "1012769047655481465": {
+      "xp": 4161,
+      "level": 6,
+      "lastMessageAt": 1778176297675,
+      "message_xp": 1663,
+      "voice_xp": 1055,
+      "voice_seconds": 30672,
+      "lastVoiceAt": 1777480221896
+    },
+    "979358449324412969": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1766588106435
+    },
+    "1356454778020040794": {
+      "xp": 455,
+      "level": 2,
+      "lastMessageAt": 1771533121068,
+      "message_xp": 85,
+      "voice_xp": 268,
+      "voice_seconds": 7866,
+      "lastVoiceAt": 1771514504052
+    },
+    "1046476320525267068": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1766601683429
+    },
+    "1134860878022463490": {
+      "xp": 661,
+      "level": 2,
+      "lastMessageAt": 1769210360650,
+      "message_xp": 0,
+      "voice_xp": 236,
+      "voice_seconds": 7031,
+      "lastVoiceAt": 1777753436669
+    },
+    "1047162334512169031": {
+      "xp": 163,
+      "level": 1,
+      "lastMessageAt": 1768050013701
+    },
+    "1085559408307736606": {
+      "xp": 4695,
+      "level": 6,
+      "lastMessageAt": 1778096879464,
+      "message_xp": 237,
+      "voice_xp": 4280,
+      "voice_seconds": 126312,
+      "lastVoiceAt": 1778169281948
+    },
+    "1056925694606721125": {
+      "xp": 234,
+      "level": 1,
+      "lastMessageAt": 1777989036558,
+      "message_xp": 100,
+      "voice_xp": 22,
+      "voice_seconds": 635,
+      "lastVoiceAt": 1770933195776
+    },
+    "1334288490203975710": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1766614548365
+    },
+    "1153755688514891859": {
+      "xp": 2200,
+      "level": 4,
+      "lastMessageAt": 1776968610929,
+      "message_xp": 683,
+      "voice_xp": 1448,
+      "voice_seconds": 42534,
+      "lastVoiceAt": 1776968592228
+    },
+    "1260708313524338719": {
+      "xp": 118,
+      "level": 1,
+      "lastMessageAt": 1773095514631,
+      "message_xp": 30,
+      "voice_xp": 12,
+      "voice_seconds": 341,
+      "lastVoiceAt": 1773095905675
+    },
+    "1169706955401601100": {
+      "xp": 884,
+      "level": 2,
+      "lastMessageAt": 1777629742742,
+      "message_xp": 154,
+      "voice_xp": 215,
+      "voice_seconds": 6422,
+      "lastVoiceAt": 1775686555052
+    },
+    "772719324208168973": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1766614819674
+    },
+    "1114472400931786802": {
+      "xp": 83,
+      "level": 0,
+      "lastMessageAt": 1766621490692
+    },
+    "1130132059147489330": {
+      "xp": 29,
+      "level": 0,
+      "lastMessageAt": 1766621686704
+    },
+    "1180919961540120687": {
+      "xp": 334,
+      "level": 1,
+      "lastMessageAt": 1777839375316,
+      "message_xp": 201,
+      "voice_xp": 56,
+      "voice_seconds": 1681,
+      "lastVoiceAt": 1777839367228
+    },
+    "902063101879406612": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1766661967849
+    },
+    "714490416036184175": {
+      "xp": 38,
+      "level": 0,
+      "lastMessageAt": 1766684367265
+    },
+    "1120046931650039859": {
+      "xp": 434,
+      "level": 2,
+      "lastMessageAt": 1775309684839,
+      "message_xp": 130,
+      "voice_xp": 82,
+      "voice_seconds": 2447,
+      "lastVoiceAt": 1777323338845
+    },
+    "1056152608328392715": {
+      "xp": 130,
+      "level": 1,
+      "lastMessageAt": 1768233103292,
+      "message_xp": 0,
+      "voice_xp": 94,
+      "voice_seconds": 2828,
+      "lastVoiceAt": 1775850176261
+    },
+    "1323346044788019230": {
+      "xp": 31,
+      "level": 0,
+      "lastMessageAt": 1766704694273
+    },
+    "730054715173371985": {
+      "xp": 788,
+      "level": 2,
+      "lastMessageAt": 1778075376888,
+      "message_xp": 289,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1087319198809718905": {
+      "xp": 382,
+      "level": 1,
+      "lastMessageAt": 1767281823241
+    },
+    "1028766135514038292": {
+      "xp": 40,
+      "level": 0,
+      "lastMessageAt": 1774449489028,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "556889462425124873": {
+      "xp": 39,
+      "level": 0,
+      "lastMessageAt": 1766784248260
+    },
+    "1453132664633557217": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1766772587284
+    },
+    "729796054228271114": {
+      "xp": 271,
+      "level": 1,
+      "lastMessageAt": 1768678407512,
+      "message_xp": 0,
+      "voice_xp": 220,
+      "voice_seconds": 6495,
+      "lastVoiceAt": 1771331934384
+    },
+    "1076812824745082900": {
+      "xp": 82,
+      "level": 0,
+      "lastMessageAt": 1766869921276
+    },
+    "882919378247614484": {
+      "xp": 1197,
+      "level": 3,
+      "lastMessageAt": 1776969867490,
+      "message_xp": 87,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1188159990645661810": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1766936878754
+    },
+    "543850492946546692": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1766938352485
+    },
+    "1337547465683111997": {
+      "xp": 3830,
+      "level": 6,
+      "lastMessageAt": 1772194688493,
+      "message_xp": 94,
+      "voice_xp": 3723,
+      "voice_seconds": 109790,
+      "lastVoiceAt": 1775473964131
+    },
+    "660201873214537730": {
+      "xp": 59,
+      "level": 0,
+      "lastMessageAt": 1766951960786
+    },
+    "1432790711987863614": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1766948835499
+    },
+    "1444783402699194450": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1766956981713
+    },
+    "1383035263739101254": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1766960715748
+    },
+    "838064579392569415": {
+      "xp": 135,
+      "level": 1,
+      "lastMessageAt": 1768249239210
+    },
+    "1254764704870436866": {
+      "xp": 25,
+      "level": 0,
+      "lastMessageAt": 1766964454327
+    },
+    "1395784191341363260": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1766964473982
+    },
+    "304707305310781440": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1766965701460
+    },
+    "1082062387500294316": {
+      "xp": 67,
+      "level": 0,
+      "lastMessageAt": 1766972974660
+    },
+    "1173576582330331218": {
+      "xp": 26,
+      "level": 0,
+      "lastMessageAt": 1767898845609
+    },
+    "1143442229860511754": {
+      "xp": 1643,
+      "level": 4,
+      "lastMessageAt": 1775312449986,
+      "message_xp": 15,
+      "voice_xp": 1590,
+      "voice_seconds": 46991,
+      "lastVoiceAt": 1777813493974
+    },
+    "452139186862948355": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1767005251692
+    },
+    "356730588817784833": {
+      "xp": 14249,
+      "level": 11,
+      "lastMessageAt": 1778014723845,
+      "message_xp": 3617,
+      "voice_xp": 10375,
+      "voice_seconds": 306526,
+      "lastVoiceAt": 1777843027448
+    },
+    "1241826144920014898": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1767012080498
+    },
+    "1230132259823288482": {
+      "xp": 289,
+      "level": 1,
+      "lastMessageAt": 1770215158697
+    },
+    "1052588681262800946": {
+      "xp": 173,
+      "level": 1,
+      "lastMessageAt": 1767230627878
+    },
+    "1410227968818548789": {
+      "xp": 34,
+      "level": 0,
+      "lastMessageAt": 1770054041876
+    },
+    "334330640914710530": {
+      "xp": 2983,
+      "level": 5,
+      "lastMessageAt": 1777746095802,
+      "message_xp": 80,
+      "voice_xp": 2895,
+      "voice_seconds": 85863,
+      "lastVoiceAt": 1777750196493
+    },
+    "1176573824876158993": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1767031069669
+    },
+    "1312498052329771119": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1767031161515
+    },
+    "1141477880518430720": {
+      "xp": 38683,
+      "level": 19,
+      "lastMessageAt": 1777417162861,
+      "message_xp": 3640,
+      "voice_xp": 34075,
+      "voice_seconds": 1009498,
+      "lastVoiceAt": 1777809573963
+    },
+    "1213204284087341178": {
+      "xp": 128,
+      "level": 1,
+      "lastMessageAt": 1768845617023
+    },
+    "496728352120373248": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1767033900244
+    },
+    "723566256065871953": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1767034102634
+    },
+    "1221480717528334480": {
+      "xp": 229,
+      "level": 1,
+      "lastMessageAt": 1768300438172
+    },
+    "1232970735325024307": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1767035627800
+    },
+    "939931130893836348": {
+      "xp": 5990,
+      "level": 7,
+      "lastMessageAt": 1776235300711,
+      "message_xp": 1182,
+      "voice_xp": 4341,
+      "voice_seconds": 128428,
+      "lastVoiceAt": 1777648414310
+    },
+    "1029280075914424381": {
+      "xp": 1579,
+      "level": 3,
+      "lastMessageAt": 1777745804445,
+      "message_xp": 108,
+      "voice_xp": 14,
+      "voice_seconds": 411,
+      "lastVoiceAt": 1777655254813
+    },
+    "722107394456289310": {
+      "xp": 29,
+      "level": 0,
+      "lastMessageAt": 1767039053513
+    },
+    "1240500746865344554": {
+      "xp": 1001,
+      "level": 3,
+      "lastMessageAt": 1770235869970
+    },
+    "548941200359424052": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1767038381242
+    },
+    "1432435491076313197": {
+      "xp": 892,
+      "level": 2,
+      "lastMessageAt": 1770461032743,
+      "message_xp": 47,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1287081456765501621": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1767044027874
+    },
+    "1417594838311764152": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1767047022231
+    },
+    "1314906647541317675": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1767049702227
+    },
+    "1345827456791351327": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1767053721563
+    },
+    "852655884920553473": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1767091663842
+    },
+    "875794654648496128": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1767092055615
+    },
+    "1446518087783288952": {
+      "xp": 77,
+      "level": 0,
+      "lastMessageAt": 1767222266351
+    },
+    "1158039699491913808": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1767118715975,
+      "message_xp": 0,
+      "voice_xp": 3,
+      "voice_seconds": 77,
+      "lastVoiceAt": 1770841187188
+    },
+    "687355268799135755": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1767126573148
+    },
+    "1454105030125949080": {
+      "xp": 545,
+      "level": 2,
+      "lastMessageAt": 1768224880915
+    },
+    "909910501985767456": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1767133650934
+    },
+    "1012805756883570788": {
+      "xp": 254,
+      "level": 1,
+      "lastMessageAt": 1767293413284
+    },
+    "1322294573757628528": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1767186197005
+    },
+    "1400786210452144201": {
+      "xp": 6057,
+      "level": 7,
+      "lastMessageAt": 1771530778927,
+      "message_xp": 508,
+      "voice_xp": 497,
+      "voice_seconds": 14783,
+      "lastVoiceAt": 1771531068920
+    },
+    "487367721168928769": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1767207545247
+    },
+    "602108033341980688": {
+      "xp": 66,
+      "level": 0,
+      "lastMessageAt": 1775503417812,
+      "message_xp": 47,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1382038716280864819": {
+      "xp": 628,
+      "level": 2,
+      "lastMessageAt": 1767395518481,
+      "message_xp": 0,
+      "voice_xp": 541,
+      "voice_seconds": 16092,
+      "lastVoiceAt": 1777750676492
+    },
+    "951174123869044736": {
+      "xp": 515,
+      "level": 2,
+      "lastMessageAt": 1770215727748,
+      "message_xp": 0,
+      "voice_xp": 466,
+      "voice_seconds": 13459,
+      "lastVoiceAt": 1773493976343
     },
     "1153647975822794784": {
+      "xp": 1473,
+      "level": 3,
+      "lastMessageAt": 1777199177104,
+      "message_xp": 236,
+      "voice_xp": 301,
+      "voice_seconds": 8852,
+      "lastVoiceAt": 1771699853776
+    },
+    "829754991547514920": {
+      "xp": 330,
+      "level": 1,
+      "lastMessageAt": 1767278251157
+    },
+    "644222083844538368": {
+      "xp": 189,
+      "level": 1,
+      "lastMessageAt": 1768209964614
+    },
+    "1180120465189118082": {
+      "xp": 55,
+      "level": 0,
+      "lastMessageAt": 1774279402944,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1098596269225680927": {
+      "xp": 49,
+      "level": 0,
+      "lastMessageAt": 1767280863063
+    },
+    "1286726638364528681": {
+      "xp": 71,
+      "level": 0,
+      "lastMessageAt": 1771606659727,
+      "message_xp": 28,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1285924362242887715": {
+      "xp": 1005,
+      "level": 3,
+      "lastMessageAt": 1767285190580,
+      "message_xp": 0,
+      "voice_xp": 992,
+      "voice_seconds": 29212,
+      "lastVoiceAt": 1776528186748
+    },
+    "1179439390796284036": {
+      "xp": 8932,
+      "level": 9,
+      "lastMessageAt": 1772721427995,
+      "message_xp": 302,
+      "voice_xp": 8617,
+      "voice_seconds": 255139,
+      "lastVoiceAt": 1778002337544
+    },
+    "1419259154060808264": {
+      "xp": 21,
+      "level": 0,
+      "lastMessageAt": 1767295155396
+    },
+    "811678882192293919": {
+      "xp": 24,
+      "level": 0,
+      "lastMessageAt": 1770406257106
+    },
+    "576826777599475725": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1767306756374
+    },
+    "526489883578073099": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1767313865265
+    },
+    "690999990566518815": {
+      "xp": 25,
+      "level": 0,
+      "lastMessageAt": 1767348114134
+    },
+    "1132956599565176952": {
+      "xp": 405,
+      "level": 2,
+      "lastMessageAt": 1771609747295,
+      "message_xp": 8,
+      "voice_xp": 304,
+      "voice_seconds": 9031,
+      "lastVoiceAt": 1771699823773
+    },
+    "881696590463647764": {
+      "xp": 118,
+      "level": 1,
+      "lastMessageAt": 1767394273854
+    },
+    "661590128057253898": {
+      "xp": 289,
+      "level": 1,
+      "lastMessageAt": 1770242847762,
+      "message_xp": 0,
+      "voice_xp": 29,
+      "voice_seconds": 833,
+      "lastVoiceAt": 1771009956461
+    },
+    "1456982421202538546": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1767446996593
+    },
+    "1392902417787519006": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1767455455963
+    },
+    "1223270924963283015": {
+      "xp": 72,
+      "level": 0,
+      "lastMessageAt": 1769547667028,
+      "message_xp": 0,
+      "voice_xp": 41,
+      "voice_seconds": 1160,
+      "lastVoiceAt": 1775316245976
+    },
+    "1004995981697351680": {
+      "xp": 60,
+      "level": 0,
+      "lastMessageAt": 1767483154727
+    },
+    "1402695521545617511": {
+      "xp": 106,
+      "level": 1,
+      "lastMessageAt": 1768063543179
+    },
+    "1357100230247579699": {
+      "xp": 38,
+      "level": 0,
+      "lastMessageAt": 1767490066299,
+      "message_xp": 0,
+      "voice_xp": 26,
+      "voice_seconds": 791,
+      "lastVoiceAt": 1776449522349
+    },
+    "1151551070061990019": {
+      "xp": 596,
+      "level": 2,
+      "lastMessageAt": 1775830486684,
+      "message_xp": 57,
+      "voice_xp": 317,
+      "voice_seconds": 9348,
+      "lastVoiceAt": 1774469055638
+    },
+    "997522085633085461": {
+      "xp": 889,
+      "level": 2,
+      "lastMessageAt": 1768753127311
+    },
+    "1077478439906451496": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1767547297579
+    },
+    "1362797445196550244": {
+      "xp": 115,
+      "level": 1,
+      "lastMessageAt": 1769547699656
+    },
+    "856490550069035069": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1767550285628
+    },
+    "1370416858636881930": {
+      "xp": 886,
+      "level": 2,
+      "lastMessageAt": 1773412865641,
+      "message_xp": 149,
+      "voice_xp": 595,
+      "voice_seconds": 17407,
+      "lastVoiceAt": 1777111792972
+    },
+    "619983881101115402": {
+      "xp": 194,
+      "level": 1,
+      "lastMessageAt": 1768746960251
+    },
+    "1108092757299449866": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1767614684496
+    },
+    "1370447354792247316": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1767619776850
+    },
+    "1059467268817432586": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1767621285436
+    },
+    "1411769647551873175": {
+      "xp": 555,
+      "level": 2,
+      "lastMessageAt": 1768230441217
+    },
+    "1419438517766848622": {
+      "xp": 266,
+      "level": 1,
+      "lastMessageAt": 1771677444374,
+      "message_xp": 12,
+      "voice_xp": 218,
+      "voice_seconds": 6468,
+      "lastVoiceAt": 1775241810728
+    },
+    "1068862596419166258": {
+      "xp": 542,
+      "level": 2,
+      "lastMessageAt": 1773611825973,
+      "message_xp": 233,
+      "voice_xp": 236,
+      "voice_seconds": 7032,
+      "lastVoiceAt": 1773410307551
+    },
+    "1060253107377934357": {
+      "xp": 100,
+      "level": 1,
+      "lastMessageAt": 1767714808512,
+      "message_xp": 0,
+      "voice_xp": 22,
+      "voice_seconds": 639,
+      "lastVoiceAt": 1772643716040
+    },
+    "1134056836157427722": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1767634860968
+    },
+    "1372571354271973459": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1767634953351
+    },
+    "1332375891086540810": {
+      "xp": 5284,
+      "level": 7,
+      "lastMessageAt": 1777715821458,
+      "message_xp": 587,
+      "voice_xp": 4689,
+      "voice_seconds": 138564,
+      "lastVoiceAt": 1777199319593
+    },
+    "1416159250840948816": {
+      "xp": 33,
+      "level": 0,
+      "lastMessageAt": 1767636087647,
+      "message_xp": 0,
+      "voice_xp": 23,
+      "voice_seconds": 678,
+      "lastVoiceAt": 1773512816767
+    },
+    "263757450300227594": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1767639918478
+    },
+    "1192608236881334383": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1767640762986
+    },
+    "1353333587239243818": {
+      "xp": 1821,
+      "level": 4,
+      "lastMessageAt": 1771249736452,
+      "message_xp": 329,
+      "voice_xp": 946,
+      "voice_seconds": 27765,
+      "lastVoiceAt": 1771252588314
+    },
+    "1235167765405503518": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1767656380926
+    },
+    "1116674756658335785": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1767698178988
+    },
+    "973207446451539968": {
+      "xp": 30,
+      "level": 0,
+      "lastMessageAt": 1768052116691
+    },
+    "1457848497691955471": {
+      "xp": 974,
+      "level": 3,
+      "lastMessageAt": 1774029490757,
+      "message_xp": 598,
+      "voice_xp": 59,
+      "voice_seconds": 1768,
+      "lastVoiceAt": 1774029490733
+    },
+    "980489713758662707": {
+      "xp": 113,
+      "level": 1,
+      "lastMessageAt": 1768674245683,
+      "message_xp": 0,
+      "voice_xp": 62,
+      "voice_seconds": 1857,
+      "lastVoiceAt": 1773156434761
+    },
+    "644928450649522217": {
+      "xp": 55,
+      "level": 0,
+      "lastMessageAt": 1767717720023,
+      "message_xp": 0,
+      "voice_xp": 43,
+      "voice_seconds": 1272,
+      "lastVoiceAt": 1775660872848
+    },
+    "1339665291675959347": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1767722925865
+    },
+    "1007664622045765634": {
+      "xp": 278,
+      "level": 1,
+      "lastMessageAt": 1770834222545,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1420468775916146740": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1767794517360
+    },
+    "1386257921226051606": {
+      "xp": 129,
+      "level": 1,
+      "lastMessageAt": 1770326872983,
+      "message_xp": 0,
+      "voice_xp": 27,
+      "voice_seconds": 782,
+      "lastVoiceAt": 1775764490821
+    },
+    "774235280982278144": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1767818421355
+    },
+    "162034746191380481": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1767889868004
+    },
+    "1208096916030627970": {
+      "xp": 50,
+      "level": 0,
+      "lastMessageAt": 1771015165185,
+      "message_xp": 41,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1293650550193262595": {
+      "xp": 1208,
+      "level": 3,
+      "lastMessageAt": 1771362191135,
+      "message_xp": 152,
+      "voice_xp": 831,
+      "voice_seconds": 24634,
+      "lastVoiceAt": 1771105627075
+    },
+    "667112176997105704": {
+      "xp": 48,
+      "level": 0,
+      "lastMessageAt": 1767977997629
+    },
+    "835960382567874582": {
+      "xp": 80,
+      "level": 0,
+      "lastMessageAt": 1768162996820
+    },
+    "1433169528187129987": {
+      "xp": 66,
+      "level": 0,
+      "lastMessageAt": 1767993488415
+    },
+    "1245478268933509238": {
+      "xp": 26,
+      "level": 0,
+      "lastMessageAt": 1767995065294,
+      "message_xp": 0,
+      "voice_xp": 17,
+      "voice_seconds": 458,
+      "lastVoiceAt": 1773264972561
+    },
+    "1445834015411273931": {
+      "xp": 93,
+      "level": 0,
+      "lastMessageAt": 1778011952846,
+      "message_xp": 18,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1450609149774790901": {
+      "xp": 53,
+      "level": 0,
+      "lastMessageAt": 1768052165464,
+      "message_xp": 0,
+      "voice_xp": 10,
+      "voice_seconds": 303,
+      "lastVoiceAt": 1771949674636
+    },
+    "1415076208680636536": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1768054251892
+    },
+    "1071750230694969434": {
+      "xp": 26,
+      "level": 0,
+      "lastMessageAt": 1768064239958
+    },
+    "717861718914760715": {
+      "xp": 84,
+      "level": 0,
+      "lastMessageAt": 1768066839762
+    },
+    "692103909593972757": {
+      "xp": 155,
+      "level": 1,
+      "lastMessageAt": 1775236488445,
+      "message_xp": 43,
+      "voice_xp": 70,
+      "voice_seconds": 1999,
+      "lastVoiceAt": 1778013707803
+    },
+    "928316171906871316": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1768069261420
+    },
+    "660201017509543936": {
+      "xp": 503,
+      "level": 2,
+      "lastMessageAt": 1772742252538,
+      "message_xp": 23,
+      "voice_xp": 435,
+      "voice_seconds": 12982,
+      "lastVoiceAt": 1773520768530
+    },
+    "1274524622263550037": {
+      "xp": 325,
+      "level": 1,
+      "lastMessageAt": 1778066429819,
+      "message_xp": 148,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1307637677960462387": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1768154397885
+    },
+    "1460014238436425798": {
+      "xp": 1240,
+      "level": 3,
+      "lastMessageAt": 1768167549205,
+      "message_xp": 0,
+      "voice_xp": 1231,
+      "voice_seconds": 36491,
+      "lastVoiceAt": 1778004707588
+    },
+    "1235604603001634896": {
+      "xp": 322,
+      "level": 1,
+      "lastMessageAt": 1768410185242
+    },
+    "835232223334367312": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1768252465830
+    },
+    "968957950905450546": {
+      "xp": 23,
+      "level": 0,
+      "lastMessageAt": 1777316647072,
+      "message_xp": 14,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1292930470660804661": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1768348691160
+    },
+    "707268257400488037": {
+      "xp": 45,
+      "level": 0,
+      "lastMessageAt": 1768390761676
+    },
+    "788562305046675508": {
+      "xp": 23,
+      "level": 0,
+      "lastMessageAt": 1768404573875,
+      "message_xp": 0,
+      "voice_xp": 14,
+      "voice_seconds": 425,
+      "lastVoiceAt": 1771790631363
+    },
+    "652246932370227200": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1768408099363
+    },
+    "1405545859013283861": {
+      "xp": 277,
+      "level": 1,
+      "lastMessageAt": 1775294889764,
+      "message_xp": 24,
+      "voice_xp": 134,
+      "voice_seconds": 3996,
+      "lastVoiceAt": 1775294975051
+    },
+    "1240723914938781828": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1768422331601
+    },
+    "882922064040833074": {
+      "xp": 24,
+      "level": 0,
+      "lastMessageAt": 1768583829083
+    },
+    "1427677040588361790": {
+      "xp": 120,
+      "level": 1,
+      "lastMessageAt": 1770040118021,
+      "message_xp": 0,
+      "voice_xp": 89,
+      "voice_seconds": 2653,
+      "lastVoiceAt": 1771260390282
+    },
+    "1335694222438699018": {
+      "xp": 22,
+      "level": 0,
+      "lastMessageAt": 1768644900167
+    },
+    "1457204184549032029": {
+      "xp": 21,
+      "level": 0,
+      "lastMessageAt": 1768652437141
+    },
+    "890585061089493142": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1768741940155
+    },
+    "1305589033849589813": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1768742688823
+    },
+    "1461785952237387822": {
+      "xp": 79,
+      "level": 0,
+      "lastMessageAt": 1775764576091,
+      "message_xp": 24,
+      "voice_xp": 47,
+      "voice_seconds": 1402,
+      "lastVoiceAt": 1777485052310
+    },
+    "1423950266394349700": {
+      "xp": 2370,
+      "level": 4,
+      "lastMessageAt": 1772304860728,
+      "message_xp": 11,
+      "voice_xp": 2331,
+      "voice_seconds": 69093,
+      "lastVoiceAt": 1772736987062
+    },
+    "1462920415948050714": {
+      "xp": 375,
+      "level": 1,
+      "lastMessageAt": 1774893067730,
+      "message_xp": 120,
+      "voice_xp": 202,
+      "voice_seconds": 5868,
+      "lastVoiceAt": 1772452204200
+    },
+    "1462131285458948189": {
+      "xp": 46,
+      "level": 0,
+      "lastMessageAt": 1770414320633
+    },
+    "1408517972926009386": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1768931635007
+    },
+    "1271841411188260875": {
+      "xp": 596,
+      "level": 2,
+      "lastMessageAt": 1768932626273,
+      "message_xp": 0,
+      "voice_xp": 588,
+      "voice_seconds": 17313,
+      "lastVoiceAt": 1773181632094
+    },
+    "1463586541334167637": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1769017155862
+    },
+    "1223572359303397410": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1769017689444
+    },
+    "1463579150794227767": {
+      "xp": 317,
+      "level": 1,
+      "lastMessageAt": 1769212390396
+    },
+    "766202979953934337": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1769104506858
+    },
+    "1058340198922072094": {
+      "xp": 67,
+      "level": 0,
+      "lastMessageAt": 1769105662342,
+      "message_xp": 0,
+      "voice_xp": 58,
+      "voice_seconds": 1691,
+      "lastVoiceAt": 1774726552372
+    },
+    "614853257898098729": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1769105971328
+    },
+    "1165905303003475968": {
+      "xp": 78,
+      "level": 0,
+      "lastMessageAt": 1769110727623
+    },
+    "1346894897743003721": {
+      "xp": 23,
+      "level": 0,
+      "lastMessageAt": 1769194009321
+    },
+    "794707013832671232": {
+      "xp": 405,
+      "level": 2,
+      "lastMessageAt": 1769256821317,
+      "message_xp": 0,
+      "voice_xp": 118,
+      "voice_seconds": 3532,
+      "lastVoiceAt": 1771359994707
+    },
+    "795010248993406986": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1769257086246
+    },
+    "613052357080514578": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1769275227684
+    },
+    "427522220127158273": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1769275240373
+    },
+    "758687872885719052": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1769275248335
+    },
+    "759066749353197618": {
+      "xp": 8,
+      "level": 0,
+      "lastMessageAt": 1769288511444
+    },
+    "1373612603024347156": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1769350740799
+    },
+    "1168546143488196648": {
+      "xp": 2522,
+      "level": 5,
+      "lastMessageAt": 1772374028828,
+      "message_xp": 863,
+      "voice_xp": 1281,
+      "voice_seconds": 37982,
+      "lastVoiceAt": 1771766957434
+    },
+    "522166528641335297": {
+      "xp": 26,
+      "level": 0,
+      "lastMessageAt": 1769358413622
+    },
+    "807971572279279627": {
+      "xp": 1873,
+      "level": 4,
+      "lastMessageAt": 1777744896444,
+      "message_xp": 227,
+      "voice_xp": 1623,
+      "voice_seconds": 47668,
+      "lastVoiceAt": 1776875680846
+    },
+    "1384441836575133816": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1769434748616
+    },
+    "989251973763194962": {
+      "xp": 522,
+      "level": 2,
+      "lastMessageAt": 1771972562592,
+      "message_xp": 219,
+      "voice_xp": 84,
+      "voice_seconds": 2414,
+      "lastVoiceAt": 1771083212653
+    },
+    "1258407876737896600": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1769459874925
+    },
+    "1413806008605605920": {
+      "xp": 1078,
+      "level": 3,
+      "lastMessageAt": 1769531102378,
+      "message_xp": 0,
+      "voice_xp": 1064,
+      "voice_seconds": 31647,
+      "lastVoiceAt": 1775306735721
+    },
+    "881977286566486016": {
+      "xp": 14,
+      "level": 0,
+      "lastMessageAt": 1769542362845
+    },
+    "1398064135677284402": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1769546959966
+    },
+    "943965491565846538": {
+      "xp": 103,
+      "level": 1,
+      "lastMessageAt": 1775403696183,
+      "message_xp": 53,
+      "voice_xp": 11,
+      "voice_seconds": 328,
+      "lastVoiceAt": 1770820691824
+    },
+    "1001076698089017415": {
+      "xp": 564,
+      "level": 2,
+      "lastMessageAt": 1771324232891,
+      "message_xp": 106,
+      "voice_xp": 146,
+      "voice_seconds": 4201,
+      "lastVoiceAt": 1771086693172
+    },
+    "1266461598264852510": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1769631542396
+    },
+    "1070413067726368779": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1769631555863
+    },
+    "691495095903715409": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1769647214119
+    },
+    "1409899003092533271": {
+      "xp": 948,
+      "level": 3,
+      "lastMessageAt": 1771605631053,
+      "message_xp": 184,
+      "voice_xp": 751,
+      "voice_seconds": 22063,
+      "lastVoiceAt": 1773072468504
+    },
+    "894579686036865094": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1769789429679,
+      "message_xp": 0,
+      "voice_xp": 2,
+      "voice_seconds": 40,
+      "lastVoiceAt": 1774535270925
+    },
+    "1378749421730267236": {
+      "xp": 12039,
+      "level": 10,
+      "lastMessageAt": 1777800522003,
+      "message_xp": 863,
+      "voice_xp": 10931,
+      "voice_seconds": 321634,
+      "lastVoiceAt": 1777826463956
+    },
+    "1462174728641970342": {
+      "xp": 22,
+      "level": 0,
+      "lastMessageAt": 1769868265979
+    },
+    "951211486951387166": {
+      "xp": 556,
+      "level": 2,
+      "lastMessageAt": 1774130984848,
+      "message_xp": 46,
+      "voice_xp": 495,
+      "voice_seconds": 14749,
+      "lastVoiceAt": 1771952225230
+    },
+    "1205940875696541767": {
+      "xp": 1385,
+      "level": 3,
+      "lastMessageAt": 1772303618903,
+      "message_xp": 177,
+      "voice_xp": 790,
+      "voice_seconds": 23525,
+      "lastVoiceAt": 1772303877898
+    },
+    "1111308293302915244": {
+      "xp": 86345,
+      "level": 29,
+      "lastMessageAt": 1778155316757,
+      "message_xp": 5513,
+      "voice_xp": 80431,
+      "voice_seconds": 2377348,
+      "lastVoiceAt": 1778179605675
+    },
+    "665605181853007883": {
+      "xp": 146,
+      "level": 1,
+      "lastMessageAt": 1774118460921,
+      "message_xp": 24,
+      "voice_xp": 84,
+      "voice_seconds": 2480,
+      "lastVoiceAt": 1777481001971
+    },
+    "1036591962909851729": {
+      "xp": 1586,
+      "level": 3,
+      "lastMessageAt": 1775501081714,
+      "message_xp": 152,
+      "voice_xp": 1365,
+      "voice_seconds": 40451,
+      "lastVoiceAt": 1776454832666
+    },
+    "1275152672801951884": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1769959372824
+    },
+    "691248015821766696": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1769982364273
+    },
+    "1093493096970452995": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1769985660432
+    },
+    "1024691544688693368": {
+      "xp": 34,
+      "level": 0,
+      "lastMessageAt": 1770038656029
+    },
+    "600352989324115991": {
+      "xp": 22,
+      "level": 0,
+      "lastMessageAt": 1770833778442,
+      "message_xp": 11,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1396242656257904701": {
+      "xp": 1975,
+      "level": 4,
+      "lastMessageAt": 1770571026375,
+      "message_xp": 34,
+      "voice_xp": 1788,
+      "voice_seconds": 52901,
+      "lastVoiceAt": 1774188422177
+    },
+    "726117984569131098": {
+      "xp": 19,
+      "level": 0,
+      "lastMessageAt": 1777750592276,
+      "message_xp": 11,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastVoiceAt": 0
+    },
+    "1138066676810793081": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1770060701949
+    },
+    "878974017258795048": {
+      "xp": 3349,
+      "level": 5,
+      "lastMessageAt": 1775061260398,
+      "message_xp": 130,
+      "voice_xp": 2931,
+      "voice_seconds": 86562,
+      "lastVoiceAt": 1777309837928
+    },
+    "1300756479472570409": {
+      "xp": 46,
+      "level": 0,
+      "lastMessageAt": 1770065097637,
+      "message_xp": 0,
+      "voice_xp": 31,
+      "voice_seconds": 929,
+      "lastVoiceAt": 1771244996514
+    },
+    "974683230559154209": {
+      "xp": 17718,
+      "level": 13,
+      "lastMessageAt": 1777644009863,
+      "message_xp": 177,
+      "voice_xp": 17477,
+      "voice_seconds": 516180,
+      "lastVoiceAt": 1778179605487
+    },
+    "1467972670669717689": {
+      "xp": 1646,
+      "level": 4,
+      "lastMessageAt": 1773080180060,
+      "message_xp": 589,
+      "voice_xp": 1045,
+      "voice_seconds": 30929,
+      "lastVoiceAt": 1774642299636
+    },
+    "1354903295222743121": {
+      "xp": 9,
+      "level": 0,
+      "lastMessageAt": 1770130849421
+    },
+    "1368352631243673674": {
+      "xp": 48,
+      "level": 0,
+      "lastMessageAt": 1770143451944,
+      "message_xp": 0,
+      "voice_xp": 33,
+      "voice_seconds": 986,
+      "lastVoiceAt": 1775298215415
+    },
+    "701505340818325504": {
+      "xp": 23,
+      "level": 0,
+      "lastMessageAt": 1770147783961
+    },
+    "1348325987724824677": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1770153096932
+    },
+    "1199419887991410808": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1770153145343
+    },
+    "1390360091575976068": {
+      "xp": 12,
+      "level": 0,
+      "lastMessageAt": 1770153779161
+    },
+    "310489317833310219": {
+      "xp": 1990,
+      "level": 4,
+      "lastMessageAt": 1770214287911,
+      "message_xp": 0,
+      "voice_xp": 1981,
+      "voice_seconds": 57875,
+      "lastVoiceAt": 1776610957753
+    },
+    "1217462061907447989": {
+      "xp": 432,
+      "level": 2,
+      "lastMessageAt": 1775324486111,
+      "message_xp": 11,
+      "voice_xp": 337,
+      "voice_seconds": 9947,
+      "lastVoiceAt": 1776017698204
+    },
+    "379370392378408961": {
+      "xp": 416,
+      "level": 2,
+      "lastMessageAt": 1773167760122,
+      "message_xp": 134,
+      "voice_xp": 78,
+      "voice_seconds": 2301,
+      "lastVoiceAt": 1771183780341
+    },
+    "1102225761076785322": {
+      "xp": 4272,
+      "level": 6,
+      "lastMessageAt": 1771883070754,
+      "message_xp": 73,
+      "voice_xp": 4104,
+      "voice_seconds": 121557,
+      "lastVoiceAt": 1771446292916
+    },
+    "1439294471186681926": {
+      "xp": 144,
+      "level": 1,
+      "lastMessageAt": 1772975630386,
+      "message_xp": 15,
+      "voice_xp": 117,
+      "voice_seconds": 3459,
+      "lastVoiceAt": 1773502198117
+    },
+    "630791794065408000": {
+      "xp": 21,
+      "level": 0,
+      "lastMessageAt": 1770309061187
+    },
+    "1466813858361507851": {
+      "xp": 126,
+      "level": 1,
+      "lastMessageAt": 1770311857266,
+      "message_xp": 0,
+      "voice_xp": 114,
+      "voice_seconds": 3376,
+      "lastVoiceAt": 1770826573229
+    },
+    "1287438192806596671": {
+      "xp": 1714,
+      "level": 4,
+      "lastMessageAt": 1776087876107,
+      "message_xp": 1423,
+      "voice_xp": 259,
+      "voice_seconds": 7613,
+      "lastVoiceAt": 1775243280856
+    },
+    "1422680110741327904": {
+      "xp": 13,
+      "level": 0,
+      "lastMessageAt": 1770320794199
+    },
+    "1452061617389965487": {
+      "xp": 45,
+      "level": 0,
+      "lastMessageAt": 1770386204576
+    },
+    "727891525845123142": {
+      "xp": 3375,
+      "level": 5,
+      "lastMessageAt": 1777669404647,
+      "message_xp": 260,
+      "voice_xp": 2989,
+      "voice_seconds": 88445,
+      "lastVoiceAt": 1776960401482
+    },
+    "715958412789153802": {
+      "xp": 344,
+      "level": 1,
+      "lastMessageAt": 1777823700952,
+      "message_xp": 21,
+      "voice_xp": 232,
+      "voice_seconds": 6791,
+      "lastVoiceAt": 1770478020898
+    },
+    "1381341830402281673": {
+      "xp": 2117,
+      "level": 4,
+      "lastMessageAt": 1774110478124,
+      "message_xp": 416,
+      "voice_xp": 1693,
+      "voice_seconds": 50143,
+      "lastVoiceAt": 1771778808079
+    },
+    "1050384004127391835": {
+      "xp": 10,
+      "level": 0,
+      "lastMessageAt": 1770399609031
+    },
+    "1436834564851892227": {
+      "xp": 11,
+      "level": 0,
+      "lastMessageAt": 1770400799408
+    },
+    "928394016393941082": {
+      "xp": 38,
+      "level": 0,
+      "lastMessageAt": 1770405694765,
+      "message_xp": 0,
+      "voice_xp": 26,
+      "voice_seconds": 761,
+      "lastVoiceAt": 1770827833466
+    },
+    "607955803592327168": {
+      "xp": 988,
+      "level": 3,
+      "lastMessageAt": 1770484327193,
+      "message_xp": 47,
+      "voice_xp": 920,
+      "voice_seconds": 27305,
+      "lastVoiceAt": 1773092785005
+    },
+    "1256666778835095576": {
+      "xp": 175,
+      "level": 1,
+      "lastMessageAt": 1770412993934,
+      "message_xp": 0,
+      "voice_xp": 163,
+      "voice_seconds": 4753,
+      "lastVoiceAt": 1770505765540
+    },
+    "1348059884826005598": {
+      "xp": 15,
+      "level": 0,
+      "lastMessageAt": 1770427213407
+    },
+    "1294012257377980477": {
+      "xp": 11,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 11,
+      "voice_seconds": 326,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1771189871393
+    },
+    "1004006463078924298": {
+      "xp": 187,
+      "level": 1,
+      "message_xp": 125,
+      "voice_xp": 62,
+      "voice_seconds": 1806,
+      "lastMessageAt": 1771769343153,
+      "lastVoiceAt": 1770463030972
+    },
+    "1210550231091908674": {
+      "xp": 307,
+      "level": 1,
+      "message_xp": 306,
+      "voice_xp": 1,
+      "voice_seconds": 38,
+      "lastMessageAt": 1771436646702,
+      "lastVoiceAt": 1770463421038
+    },
+    "1077375062870593572": {
+      "xp": 6990,
+      "level": 8,
+      "message_xp": 0,
+      "voice_xp": 6990,
+      "voice_seconds": 207613,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1775651388669
+    },
+    "884796661161938965": {
+      "xp": 879,
+      "level": 2,
+      "message_xp": 190,
+      "voice_xp": 689,
+      "voice_seconds": 20023,
+      "lastMessageAt": 1776450145673,
+      "lastVoiceAt": 1776450302352
+    },
+    "1455203567852982487": {
+      "xp": 42,
+      "level": 0,
+      "message_xp": 37,
+      "voice_xp": 5,
+      "voice_seconds": 136,
+      "lastMessageAt": 1770495167124,
+      "lastVoiceAt": 1770494303260
+    },
+    "1395677693865099356": {
+      "xp": 295,
+      "level": 1,
+      "message_xp": 14,
+      "voice_xp": 281,
+      "voice_seconds": 8349,
+      "lastMessageAt": 1770477062157,
+      "lastVoiceAt": 1773336210898
+    },
+    "713085247117459476": {
+      "xp": 6,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 6,
+      "voice_seconds": 165,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1770486495711
+    },
+    "1389288077150781550": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 22,
+      "voice_seconds": 630,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1770491272743
+    },
+    "1205132474812993552": {
+      "xp": 105,
+      "level": 1,
+      "message_xp": 14,
+      "voice_xp": 91,
+      "voice_seconds": 2715,
+      "lastMessageAt": 1770498282355,
+      "lastVoiceAt": 1771784239489
+    },
+    "740465713189355614": {
+      "xp": 37,
+      "level": 0,
+      "message_xp": 20,
+      "voice_xp": 17,
+      "voice_seconds": 515,
+      "lastMessageAt": 1771790197758,
+      "lastVoiceAt": 1771790631363
+    },
+    "1406779796498944172": {
+      "xp": 51,
+      "level": 0,
+      "message_xp": 44,
+      "voice_xp": 7,
+      "voice_seconds": 202,
+      "lastMessageAt": 1770500789152,
+      "lastVoiceAt": 1770500754430
+    },
+    "1469863155814502452": {
+      "xp": 23,
+      "level": 0,
+      "message_xp": 18,
+      "voice_xp": 5,
+      "voice_seconds": 148,
+      "lastMessageAt": 1771300306677,
+      "lastVoiceAt": 1771346159301
+    },
+    "1221836199295979610": {
+      "xp": 218,
+      "level": 1,
+      "message_xp": 138,
+      "voice_xp": 80,
+      "voice_seconds": 2284,
+      "lastMessageAt": 1775048572002,
+      "lastVoiceAt": 1775045561338
+    },
+    "766677341484220416": {
+      "xp": 69,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 69,
+      "voice_seconds": 2030,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1771361045099
+    },
+    "1240014231345172489": {
+      "xp": 1494,
+      "level": 3,
+      "message_xp": 55,
+      "voice_xp": 1439,
+      "voice_seconds": 42066,
+      "lastMessageAt": 1773092620678,
+      "lastVoiceAt": 1776612967838
+    },
+    "1367807749781717073": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1770583523821,
+      "lastVoiceAt": 0
+    },
+    "1467124507960414435": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1770589383777,
+      "lastVoiceAt": 0
+    },
+    "756992140705398885": {
+      "xp": 2950,
+      "level": 5,
+      "message_xp": 12,
+      "voice_xp": 2938,
+      "voice_seconds": 86914,
+      "lastMessageAt": 1770645720572,
+      "lastVoiceAt": 1776710173383
+    },
+    "1349113742205521961": {
+      "xp": 107,
+      "level": 1,
+      "message_xp": 107,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1770658709741,
+      "lastVoiceAt": 0
+    },
+    "1289311430616547449": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 10,
+      "voice_seconds": 299,
+      "lastMessageAt": 1772030556170,
+      "lastVoiceAt": 1770658088042
+    },
+    "1386119417217155194": {
+      "xp": 37,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 23,
+      "voice_seconds": 679,
+      "lastMessageAt": 1770657882453,
+      "lastVoiceAt": 1776448394821
+    },
+    "1037324427962101840": {
+      "xp": 24,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 15,
+      "voice_seconds": 443,
+      "lastMessageAt": 1770659903429,
+      "lastVoiceAt": 1775063377727
+    },
+    "1342577391440105523": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1770749866480,
+      "lastVoiceAt": 0
+    },
+    "1012416175923286136": {
+      "xp": 57,
+      "level": 0,
+      "message_xp": 45,
+      "voice_xp": 12,
+      "voice_seconds": 356,
+      "lastMessageAt": 1777243301624,
+      "lastVoiceAt": 1770821982129
+    },
+    "967347450983624716": {
+      "xp": 626,
+      "level": 2,
+      "message_xp": 18,
+      "voice_xp": 608,
+      "voice_seconds": 18178,
+      "lastMessageAt": 1773003431338,
+      "lastVoiceAt": 1773169251508
+    },
+    "660277253837553667": {
+      "xp": 1615,
+      "level": 4,
+      "message_xp": 475,
+      "voice_xp": 1140,
+      "voice_seconds": 33913,
+      "lastMessageAt": 1774210403676,
+      "lastVoiceAt": 1773180582050
+    },
+    "1005886101082341436": {
+      "xp": 413,
+      "level": 2,
+      "message_xp": 39,
+      "voice_xp": 374,
+      "voice_seconds": 11101,
+      "lastMessageAt": 1771533112567,
+      "lastVoiceAt": 1771536650428
+    },
+    "857186941875388458": {
+      "xp": 763,
+      "level": 2,
+      "message_xp": 216,
+      "voice_xp": 547,
+      "voice_seconds": 16104,
+      "lastMessageAt": 1776801748710,
+      "lastVoiceAt": 1777583669333
+    },
+    "1402722994211782686": {
       "xp": 12,
       "level": 0,
       "message_xp": 12,
       "voice_xp": 0,
       "voice_seconds": 0,
-      "lastMessageAt": 1770487385104,
+      "lastMessageAt": 1770815071325,
       "lastVoiceAt": 0
     },
-    "917860455094042625": {
-      "xp": 29,
+    "1471134061119406120": {
+      "xp": 13,
       "level": 0,
-      "message_xp": 0,
-      "voice_xp": 29,
-      "voice_seconds": 878,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770488468169
+      "message_xp": 12,
+      "voice_xp": 1,
+      "voice_seconds": 32,
+      "lastMessageAt": 1770816364670,
+      "lastVoiceAt": 1770821553169
     },
-    "1400786210452144201": {
+    "830419407024947212": {
+      "xp": 480,
+      "level": 2,
+      "message_xp": 0,
+      "voice_xp": 480,
+      "voice_seconds": 14178,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1777108732728
+    },
+    "860539348490387466": {
+      "xp": 20238,
+      "level": 14,
+      "message_xp": 1070,
+      "voice_xp": 19168,
+      "voice_seconds": 564563,
+      "lastMessageAt": 1777726431879,
+      "lastVoiceAt": 1778170812041
+    },
+    "1471217997363282125": {
+      "xp": 502,
+      "level": 2,
+      "message_xp": 26,
+      "voice_xp": 476,
+      "voice_seconds": 14154,
+      "lastMessageAt": 1770932707819,
+      "lastVoiceAt": 1777583249312
+    },
+    "1004492263491117076": {
+      "xp": 114,
+      "level": 1,
+      "message_xp": 114,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1770942116367,
+      "lastVoiceAt": 0
+    },
+    "1138813986742210640": {
+      "xp": 2059,
+      "level": 4,
+      "message_xp": 162,
+      "voice_xp": 1897,
+      "voice_seconds": 56004,
+      "lastMessageAt": 1773264971289,
+      "lastVoiceAt": 1773265062555
+    },
+    "287567389963321346": {
+      "xp": 874,
+      "level": 2,
+      "message_xp": 235,
+      "voice_xp": 639,
+      "voice_seconds": 18786,
+      "lastMessageAt": 1777629695085,
+      "lastVoiceAt": 1775492625508
+    },
+    "1274692837727932439": {
+      "xp": 360,
+      "level": 1,
+      "message_xp": 46,
+      "voice_xp": 314,
+      "voice_seconds": 9253,
+      "lastMessageAt": 1773256470064,
+      "lastVoiceAt": 1774034844289
+    },
+    "1206612511156342864": {
+      "xp": 235,
+      "level": 1,
+      "message_xp": 9,
+      "voice_xp": 226,
+      "voice_seconds": 6702,
+      "lastMessageAt": 1770932334270,
+      "lastVoiceAt": 1771606207201
+    },
+    "1357398280316911746": {
+      "xp": 131,
+      "level": 1,
+      "message_xp": 14,
+      "voice_xp": 117,
+      "voice_seconds": 3458,
+      "lastMessageAt": 1770932364844,
+      "lastVoiceAt": 1771194642537
+    },
+    "1325633083378106464": {
+      "xp": 66,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 51,
+      "voice_seconds": 1474,
+      "lastMessageAt": 1770932374631,
+      "lastVoiceAt": 1770933885947
+    },
+    "871694962327171093": {
+      "xp": 145,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 145,
+      "voice_seconds": 4333,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1770988110580
+    },
+    "1033712684509691975": {
+      "xp": 179,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 179,
+      "voice_seconds": 5330,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1771345259009
+    },
+    "526847113112322048": {
+      "xp": 170,
+      "level": 1,
+      "message_xp": 86,
+      "voice_xp": 84,
+      "voice_seconds": 2497,
+      "lastMessageAt": 1773676775926,
+      "lastVoiceAt": 1773678931406
+    },
+    "721690029692420136": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 11,
+      "voice_xp": 3,
+      "voice_seconds": 93,
+      "lastMessageAt": 1771002354132,
+      "lastVoiceAt": 1771002454204
+    },
+    "1105216020358115339": {
+      "xp": 5013,
+      "level": 7,
+      "message_xp": 56,
+      "voice_xp": 4957,
+      "voice_seconds": 145229,
+      "lastMessageAt": 1771105100619,
+      "lastVoiceAt": 1778104161978
+    },
+    "1446879035522158785": {
+      "xp": 151,
+      "level": 1,
+      "message_xp": 151,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772970109798,
+      "lastVoiceAt": 0
+    },
+    "1035994805462913167": {
+      "xp": 52,
+      "level": 0,
+      "message_xp": 52,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771084466033,
+      "lastVoiceAt": 0
+    },
+    "1396540769321357342": {
+      "xp": 3613,
+      "level": 6,
+      "message_xp": 258,
+      "voice_xp": 3355,
+      "voice_seconds": 99411,
+      "lastMessageAt": 1774886900576,
+      "lastVoiceAt": 1774628138272
+    },
+    "1118783812810313729": {
+      "xp": 40,
+      "level": 0,
+      "message_xp": 36,
+      "voice_xp": 4,
+      "voice_seconds": 126,
+      "lastMessageAt": 1773335963727,
+      "lastVoiceAt": 1773336030852
+    },
+    "1434936317858283590": {
+      "xp": 17,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 5,
+      "voice_seconds": 160,
+      "lastMessageAt": 1771094055488,
+      "lastVoiceAt": 1775588726866
+    },
+    "352807216094511105": {
       "xp": 21,
       "level": 0,
-      "message_xp": 0,
-      "voice_xp": 21,
-      "voice_seconds": 624,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770488468177
+      "message_xp": 21,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771151350695,
+      "lastVoiceAt": 0
     },
-    "1414139880006619156": {
-      "xp": 16,
+    "1335310012087799848": {
+      "xp": 90,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 78,
+      "voice_seconds": 2316,
+      "lastMessageAt": 1771151785262,
+      "lastVoiceAt": 1771154120654
+    },
+    "1353303255639261244": {
+      "xp": 2325,
+      "level": 4,
+      "message_xp": 165,
+      "voice_xp": 2160,
+      "voice_seconds": 63468,
+      "lastMessageAt": 1775686705074,
+      "lastVoiceAt": 1776096918076
+    },
+    "1345098180718760027": {
+      "xp": 943,
+      "level": 3,
+      "message_xp": 154,
+      "voice_xp": 789,
+      "voice_seconds": 23002,
+      "lastMessageAt": 1777676035893,
+      "lastVoiceAt": 1776532446968
+    },
+    "1470038476190646293": {
+      "xp": 1475,
+      "level": 3,
+      "message_xp": 513,
+      "voice_xp": 962,
+      "voice_seconds": 28020,
+      "lastMessageAt": 1775398887325,
+      "lastVoiceAt": 1777209299884
+    },
+    "1097398234353258577": {
+      "xp": 207,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 207,
+      "voice_seconds": 5957,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1775513926231
+    },
+    "1472360805923160105": {
+      "xp": 36,
+      "level": 0,
+      "message_xp": 21,
+      "voice_xp": 15,
+      "voice_seconds": 436,
+      "lastMessageAt": 1771762925768,
+      "lastVoiceAt": 1771192782103
+    },
+    "669565472416595969": {
+      "xp": 139,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 139,
+      "voice_seconds": 4151,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1771199503712
+    },
+    "1403156983607197826": {
+      "xp": 59,
+      "level": 0,
+      "message_xp": 59,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771264875858,
+      "lastVoiceAt": 0
+    },
+    "688690689940520970": {
+      "xp": 25,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 17,
+      "voice_seconds": 491,
+      "lastMessageAt": 1771248317900,
+      "lastVoiceAt": 1771248927477
+    },
+    "1081226703545839627": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771253287939,
+      "lastVoiceAt": 0
+    },
+    "581483345842536448": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771263180555,
+      "lastVoiceAt": 0
+    },
+    "1329513344721354834": {
+      "xp": 408,
+      "level": 2,
+      "message_xp": 8,
+      "voice_xp": 400,
+      "voice_seconds": 11839,
+      "lastMessageAt": 1774708043902,
+      "lastVoiceAt": 1778161871614
+    },
+    "1199005257280266440": {
+      "xp": 38,
+      "level": 0,
+      "message_xp": 38,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773406548000,
+      "lastVoiceAt": 0
+    },
+    "1074113568242409473": {
+      "xp": 256,
+      "level": 1,
+      "message_xp": 256,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771664943507,
+      "lastVoiceAt": 0
+    },
+    "1230507710441717850": {
+      "xp": 6420,
+      "level": 8,
+      "message_xp": 82,
+      "voice_xp": 6338,
+      "voice_seconds": 186796,
+      "lastMessageAt": 1772848712636,
+      "lastVoiceAt": 1778160581553
+    },
+    "1200552892105502852": {
+      "xp": 294,
+      "level": 1,
+      "message_xp": 171,
+      "voice_xp": 123,
+      "voice_seconds": 3691,
+      "lastMessageAt": 1771374187946,
+      "lastVoiceAt": 1771347239679
+    },
+    "924453262202130464": {
+      "xp": 405,
+      "level": 2,
+      "message_xp": 246,
+      "voice_xp": 159,
+      "voice_seconds": 4654,
+      "lastMessageAt": 1773772175515,
+      "lastVoiceAt": 1777219020397
+    },
+    "1215037903441498162": {
+      "xp": 23,
+      "level": 0,
+      "message_xp": 23,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771367169816,
+      "lastVoiceAt": 0
+    },
+    "708301421120061511": {
+      "xp": 982,
+      "level": 3,
+      "message_xp": 0,
+      "voice_xp": 982,
+      "voice_seconds": 28956,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1773003326894
+    },
+    "1297165078742700105": {
+      "xp": 86,
       "level": 0,
       "message_xp": 0,
-      "voice_xp": 16,
-      "voice_seconds": 484,
+      "voice_xp": 86,
+      "voice_seconds": 2541,
       "lastMessageAt": 0,
-      "lastVoiceAt": 1770488468179
+      "lastVoiceAt": 1771427868431
     },
-    "1210550231091908674": {
+    "1353459153670115478": {
+      "xp": 23,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 8,
+      "voice_seconds": 248,
+      "lastMessageAt": 1772273102604,
+      "lastVoiceAt": 1771431229136
+    },
+    "1039176402114711552": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771442064367,
+      "lastVoiceAt": 0
+    },
+    "1161702336054448149": {
+      "xp": 51,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 36,
+      "voice_seconds": 1036,
+      "lastMessageAt": 1771453682682,
+      "lastVoiceAt": 1771454785187
+    },
+    "1416764871684522075": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 22,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771506573715,
+      "lastVoiceAt": 0
+    },
+    "1457933044588613759": {
+      "xp": 36,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 28,
+      "voice_seconds": 823,
+      "lastMessageAt": 1771530068200,
+      "lastVoiceAt": 1771531188934
+    },
+    "695251178639982634": {
+      "xp": 876,
+      "level": 2,
+      "message_xp": 14,
+      "voice_xp": 862,
+      "voice_seconds": 25580,
+      "lastMessageAt": 1771531101580,
+      "lastVoiceAt": 1777838857190
+    },
+    "1148219428526358598": {
+      "xp": 42,
+      "level": 0,
+      "message_xp": 42,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771541529614,
+      "lastVoiceAt": 0
+    },
+    "1474165851346436271": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771581518585,
+      "lastVoiceAt": 0
+    },
+    "853195662015594507": {
+      "xp": 273,
+      "level": 1,
+      "message_xp": 273,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774019527802,
+      "lastVoiceAt": 0
+    },
+    "1424083552638599358": {
+      "xp": 355,
+      "level": 1,
+      "message_xp": 59,
+      "voice_xp": 296,
+      "voice_seconds": 8496,
+      "lastMessageAt": 1771625737510,
+      "lastVoiceAt": 1771621695820
+    },
+    "1374818348864376946": {
+      "xp": 141,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 141,
+      "voice_seconds": 4220,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1771681009083
+    },
+    "1474730675218153593": {
+      "xp": 10846,
+      "level": 10,
+      "message_xp": 6541,
+      "voice_xp": 4305,
+      "voice_seconds": 127478,
+      "lastMessageAt": 1778079683940,
+      "lastVoiceAt": 1777743018914
+    },
+    "824275346533777438": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771688321171,
+      "lastVoiceAt": 0
+    },
+    "1465735539205476498": {
+      "xp": 108,
+      "level": 1,
+      "message_xp": 104,
+      "voice_xp": 4,
+      "voice_seconds": 103,
+      "lastMessageAt": 1772742997791,
+      "lastVoiceAt": 1772632103242
+    },
+    "1452547127015374866": {
+      "xp": 25,
+      "level": 0,
+      "message_xp": 25,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771707466325,
+      "lastVoiceAt": 0
+    },
+    "1413419091586191380": {
+      "xp": 200,
+      "level": 1,
+      "message_xp": 11,
+      "voice_xp": 189,
+      "voice_seconds": 5493,
+      "lastMessageAt": 1771715588274,
+      "lastVoiceAt": 1771854703919
+    },
+    "1332852024521392273": {
+      "xp": 161,
+      "level": 1,
+      "message_xp": 10,
+      "voice_xp": 151,
+      "voice_seconds": 4468,
+      "lastMessageAt": 1771717908118,
+      "lastVoiceAt": 1771722450506
+    },
+    "1471241956708581376": {
+      "xp": 27,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 15,
+      "voice_seconds": 442,
+      "lastMessageAt": 1771762834938,
+      "lastVoiceAt": 1771763296049
+    },
+    "804300852147126272": {
+      "xp": 6,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 6,
+      "voice_seconds": 173,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1773155024396
+    },
+    "977098145827794984": {
+      "xp": 413,
+      "level": 2,
+      "message_xp": 49,
+      "voice_xp": 364,
+      "voice_seconds": 10647,
+      "lastMessageAt": 1774114665174,
+      "lastVoiceAt": 1771777848058
+    },
+    "1319958309561958502": {
+      "xp": 431,
+      "level": 2,
+      "message_xp": 407,
+      "voice_xp": 24,
+      "voice_seconds": 719,
+      "lastMessageAt": 1772362188686,
+      "lastVoiceAt": 1771938512224
+    },
+    "1387347596712087574": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771774293886,
+      "lastVoiceAt": 0
+    },
+    "960963778864881694": {
+      "xp": 103,
+      "level": 1,
+      "message_xp": 103,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772459450764,
+      "lastVoiceAt": 0
+    },
+    "601874304648347648": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 14,
+      "voice_seconds": 403,
+      "lastMessageAt": 1771790219865,
+      "lastVoiceAt": 1771790631364
+    },
+    "835490592451985469": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 12,
+      "voice_seconds": 351,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1775142355326
+    },
+    "830837726390648912": {
+      "xp": 238,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 238,
+      "voice_seconds": 7151,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1773161776197
+    },
+    "1117760111964860466": {
+      "xp": 23,
+      "level": 0,
+      "message_xp": 23,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1771956552082,
+      "lastVoiceAt": 0
+    },
+    "709363579417133066": {
+      "xp": 25,
+      "level": 0,
+      "message_xp": 25,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772058575695,
+      "lastVoiceAt": 0
+    },
+    "919263906713698314": {
+      "xp": 50,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 36,
+      "voice_seconds": 1034,
+      "lastMessageAt": 1772130932522,
+      "lastVoiceAt": 1772134174630
+    },
+    "1168466827354050640": {
+      "xp": 53,
+      "level": 0,
+      "message_xp": 20,
+      "voice_xp": 33,
+      "voice_seconds": 982,
+      "lastMessageAt": 1773162501797,
+      "lastVoiceAt": 1772134294657
+    },
+    "1044363857948311703": {
+      "xp": 40,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 25,
+      "voice_seconds": 705,
+      "lastMessageAt": 1772131410942,
+      "lastVoiceAt": 1772134294658
+    },
+    "1345306741688242237": {
+      "xp": 31,
+      "level": 0,
+      "message_xp": 11,
+      "voice_xp": 20,
+      "voice_seconds": 590,
+      "lastMessageAt": 1772131711927,
+      "lastVoiceAt": 1772133904611
+    },
+    "712198276287299644": {
+      "xp": 49,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 34,
+      "voice_seconds": 994,
+      "lastMessageAt": 1772133052079,
+      "lastVoiceAt": 1772134294657
+    },
+    "1348786773655945328": {
+      "xp": 26,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 17,
+      "voice_seconds": 492,
+      "lastMessageAt": 1772194291264,
+      "lastVoiceAt": 1772194791644
+    },
+    "1393177051631976502": {
+      "xp": 27,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 12,
+      "voice_seconds": 340,
+      "lastMessageAt": 1772194821308,
+      "lastVoiceAt": 1772194671615
+    },
+    "1362388106682171502": {
+      "xp": 1319,
+      "level": 3,
+      "message_xp": 737,
+      "voice_xp": 582,
+      "voice_seconds": 17141,
+      "lastMessageAt": 1777630321198,
+      "lastVoiceAt": 1777567618111
+    },
+    "686532431540387864": {
+      "xp": 96,
+      "level": 0,
+      "message_xp": 20,
+      "voice_xp": 76,
+      "voice_seconds": 2237,
+      "lastMessageAt": 1772212104906,
+      "lastVoiceAt": 1772655478778
+    },
+    "1270013528786600038": {
+      "xp": 45,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 37,
+      "voice_seconds": 1068,
+      "lastMessageAt": 1772212116023,
+      "lastVoiceAt": 1772212882031
+    },
+    "686293114566344749": {
+      "xp": 191,
+      "level": 1,
+      "message_xp": 191,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772382545906,
+      "lastVoiceAt": 0
+    },
+    "1167499732365615185": {
+      "xp": 246,
+      "level": 1,
+      "message_xp": 9,
+      "voice_xp": 237,
+      "voice_seconds": 6739,
+      "lastMessageAt": 1772288354908,
+      "lastVoiceAt": 1772299707128
+    },
+    "955948625761009675": {
+      "xp": 246,
+      "level": 1,
+      "message_xp": 10,
+      "voice_xp": 236,
+      "voice_seconds": 6702,
+      "lastMessageAt": 1772288354979,
+      "lastVoiceAt": 1772299677126
+    },
+    "727698084875730955": {
+      "xp": 3315,
+      "level": 5,
+      "message_xp": 2327,
+      "voice_xp": 988,
+      "voice_seconds": 29378,
+      "lastMessageAt": 1775521726907,
+      "lastVoiceAt": 1774813116233
+    },
+    "714205574765740183": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772290805966,
+      "lastVoiceAt": 0
+    },
+    "819566981693964288": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772290934669,
+      "lastVoiceAt": 0
+    },
+    "1333860707787345972": {
+      "xp": 864,
+      "level": 2,
+      "message_xp": 88,
+      "voice_xp": 776,
+      "voice_seconds": 22495,
+      "lastMessageAt": 1773050975235,
+      "lastVoiceAt": 1775994356758
+    },
+    "893894006893854780": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772294269463,
+      "lastVoiceAt": 0
+    },
+    "1038761461578739763": {
+      "xp": 188,
+      "level": 1,
+      "message_xp": 116,
+      "voice_xp": 72,
+      "voice_seconds": 2152,
+      "lastMessageAt": 1773156433577,
+      "lastVoiceAt": 1774115899173
+    },
+    "1451785892934058065": {
+      "xp": 1648,
+      "level": 4,
+      "message_xp": 256,
+      "voice_xp": 1392,
+      "voice_seconds": 41370,
+      "lastMessageAt": 1772975010975,
+      "lastVoiceAt": 1773430174470
+    },
+    "485829145025052683": {
+      "xp": 441,
+      "level": 2,
+      "message_xp": 165,
+      "voice_xp": 276,
+      "voice_seconds": 8211,
+      "lastMessageAt": 1777483793124,
+      "lastVoiceAt": 1772997925449
+    },
+    "913869217177141289": {
+      "xp": 366,
+      "level": 1,
+      "message_xp": 90,
+      "voice_xp": 276,
+      "voice_seconds": 8211,
+      "lastMessageAt": 1774110394985,
+      "lastVoiceAt": 1772997925446
+    },
+    "731519123313524813": {
+      "xp": 172,
+      "level": 1,
+      "message_xp": 117,
+      "voice_xp": 55,
+      "voice_seconds": 1635,
+      "lastMessageAt": 1772367390646,
+      "lastVoiceAt": 1772318760771
+    },
+    "1474532717675806790": {
+      "xp": 111,
+      "level": 1,
+      "message_xp": 13,
+      "voice_xp": 98,
+      "voice_seconds": 2930,
+      "lastMessageAt": 1772362546436,
+      "lastVoiceAt": 1772921147355
+    },
+    "1004365479361654804": {
+      "xp": 155,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 155,
+      "voice_seconds": 4551,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1776017698203
+    },
+    "725658730263478292": {
+      "xp": 70,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 70,
+      "voice_seconds": 2100,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1772370434804
+    },
+    "1475566063210074258": {
+      "xp": 19,
+      "level": 0,
+      "message_xp": 19,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774109959197,
+      "lastVoiceAt": 0
+    },
+    "588403807130746893": {
+      "xp": 212,
+      "level": 1,
+      "message_xp": 15,
+      "voice_xp": 197,
+      "voice_seconds": 5824,
+      "lastMessageAt": 1772386652316,
+      "lastVoiceAt": 1772997625403
+    },
+    "1255450434005635116": {
+      "xp": 1717,
+      "level": 4,
+      "message_xp": 1270,
+      "voice_xp": 447,
+      "voice_seconds": 13020,
+      "lastMessageAt": 1775755570240,
+      "lastVoiceAt": 1774631078502
+    },
+    "938518448508645396": {
+      "xp": 18,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 9,
+      "voice_seconds": 275,
+      "lastMessageAt": 1772565008343,
+      "lastVoiceAt": 1772643716038
+    },
+    "882962705017897000": {
+      "xp": 39,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 39,
+      "voice_seconds": 1143,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1773590644017
+    },
+    "1134991268624220170": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772570143357,
+      "lastVoiceAt": 0
+    },
+    "528880003832872970": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772639332335,
+      "lastVoiceAt": 0
+    },
+    "593714050865692673": {
+      "xp": 25,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 15,
+      "voice_seconds": 451,
+      "lastMessageAt": 1772643060131,
+      "lastVoiceAt": 1772643776041
+    },
+    "476780620174065684": {
+      "xp": 21,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 8,
+      "voice_seconds": 230,
+      "lastMessageAt": 1772643478064,
+      "lastVoiceAt": 1772643716039
+    },
+    "962789934991818784": {
+      "xp": 26,
+      "level": 0,
+      "message_xp": 19,
+      "voice_xp": 7,
+      "voice_seconds": 216,
+      "lastMessageAt": 1772643703822,
+      "lastVoiceAt": 1772643716473
+    },
+    "1277190127051079736": {
+      "xp": 284,
+      "level": 1,
+      "message_xp": 58,
+      "voice_xp": 226,
+      "voice_seconds": 6747,
+      "lastMessageAt": 1773075402786,
+      "lastVoiceAt": 1776977922856
+    },
+    "1244246889772351553": {
+      "xp": 5247,
+      "level": 7,
+      "message_xp": 3590,
+      "voice_xp": 1657,
+      "voice_seconds": 48719,
+      "lastMessageAt": 1777642698929,
+      "lastVoiceAt": 1777410075578
+    },
+    "1310247505740431411": {
+      "xp": 38,
+      "level": 0,
+      "message_xp": 38,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772715883378,
+      "lastVoiceAt": 0
+    },
+    "1072902868916518942": {
+      "xp": 877,
+      "level": 2,
+      "message_xp": 129,
+      "voice_xp": 748,
+      "voice_seconds": 22024,
+      "lastMessageAt": 1774941058360,
+      "lastVoiceAt": 1775042021249
+    },
+    "964236824312696874": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772700426285,
+      "lastVoiceAt": 0
+    },
+    "1379863425118638080": {
+      "xp": 179,
+      "level": 1,
+      "message_xp": 9,
+      "voice_xp": 170,
+      "voice_seconds": 5082,
+      "lastMessageAt": 1778101531286,
+      "lastVoiceAt": 1772741788251
+    },
+    "698834203672051753": {
+      "xp": 81,
+      "level": 0,
+      "message_xp": 81,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773515178366,
+      "lastVoiceAt": 0
+    },
+    "835945761580515368": {
+      "xp": 99,
+      "level": 0,
+      "message_xp": 96,
+      "voice_xp": 3,
+      "voice_seconds": 85,
+      "lastMessageAt": 1772821566811,
+      "lastVoiceAt": 1772993694534
+    },
+    "711191126677258272": {
+      "xp": 20,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 7,
+      "voice_seconds": 203,
+      "lastMessageAt": 1772828783707,
+      "lastVoiceAt": 1773265032558
+    },
+    "971071572796379217": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772831865963,
+      "lastVoiceAt": 0
+    },
+    "1051906164348174397": {
       "xp": 11,
       "level": 0,
       "message_xp": 11,
       "voice_xp": 0,
       "voice_seconds": 0,
-      "lastMessageAt": 1770488159457,
+      "lastMessageAt": 1772831896044,
       "lastVoiceAt": 0
     },
-    "1102225761076785322": {
-      "xp": 11,
+    "688570790592905273": {
+      "xp": 81,
       "level": 0,
-      "message_xp": 0,
-      "voice_xp": 11,
-      "voice_seconds": 331,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1770488468180
-    },
-    "339395859147915275": {
-      "xp": 6,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 6,
-      "voice_seconds": 180,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1775081347362
-    },
-    "1141477880518430720": {
-      "xp": 54,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 54,
-      "voice_seconds": 1618,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1775082787787
-    },
-    "1334535608474931283": {
-      "xp": 54,
-      "level": 0,
-      "message_xp": 15,
-      "voice_xp": 39,
-      "voice_seconds": 1170,
-      "lastMessageAt": 1775081726199,
-      "lastVoiceAt": 1775082338378
-    },
-    "1378749421730267236": {
-      "xp": 54,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 54,
-      "voice_seconds": 1620,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1775082787786
-    },
-    "356730588817784833": {
-      "xp": 26,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 26,
-      "voice_seconds": 783,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1775082067571
-    },
-    "1463252268580212847": {
-      "xp": 45,
-      "level": 0,
-      "message_xp": 0,
-      "voice_xp": 45,
-      "voice_seconds": 1354,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1775082787786
-    },
-    "1411341130871734392": {
-      "xp": 16,
-      "level": 0,
-      "message_xp": 16,
+      "message_xp": 81,
       "voice_xp": 0,
       "voice_seconds": 0,
-      "lastMessageAt": 1776804677425,
+      "lastMessageAt": 1772872536203,
       "lastVoiceAt": 0
     },
-    "1400479484334837771": {
-      "xp": 55,
+    "1387344641745223690": {
+      "xp": 5,
       "level": 0,
       "message_xp": 0,
-      "voice_xp": 55,
-      "voice_seconds": 1655,
+      "voice_xp": 5,
+      "voice_seconds": 149,
       "lastMessageAt": 0,
-      "lastVoiceAt": 1776806640032
+      "lastVoiceAt": 1772890446870
     },
-    "1324708734706122784": {
+    "1386708007676809337": {
+      "xp": 231,
+      "level": 1,
+      "message_xp": 8,
+      "voice_xp": 223,
+      "voice_seconds": 6517,
+      "lastMessageAt": 1772914470334,
+      "lastVoiceAt": 1776006927562
+    },
+    "1320525155730063441": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772917387033,
+      "lastVoiceAt": 0
+    },
+    "1401186587957661727": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772923347397,
+      "lastVoiceAt": 0
+    },
+    "1446197347779477695": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772958577183,
+      "lastVoiceAt": 0
+    },
+    "690994075880521758": {
+      "xp": 131,
+      "level": 1,
+      "message_xp": 14,
+      "voice_xp": 117,
+      "voice_seconds": 3451,
+      "lastMessageAt": 1772982231862,
+      "lastVoiceAt": 1773431314892
+    },
+    "778677119932170312": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1772982250717,
+      "lastVoiceAt": 0
+    },
+    "1397219885997752361": {
+      "xp": 554,
+      "level": 2,
+      "message_xp": 174,
+      "voice_xp": 380,
+      "voice_seconds": 11184,
+      "lastMessageAt": 1774369402388,
+      "lastVoiceAt": 1773587883255
+    },
+    "1480537390065123401": {
+      "xp": 190,
+      "level": 1,
+      "message_xp": 50,
+      "voice_xp": 140,
+      "voice_seconds": 4127,
+      "lastMessageAt": 1774297867772,
+      "lastVoiceAt": 1773159135485
+    },
+    "695568744969404506": {
+      "xp": 7453,
+      "level": 8,
+      "message_xp": 160,
+      "voice_xp": 7293,
+      "voice_seconds": 214795,
+      "lastMessageAt": 1777800500398,
+      "lastVoiceAt": 1778175731950
+    },
+    "1469661535453319360": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773072683906,
+      "lastVoiceAt": 0
+    },
+    "1470783396346073352": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773078639675,
+      "lastVoiceAt": 0
+    },
+    "1252710674052812831": {
+      "xp": 107,
+      "level": 1,
+      "message_xp": 21,
+      "voice_xp": 86,
+      "voice_seconds": 2466,
+      "lastMessageAt": 1773175909324,
+      "lastVoiceAt": 1774273402163
+    },
+    "944992820891090964": {
+      "xp": 74,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 74,
+      "voice_seconds": 2215,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1773099446557
+    },
+    "1017346061842526209": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 5,
+      "voice_seconds": 151,
+      "lastMessageAt": 1773180621479,
+      "lastVoiceAt": 1773180912081
+    },
+    "880371741455679570": {
+      "xp": 19,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 5,
+      "voice_seconds": 152,
+      "lastMessageAt": 1773180727348,
+      "lastVoiceAt": 1773180912080
+    },
+    "1021306825963995156": {
+      "xp": 64,
+      "level": 0,
+      "message_xp": 62,
+      "voice_xp": 2,
+      "voice_seconds": 69,
+      "lastMessageAt": 1773342776351,
+      "lastVoiceAt": 1775823083994
+    },
+    "1463252268580212847": {
+      "xp": 608,
+      "level": 2,
+      "message_xp": 469,
+      "voice_xp": 139,
+      "voice_seconds": 4103,
+      "lastMessageAt": 1776970330348,
+      "lastVoiceAt": 1775086321474
+    },
+    "1412506744302735563": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773252983814,
+      "lastVoiceAt": 0
+    },
+    "1457763590755975178": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773254465600,
+      "lastVoiceAt": 0
+    },
+    "1421165321259061389": {
+      "xp": 72,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 62,
+      "voice_seconds": 1859,
+      "lastMessageAt": 1777204450880,
+      "lastVoiceAt": 1773329879062
+    },
+    "1332857007497023490": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773398105926,
+      "lastVoiceAt": 0
+    },
+    "1324411809519636597": {
+      "xp": 37,
+      "level": 0,
+      "message_xp": 37,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773775241475,
+      "lastVoiceAt": 0
+    },
+    "1190211467153264690": {
+      "xp": 31,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 23,
+      "voice_seconds": 690,
+      "lastMessageAt": 1773425751908,
+      "lastVoiceAt": 1776266460228
+    },
+    "337594060925829131": {
+      "xp": 132,
+      "level": 1,
+      "message_xp": 15,
+      "voice_xp": 117,
+      "voice_seconds": 3452,
+      "lastMessageAt": 1773427843413,
+      "lastVoiceAt": 1773431314891
+    },
+    "726131873075429488": {
+      "xp": 506,
+      "level": 2,
+      "message_xp": 368,
+      "voice_xp": 138,
+      "voice_seconds": 4058,
+      "lastMessageAt": 1774624731922,
+      "lastVoiceAt": 1774118869470
+    },
+    "1061076867781759054": {
+      "xp": 56,
+      "level": 0,
+      "message_xp": 56,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773504050641,
+      "lastVoiceAt": 0
+    },
+    "1123005939239370833": {
+      "xp": 839,
+      "level": 2,
+      "message_xp": 492,
+      "voice_xp": 347,
+      "voice_seconds": 10359,
+      "lastMessageAt": 1776689736970,
+      "lastVoiceAt": 1776274770797
+    },
+    "1480905836481220690": {
+      "xp": 279,
+      "level": 1,
+      "message_xp": 64,
+      "voice_xp": 215,
+      "voice_seconds": 6289,
+      "lastMessageAt": 1777386184391,
+      "lastVoiceAt": 1775759870637
+    },
+    "1091064745974562948": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773529255786,
+      "lastVoiceAt": 0
+    },
+    "652157382582861844": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773531608394,
+      "lastVoiceAt": 0
+    },
+    "1390640059702837363": {
+      "xp": 339,
+      "level": 1,
+      "message_xp": 300,
+      "voice_xp": 39,
+      "voice_seconds": 1127,
+      "lastMessageAt": 1777391104955,
+      "lastVoiceAt": 1774126520239
+    },
+    "1009926886866043001": {
+      "xp": 42,
+      "level": 0,
+      "message_xp": 29,
+      "voice_xp": 13,
+      "voice_seconds": 399,
+      "lastMessageAt": 1777925481738,
+      "lastVoiceAt": 1776122664119
+    },
+    "825676396059688980": {
+      "xp": 42,
+      "level": 0,
+      "message_xp": 42,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773773195809,
+      "lastVoiceAt": 0
+    },
+    "1110927543760068618": {
+      "xp": 215,
+      "level": 1,
+      "message_xp": 215,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777479303046,
+      "lastVoiceAt": 0
+    },
+    "1483546482580652186": {
+      "xp": 61,
+      "level": 0,
+      "message_xp": 61,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773776732040,
+      "lastVoiceAt": 0
+    },
+    "1375622684343537785": {
+      "xp": 460,
+      "level": 2,
+      "message_xp": 83,
+      "voice_xp": 377,
+      "voice_seconds": 11222,
+      "lastMessageAt": 1773936217354,
+      "lastVoiceAt": 1773936925061
+    },
+    "1230521128523403338": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773844991097,
+      "lastVoiceAt": 0
+    },
+    "1247157074375344218": {
+      "xp": 303,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 303,
+      "voice_seconds": 8947,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1773872225356
+    },
+    "1304203523113881692": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773862881678,
+      "lastVoiceAt": 0
+    },
+    "1405608026718732400": {
+      "xp": 245,
+      "level": 1,
+      "message_xp": 12,
+      "voice_xp": 233,
+      "voice_seconds": 6907,
+      "lastMessageAt": 1773915398246,
+      "lastVoiceAt": 1774619947552
+    },
+    "707963651063283733": {
+      "xp": 32,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 32,
+      "voice_seconds": 941,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1773936505031
+    },
+    "1090969831119007784": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1773944332690,
+      "lastVoiceAt": 0
+    },
+    "1376472129305972756": {
+      "xp": 41,
+      "level": 0,
+      "message_xp": 41,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774379395899,
+      "lastVoiceAt": 0
+    },
+    "1461463227861958686": {
+      "xp": 752,
+      "level": 2,
+      "message_xp": 399,
+      "voice_xp": 353,
+      "voice_seconds": 10303,
+      "lastMessageAt": 1775335569449,
+      "lastVoiceAt": 1775416779171
+    },
+    "1053651797027328060": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774134507042,
+      "lastVoiceAt": 0
+    },
+    "1146086577777426644": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774134586463,
+      "lastVoiceAt": 0
+    },
+    "667988248932515871": {
       "xp": 24,
       "level": 0,
       "message_xp": 24,
       "voice_xp": 0,
       "voice_seconds": 0,
-      "lastMessageAt": 1776806179164,
+      "lastMessageAt": 1774177153841,
+      "lastVoiceAt": 0
+    },
+    "1324708734706122784": {
+      "xp": 3336,
+      "level": 5,
+      "message_xp": 2340,
+      "voice_xp": 996,
+      "voice_seconds": 29234,
+      "lastMessageAt": 1778175971040,
+      "lastVoiceAt": 1777661045287
+    },
+    "1270783161168826488": {
+      "xp": 97,
+      "level": 0,
+      "message_xp": 97,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774210919615,
+      "lastVoiceAt": 0
+    },
+    "1155836469194276916": {
+      "xp": 24,
+      "level": 0,
+      "message_xp": 24,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774263896313,
+      "lastVoiceAt": 0
+    },
+    "545305957530337280": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774272620385,
+      "lastVoiceAt": 0
+    },
+    "1464668480337871072": {
+      "xp": 75,
+      "level": 0,
+      "message_xp": 56,
+      "voice_xp": 19,
+      "voice_seconds": 560,
+      "lastMessageAt": 1774278294456,
+      "lastVoiceAt": 1774278892755
+    },
+    "1483390076355350659": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774275929515,
+      "lastVoiceAt": 0
+    },
+    "1030576389902053427": {
+      "xp": 77,
+      "level": 0,
+      "message_xp": 26,
+      "voice_xp": 51,
+      "voice_seconds": 1502,
+      "lastMessageAt": 1774279197391,
+      "lastVoiceAt": 1774278412731
+    },
+    "1461878289701535797": {
+      "xp": 20,
+      "level": 0,
+      "message_xp": 20,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774940704204,
+      "lastVoiceAt": 0
+    },
+    "1396933314966978602": {
+      "xp": 223,
+      "level": 1,
+      "message_xp": 112,
+      "voice_xp": 111,
+      "voice_seconds": 3267,
+      "lastMessageAt": 1776781336959,
+      "lastVoiceAt": 1775324856234
+    },
+    "1040312882958696539": {
+      "xp": 31,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 19,
+      "voice_seconds": 554,
+      "lastMessageAt": 1774289085499,
+      "lastVoiceAt": 1774289655628
+    },
+    "702868264845312067": {
+      "xp": 43,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 33,
+      "voice_seconds": 947,
+      "lastMessageAt": 1774300205628,
+      "lastVoiceAt": 1774301209318
+    },
+    "1201876245357539410": {
+      "xp": 461,
+      "level": 2,
+      "message_xp": 209,
+      "voice_xp": 252,
+      "voice_seconds": 7495,
+      "lastMessageAt": 1777978478494,
+      "lastVoiceAt": 1777754325563
+    },
+    "1136771109254090872": {
+      "xp": 508,
+      "level": 2,
+      "message_xp": 19,
+      "voice_xp": 489,
+      "voice_seconds": 14423,
+      "lastMessageAt": 1774344774663,
+      "lastVoiceAt": 1776611137752
+    },
+    "1306367232565051494": {
+      "xp": 543,
+      "level": 2,
+      "message_xp": 30,
+      "voice_xp": 513,
+      "voice_seconds": 15153,
+      "lastMessageAt": 1776510924589,
+      "lastVoiceAt": 1777240141788
+    },
+    "1131335774772666519": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774373251267,
+      "lastVoiceAt": 0
+    },
+    "1203069045990236161": {
+      "xp": 163,
+      "level": 1,
+      "message_xp": 32,
+      "voice_xp": 131,
+      "voice_seconds": 3806,
+      "lastMessageAt": 1774475642368,
+      "lastVoiceAt": 1775052521555
+    },
+    "1359549709940687029": {
+      "xp": 128,
+      "level": 1,
+      "message_xp": 117,
+      "voice_xp": 11,
+      "voice_seconds": 327,
+      "lastMessageAt": 1774539853304,
+      "lastVoiceAt": 1774540435441
+    },
+    "1134772773571526696": {
+      "xp": 375,
+      "level": 1,
+      "message_xp": 134,
+      "voice_xp": 241,
+      "voice_seconds": 7155,
+      "lastMessageAt": 1775581945806,
+      "lastVoiceAt": 1774705130364
+    },
+    "999091459573682307": {
+      "xp": 88,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 78,
+      "voice_seconds": 2278,
+      "lastMessageAt": 1774476966747,
+      "lastVoiceAt": 1775683674900
+    },
+    "1477591273325199491": {
+      "xp": 122,
+      "level": 1,
+      "message_xp": 122,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774696548961,
+      "lastVoiceAt": 0
+    },
+    "1342804353060442172": {
+      "xp": 59,
+      "level": 0,
+      "message_xp": 59,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774541558814,
+      "lastVoiceAt": 0
+    },
+    "1155887566441173063": {
+      "xp": 581,
+      "level": 2,
+      "message_xp": 61,
+      "voice_xp": 520,
+      "voice_seconds": 15310,
+      "lastMessageAt": 1775925376777,
+      "lastVoiceAt": 1776615547900
+    },
+    "557206159057092649": {
+      "xp": 6038,
+      "level": 7,
+      "message_xp": 200,
+      "voice_xp": 5838,
+      "voice_seconds": 171939,
+      "lastMessageAt": 1777481372946,
+      "lastVoiceAt": 1777753526679
+    },
+    "1324344104653422707": {
+      "xp": 21,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 7,
+      "voice_seconds": 210,
+      "lastMessageAt": 1774610357430,
+      "lastVoiceAt": 1776978852939
+    },
+    "1477298941287727184": {
+      "xp": 532,
+      "level": 2,
+      "message_xp": 13,
+      "voice_xp": 519,
+      "voice_seconds": 15196,
+      "lastMessageAt": 1774619242389,
+      "lastVoiceAt": 1776101903129
+    },
+    "1340078355051188295": {
+      "xp": 829,
+      "level": 2,
+      "message_xp": 29,
+      "voice_xp": 800,
+      "voice_seconds": 23909,
+      "lastMessageAt": 1774626383402,
+      "lastVoiceAt": 1775756960543
+    },
+    "1457429608407367740": {
+      "xp": 48,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 36,
+      "voice_seconds": 1077,
+      "lastMessageAt": 1774626689985,
+      "lastVoiceAt": 1774627808249
+    },
+    "416670429969776641": {
+      "xp": 1632,
+      "level": 4,
+      "message_xp": 13,
+      "voice_xp": 1619,
+      "voice_seconds": 47885,
+      "lastMessageAt": 1774630555705,
+      "lastVoiceAt": 1777907049953
+    },
+    "856635811351887892": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774641342358,
+      "lastVoiceAt": 0
+    },
+    "1471260546329215006": {
+      "xp": 11,
+      "level": 0,
+      "message_xp": 11,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774706438973,
+      "lastVoiceAt": 0
+    },
+    "1127930734317948979": {
+      "xp": 297,
+      "level": 1,
+      "message_xp": 280,
+      "voice_xp": 17,
+      "voice_seconds": 514,
+      "lastMessageAt": 1776022413554,
+      "lastVoiceAt": 1776022138483
+    },
+    "1259897994002694186": {
+      "xp": 55,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 43,
+      "voice_seconds": 1283,
+      "lastMessageAt": 1774778544425,
+      "lastVoiceAt": 1775492115497
+    },
+    "1280436891044282422": {
+      "xp": 6,
+      "level": 0,
+      "message_xp": 0,
+      "voice_xp": 6,
+      "voice_seconds": 160,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1774786653578
+    },
+    "1479784988948959347": {
+      "xp": 213,
+      "level": 1,
+      "message_xp": 20,
+      "voice_xp": 193,
+      "voice_seconds": 5733,
+      "lastMessageAt": 1777491372919,
+      "lastVoiceAt": 1777553277517
+    },
+    "1488155446442459147": {
+      "xp": 2996,
+      "level": 5,
+      "message_xp": 412,
+      "voice_xp": 2584,
+      "voice_seconds": 75752,
+      "lastMessageAt": 1778071360035,
+      "lastVoiceAt": 1777844947652
+    },
+    "417335247043297290": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774880373380,
+      "lastVoiceAt": 0
+    },
+    "1187130502415667210": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1774960502998,
+      "lastVoiceAt": 0
+    },
+    "1371068255862784101": {
+      "xp": 369,
+      "level": 1,
+      "message_xp": 12,
+      "voice_xp": 357,
+      "voice_seconds": 10435,
+      "lastMessageAt": 1775044029144,
+      "lastVoiceAt": 1775578518478
+    },
+    "1047073554065276939": {
+      "xp": 996,
+      "level": 3,
+      "message_xp": 10,
+      "voice_xp": 986,
+      "voice_seconds": 29034,
+      "lastMessageAt": 1775056578714,
+      "lastVoiceAt": 1775910961789
+    },
+    "606575199508365353": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775073654072,
       "lastVoiceAt": 0
     },
     "1482129255705084047": {
-      "xp": 68,
+      "xp": 8344,
+      "level": 9,
+      "message_xp": 12,
+      "voice_xp": 8332,
+      "voice_seconds": 244523,
+      "lastMessageAt": 1775141454261,
+      "lastVoiceAt": 1777838587177
+    },
+    "923970947726327848": {
+      "xp": 61,
+      "level": 0,
+      "message_xp": 34,
+      "voice_xp": 27,
+      "voice_seconds": 791,
+      "lastMessageAt": 1775291928582,
+      "lastVoiceAt": 1775302745605
+    },
+    "1109211809384247367": {
+      "xp": 11,
+      "level": 0,
+      "message_xp": 11,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775160875563,
+      "lastVoiceAt": 0
+    },
+    "687010300863840257": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775176084840,
+      "lastVoiceAt": 0
+    },
+    "906610837928685648": {
+      "xp": 547,
+      "level": 2,
+      "message_xp": 208,
+      "voice_xp": 339,
+      "voice_seconds": 9901,
+      "lastMessageAt": 1776459381906,
+      "lastVoiceAt": 1777929498865
+    },
+    "775338732294635520": {
+      "xp": 84,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 74,
+      "voice_seconds": 2069,
+      "lastMessageAt": 1775225723173,
+      "lastVoiceAt": 1775498550012
+    },
+    "1223928851298521173": {
+      "xp": 757,
+      "level": 2,
+      "message_xp": 53,
+      "voice_xp": 704,
+      "voice_seconds": 20805,
+      "lastMessageAt": 1777997438162,
+      "lastVoiceAt": 1778074490609
+    },
+    "764161380710350910": {
+      "xp": 2064,
+      "level": 4,
+      "message_xp": 21,
+      "voice_xp": 2043,
+      "voice_seconds": 60192,
+      "lastMessageAt": 1777330932343,
+      "lastVoiceAt": 1778074490616
+    },
+    "906584782731886632": {
+      "xp": 17,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 9,
+      "voice_seconds": 253,
+      "lastMessageAt": 1775292825376,
+      "lastVoiceAt": 1775306675718
+    },
+    "723902906721501204": {
+      "xp": 83,
+      "level": 0,
+      "message_xp": 83,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775306942731,
+      "lastVoiceAt": 0
+    },
+    "1085972706039701586": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 6,
+      "voice_seconds": 150,
+      "lastMessageAt": 1775308792039,
+      "lastVoiceAt": 1775412780460
+    },
+    "1345887242459152404": {
+      "xp": 263,
+      "level": 1,
+      "message_xp": 13,
+      "voice_xp": 250,
+      "voice_seconds": 7296,
+      "lastMessageAt": 1775382125028,
+      "lastVoiceAt": 1775998467016
+    },
+    "1352272224522076203": {
+      "xp": 184,
+      "level": 1,
+      "message_xp": 184,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777474760216,
+      "lastVoiceAt": 0
+    },
+    "1391173944115204207": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775419965605,
+      "lastVoiceAt": 0
+    },
+    "859446141900554250": {
+      "xp": 57,
+      "level": 0,
+      "message_xp": 52,
+      "voice_xp": 5,
+      "voice_seconds": 166,
+      "lastMessageAt": 1776262709651,
+      "lastVoiceAt": 1777484962302
+    },
+    "733022857155706913": {
+      "xp": 296,
+      "level": 1,
+      "message_xp": 296,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1778171162448,
+      "lastVoiceAt": 0
+    },
+    "1365631126927970396": {
+      "xp": 2,
       "level": 0,
       "message_xp": 0,
-      "voice_xp": 68,
-      "voice_seconds": 2037,
+      "voice_xp": 2,
+      "voice_seconds": 67,
       "lastMessageAt": 0,
-      "lastVoiceAt": 1778360452766
+      "lastVoiceAt": 1775506725994
     },
-    "951174123869044736": {
-      "xp": 32,
+    "1179288583891320895": {
+      "xp": 1416,
+      "level": 3,
+      "message_xp": 44,
+      "voice_xp": 1372,
+      "voice_seconds": 40696,
+      "lastMessageAt": 1776802204814,
+      "lastVoiceAt": 1777392464301
+    },
+    "1479156852452491409": {
+      "xp": 73,
+      "level": 0,
+      "message_xp": 73,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775553455675,
+      "lastVoiceAt": 0
+    },
+    "1067150678352478229": {
+      "xp": 82,
+      "level": 0,
+      "message_xp": 82,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775553109092,
+      "lastVoiceAt": 0
+    },
+    "1491094444311842858": {
+      "xp": 197,
+      "level": 1,
+      "message_xp": 40,
+      "voice_xp": 157,
+      "voice_seconds": 4693,
+      "lastMessageAt": 1775830068064,
+      "lastVoiceAt": 1775945094936
+    },
+    "1014793488249921566": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775584197629,
+      "lastVoiceAt": 0
+    },
+    "1341126861828128829": {
+      "xp": 121,
+      "level": 1,
+      "message_xp": 121,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775671753311,
+      "lastVoiceAt": 0
+    },
+    "1364142610687459348": {
+      "xp": 120,
+      "level": 1,
+      "message_xp": 0,
+      "voice_xp": 120,
+      "voice_seconds": 3528,
+      "lastMessageAt": 0,
+      "lastVoiceAt": 1775936882682
+    },
+    "722113753880985652": {
+      "xp": 24,
       "level": 0,
       "message_xp": 0,
-      "voice_xp": 32,
-      "voice_seconds": 964,
+      "voice_xp": 24,
+      "voice_seconds": 726,
       "lastMessageAt": 0,
-      "lastVoiceAt": 1778362245613
+      "lastVoiceAt": 1775830374584
     },
-    "1105216020358115339": {
-      "xp": 29,
+    "1194691221327724564": {
+      "xp": 25,
       "level": 0,
-      "message_xp": 0,
-      "voice_xp": 29,
-      "voice_seconds": 851,
-      "lastMessageAt": 0,
-      "lastVoiceAt": 1778362245616
+      "message_xp": 25,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777803845925,
+      "lastVoiceAt": 0
     },
-    "1492535564963025067": {
-      "xp": 18,
+    "1459949016115576853": {
+      "xp": 76,
       "level": 0,
       "message_xp": 15,
-      "voice_xp": 3,
-      "voice_seconds": 89,
-      "lastMessageAt": 1778361456065,
-      "lastVoiceAt": 1778361571949
+      "voice_xp": 61,
+      "voice_seconds": 1823,
+      "lastMessageAt": 1775841809364,
+      "lastVoiceAt": 1775843725638
+    },
+    "1342811028886388769": {
+      "xp": 183,
+      "level": 1,
+      "message_xp": 183,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777561612503,
+      "lastVoiceAt": 0
     },
     "1476654149889163439": {
-      "xp": 3,
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775852925194,
+      "lastVoiceAt": 0
+    },
+    "1191738004839084193": {
+      "xp": 26,
+      "level": 0,
+      "message_xp": 26,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775853766202,
+      "lastVoiceAt": 0
+    },
+    "1468234788765696023": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775912195540,
+      "lastVoiceAt": 0
+    },
+    "1393157087051120768": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775915222820,
+      "lastVoiceAt": 0
+    },
+    "1136662937247961149": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1775929046871,
+      "lastVoiceAt": 0
+    },
+    "1215973656593961051": {
+      "xp": 26,
+      "level": 0,
+      "message_xp": 26,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776688325712,
+      "lastVoiceAt": 0
+    },
+    "1458556188017954937": {
+      "xp": 20,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 10,
+      "voice_seconds": 300,
+      "lastMessageAt": 1776002360765,
+      "lastVoiceAt": 1776003117312
+    },
+    "1464970735155020020": {
+      "xp": 19,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 10,
+      "voice_seconds": 302,
+      "lastMessageAt": 1776002427798,
+      "lastVoiceAt": 1776003117311
+    },
+    "420256877411041280": {
+      "xp": 65,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 51,
+      "voice_seconds": 1405,
+      "lastMessageAt": 1776002731880,
+      "lastVoiceAt": 1776123583891
+    },
+    "483667419382939668": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776002756206,
+      "lastVoiceAt": 0
+    },
+    "1023648162533097594": {
+      "xp": 198,
+      "level": 1,
+      "message_xp": 9,
+      "voice_xp": 189,
+      "voice_seconds": 5605,
+      "lastMessageAt": 1776003291260,
+      "lastVoiceAt": 1776008937684
+    },
+    "1478119334139396287": {
+      "xp": 138,
+      "level": 1,
+      "message_xp": 23,
+      "voice_xp": 115,
+      "voice_seconds": 3325,
+      "lastMessageAt": 1777218217305,
+      "lastVoiceAt": 1777797420915
+    },
+    "1265324126864932925": {
+      "xp": 52,
+      "level": 0,
+      "message_xp": 52,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776113357085,
+      "lastVoiceAt": 0
+    },
+    "1268298217544749096": {
+      "xp": 246,
+      "level": 1,
+      "message_xp": 246,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1778173500294,
+      "lastVoiceAt": 0
+    },
+    "1346892142009647230": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 2,
+      "voice_seconds": 49,
+      "lastMessageAt": 1776099681537,
+      "lastVoiceAt": 1776099983038
+    },
+    "1470769508015673388": {
+      "xp": 8,
+      "level": 0,
+      "message_xp": 8,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776099807852,
+      "lastVoiceAt": 0
+    },
+    "787708735266095125": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776100119007,
+      "lastVoiceAt": 0
+    },
+    "1233811058762846278": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776106279251,
+      "lastVoiceAt": 0
+    },
+    "1254758162272227330": {
+      "xp": 16,
+      "level": 0,
+      "message_xp": 16,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776146944368,
+      "lastVoiceAt": 0
+    },
+    "1400479484334837771": {
+      "xp": 661,
+      "level": 2,
+      "message_xp": 176,
+      "voice_xp": 485,
+      "voice_seconds": 14222,
+      "lastMessageAt": 1777626191988,
+      "lastVoiceAt": 1777206869681
+    },
+    "743079567572467763": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776264367508,
+      "lastVoiceAt": 0
+    },
+    "915325690881126402": {
+      "xp": 32,
+      "level": 0,
+      "message_xp": 25,
+      "voice_xp": 7,
+      "voice_seconds": 213,
+      "lastMessageAt": 1776969831555,
+      "lastVoiceAt": 1776266490227
+    },
+    "710219490872393729": {
+      "xp": 99,
+      "level": 0,
+      "message_xp": 99,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777125893335,
+      "lastVoiceAt": 0
+    },
+    "1485198162804084894": {
+      "xp": 714,
+      "level": 2,
+      "message_xp": 424,
+      "voice_xp": 290,
+      "voice_seconds": 8446,
+      "lastMessageAt": 1778009119307,
+      "lastVoiceAt": 1777325018969
+    },
+    "1061754432821399574": {
+      "xp": 425,
+      "level": 2,
+      "message_xp": 88,
+      "voice_xp": 337,
+      "voice_seconds": 9648,
+      "lastMessageAt": 1777831260384,
+      "lastVoiceAt": 1776615547899
+    },
+    "1493642510189199552": {
+      "xp": 299,
+      "level": 1,
+      "message_xp": 32,
+      "voice_xp": 267,
+      "voice_seconds": 7901,
+      "lastMessageAt": 1778157839442,
+      "lastVoiceAt": 1777722139054
+    },
+    "929089958818480158": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776522255797,
+      "lastVoiceAt": 0
+    },
+    "1457439240769110198": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776600919596,
+      "lastVoiceAt": 0
+    },
+    "1411341130871734392": {
+      "xp": 294,
+      "level": 1,
+      "message_xp": 119,
+      "voice_xp": 175,
+      "voice_seconds": 5005,
+      "lastMessageAt": 1777764046466,
+      "lastVoiceAt": 1776870001789
+    },
+    "693781882914996254": {
+      "xp": 279,
+      "level": 1,
+      "message_xp": 22,
+      "voice_xp": 257,
+      "voice_seconds": 7615,
+      "lastMessageAt": 1777584474127,
+      "lastVoiceAt": 1777581029192
+    },
+    "771446611632586762": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776678965149,
+      "lastVoiceAt": 0
+    },
+    "1477797692049719497": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 22,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776679226547,
+      "lastVoiceAt": 0
+    },
+    "610835997437067274": {
+      "xp": 607,
+      "level": 2,
+      "message_xp": 45,
+      "voice_xp": 562,
+      "voice_seconds": 16383,
+      "lastMessageAt": 1777629904588,
+      "lastVoiceAt": 1778089341499
+    },
+    "1426634301268819978": {
+      "xp": 27,
+      "level": 0,
+      "message_xp": 27,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777993668965,
+      "lastVoiceAt": 0
+    },
+    "1272532493286768640": {
+      "xp": 199,
+      "level": 1,
+      "message_xp": 9,
+      "voice_xp": 190,
+      "voice_seconds": 5638,
+      "lastMessageAt": 1776791345587,
+      "lastVoiceAt": 1777201949240
+    },
+    "1346814740503986186": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776792894938,
+      "lastVoiceAt": 0
+    },
+    "1387818417708466226": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 22,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777057643814,
+      "lastVoiceAt": 0
+    },
+    "781910340287856700": {
+      "xp": 13,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776800760532,
+      "lastVoiceAt": 0
+    },
+    "1400176347321467032": {
+      "xp": 177,
+      "level": 1,
+      "message_xp": 9,
+      "voice_xp": 168,
+      "voice_seconds": 4898,
+      "lastMessageAt": 1776872097769,
+      "lastVoiceAt": 1776900066082
+    },
+    "1204992312284028972": {
+      "xp": 1774,
+      "level": 4,
+      "message_xp": 67,
+      "voice_xp": 1707,
+      "voice_seconds": 50489,
+      "lastMessageAt": 1777840500319,
+      "lastVoiceAt": 1777757278754
+    },
+    "1439375678557524159": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776888471156,
+      "lastVoiceAt": 0
+    },
+    "605422034448547903": {
+      "xp": 385,
+      "level": 1,
+      "message_xp": 11,
+      "voice_xp": 374,
+      "voice_seconds": 11092,
+      "lastMessageAt": 1776891019959,
+      "lastVoiceAt": 1777504674049
+    },
+    "1427647220903055460": {
+      "xp": 77,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 63,
+      "voice_seconds": 1867,
+      "lastMessageAt": 1776891187146,
+      "lastVoiceAt": 1776893105163
+    },
+    "1464551921133027525": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776895858574,
+      "lastVoiceAt": 0
+    },
+    "1115993088737943673": {
+      "xp": 36,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 27,
+      "voice_seconds": 783,
+      "lastMessageAt": 1776951969662,
+      "lastVoiceAt": 1777749716480
+    },
+    "762998973895671828": {
+      "xp": 67,
+      "level": 0,
+      "message_xp": 67,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776977407032,
+      "lastVoiceAt": 0
+    },
+    "1014877869970817024": {
+      "xp": 379,
+      "level": 1,
+      "message_xp": 25,
+      "voice_xp": 354,
+      "voice_seconds": 10237,
+      "lastMessageAt": 1778081282714,
+      "lastVoiceAt": 1778081541211
+    },
+    "1395865059246477382": {
+      "xp": 11,
+      "level": 0,
+      "message_xp": 11,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1776984208007,
+      "lastVoiceAt": 0
+    },
+    "1084571898949673002": {
+      "xp": 433,
+      "level": 2,
+      "message_xp": 433,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777213168657,
+      "lastVoiceAt": 0
+    },
+    "878282346070151178": {
+      "xp": 110,
+      "level": 1,
+      "message_xp": 13,
+      "voice_xp": 97,
+      "voice_seconds": 2839,
+      "lastMessageAt": 1777107420096,
+      "lastVoiceAt": 1778089101502
+    },
+    "919625114348314754": {
+      "xp": 24,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 9,
+      "voice_seconds": 266,
+      "lastMessageAt": 1777125215975,
+      "lastVoiceAt": 1777125563983
+    },
+    "762355752995389441": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 5,
+      "voice_seconds": 134,
+      "lastMessageAt": 1777153424665,
+      "lastVoiceAt": 1777153585661
+    },
+    "1257438553969787004": {
+      "xp": 32,
+      "level": 0,
+      "message_xp": 32,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777194951382,
+      "lastVoiceAt": 0
+    },
+    "1465861520897609943": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 22,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777213264140,
+      "lastVoiceAt": 0
+    },
+    "1317163633746116712": {
+      "xp": 17,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 2,
+      "voice_seconds": 50,
+      "lastMessageAt": 1777739921040,
+      "lastVoiceAt": 1777208219784
+    },
+    "1484189618483105985": {
+      "xp": 1257,
+      "level": 3,
+      "message_xp": 58,
+      "voice_xp": 1199,
+      "voice_seconds": 35372,
+      "lastMessageAt": 1777559691202,
+      "lastVoiceAt": 1777999787437
+    },
+    "1490570432477270096": {
+      "xp": 22,
+      "level": 0,
+      "message_xp": 13,
+      "voice_xp": 9,
+      "voice_seconds": 251,
+      "lastMessageAt": 1777218724456,
+      "lastVoiceAt": 1777218990406
+    },
+    "944329366555471872": {
+      "xp": 265,
+      "level": 1,
+      "message_xp": 265,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777876244821,
+      "lastVoiceAt": 0
+    },
+    "1030501788777979955": {
+      "xp": 47,
+      "level": 0,
+      "message_xp": 47,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777316422062,
+      "lastVoiceAt": 0
+    },
+    "1172633026262487040": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777316357173,
+      "lastVoiceAt": 0
+    },
+    "844920116097318983": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777397990129,
+      "lastVoiceAt": 0
+    },
+    "587732943192064000": {
+      "xp": 135,
+      "level": 1,
+      "message_xp": 12,
+      "voice_xp": 123,
+      "voice_seconds": 3637,
+      "lastMessageAt": 1777489177374,
+      "lastVoiceAt": 1777492852989
+    },
+    "1492161459181064294": {
+      "xp": 12,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777495163659,
+      "lastVoiceAt": 0
+    },
+    "1408873007367323840": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777557770247,
+      "lastVoiceAt": 0
+    },
+    "1314627558326665240": {
+      "xp": 10,
+      "level": 0,
+      "message_xp": 10,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777558963896,
+      "lastVoiceAt": 0
+    },
+    "937405116309471352": {
+      "xp": 15,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777629805453,
+      "lastVoiceAt": 0
+    },
+    "1467466769370452069": {
+      "xp": 17,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 8,
+      "voice_seconds": 204,
+      "lastMessageAt": 1777638822122,
+      "lastVoiceAt": 1777665313528
+    },
+    "666648312404770827": {
+      "xp": 328,
+      "level": 1,
+      "message_xp": 9,
+      "voice_xp": 319,
+      "voice_seconds": 9391,
+      "lastMessageAt": 1777663742318,
+      "lastVoiceAt": 1777907049956
+    },
+    "1302695866490159225": {
+      "xp": 59,
+      "level": 0,
+      "message_xp": 59,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777997563902,
+      "lastVoiceAt": 0
+    },
+    "823279578222428160": {
+      "xp": 33,
+      "level": 0,
+      "message_xp": 12,
+      "voice_xp": 21,
+      "voice_seconds": 622,
+      "lastMessageAt": 1777724120873,
+      "lastVoiceAt": 1777725073478
+    },
+    "967498457348710410": {
+      "xp": 164,
+      "level": 1,
+      "message_xp": 8,
+      "voice_xp": 156,
+      "voice_seconds": 4612,
+      "lastMessageAt": 1777745806152,
+      "lastVoiceAt": 1777751006508
+    },
+    "418446304302202880": {
+      "xp": 85,
+      "level": 0,
+      "message_xp": 30,
+      "voice_xp": 55,
+      "voice_seconds": 1635,
+      "lastMessageAt": 1777824999042,
+      "lastVoiceAt": 1777748006342
+    },
+    "1500552926454878378": {
+      "xp": 199,
+      "level": 1,
+      "message_xp": 11,
+      "voice_xp": 188,
+      "voice_seconds": 5455,
+      "lastMessageAt": 1777897330035,
+      "lastVoiceAt": 1777902819863
+    },
+    "1458462192952279151": {
+      "xp": 14,
+      "level": 0,
+      "message_xp": 14,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1777908503932,
+      "lastVoiceAt": 0
+    },
+    "1201581907964592199": {
+      "xp": 142,
+      "level": 1,
+      "message_xp": 142,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1778080955889,
+      "lastVoiceAt": 0
+    },
+    "1496556767687999549": {
+      "xp": 39,
+      "level": 0,
+      "message_xp": 15,
+      "voice_xp": 24,
+      "voice_seconds": 719,
+      "lastMessageAt": 1777984435521,
+      "lastVoiceAt": 1777985297059
+    },
+    "893016385586888705": {
+      "xp": 9,
       "level": 0,
       "message_xp": 0,
-      "voice_xp": 3,
-      "voice_seconds": 87,
+      "voice_xp": 9,
+      "voice_seconds": 252,
       "lastMessageAt": 0,
-      "lastVoiceAt": 1778361571950
+      "lastVoiceAt": 1778007557658
+    },
+    "779680390159269898": {
+      "xp": 168,
+      "level": 1,
+      "message_xp": 12,
+      "voice_xp": 156,
+      "voice_seconds": 4547,
+      "lastMessageAt": 1778009088012,
+      "lastVoiceAt": 1778013707792
+    },
+    "1501307786166931587": {
+      "xp": 69,
+      "level": 0,
+      "message_xp": 69,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1778011772803,
+      "lastVoiceAt": 0
+    },
+    "1494996240583233637": {
+      "xp": 9,
+      "level": 0,
+      "message_xp": 9,
+      "voice_xp": 0,
+      "voice_seconds": 0,
+      "lastMessageAt": 1778010994384,
+      "lastVoiceAt": 0
     }
   }
 }

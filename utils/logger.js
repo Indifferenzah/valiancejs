@@ -13,23 +13,36 @@ const {
     metadata
 } = winston.format;
 
-// === DIRECTORY LOGS ===
-const logsDir = path.join(__dirname, '../logs');
+// === DIRECTORY LOGS (Compatibile Pterodactyl) ===
+const logsDir = path.resolve(process.cwd(), 'logs');
+
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
 }
 
-// === NOME FILE FORMATTATO ===
+// === GENERA NOME BASE (es: 21_Febbraio_2025) ===
 const mesi = [
     "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
     "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
 ];
 
 const now = new Date();
-const nomeFile = `${now.getDate()}_${mesi[now.getMonth()]}_${now.getFullYear()}.log`;
-const logFilePath = path.join(logsDir, nomeFile);
+const baseName = `${now.getDate()}_${mesi[now.getMonth()]}_${now.getFullYear()}`;
 
-// === FORMATS ===
+// === CONTROLLO VERSIONE SE ESISTE FILE ===
+// base: "21_Febbraio_2025.log"
+let finalLogName = `${baseName}.log`;
+let version = 1;
+
+while (fs.existsSync(path.join(logsDir, finalLogName))) {
+    finalLogName = `${baseName}_${version}.log`;
+    version++;
+}
+
+// === PERCORSO COMPLETO FILE ===
+const logFilePath = path.join(logsDir, finalLogName);
+
+// === FORMATI LOG ===
 const fileFormat = combine(
     timestamp(),
     errors({ stack: true }),
@@ -43,9 +56,8 @@ const consoleFormat = combine(
     timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     errors({ stack: true }),
     splat(),
-    metadata({ fillExcept: ['timestamp', 'level', 'message', 'stack'] }),
-    printf(({ timestamp, level, message, stack, service = 'valiance-bot', pid = process.pid }) => {
-        return `${timestamp} ${level}: [${service}@${pid}] ${stack || message}`;
+    printf(({ timestamp, level, message, stack }) => {
+        return `${timestamp} ${level}: ${stack || message}`;
     })
 );
 
@@ -58,23 +70,20 @@ const logger = winston.createLogger({
         new winston.transports.File({
             filename: logFilePath,
             level: 'debug',
-            maxsize: 20 * 1024 * 1024,
             tailable: true
         })
-    ],
-    exitOnError: false
+    ]
 });
 
-// === OUTPUT IN CONSOLE REALTIME ===
+// === LOG IN CONSOLE REALTIME ===
 logger.add(new winston.transports.Console({
     level: 'debug',
     format: consoleFormat
 }));
 
-// === REDIREZIONE console.log / console.error ===
+// === REDIREZIONE COMPLETA DI console.log ED ERRORI ===
 const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
-// Sovrascrivo le funzioni della console
 const origLog = console.log;
 const origErr = console.error;
 
@@ -88,6 +97,5 @@ console.error = (...args) => {
     origErr.apply(console, args);
 };
 
-// === EXPORT ===
 module.exports = logger;
 module.exports.createScopedLogger = (scope) => logger.child({ scope });

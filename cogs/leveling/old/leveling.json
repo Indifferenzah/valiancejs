@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "xp_min": 8,
+  "xp_max": 15,
+  "cooldown_seconds": 10,
+  "ignored_channel_ids": [],
+  "ignored_role_ids": [],
+  "announce_channel_id": "1452762255438381108",
+  "level_base_xp": 100,
+  "role_levels": {
+    "5": "",
+    "10": ""
+  }
+}
