@@ -56,7 +56,10 @@
       "Bash(node -e \"require\\('./cogs/coralmc/commands/coral.js'\\); console.log\\('coral ok'\\)\")",
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d.get\\('main',''\\); print\\(d.get\\('scripts',''\\)\\)\")",
       "Bash(Select-String \"index\")",
-      "Bash(xargs cat *)"
+      "Bash(xargs cat *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

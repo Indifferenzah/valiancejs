@@ -14,7 +14,7 @@ const {
 } = winston.format;
 
 // === DIRECTORY LOGS (Compatibile Pterodactyl) ===
-const logsDir = path.resolve(process.cwd(), 'logs');
+const logsDir = path.resolve(process.cwd(), '../logs');
 
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir, { recursive: true });
