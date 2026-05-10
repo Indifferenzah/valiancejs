@@ -106,6 +106,11 @@ class CwCog {
       .join("\n");
   }
 
+  escapeMarkdown(text) {
+    if (!text) return text;
+    return text.replace(/_/g, "\\_");
+  }
+
   formatTeam(raw) {
     if (!raw) return "";
 
@@ -135,35 +140,48 @@ class CwCog {
       });
     }
 
-    const rawMappe = interaction.options.getString("mappe");
-    const rawRecap = interaction.options.getString("recap");
-
     const values = {
       numerocw: interaction.options.getInteger("numero"),
-      data: interaction.options.getString("data"),
-      ora: interaction.options.getString("ora"),
-      rossi: this.formatTeam(interaction.options.getString("rossi")),
-      verdi: this.formatTeam(interaction.options.getString("verdi")),
+      data: this.escapeMarkdown(interaction.options.getString("data")),
+      ora: this.escapeMarkdown(interaction.options.getString("ora")),
+      rossi: this.formatTeam(
+        this.escapeMarkdown(interaction.options.getString("rossi")),
+      ),
+      verdi: this.formatTeam(
+        this.escapeMarkdown(interaction.options.getString("verdi")),
+      ),
       mappe: this.formatList(
-        interaction.options.getString("mappe"),
+        this.escapeMarkdown(interaction.options.getString("mappe")),
         this.config.prefix_map || "(#{num_map})",
         "num_map",
       ),
       recap: this.formatListPrefix(
-        interaction.options.getString("recap"),
+        this.escapeMarkdown(interaction.options.getString("recap")),
         this.config.prefix_recap || "**#{num_recap}:**",
         "num_recap",
       ),
-      vincitore: interaction.options.getString("vincitore"),
+      vincitore: this.escapeMarkdown(
+        interaction.options.getString("vincitore"),
+      ),
     };
+
+    const description = this.parseTemplate(
+      this.config.embed_description || "",
+      values,
+    );
+    const truncated =
+      description.length > 4096
+        ? (logger.warn(
+            `CW #${values.numerocw}: description truncated (${description.length} > 4096 chars)`,
+          ),
+          description.slice(0, 4093) + "...")
+        : description;
 
     const embed = new EmbedBuilder()
       .setTitle(this.config.embed_title || "CW")
-      .setDescription(
-        this.parseTemplate(this.config.embed_description || "", values),
-      )
+      .setDescription(truncated || null)
       .setColor(this.config.embed_color || 0x3498db)
-      .setFooter({ text: this.config.footer || "" })
+      .setFooter(this.config.footer ? { text: this.config.footer } : null)
       .setTimestamp();
 
     await interaction.reply({ embeds: [embed] });
